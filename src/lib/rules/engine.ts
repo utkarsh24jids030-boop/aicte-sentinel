@@ -5,7 +5,7 @@
 import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Finding, DocumentType, Institution, LocationType } from '@/types';
 import rulePacks from './packs.json';
 import { getAsOfDate } from '@/lib/config/env';
-import { MINIMUM_LAND_AREA_ACRES } from '@/lib/config/norms';
+import { MINIMUM_LAND_AREA_ACRES, resolveProgrammeLevel, computeRequiredFaculty, FACULTY_CALCULATION_BASIS } from '@/lib/config/norms';
 
 /**
  * Canonical readiness score calculation function.
@@ -384,14 +384,15 @@ export class RulesEngine {
 
       case 'FACULTY-COUNT-001': {
         const totalIntake = app.proposedIntake || app.currentIntake || 300;
-        const requiredFaculty = Math.ceil(totalIntake / 20);
+        const progLevel = resolveProgrammeLevel(app.programmes);
+        const { requiredFaculty, ratio, basisDescription } = computeRequiredFaculty(totalIntake, progLevel, FACULTY_CALCULATION_BASIS);
         const facDoc = findDoc('Faculty Appointment Letter') || findDoc('Faculty Qualification Certificate');
         const declaredFacultyStr = (facDoc && getField(facDoc.documentType, 'declared_faculty_count')) || (app.type === 'Intake_Increase' ? '22' : String(requiredFaculty));
         const declaredFaculty = parseInt(declaredFacultyStr, 10);
         if (declaredFaculty < requiredFaculty) {
           return {
             passed: false,
-            failureMessage: `Declared faculty strength (${declaredFaculty}) is below statutory requirement of ${requiredFaculty} for proposed intake of ${totalIntake}.`,
+            failureMessage: `Declared faculty strength (${declaredFaculty}) is below statutory requirement of ${requiredFaculty} faculty for ${basisDescription} at 1:${ratio} ratio (${progLevel} programme) [SOURCE: TO BE VERIFIED].`,
             relatedDocType: 'Faculty Appointment Letter',
             relatedDocId: facDoc?.id
           };

@@ -90,9 +90,9 @@
     "category": "Faculty",
     "applies_to": ["EoA", "New_Institution", "Intake_Increase"],
     "severity": "Critical",
-    "logic": "faculty_count >= (approved_intake / 20.0)",
-    "evidence_fields": ["faculty_summary.total_faculty", "application.current_intake", "application.proposed_intake"],
-    "failure_message": "Total qualified faculty strength is below statutory AICTE Student-Faculty Ratio (1:20 for Engineering / 1:25 for Polytechnic).",
+    "logic": "faculty_count >= required_faculty(application.programmes, approved_intake)",
+    "evidence_fields": ["faculty_summary.total_faculty", "application.programmes", "application.current_intake", "application.proposed_intake"],
+    "failure_message": "Total qualified core faculty strength is below statutory Student-Faculty Ratio for approved programme level and student basis [SOURCE: TO BE VERIFIED].",
     "recommended_action": "Complete recruitment of designated Professors, Associate Professors, and Assistant Professors."
   },
   {

@@ -64,12 +64,12 @@ export default function PreviewLayout({
                   {link.label}
                 </a>
               ))}
-              <a
+              <Link
                 href="/"
                 className="ml-2 px-2.5 py-1 rounded-md bg-white/15 text-amber-300 hover:bg-white/20 font-semibold"
               >
                 Back to Portal
-              </a>
+              </Link>
             </nav>
           </div>
         </div>

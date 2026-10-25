@@ -34,11 +34,7 @@ export default function ScrutinyReportPage({
     'Based on automated regulatory compliance parsing and cross-institution collusion detection, case warrants physical on-site verification before regulatory approval decision.'
   );
 
-  useEffect(() => {
-    fetchCase();
-  }, [id]);
-
-  const fetchCase = async () => {
+  const fetchCase = React.useCallback(async () => {
     try {
       const res = await fetch(`/api/applications/${id}`);
       const data = await res.json();
@@ -59,7 +55,11 @@ export default function ScrutinyReportPage({
     } catch (e) {
       console.error(e);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchCase();
+  }, [fetchCase]);
 
   const handlePrint = () => {
     window.print();

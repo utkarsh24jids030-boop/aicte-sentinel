@@ -56,11 +56,11 @@ export class ForensicsEngine {
     // Simulated PDF metadata analysis
     let pdfProducer = 'Adobe PDF Library 21.1.84';
     let pdfCreator = 'Acrobat PDFMaker 21 for Windows';
-    let creationDate = '2025-11-12T10:30:00Z';
+    const creationDate = '2025-11-12T10:30:00Z';
     let modificationDate = '2025-11-12T10:30:00Z';
 
     // Deliberate anomaly triggers for demo cases
-    if (fileName.includes('nova') && fileName.includes('alter')) {
+    if (fileName.toLowerCase().includes('nova') && (fileName.toLowerCase().includes('alter') || fileName.toLowerCase().includes('rev2') || fileName.toLowerCase().includes('structure_plan') || fileName.toLowerCase().includes('building_plan'))) {
       metadataAnomalyDetected = true;
       incrementalSavesDetected = true;
       pdfProducer = 'Canva / Ghostscript 9.53 (Hex Modified)';

@@ -21,7 +21,7 @@ import {
   Plus
 } from 'lucide-react';
 import { InspectionTask, InspectionObservation } from '@/types';
-import { DataStore, DEMO_APPLICATIONS, DEMO_DOCUMENTS, DEMO_FINDINGS } from '@/lib/store';
+import { DataStore, DEMO_APPLICATIONS, DEMO_DOCUMENTS } from '@/lib/store';
 import { EvcCopilotEngine, InspectionBrief } from '@/lib/evc/copilot';
 
 export default function MobileInspectionFormPage({

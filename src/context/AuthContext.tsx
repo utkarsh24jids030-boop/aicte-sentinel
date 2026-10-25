@@ -59,13 +59,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       let fbCred;
       try {
         fbCred = await signInWithEmailAndPassword(auth, email.trim(), pass);
-      } catch (signInErr: any) {
+      } catch (signInErr: unknown) {
+        const authErr = signInErr as { code?: string; message?: string };
         // Auto-provision demo persona if this is a pre-seeded evaluator account
         // and doesn't exist in the freshly linked Firebase project yet
         const isDemo = DEMO_CREDENTIALS.some(c => c.email.toLowerCase() === email.trim().toLowerCase());
-        const isNotFound = signInErr?.code === 'auth/user-not-found' || 
-                           signInErr?.code === 'auth/invalid-credential' ||
-                           signInErr?.code === 'auth/invalid-login-credentials';
+        const isNotFound = authErr?.code === 'auth/user-not-found' || 
+                           authErr?.code === 'auth/invalid-credential' ||
+                           authErr?.code === 'auth/invalid-login-credentials';
 
         if (isDemo && isNotFound) {
           try {
@@ -97,16 +98,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       return { success: true, user: resolved };
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const authErr = err as { code?: string; message?: string };
       let msg = 'Authentication failed. Please check your credentials.';
-      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+      if (authErr?.code === 'auth/user-not-found' || authErr?.code === 'auth/wrong-password' || authErr?.code === 'auth/invalid-credential') {
         msg = 'Invalid email or password.';
-      } else if (err.code === 'auth/too-many-requests') {
+      } else if (authErr?.code === 'auth/too-many-requests') {
         msg = 'Too many failed login attempts. Please wait a few moments.';
-      } else if (err.code === 'auth/invalid-email') {
+      } else if (authErr?.code === 'auth/invalid-email') {
         msg = 'Invalid email address format.';
-      } else if (err.message) {
-        msg = err.message;
+      } else if (authErr?.message) {
+        msg = authErr.message;
       }
       setError(msg);
       return { success: false, error: msg };
@@ -140,16 +142,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       return { success: true, user: resolved };
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const authErr = err as { code?: string; message?: string };
       let msg = 'Registration failed.';
-      if (err.code === 'auth/email-already-in-use') {
+      if (authErr?.code === 'auth/email-already-in-use') {
         msg = 'An account with this email address already exists. Please sign in.';
-      } else if (err.code === 'auth/weak-password') {
+      } else if (authErr?.code === 'auth/weak-password') {
         msg = 'Password is too weak. Please use at least 6 characters.';
-      } else if (err.code === 'auth/invalid-email') {
+      } else if (authErr?.code === 'auth/invalid-email') {
         msg = 'Invalid email address format.';
-      } else if (err.message) {
-        msg = err.message;
+      } else if (authErr?.message) {
+        msg = authErr.message;
       }
       setError(msg);
       return { success: false, error: msg };
@@ -173,14 +176,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await sendPasswordResetEmail(auth, email.trim());
       return { success: true };
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const authErr = err as { code?: string; message?: string };
       let msg = 'Failed to send password reset email.';
-      if (err.code === 'auth/user-not-found') {
+      if (authErr?.code === 'auth/user-not-found') {
         msg = 'No registered account found with this email.';
-      } else if (err.code === 'auth/invalid-email') {
+      } else if (authErr?.code === 'auth/invalid-email') {
         msg = 'Please enter a valid email address.';
-      } else if (err.message) {
-        msg = err.message;
+      } else if (authErr?.message) {
+        msg = authErr.message;
       }
       return { success: false, error: msg };
     }

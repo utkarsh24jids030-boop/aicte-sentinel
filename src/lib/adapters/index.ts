@@ -299,7 +299,7 @@ export class MockVerificationService {
     const attemptId = `ATT-LR-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     
     // Look up in registry
-    let foundKey = Object.keys(MOCK_LAND_RECORDS_DB).find(k => k.includes(surveyNumber));
+    const foundKey = Object.keys(MOCK_LAND_RECORDS_DB).find(k => k.includes(surveyNumber));
     const record = foundKey ? MOCK_LAND_RECORDS_DB[foundKey] : undefined;
 
     let status: VerificationStatus = 'Not Verified';

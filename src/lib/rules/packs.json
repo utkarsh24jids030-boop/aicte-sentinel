@@ -69,7 +69,7 @@
     "logic": "extracted_number('Building Plan', 'carpet_area_sqm') >= (proposed_intake * 10.5)",
     "evidence_fields": ["building_plan.carpet_area_sqm", "application.proposed_intake"],
     "failure_message": "Total instructional and administrative carpet area is inadequate for declared student intake.",
-    "recommended_action": "Review architectural layout and submit revised built-up area schedule meeting AICTE Norms Table 2.1."
+    "recommended_action": "Review architectural layout and submit revised built-up area schedule meeting AICTE Norms [SOURCE: TO BE VERIFIED]."
   },
   {
     "rule_id": "FIRE-NOC-001",

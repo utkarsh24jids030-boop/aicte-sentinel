@@ -5,16 +5,9 @@ import { CollusionRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
 import StatusChip from './StatusChip';
 import { 
   Building2, 
-  Users, 
-  MapPin, 
-  FileCheck, 
-  FileText, 
-  AlertTriangle, 
   ShieldAlert, 
   Share2, 
   Info,
-  Filter,
-  CheckCircle2,
   ExternalLink
 } from 'lucide-react';
 
@@ -63,7 +56,7 @@ export default function CollusionRadarGraph({ data, onSelectInstitution }: Collu
               <span>Cross-Institution Collusion & Fraud Radar</span>
             </h3>
             <span className="bg-rose-100 text-rose-800 text-xs font-bold px-2 py-0.5 rounded-full border border-rose-300">
-              Risk Score: {data.overallCollusionRiskScore}/100
+              Peak Network Risk: {data.overallCollusionRiskScore}%
             </span>
           </div>
           <p className="text-xs text-slate-500">

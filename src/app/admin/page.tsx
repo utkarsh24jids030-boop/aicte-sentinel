@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
 import StatusChip from '@/components/StatusChip';
@@ -29,11 +29,7 @@ export default function AdminPortalPage() {
   const [isVerifyingChain, setIsVerifyingChain] = useState(false);
   const [rules, setRules] = useState<ComplianceRule[]>(rulePacks as ComplianceRule[]);
 
-  useEffect(() => {
-    fetchAuditTrail();
-  }, []);
-
-  const fetchAuditTrail = async () => {
+  const fetchAuditTrail = useCallback(async () => {
     try {
       const res = await fetch('/api/audit');
       const data = await res.json();
@@ -42,7 +38,11 @@ export default function AdminPortalPage() {
     } catch (e) {
       console.error(e);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchAuditTrail();
+  }, [fetchAuditTrail]);
 
   const handleVerifyChain = async () => {
     setIsVerifyingChain(true);

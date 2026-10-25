@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
@@ -31,11 +31,19 @@ export default function InstitutionDashboard() {
 
   const institution = DEMO_INSTITUTIONS[0]; // Sunrise Institute of Technology
 
-  useEffect(() => {
-    fetchApplications();
+  const fetchAppDetail = useCallback(async (appId: string) => {
+    try {
+      const res = await fetch(`/api/applications/${appId}`);
+      const data = await res.json();
+      if (data.readiness) {
+        setReadiness(data.readiness);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
 
-  const fetchApplications = async () => {
+  const fetchApplications = useCallback(async () => {
     setIsLoading(true);
     try {
       const res = await fetch(`/api/applications?institutionId=${institution.id}`);
@@ -50,19 +58,11 @@ export default function InstitutionDashboard() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [institution.id, fetchAppDetail]);
 
-  const fetchAppDetail = async (appId: string) => {
-    try {
-      const res = await fetch(`/api/applications/${appId}`);
-      const data = await res.json();
-      if (data.readiness) {
-        setReadiness(data.readiness);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  useEffect(() => {
+    fetchApplications();
+  }, [fetchApplications]);
 
   return (
     <ProtectedRoute allowedRoles={['INSTITUTION', 'ADMIN']}>

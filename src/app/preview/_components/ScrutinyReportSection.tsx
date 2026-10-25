@@ -1,8 +1,7 @@
 import React from 'react';
 import { DataStore } from '@/lib/store';
-import { RulesEngine } from '@/lib/rules/engine';
-import { Application, DocumentRecord, Finding } from '@/types';
-import { formatSeverity, formatStatus } from './helpers';
+import { Application } from '@/types';
+import { formatSeverity } from './helpers';
 
 interface ScrutinyReportSectionProps {
   appId?: string;
@@ -27,7 +26,6 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
         const institution = DataStore.getInstitutionById(app.institutionId);
         const documents = DataStore.getDocuments(app.id);
         const findings = DataStore.getFindings(app.id);
-        const { breakdown } = RulesEngine.evaluateApplication(app, documents);
 
         // Verification matrix counts
         const totalDocs = documents.length;

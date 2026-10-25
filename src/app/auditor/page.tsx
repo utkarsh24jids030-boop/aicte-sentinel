@@ -1,35 +1,26 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
 import StatusChip from '@/components/StatusChip';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { 
-  Scale, 
   ShieldCheck, 
   CheckCircle2, 
-  AlertTriangle, 
-  Hash, 
-  RefreshCw, 
-  FileText,
-  Building2,
-  Lock
+  Building2 
 } from 'lucide-react';
-import { AuditEvent, Application } from '@/types';
-import { DEMO_APPLICATIONS } from '@/lib/store';
+import { AuditEvent } from '@/types';
+import { DataStore } from '@/lib/store';
 import Link from 'next/link';
 
 export default function AuditorPage() {
   const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
   const [chainIntegrity, setChainIntegrity] = useState<{ isValid: boolean; totalEventsChecked: number } | null>(null);
   const [isVerifying, setIsVerifying] = useState(false);
+  const applications = DataStore.getApplications();
 
-  useEffect(() => {
-    fetchAuditTrail();
-  }, []);
-
-  const fetchAuditTrail = async () => {
+  const fetchAuditTrail = useCallback(async () => {
     try {
       const res = await fetch('/api/audit');
       const data = await res.json();
@@ -38,7 +29,11 @@ export default function AuditorPage() {
     } catch (e) {
       console.error(e);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchAuditTrail();
+  }, [fetchAuditTrail]);
 
   const handleVerifyChain = async () => {
     setIsVerifying(true);
@@ -115,7 +110,7 @@ export default function AuditorPage() {
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {DEMO_APPLICATIONS.map((app) => (
+            {applications.map((app) => (
               <div key={app.id} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2 text-xs">
                 <div className="flex items-center justify-between">
                   <span className="font-mono font-bold text-slate-800">{app.applicationNumber}</span>

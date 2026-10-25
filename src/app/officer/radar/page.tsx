@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
 import CollusionRadarGraph from '@/components/CollusionRadarGraph';
 import { CollusionRadarData } from '@/types';
-import { Radar, RefreshCw, AlertTriangle, ShieldAlert, ArrowLeft } from 'lucide-react';
+import { Radar, RefreshCw, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
@@ -18,11 +18,7 @@ function RadarContent() {
   const [selectedInst, setSelectedInst] = useState<string>(instQuery);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchRadarData(selectedInst);
-  }, [selectedInst]);
-
-  const fetchRadarData = async (inst: string) => {
+  const fetchRadarData = useCallback(async (inst: string) => {
     setIsLoading(true);
     try {
       const url = inst ? `/api/radar?institution=${encodeURIComponent(inst)}` : '/api/radar';
@@ -32,7 +28,11 @@ function RadarContent() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchRadarData(selectedInst);
+  }, [selectedInst, fetchRadarData]);
 
   return (
     <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">

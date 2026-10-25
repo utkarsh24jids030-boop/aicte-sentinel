@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { DataStore } from '@/lib/store';
 import { formatSeverity, formatStatus } from './helpers';
 
@@ -87,7 +86,9 @@ export default function OfficerQueueSection() {
                     </span>
                   </td>
                   <td className="p-3">
-                    <div className="font-semibold text-slate-800">{findings.length} findings</div>
+                    <div className="font-semibold text-slate-800">
+                      {findings.length} {findings.length === 1 ? 'finding' : 'findings'}
+                    </div>
                     {criticalCount > 0 && (
                       <div className="text-[11px] font-bold text-rose-600">
                         {criticalCount} Critical

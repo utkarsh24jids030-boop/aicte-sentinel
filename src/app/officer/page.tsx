@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
@@ -28,11 +28,7 @@ export default function OfficerDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchApplications();
-  }, []);
-
-  const fetchApplications = async () => {
+  const fetchApplications = useCallback(async () => {
     setIsLoading(true);
     try {
       const res = await fetch('/api/applications');
@@ -41,7 +37,11 @@ export default function OfficerDashboard() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchApplications();
+  }, [fetchApplications]);
 
   // Filtered applications
   const filteredApps = applications.filter(app => {
@@ -74,6 +74,9 @@ export default function OfficerDashboard() {
               </span>
               <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
                 AICTE HQ New Delhi
+              </span>
+              <span className="bg-slate-100 text-slate-700 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border border-slate-300">
+                Evaluation As-Of: 01 Feb 2026
               </span>
             </div>
             <h1 className="text-2xl font-bold text-slate-900 mt-1">

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect, useCallback, use } from 'react';
 import Link from 'next/link';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
@@ -47,11 +47,7 @@ export default function OfficerCaseFilePage({
   const [activeTab, setActiveTab] = useState<'findings' | 'documents' | 'summary'>('findings');
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadCaseData();
-  }, [id]);
-
-  const loadCaseData = async () => {
+  const loadCaseData = useCallback(async () => {
     setIsLoading(true);
     try {
       const res = await fetch(`/api/applications/${id}`);
@@ -65,7 +61,11 @@ export default function OfficerCaseFilePage({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    loadCaseData();
+  }, [loadCaseData]);
 
   const handleFindingAction = async (findingId: string, action: FindingStatus, notes?: string) => {
     try {
@@ -135,6 +135,9 @@ export default function OfficerCaseFilePage({
               <h1 className="text-2xl font-bold text-slate-900">{application.applicationNumber}</h1>
               <StatusChip status={application.status} size="md" />
               <StatusChip status={application.riskTier} size="md" />
+              <span className="bg-slate-100 text-slate-700 text-[10px] font-mono font-bold px-2.5 py-1 rounded-full border border-slate-300">
+                Evaluation As-Of: 01 Feb 2026
+              </span>
             </div>
             <p className="text-xs text-slate-500 mt-1">
               Case Docket: <strong>{application.institutionName}</strong> • {application.type.replace('_', ' ')} • Session {application.academicYear}

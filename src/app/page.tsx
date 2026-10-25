@@ -295,8 +295,15 @@ export default function LandingPage() {
             <span className="font-bold text-white">AICTE Sentinel</span>
             <span>• Smart India Hackathon 2026 PS SIH26261</span>
           </div>
-          <div className="text-blue-300">
-            Advisory Decision-Support Platform • Prototype Operating on Synthetic Sandbox Data
+          <div className="flex flex-wrap items-center justify-center gap-3 text-blue-300">
+            <span>Advisory Decision-Support Platform • Prototype Operating on Synthetic Sandbox Data</span>
+            <span>•</span>
+            <Link 
+              href="/preview" 
+              className="text-amber-400 hover:text-amber-300 font-bold underline underline-offset-2 transition-colors"
+            >
+              Public Preview
+            </Link>
           </div>
         </div>
       </footer>

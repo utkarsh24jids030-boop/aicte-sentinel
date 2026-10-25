@@ -19,11 +19,14 @@ export interface User {
   createdAt: string;
 }
 
+export type LocationType = 'metro' | 'urban' | 'semi-urban' | 'rural';
+
 export interface Institution {
   id: string;
   aicteId: string;
   name: string;
   trustName: string;
+  locationType?: LocationType;
   state: string;
   district: string;
   address: string;

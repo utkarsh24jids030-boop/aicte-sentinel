@@ -2,9 +2,10 @@
 // Dynamic evaluation of institutional applications against AICTE statutory regulations
 // Problem Statement SIH26261 - Smart India Hackathon 2026
 
-import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Finding, DocumentType, Institution } from '@/types';
+import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Finding, DocumentType, Institution, LocationType } from '@/types';
 import rulePacks from './packs.json';
 import { getAsOfDate } from '@/lib/config/env';
+import { MINIMUM_LAND_AREA_ACRES } from '@/lib/config/norms';
 
 /**
  * Canonical readiness score calculation function.
@@ -293,10 +294,13 @@ export class RulesEngine {
         if (!doc) return { passed: false, failureMessage: 'Land deed missing to verify acreage.' };
         const areaStr = getField('Land Deed', 'area_acres') || '0';
         const area = parseFloat(areaStr);
-        if (isNaN(area) || area < 2.5) {
+        const locType: LocationType = institution?.locationType || 'semi-urban';
+        const minRequired = MINIMUM_LAND_AREA_ACRES[locType] ?? 2.5;
+
+        if (isNaN(area) || area < minRequired) {
           return {
             passed: false,
-            failureMessage: `Declared land area (${area} acres) is below statutory minimum (2.5 acres).`,
+            failureMessage: `Declared land area (${area} acres) is below statutory minimum (${minRequired} acres for ${locType} classification) [SOURCE: TO BE VERIFIED].`,
             relatedDocType: 'Land Deed',
             relatedDocId: doc.id
           };

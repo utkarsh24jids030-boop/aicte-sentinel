@@ -18,9 +18,9 @@
     "category": "Land",
     "applies_to": ["EoA", "New_Institution", "Intake_Increase", "Site_Change"],
     "severity": "High",
-    "logic": "extracted_number('Land Deed', 'area_acres') >= 2.5",
-    "evidence_fields": ["land_deed.area_acres", "affidavit.declared_land_acres"],
-    "failure_message": "Declared contiguous land area does not satisfy the statutory minimum requirement (minimum 2.5 acres in semi-urban / 1.5 acres in metro).",
+    "logic": "extracted_number('Land Deed', 'area_acres') >= min_land_area(institution.location_type)",
+    "evidence_fields": ["land_deed.area_acres", "affidavit.declared_land_acres", "institution.location_type"],
+    "failure_message": "Declared contiguous land area does not satisfy the statutory minimum requirement based on location classification [SOURCE: TO BE VERIFIED].",
     "recommended_action": "Submit rectified land revenue demarcation report showing requisite contiguous acreage."
   },
   {

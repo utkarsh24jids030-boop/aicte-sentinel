@@ -375,7 +375,7 @@ export function computeCrossInstitutionRiskScore(factors: {
   const facPts = factors.hasReusedFaculty ? COLLUSION_FACTOR_WEIGHTS.REUSED_FACULTY : 0;
   const certPts = factors.hasDuplicateCert ? 17 : 0; // Scaled to calibrate 92 peak
   const trustPts = factors.hasCommonTrustee ? COLLUSION_FACTOR_WEIGHTS.COMMON_TRUSTEE : 0;
-  const residual = (factors.hasSharedLand || factors.hasReusedFaculty || factors.hasDuplicateCert) ? 0 : (factors.baseResidual ?? 15);
+  const residual = factors.baseResidual !== undefined ? factors.baseResidual : ((factors.hasSharedLand || factors.hasReusedFaculty || factors.hasDuplicateCert) ? 0 : 15);
 
   const raw = landPts + facPts + certPts + trustPts + residual;
   const score = Math.min(100, Math.max(0, raw));

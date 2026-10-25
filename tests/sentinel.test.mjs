@@ -153,7 +153,7 @@ test('Cross-Institution Collusion Formula: Transparent weights and calibrated ou
     const fac = factors.reusedFaculty ? COLLUSION_WEIGHTS.REUSED_FACULTY : 0;
     const cert = factors.duplicateCert ? 17 : 0; // Scaled to calibrate peak 92
     const trust = factors.commonTrustee ? COLLUSION_WEIGHTS.COMMON_TRUSTEE : 0;
-    const residual = (factors.sharedLand || factors.reusedFaculty || factors.duplicateCert) ? 0 : (factors.baseResidual ?? 15);
+    const residual = factors.baseResidual !== undefined ? factors.baseResidual : ((factors.sharedLand || factors.reusedFaculty || factors.duplicateCert) ? 0 : 15);
     return Math.min(100, Math.max(0, land + fac + cert + trust + residual));
   };
 

@@ -211,7 +211,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       { id: 'f-sun-1', documentId: 'doc-sun-land', fieldKey: 'survey_number', fieldLabel: 'Survey / Khasra Number', fieldValue: '144/2', confidence: 0.98, isManuallyCorrected: false, pageNumber: 2 },
       { id: 'f-sun-2', documentId: 'doc-sun-land', fieldKey: 'area_acres', fieldLabel: 'Contiguous Land Area (Acres)', fieldValue: '4.85', confidence: 0.96, isManuallyCorrected: false, pageNumber: 3 },
       { id: 'f-sun-3', documentId: 'doc-sun-land', fieldKey: 'deed_number', fieldLabel: 'Registered Deed Number', fieldValue: 'REG-BLR-2015-8891', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
-      { id: 'f-sun-4', documentId: 'doc-sun-land', fieldKey: 'institution_name', fieldLabel: 'Purchaser / Grantee Name', fieldValue: 'Sunrise Education Trust', confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 }
+      { id: 'f-sun-4', documentId: 'doc-sun-land', fieldKey: 'grantee_name', fieldLabel: 'Purchaser / Grantee Name', fieldValue: 'Sunrise Education Trust', confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 }
     ],
     versions: [
       { id: 'v-sun-1', documentId: 'doc-sun-land', versionNumber: 1, fileName: 'Sunrise_Land_Sale_Deed.pdf', filePath: '/uploads/sunrise/land_deed.pdf', fileSize: 2450120, sha256Hash: 'a1f893e3d489b0128cf7e9124401bbcd87234918237461829374012938471a2b', uploadedAt: '2026-01-18T10:00:00Z', uploadedBy: 'Dr. Anand Kumar' }
@@ -684,7 +684,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       { id: 'f-nov-6', documentId: 'doc-nova-land', fieldKey: 'survey_number', fieldLabel: 'Survey Number', fieldValue: '289/1A', confidence: 0.98, isManuallyCorrected: false, pageNumber: 2 },
       { id: 'f-nov-7', documentId: 'doc-nova-land', fieldKey: 'area_acres', fieldLabel: 'Contiguous Land Area', fieldValue: '3.2', confidence: 0.96, isManuallyCorrected: false, pageNumber: 3 },
       { id: 'f-nov-8', documentId: 'doc-nova-land', fieldKey: 'deed_number', fieldLabel: 'Deed Number', fieldValue: 'PUNE-REG-2016-4410', confidence: 0.98, isManuallyCorrected: false, pageNumber: 1 },
-      { id: 'f-nov-9', documentId: 'doc-nova-land', fieldKey: 'institution_name', fieldLabel: 'Purchaser Name', fieldValue: 'Nova Horizon Charitable Trust', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 }
+      { id: 'f-nov-9', documentId: 'doc-nova-land', fieldKey: 'grantee_name', fieldLabel: 'Purchaser / Grantee Name', fieldValue: 'Nova Horizon Charitable Trust', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 }
     ],
     versions: [
       { id: 'v-nov-3', documentId: 'doc-nova-land', versionNumber: 1, fileName: 'Nova_Land_Sale_Deed.pdf', filePath: '/uploads/nova/land_deed.pdf', fileSize: 2100000, sha256Hash: '8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c', uploadedAt: '2026-01-20T14:40:00Z', uploadedBy: 'Rajesh Deshmukh' }
@@ -719,7 +719,8 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     },
     extractedFields: [
       { id: 'f-nov-10', documentId: 'doc-nova-affidavit', fieldKey: 'survey_number', fieldLabel: 'Survey Number', fieldValue: '289/1A', confidence: 0.98, isManuallyCorrected: false, pageNumber: 2 },
-      { id: 'f-nov-11', documentId: 'doc-nova-affidavit', fieldKey: 'institution_name', fieldLabel: 'Institution Name', fieldValue: 'Nova Horizon Charitable Trust', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
+      { id: 'f-nov-11', documentId: 'doc-nova-affidavit', fieldKey: 'institution_name', fieldLabel: 'Institution Name Declared', fieldValue: 'Nova Institute of Technology', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
+      { id: 'f-nov-11b', documentId: 'doc-nova-affidavit', fieldKey: 'trust_name', fieldLabel: 'Sponsoring Trust Name', fieldValue: 'Nova Horizon Charitable Trust', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
       { id: 'f-nov-12', documentId: 'doc-nova-affidavit', fieldKey: 'execution_date', fieldLabel: 'Execution Date', fieldValue: '2026-01-12', confidence: 0.97, isManuallyCorrected: false, pageNumber: 7 },
       { id: 'f-nov-13', documentId: 'doc-nova-affidavit', fieldKey: 'iqac_constituted', fieldLabel: 'IQAC Constituted', fieldValue: 'true', confidence: 0.98, isManuallyCorrected: false, pageNumber: 4 },
       { id: 'f-nov-14', documentId: 'doc-nova-affidavit', fieldKey: 'anti_ragging_committee_constituted', fieldLabel: 'Anti-Ragging Squad Active', fieldValue: 'true', confidence: 0.98, isManuallyCorrected: false, pageNumber: 5 },
@@ -936,7 +937,8 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       { id: 'f-apx-1', documentId: 'doc-apex-land-conflict', fieldKey: 'survey_number', fieldLabel: 'Survey Number', fieldValue: '289/1A', confidence: 0.98, isManuallyCorrected: false, pageNumber: 2 },
       { id: 'f-apx-2', documentId: 'doc-apex-land-conflict', fieldKey: 'area_acres', fieldLabel: 'Leased Acreage', fieldValue: '2.1', confidence: 0.95, isManuallyCorrected: false, pageNumber: 3 },
       { id: 'f-apx-3', documentId: 'doc-apex-land-conflict', fieldKey: 'deed_number', fieldLabel: 'Lease Deed Number', fieldValue: 'APEX-LEASE-2025-091', confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 },
-      { id: 'f-apx-4', documentId: 'doc-apex-land-conflict', fieldKey: 'lessor_name', fieldLabel: 'Lessor / Grantor', fieldValue: 'Apex Technical Society', confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 }
+      { id: 'f-apx-4', documentId: 'doc-apex-land-conflict', fieldKey: 'lessor_name', fieldLabel: 'Lessor / Grantor', fieldValue: 'Apex Technical Society', confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 },
+      { id: 'f-apx-4b', documentId: 'doc-apex-land-conflict', fieldKey: 'grantee_name', fieldLabel: 'Purchaser / Grantee / Lessee Name', fieldValue: 'Apex Technical Society', confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 }
     ],
     versions: [
       { id: 'v-apx-1', documentId: 'doc-apex-land-conflict', versionNumber: 1, fileName: 'Apex_Land_Lease_Deed.pdf', filePath: '/uploads/apex/lease_deed.pdf', fileSize: 1840000, sha256Hash: 'e492019481029384019283049182039481029384019283049182039481029384', uploadedAt: '2026-01-22T09:00:00Z', uploadedBy: 'Sanjay Deshmukh' }
@@ -1044,7 +1046,8 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     },
     extractedFields: [
       { id: 'f-apx-9', documentId: 'doc-apex-affidavit', fieldKey: 'survey_number', fieldLabel: 'Survey Number', fieldValue: '289/1A', confidence: 0.98, isManuallyCorrected: false, pageNumber: 2 },
-      { id: 'f-apx-10', documentId: 'doc-apex-affidavit', fieldKey: 'institution_name', fieldLabel: 'Institution Name', fieldValue: 'Apex Technical Society', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
+      { id: 'f-apx-10', documentId: 'doc-apex-affidavit', fieldKey: 'institution_name', fieldLabel: 'Institution Name Declared', fieldValue: 'Apex Institute of Technology & Management', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
+      { id: 'f-apx-10b', documentId: 'doc-apex-affidavit', fieldKey: 'trust_name', fieldLabel: 'Sponsoring Society Name', fieldValue: 'Apex Technical Society', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
       { id: 'f-apx-11', documentId: 'doc-apex-affidavit', fieldKey: 'declared_land_acres', fieldLabel: 'Declared Campus Land', fieldValue: '2.1', confidence: 0.97, isManuallyCorrected: false, pageNumber: 2 },
       { id: 'f-apx-12', documentId: 'doc-apex-affidavit', fieldKey: 'execution_date', fieldLabel: 'Execution Date', fieldValue: '2026-01-15', confidence: 0.96, isManuallyCorrected: false, pageNumber: 8 },
       { id: 'f-apx-13', documentId: 'doc-apex-affidavit', fieldKey: 'joint_fdr_deposited', fieldLabel: 'Joint FDR Corpus Deposited', fieldValue: 'true', confidence: 0.98, isManuallyCorrected: false, pageNumber: 5 }
@@ -1081,7 +1084,8 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       anomalyIndicators: []
     },
     extractedFields: [
-      { id: 'f-apx-14', documentId: 'doc-apex-trust', fieldKey: 'registration_number', fieldLabel: 'Society Registration No', fieldValue: 'PUNE-SOC-1029/2024', confidence: 0.98, isManuallyCorrected: false, pageNumber: 1 }
+      { id: 'f-apx-14', documentId: 'doc-apex-trust', fieldKey: 'registration_number', fieldLabel: 'Society Registration No', fieldValue: 'PUNE-SOC-1029/2024', confidence: 0.98, isManuallyCorrected: false, pageNumber: 1 },
+      { id: 'f-apx-15', documentId: 'doc-apex-trust', fieldKey: 'trust_name', fieldLabel: 'Society Name', fieldValue: 'Apex Technical Society', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 }
     ],
     versions: [
       { id: 'v-apx-5', documentId: 'doc-apex-trust', versionNumber: 1, fileName: 'Apex_Trust_Registration_Deed.pdf', filePath: '/uploads/apex/trust_deed.pdf', fileSize: 1450000, sha256Hash: 'b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1', uploadedAt: '2026-01-22T09:40:00Z', uploadedBy: 'Sanjay Deshmukh' }
@@ -1407,7 +1411,7 @@ export class DataStore {
   static getApplications(): Application[] {
     return this.applications.map(app => {
       const docs = this.getDocuments(app.id);
-      const { breakdown } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents);
+      const { breakdown } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions);
       const riskData = CollusionRadarEngine.getRadarForInstitution(app.institutionName);
       const collusionRiskScore = riskData.overallCollusionRiskScore;
 
@@ -1433,7 +1437,7 @@ export class DataStore {
     const app = this.applications.find(a => a.id === id);
     if (!app) return undefined;
     const docs = this.getDocuments(app.id);
-    const { breakdown } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents);
+    const { breakdown } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions);
     const riskData = CollusionRadarEngine.getRadarForInstitution(app.institutionName);
     const collusionRiskScore = riskData.overallCollusionRiskScore;
 
@@ -1559,7 +1563,7 @@ export class DataStore {
 
     for (const app of targetApps) {
       const docs = this.getDocuments(app.id);
-      const { ruleFindings } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents);
+      const { ruleFindings } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions);
 
       for (const f of ruleFindings) {
         // Overlay officer review action state if present

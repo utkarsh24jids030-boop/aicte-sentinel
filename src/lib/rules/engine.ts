@@ -2,7 +2,7 @@
 // Dynamic evaluation of institutional applications against AICTE statutory regulations
 // Problem Statement SIH26261 - Smart India Hackathon 2026
 
-import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Finding, DocumentType } from '@/types';
+import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Finding, DocumentType, Institution } from '@/types';
 import rulePacks from './packs.json';
 import { getAsOfDate } from '@/lib/config/env';
 
@@ -43,11 +43,13 @@ export class RulesEngine {
     app: Application,
     documents: DocumentRecord[],
     allApps?: Application[],
-    allDocs?: DocumentRecord[]
+    allDocs?: DocumentRecord[],
+    institutions?: Institution[]
   ): { breakdown: ReadinessBreakdown; ruleFindings: Finding[] } {
     const applicableRules = this.getRulesForApplicationType(app.type);
     const deficiencies: ReadinessBreakdown['deficiencies'] = [];
     const findings: Finding[] = [];
+    const institution = institutions?.find(i => i.id === app.institutionId);
 
     let criticalCount = 0;
     let highCount = 0;
@@ -57,7 +59,7 @@ export class RulesEngine {
 
     // 1. STATUTORY COMPLIANCE RULES EVALUATION
     for (const rule of applicableRules) {
-      const evaluationResult = this.evaluateSingleRule(rule, app, documents);
+      const evaluationResult = this.evaluateSingleRule(rule, app, documents, institution);
 
       if (!evaluationResult.passed) {
         if (rule.severity === 'Critical') criticalCount++;
@@ -266,7 +268,8 @@ export class RulesEngine {
   private static evaluateSingleRule(
     rule: ComplianceRule,
     app: Application,
-    documents: DocumentRecord[]
+    documents: DocumentRecord[],
+    institution?: Institution
   ): { passed: boolean; failureMessage?: string; relatedDocType?: DocumentType; relatedDocId?: string } {
     const findDoc = (type: string) => documents.find(d => d.documentType === type);
     const getField = (docType: string, key: string) => {
@@ -479,19 +482,56 @@ export class RulesEngine {
       }
 
       case 'CONSIST-NAME-001': {
-        const land = findDoc('Land Deed');
         const aff = findDoc('Affidavit');
-        if (land && aff) {
-          const n1 = getField('Land Deed', 'institution_name');
-          const n2 = getField('Affidavit', 'institution_name');
-          if (n1 && n2 && n1.trim().toLowerCase() !== n2.trim().toLowerCase()) {
+        const land = findDoc('Land Deed');
+        const trustDoc = findDoc('Trust Deed');
+
+        // 1. Institution Name Check: compare institution name strictly to institution name
+        if (aff) {
+          const affInst = getField('Affidavit', 'institution_name');
+          if (affInst && affInst.trim().toLowerCase() !== app.institutionName.trim().toLowerCase()) {
             return {
               passed: false,
-              failureMessage: `Name divergence: Land Deed has "${n1}" while Affidavit declares "${n2}".`,
-              relatedDocId: land.id
+              failureMessage: `Institution name mismatch: Affidavit declares "${affInst}" but application record declares "${app.institutionName}".`,
+              relatedDocId: aff.id,
+              relatedDocType: 'Affidavit'
             };
           }
         }
+
+        // 2. Trust Name Check: compare trust/grantee strictly to trust name; never compare institution name with a trust or grantee name
+        const trustTarget = institution?.trustName;
+        const deedGrantee = land ? getField('Land Deed', 'grantee_name') : undefined;
+        const trustDocName = trustDoc ? getField('Trust Deed', 'trust_name') : undefined;
+
+        if (trustTarget) {
+          if (deedGrantee && deedGrantee.trim().toLowerCase() !== trustTarget.trim().toLowerCase()) {
+            return {
+              passed: false,
+              failureMessage: `Sponsoring Trust name divergence: Land Deed grantee is "${deedGrantee}" but registered Trust name is "${trustTarget}".`,
+              relatedDocId: land?.id,
+              relatedDocType: 'Land Deed'
+            };
+          }
+          if (trustDocName && trustDocName.trim().toLowerCase() !== trustTarget.trim().toLowerCase()) {
+            return {
+              passed: false,
+              failureMessage: `Sponsoring Trust name divergence: Trust Deed declares "${trustDocName}" but registered Trust name is "${trustTarget}".`,
+              relatedDocId: trustDoc?.id,
+              relatedDocType: 'Trust Deed'
+            };
+          }
+        } else if (deedGrantee && trustDocName) {
+          if (deedGrantee.trim().toLowerCase() !== trustDocName.trim().toLowerCase()) {
+            return {
+              passed: false,
+              failureMessage: `Sponsoring Trust name divergence: Land Deed grantee is "${deedGrantee}" but Trust Deed declares "${trustDocName}".`,
+              relatedDocId: land?.id,
+              relatedDocType: 'Land Deed'
+            };
+          }
+        }
+
         return { passed: true };
       }
 

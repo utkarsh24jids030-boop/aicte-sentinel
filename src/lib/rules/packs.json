@@ -246,9 +246,9 @@
     "category": "Consistency",
     "applies_to": ["EoA", "New_Institution", "Intake_Increase", "Site_Change"],
     "severity": "High",
-    "logic": "extracted('Affidavit', 'institution_name') == extracted('Land Deed', 'institution_name')",
-    "evidence_fields": ["affidavit.institution_name", "land_deed.institution_name", "trust_deed.institution_name"],
-    "failure_message": "Mismatch detected in institution or sponsoring trust name across legal deeds and statutory affidavit.",
+    "logic": "extracted('Affidavit', 'institution_name') == application.institution_name && (extracted('Land Deed', 'grantee_name') == null || extracted('Land Deed', 'grantee_name') == institution.trust_name)",
+    "evidence_fields": ["affidavit.institution_name", "land_deed.grantee_name", "trust_deed.trust_name", "application.institution_name", "institution.trust_name"],
+    "failure_message": "Mismatch detected between declared institution name or sponsoring body/grantee name across statutory records.",
     "recommended_action": "Submit registered gazette notification or official resolution rectifying name discrepancy."
   },
   {

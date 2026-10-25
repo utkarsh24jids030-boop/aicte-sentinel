@@ -46,7 +46,7 @@ export async function POST(request: Request) {
         { id: `f-${Date.now()}-1`, documentId: docId, fieldKey: 'survey_number', fieldLabel: 'Survey / Khasra Number', fieldValue: '144/2', confidence: 0.97, isManuallyCorrected: false, pageNumber: 2 },
         { id: `f-${Date.now()}-2`, documentId: docId, fieldKey: 'area_acres', fieldLabel: 'Contiguous Land Area (Acres)', fieldValue: '4.85', confidence: 0.95, isManuallyCorrected: false, pageNumber: 3 },
         { id: `f-${Date.now()}-3`, documentId: docId, fieldKey: 'deed_number', fieldLabel: 'Registered Deed Number', fieldValue: 'DEED-2026-9912', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
-        { id: `f-${Date.now()}-4`, documentId: docId, fieldKey: 'institution_name', fieldLabel: 'Institution Name', fieldValue: app.institutionName, confidence: 0.98, isManuallyCorrected: false, pageNumber: 1 }
+        { id: `f-${Date.now()}-4`, documentId: docId, fieldKey: 'grantee_name', fieldLabel: 'Purchaser / Grantee Name', fieldValue: 'Sunrise Education Trust', confidence: 0.98, isManuallyCorrected: false, pageNumber: 1 }
       );
     } else if (documentType === 'Fire Safety Certificate') {
       extractedFields.push(

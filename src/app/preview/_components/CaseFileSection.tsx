@@ -75,6 +75,26 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
               </div>
             </div>
 
+            {/* Documented Statutory Readiness Formula Banner (Item 3) */}
+            <div className="p-3.5 bg-blue-50/70 border border-blue-200 rounded-xl text-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div>
+                <div className="font-bold text-blue-950 flex flex-wrap items-center gap-1.5">
+                  <span>Statutory Readiness Formula:</span>
+                  <span className="font-mono bg-white px-2 py-0.5 rounded border border-blue-300 text-blue-900 font-bold text-[11px]">
+                    Score = max(0, 100 - (25×Crit + 15×High + 8×Med + 3×Low))
+                  </span>
+                </div>
+                <p className="text-[11px] text-blue-800 mt-1">
+                  Active Deductions: {breakdown.criticalDeficiencies} Critical (-{breakdown.criticalDeficiencies * 25}), {breakdown.highDeficiencies} High (-{breakdown.highDeficiencies * 15}), {breakdown.mediumDeficiencies} Medium (-{breakdown.mediumDeficiencies * 8}), {breakdown.lowDeficiencies} Low (-{breakdown.lowDeficiencies * 3})
+                </p>
+              </div>
+              <div className="flex items-center gap-2 font-mono text-[11px] whitespace-nowrap self-start md:self-auto">
+                <span className="px-2 py-0.5 bg-white rounded border border-slate-200 text-slate-700">
+                  {breakdown.passedChecks}/{breakdown.totalChecks} Checks Passed
+                </span>
+              </div>
+            </div>
+
             {/* Application Overview Definition List */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs">
               <div>

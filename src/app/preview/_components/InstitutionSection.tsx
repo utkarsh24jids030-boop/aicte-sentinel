@@ -96,6 +96,19 @@ export default function InstitutionSection() {
             </div>
           </div>
         </div>
+
+        {/* Formula Display */}
+        <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-blue-200">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-white">Statutory Formula:</span>
+            <span className="font-mono bg-white/20 px-2 py-0.5 rounded text-amber-300 font-bold text-[11px]">
+              Score = max(0, 100 - (25×Crit + 15×High + 8×Med + 3×Low))
+            </span>
+          </div>
+          <span className="text-[11px] text-blue-300">
+            Deductions: {breakdown.criticalDeficiencies * 25 + breakdown.highDeficiencies * 15 + breakdown.mediumDeficiencies * 8 + breakdown.lowDeficiencies * 3} pts total penalty
+          </span>
+        </div>
       </div>
 
       {/* Application Wizard Steps */}

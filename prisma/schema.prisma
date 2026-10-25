@@ -1,0 +1,388 @@
+// AICTE Sentinel - Prisma Database Schema
+// PostgreSQL compatible schema for SIH 2026 Problem Statement SIH26261
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  INSTITUTION
+  OFFICER
+  EVC_INSPECTOR
+  ADMIN
+  AUDITOR
+}
+
+enum ApplicationType {
+  EoA
+  New_Institution
+  Intake_Increase
+  Site_Change
+  Closure
+}
+
+enum ApplicationStatus {
+  Draft
+  Submitted
+  Under_Scrutiny
+  Deficiency_Communicated
+  Resubmitted
+  EVC_Inspection_Recommended
+  Approved
+  Rejected
+}
+
+enum RiskTier {
+  Low
+  Medium
+  High
+  Critical
+}
+
+enum DocumentType {
+  Land_Deed
+  Affidavit
+  Fire_Safety_Certificate
+  Occupancy_Certificate
+  Structural_Stability_Certificate
+  Faculty_Appointment_Letter
+  Faculty_Qualification_Certificate
+  Trust_Deed
+  NOC
+  Prior_EoA
+  Building_Plan
+  Audited_Financial_Statement
+}
+
+enum VerificationStatus {
+  Verified
+  Mismatch_Detected
+  Expired
+  Verification_Pending
+  Source_Unavailable
+  Manual_Review_Required
+  Not_Verified
+}
+
+enum FindingSeverity {
+  Critical
+  High
+  Medium
+  Low
+}
+
+enum FindingStatus {
+  Open
+  Confirmed_by_Officer
+  Dismissed_with_Justification
+  Clarification_Requested
+  Escalated_for_EVC
+}
+
+enum FindingCategory {
+  FORENSIC_ANOMALY
+  COMPLIANCE_BREACH
+  CROSS_INSTITUTION_COLLUSION
+  VERIFICATION_MISMATCH
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  name          String
+  passwordHash  String    @default("$2a$12$eQ6B9rY9WkZpZ1K1pL6Lau...")
+  role          UserRole  @default(INSTITUTION)
+  designation   String?
+  institutionId String?
+  avatarUrl     String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  institution   Institution? @relation(fields: [institutionId], references: [id])
+  auditEvents   AuditEvent[]
+}
+
+model Institution {
+  id               String        @id @default(uuid())
+  aicteId          String        @unique
+  name             String
+  trustName        String
+  state            String
+  district         String
+  address          String
+  landSurveyNumber String
+  landAreaAcres    Float
+  contactEmail     String
+  contactPhone     String
+  establishedYear  Int
+  status           String        @default("ACTIVE")
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  users            User[]
+  applications     Application[]
+  documents        Document[]
+}
+
+model Application {
+  id                 String             @id @default(uuid())
+  applicationNumber  String             @unique
+  institutionId      String
+  type               ApplicationType
+  academicYear       String             @default("2026-2027")
+  status             ApplicationStatus  @default(Draft)
+  readinessScore     Int                @default(0)
+  collusionRiskScore Int                @default(0)
+  riskTier           RiskTier           @default(Low)
+  programmes         String             // JSON string array
+  currentIntake      Int                @default(0)
+  proposedIntake     Int                @default(0)
+  submittedAt        DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  institution        Institution        @relation(fields: [institutionId], references: [id])
+  versions           ApplicationVersion[]
+  documents          Document[]
+  findings           Finding[]
+  officerActions     OfficerAction[]
+  inspectionTasks    InspectionTask[]
+}
+
+model ApplicationVersion {
+  id             String       @id @default(uuid())
+  applicationId  String
+  versionNumber  Int
+  snapshotData   String       // JSON snapshot of application and documents
+  changeSummary  String?
+  createdBy      String
+  createdAt      DateTime     @default(now())
+
+  application    Application  @relation(fields: [applicationId], references: [id])
+}
+
+model Document {
+  id                 String              @id @default(uuid())
+  applicationId      String
+  institutionId      String
+  documentType       DocumentType
+  title              String
+  fileName           String
+  filePath           String
+  fileSize           Int
+  mimeType           String
+  sha256Hash         String              @unique
+  verificationStatus VerificationStatus  @default(Not_Verified)
+  verificationSource String?
+  forensicMetadata   String              // JSON serialized forensic indicators
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  application        Application         @relation(fields: [applicationId], references: [id])
+  institution        Institution         @relation(fields: [institutionId], references: [id])
+  versions           DocumentVersion[]
+  extractedFields    ExtractedField[]
+  findings           Finding[]
+  verificationAttempts VerificationAttempt[]
+  sourceResponses    SourceResponse[]
+}
+
+model DocumentVersion {
+  id            String    @id @default(uuid())
+  documentId    String
+  versionNumber Int
+  fileName      String
+  filePath      String
+  fileSize      Int
+  sha256Hash    String
+  uploadedAt    DateTime  @default(now())
+  uploadedBy    String
+  changeNote    String?
+
+  document      Document  @relation(fields: [documentId], references: [id])
+}
+
+model ExtractedField {
+  id                  String    @id @default(uuid())
+  documentId          String
+  fieldKey            String
+  fieldLabel          String
+  fieldValue          String
+  confidence          Float
+  isManuallyCorrected Boolean   @default(false)
+  originalValue       String?
+  pageNumber          Int?
+  boundingBox         String?   // JSON {x, y, w, h}
+  createdAt           DateTime  @default(now())
+
+  document            Document  @relation(fields: [documentId], references: [id])
+}
+
+model Rule {
+  id                     String          @id @default(uuid())
+  ruleId                 String          @unique
+  version                String          @default("2026.3")
+  name                   String
+  category               String
+  appliesTo              String          // JSON array of ApplicationType
+  severity               FindingSeverity
+  logic                  String
+  evidenceFields         String          // JSON array of field paths
+  failureMessage         String
+  recommendedAction      String
+  isActive               Boolean         @default(true)
+  createdAt              DateTime        @default(now())
+
+  ruleVersions           RuleVersion[]
+  findings               Finding[]
+}
+
+model RuleVersion {
+  id             String    @id @default(uuid())
+  ruleId         String
+  versionNumber  String
+  ruleDefinition String    // JSON of full rule definition
+  changeReason   String?
+  effectiveDate  DateTime  @default(now())
+
+  rule           Rule      @relation(fields: [ruleId], references: [id])
+}
+
+model Finding {
+  id                String          @id @default(uuid())
+  applicationId     String
+  documentId        String?
+  ruleId            String?
+  category          FindingCategory
+  severity          FindingSeverity
+  confidence        Float
+  title             String
+  explanation       String
+  evidenceLocator   String
+  recommendedAction String
+  status            FindingStatus   @default(Open)
+  officerNotes      String?
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  createdAt         DateTime        @default(now())
+
+  application       Application     @relation(fields: [applicationId], references: [id])
+  document          Document?       @relation(fields: [documentId], references: [id])
+  rule              Rule?           @relation(fields: [ruleId], references: [id])
+}
+
+model VerificationAttempt {
+  id               String    @id @default(uuid())
+  documentId       String
+  adapterName      String
+  attemptTimestamp DateTime  @default(now())
+  requestPayload   String    // JSON
+  responseStatus   String
+  rawResponse      String    // JSON
+
+  document         Document  @relation(fields: [documentId], references: [id])
+}
+
+model SourceResponse {
+  id           String    @id @default(uuid())
+  documentId   String
+  sourceName   String
+  sourceStatus String
+  details      String    // JSON
+  timestamp    DateTime  @default(now())
+
+  document     Document  @relation(fields: [documentId], references: [id])
+}
+
+model OfficerAction {
+  id            String    @id @default(uuid())
+  applicationId String
+  officerId     String
+  officerName   String
+  actionType    String
+  notes         String
+  findingId     String?
+  timestamp     DateTime  @default(now())
+
+  application   Application @relation(fields: [applicationId], references: [id])
+}
+
+model InspectionTask {
+  id                  String                  @id @default(uuid())
+  applicationId       String
+  institutionId       String
+  inspectorId         String
+  inspectorName       String
+  status              String                  @default("Assigned")
+  scheduledDate       DateTime
+  siteAddress         String
+  highRiskClaimsCount Int                     @default(0)
+  unresolvedGapsCount Int                     @default(0)
+  briefSummary        String
+  createdAt           DateTime                @default(now())
+
+  application         Application             @relation(fields: [applicationId], references: [id])
+  observations        InspectionObservation[]
+}
+
+model InspectionObservation {
+  id                         String         @id @default(uuid())
+  taskId                     String
+  category                   String
+  claimText                  String
+  physicalVerificationStatus String
+  observationNotes           String
+  photoUrls                  String         // JSON array
+  latitude                   Float?
+  longitude                  Float?
+  capturedAt                 DateTime       @default(now())
+
+  task                       InspectionTask @relation(fields: [taskId], references: [id])
+}
+
+model RiskGraphNode {
+  id         String   @id @default(uuid())
+  nodeType   String
+  entityId   String   @unique
+  label      String
+  subLabel   String?
+  riskLevel  String
+  metadata   String   // JSON
+  createdAt  DateTime @default(now())
+}
+
+model RiskGraphEdge {
+  id                   String   @id @default(uuid())
+  sourceNodeId         String
+  targetNodeId         String
+  relationType         String
+  label                String
+  riskLevel            String
+  evidenceDetails      String
+  institutionsInvolved String   // JSON array
+  createdAt            DateTime @default(now())
+}
+
+model AuditEvent {
+  id            String    @id @default(uuid())
+  timestamp     DateTime  @default(now())
+  actorId       String
+  actorName     String
+  actorRole     UserRole
+  action        String
+  entityType    String
+  entityId      String
+  beforeSummary String?
+  afterSummary  String?
+  ipAddress     String?
+  userAgent     String?
+  prevHash      String
+  hash          String
+
+  user          User?     @relation(fields: [actorId], references: [id])
+}

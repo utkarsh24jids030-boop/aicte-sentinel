@@ -73,7 +73,7 @@ export default function InstitutionSection() {
               {breakdown.score} / {breakdown.maxScore} Points
             </h3>
             <p className="text-xs text-blue-200 mt-1">
-              Passed {breakdown.passedChecks} of {breakdown.totalChecks} statutory checks adhering to the 2026 Approval Process Handbook.
+              Passed {breakdown.passedChecks} of {breakdown.totalChecks} statutory checks adhering to statutory approval norms [SOURCE: TO BE VERIFIED].
             </p>
           </div>
 

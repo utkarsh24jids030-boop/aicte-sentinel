@@ -157,7 +157,7 @@ export class RulesEngine {
               title: 'Duplicate Occupancy Certificate Reused from Prior Approval',
               explanation: `Municipal Occupancy Certificate OCC-PUNE-2021-DUP-01 is an exact SHA-256 duplicate of a certificate previously issued to Western Horizon School in 2021.`,
               evidenceLocator: `SHA256: ${doc.sha256Hash}`,
-              recommendedAction: 'Issue immediate Show-Cause notice under AICTE Approval Process Handbook Regulations [SOURCE: TO BE VERIFIED].',
+              recommendedAction: 'Issue immediate Show-Cause notice under statutory regulations [SOURCE: TO BE VERIFIED].',
               status: 'Open',
               createdAt: doc.createdAt
             });
@@ -444,7 +444,7 @@ export class RulesEngine {
         if (app.type === 'Intake_Increase' && app.proposedIntake > app.currentIntake * 1.5) {
           return {
             passed: false,
-            failureMessage: `Intake hike from ${app.currentIntake} to ${app.proposedIntake} (>50%) requires NBA accreditation tier-1 compliance.`
+            failureMessage: `Intake hike from ${app.currentIntake} to ${app.proposedIntake} requires valid programme accreditation compliance [SOURCE: TO BE VERIFIED].`
           };
         }
         return { passed: true };

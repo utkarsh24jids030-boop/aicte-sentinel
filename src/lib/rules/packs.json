@@ -7,9 +7,10 @@
     "applies_to": ["EoA", "New_Institution", "Intake_Increase", "Site_Change"],
     "severity": "Critical",
     "logic": "has_document('Land Deed') && extracted('Land Deed', 'deed_number') != null",
-    "evidence_fields": ["land_deed.deed_number", "land_deed.registration_date", "land_deed.lessor_name"],
-    "failure_message": "Registered land ownership or registered lease deed (minimum 30 years) is missing or unverified.",
-    "recommended_action": "Upload officially registered deed of land ownership or continuous 30-year lease deed registered with Sub-Registrar."
+    "evidence_fields": ["land_deed.deed_number", "land_deed.registration_date", "land_deed.grantee_name"],
+    "failure_message": "Registered land ownership or registered continuous lease deed is missing or unverified [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Upload officially registered deed of land ownership or continuous registered lease deed [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "LAND-AREA-002",
@@ -21,7 +22,8 @@
     "logic": "extracted_number('Land Deed', 'area_acres') >= min_land_area(institution.location_type)",
     "evidence_fields": ["land_deed.area_acres", "affidavit.declared_land_acres", "institution.location_type"],
     "failure_message": "Declared contiguous land area does not satisfy the statutory minimum requirement based on location classification [SOURCE: TO BE VERIFIED].",
-    "recommended_action": "Submit rectified land revenue demarcation report showing requisite contiguous acreage."
+    "recommended_action": "Submit certified land revenue demarcation report showing requisite contiguous acreage [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "LAND-SURVEY-003",
@@ -33,7 +35,8 @@
     "logic": "extracted('Land Deed', 'survey_number') == extracted('Affidavit', 'survey_number')",
     "evidence_fields": ["land_deed.survey_number", "affidavit.survey_number", "building_plan.survey_number"],
     "failure_message": "Survey number declared in Affidavit differs from survey number in Land Deed.",
-    "recommended_action": "Ensure uniform survey/khasra numbers across revenue records, affidavit, and municipal approvals."
+    "recommended_action": "Ensure uniform survey / khasra numbers across revenue records, affidavit, and municipal approvals.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "BLDG-OCC-001",
@@ -45,7 +48,8 @@
     "logic": "has_document('Occupancy Certificate') && extracted('Occupancy Certificate', 'issuing_authority') != null",
     "evidence_fields": ["occupancy_certificate.certificate_number", "occupancy_certificate.issuing_authority"],
     "failure_message": "Permanent Occupancy / Completion Certificate issued by competent municipal authority is missing.",
-    "recommended_action": "Furnish valid Occupancy / Completion Certificate from Town Planning / Municipal Authority."
+    "recommended_action": "Furnish valid Occupancy / Completion Certificate from Town Planning / Municipal Authority.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "BLDG-STRUCT-002",
@@ -56,8 +60,9 @@
     "severity": "High",
     "logic": "has_document('Structural Stability Certificate') && is_recent('Structural Stability Certificate', 'issue_date', 365)",
     "evidence_fields": ["structural_stability.engineer_registration_no", "structural_stability.issue_date"],
-    "failure_message": "Structural Stability Certificate is missing or exceeds allowable renewal period.",
-    "recommended_action": "Submit structural safety assessment signed and stamped by an empanelled structural engineer."
+    "failure_message": "Structural Stability Certificate is missing or exceeds allowable renewal period [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Submit structural safety assessment signed and stamped by an empanelled structural engineer.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "BLDG-CARPET-003",
@@ -68,8 +73,9 @@
     "severity": "High",
     "logic": "extracted_number('Building Plan', 'carpet_area_sqm') >= (proposed_intake * 10.5)",
     "evidence_fields": ["building_plan.carpet_area_sqm", "application.proposed_intake"],
-    "failure_message": "Total instructional and administrative carpet area is inadequate for declared student intake.",
-    "recommended_action": "Review architectural layout and submit revised built-up area schedule meeting AICTE Norms [SOURCE: TO BE VERIFIED]."
+    "failure_message": "Total instructional and administrative carpet area is inadequate for declared student intake [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Review architectural layout and submit revised built-up area schedule meeting statutory norms [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "FIRE-NOC-001",
@@ -81,7 +87,8 @@
     "logic": "has_document('Fire Safety Certificate') && !is_expired('Fire Safety Certificate')",
     "evidence_fields": ["fire_safety.certificate_number", "fire_safety.expiry_date", "fire_safety.issuing_station"],
     "failure_message": "Fire Safety Certificate is missing, unverified, or has expired beyond grace period.",
-    "recommended_action": "Obtain and upload renewed Fire NOC issued by Chief Fire Officer / District Fire Authority."
+    "recommended_action": "Obtain and upload renewed Fire NOC issued by Chief Fire Officer / District Fire Authority.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "FACULTY-COUNT-001",
@@ -93,7 +100,8 @@
     "logic": "faculty_count >= required_faculty(application.programmes, approved_intake)",
     "evidence_fields": ["faculty_summary.total_faculty", "application.programmes", "application.current_intake", "application.proposed_intake"],
     "failure_message": "Total qualified core faculty strength is below statutory Student-Faculty Ratio for approved programme level and student basis [SOURCE: TO BE VERIFIED].",
-    "recommended_action": "Complete recruitment of designated Professors, Associate Professors, and Assistant Professors."
+    "recommended_action": "Complete recruitment of designated Professors, Associate Professors, and Assistant Professors.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "FACULTY-APPT-002",
@@ -105,7 +113,8 @@
     "logic": "has_document('Faculty Appointment Letter') && extracted('Faculty Appointment Letter', 'appointment_date') != null",
     "evidence_fields": ["faculty_appointment.selection_committee_date", "faculty_appointment.pay_scale"],
     "failure_message": "Appointment letters or selection committee approval resolutions missing for declared regular faculty.",
-    "recommended_action": "Upload 7th CPC appointment orders and university ratification approvals."
+    "recommended_action": "Upload statutory appointment orders and university ratification approvals [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "FACULTY-QUAL-003",
@@ -117,7 +126,8 @@
     "logic": "has_document('Faculty Qualification Certificate') && verification_status('Faculty Qualification Certificate') == 'Verified'",
     "evidence_fields": ["faculty_qualification.degree_certificate_no", "faculty_qualification.university"],
     "failure_message": "Principal / HoD highest degree certificate could not be authenticated via University / National Academic Depository.",
-    "recommended_action": "Provide verified NAD/DigiLocker document URI for faculty credentials."
+    "recommended_action": "Provide verified NAD/DigiLocker document URI for faculty credentials.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "GOV-IQAC-001",
@@ -129,7 +139,8 @@
     "logic": "extracted_bool('Affidavit', 'iqac_constituted') == true",
     "evidence_fields": ["affidavit.iqac_order_no", "affidavit.iqac_last_meeting_date"],
     "failure_message": "Mandatory IQAC establishment declaration and committee composition record absent.",
-    "recommended_action": "Attach official committee notification and minutes of previous IQAC meeting."
+    "recommended_action": "Attach official committee notification and minutes of previous IQAC meeting.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "GOV-RAGGING-002",
@@ -141,7 +152,8 @@
     "logic": "extracted_bool('Affidavit', 'anti_ragging_committee_constituted') == true",
     "evidence_fields": ["affidavit.anti_ragging_committee_notification", "affidavit.toll_free_helpline"],
     "failure_message": "Mandatory Anti-Ragging Committee, Squad, and 24x7 helpline declarations missing.",
-    "recommended_action": "Furnish institutional anti-ragging squad notification with contact coordinates."
+    "recommended_action": "Furnish institutional anti-ragging squad notification with contact coordinates.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "GOV-GRIEV-003",
@@ -153,7 +165,8 @@
     "logic": "extracted_bool('Affidavit', 'sgrc_ombudsperson_appointed') == true",
     "evidence_fields": ["affidavit.sgrc_notification_date", "affidavit.ombudsperson_name"],
     "failure_message": "Affidavit lacks declaration of Student Grievance Redressal Committee or university-appointed Ombudsperson.",
-    "recommended_action": "Submit SGRC committee constitution notification and Ombudsperson details."
+    "recommended_action": "Submit SGRC committee constitution notification and Ombudsperson details.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "FIN-AUDIT-001",
@@ -165,7 +178,8 @@
     "logic": "has_document('Audited Financial Statement') && extracted('Audited Financial Statement', 'ca_membership_no') != null",
     "evidence_fields": ["audited_financials.udin_number", "audited_financials.financial_year"],
     "failure_message": "Audited balance sheet with verified UDIN (Unique Document Identification Number) is absent.",
-    "recommended_action": "Upload previous financial year Balance Sheet and Income & Expenditure account with ICAI UDIN."
+    "recommended_action": "Upload previous financial year Balance Sheet and Income & Expenditure account with ICAI UDIN.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "FIN-FDR-002",
@@ -176,20 +190,22 @@
     "severity": "Critical",
     "logic": "extracted_bool('Affidavit', 'joint_fdr_deposited') == true",
     "evidence_fields": ["affidavit.fdr_number", "affidavit.fdr_amount_inr", "affidavit.fdr_bank_branch"],
-    "failure_message": "Joint FDR with Regional Officer, AICTE for corpus endowment has not been deposited.",
-    "recommended_action": "Submit bank confirmation letter of Joint FDR for the required amount."
+    "failure_message": "Joint FDR with Regional Officer for corpus endowment has not been deposited [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Submit bank confirmation letter of Joint FDR for the required amount [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "ACAD-INTAKE-001",
     "version": "2026.3",
-    "name": "Programme Intake Consistency and Accreditation Eligibility",
+    "name": "Programme Intake Expansion Accreditation Eligibility",
     "category": "Academic",
     "applies_to": ["Intake_Increase"],
     "severity": "High",
-    "logic": "proposed_intake <= (current_intake * 1.5) && extracted_bool('Affidavit', 'nba_accreditation_valid') == true",
-    "evidence_fields": ["application.current_intake", "application.proposed_intake", "affidavit.nba_accredited_programmes"],
-    "failure_message": "Intake expansion exceeding 50% requested without valid NBA accreditation in core programmes.",
-    "recommended_action": "Furnish NBA accreditation certificate (minimum 3 years validity) for programmes seeking intake expansion."
+    "logic": "proposed_intake <= (current_intake * 1.5) && extracted_bool('Affidavit', 'accreditation_valid') == true",
+    "evidence_fields": ["application.current_intake", "application.proposed_intake", "affidavit.accredited_programmes"],
+    "failure_message": "Substantial intake expansion requested without required accreditation in core programmes [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Furnish programme accreditation certificate or statutory exemption for programmes seeking intake expansion [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "ACAD-PRIOR-002",
@@ -200,8 +216,9 @@
     "severity": "High",
     "logic": "has_document('Prior EoA') && extracted('Prior EoA', 'academic_year') == '2025-2026'",
     "evidence_fields": ["prior_eoa.approval_letter_number", "prior_eoa.academic_year"],
-    "failure_message": "Preceding academic year AICTE Extension of Approval (EoA) letter is not linked.",
-    "recommended_action": "Attach official AICTE approval order issued for academic session 2025-2026."
+    "failure_message": "Preceding academic year AICTE Extension of Approval (EoA) letter is not linked [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Attach official approval order issued for preceding academic session [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "DOC-AFFIDAVIT-001",
@@ -212,8 +229,9 @@
     "severity": "Critical",
     "logic": "has_document('Affidavit') && extracted('Affidavit', 'notary_registration_no') != null",
     "evidence_fields": ["affidavit.stamp_paper_value", "affidavit.notary_registration_no", "affidavit.execution_date"],
-    "failure_message": "Mandatory composite affidavit in AICTE prescribed format on Rs. 100/- non-judicial stamp paper is missing or un-notarized.",
-    "recommended_action": "Execute sworn affidavit before First Class Judicial Magistrate / Notary Public."
+    "failure_message": "Mandatory composite affidavit in prescribed format on non-judicial stamp paper is missing or un-notarized [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Execute sworn affidavit in prescribed statutory format before First Class Judicial Magistrate / Notary Public [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "DOC-TRUST-002",
@@ -225,7 +243,8 @@
     "logic": "has_document('Trust Deed') && extracted('Trust Deed', 'registration_number') != null",
     "evidence_fields": ["trust_deed.trust_name", "trust_deed.registration_number", "trust_deed.sub_registrar_office"],
     "failure_message": "Registration certificate and constitutional memorandum of sponsoring society/trust not uploaded.",
-    "recommended_action": "Upload certified copy of Trust Deed / Society registration certificate."
+    "recommended_action": "Upload certified copy of Trust Deed / Society registration certificate.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "DOC-NOC-003",
@@ -237,7 +256,8 @@
     "logic": "has_document('NOC') && extracted('NOC', 'issuing_department') != null",
     "evidence_fields": ["noc.issuing_department", "noc.noc_number", "noc.issue_date"],
     "failure_message": "No Objection Certificate (NOC) from State Directorate of Technical Education / Affiliating University is absent.",
-    "recommended_action": "Procure and submit formal NOC issued by State Higher & Technical Education department."
+    "recommended_action": "Procure and submit formal NOC issued by State Higher & Technical Education department.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "CONSIST-NAME-001",
@@ -249,7 +269,8 @@
     "logic": "extracted('Affidavit', 'institution_name') == application.institution_name && (extracted('Land Deed', 'grantee_name') == null || extracted('Land Deed', 'grantee_name') == institution.trust_name)",
     "evidence_fields": ["affidavit.institution_name", "land_deed.grantee_name", "trust_deed.trust_name", "application.institution_name", "institution.trust_name"],
     "failure_message": "Mismatch detected between declared institution name or sponsoring body/grantee name across statutory records.",
-    "recommended_action": "Submit registered gazette notification or official resolution rectifying name discrepancy."
+    "recommended_action": "Submit registered gazette notification or official resolution rectifying name discrepancy.",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   },
   {
     "rule_id": "DATE-VALID-001",
@@ -260,7 +281,8 @@
     "severity": "Medium",
     "logic": "date_diff('Affidavit.execution_date', current_date) <= 90",
     "evidence_fields": ["affidavit.execution_date", "application.submission_date"],
-    "failure_message": "Affidavit execution date exceeds 90 days prior to application submission.",
-    "recommended_action": "Re-affirm affidavit with fresh notarization within the current approval cycle."
+    "failure_message": "Affidavit execution date exceeds allowable threshold prior to application submission [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Re-affirm affidavit with fresh notarization within the current approval cycle [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED"
   }
 ]

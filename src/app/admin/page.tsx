@@ -223,7 +223,7 @@ export default function AdminPortalPage() {
         {activeTab === 'rules' && (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
             <div className="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center text-xs">
-              <span className="font-bold text-slate-800">Active Rule Pack: AICTE Approval Process Handbook (v2026.3)</span>
+              <span className="font-bold text-slate-800">Active Rule Pack: AICTE Statutory Approval Norms (v2026.3) [SOURCE: TO BE VERIFIED]</span>
               <span className="text-slate-500">22 Configurable Regulatory Checks</span>
             </div>
 

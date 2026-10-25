@@ -50,9 +50,9 @@ export default function NewApplicationWizard() {
 
       case 'New_Institution':
         return [
-          { type: 'Land Deed', mandatory: true, note: 'Registered sale/lease deed (min 30 yrs, min 2.5 acres)' },
+          { type: 'Land Deed', mandatory: true, note: 'Registered sale/lease deed (statutory continuous lease / ownership [SOURCE: TO BE VERIFIED])' },
           { type: 'Trust Deed', mandatory: true, note: 'Sponsoring Trust/Society registration certificate' },
-          { type: 'Affidavit', mandatory: true, note: 'Mandatory Rs. 100 non-judicial notarized affidavit' },
+          { type: 'Affidavit', mandatory: true, note: 'Statutory non-judicial notarized affidavit [SOURCE: TO BE VERIFIED]' },
           { type: 'NOC', mandatory: true, note: 'State Government and Affiliating University NOC' },
           { type: 'Building Plan', mandatory: true, note: 'Approved architectural master plan with carpet area' },
           { type: 'Occupancy Certificate', mandatory: true, note: 'Competent municipal town planning certificate' },
@@ -62,12 +62,12 @@ export default function NewApplicationWizard() {
 
       case 'Intake_Increase':
         return [
-          { type: 'Prior EoA', mandatory: true, note: 'Continuous AICTE approval for last 3 years' },
+          { type: 'Prior EoA', mandatory: true, note: 'Continuous AICTE approval for prior cycles' },
           { type: 'Building Plan', mandatory: true, note: 'Built-up area schedule accommodating increased intake' },
           { type: 'Structural Stability Certificate', mandatory: true, note: 'Recent structural safety audit' },
-          { type: 'Faculty Appointment Letter', mandatory: true, note: 'Recruitment orders maintaining 1:20 SFR' },
+          { type: 'Faculty Appointment Letter', mandatory: true, note: 'Recruitment orders maintaining statutory SFR [SOURCE: TO BE VERIFIED]' },
           { type: 'Audited Financial Statement', mandatory: true, note: 'Audited balance sheet showing corpus' },
-          { type: 'Affidavit', mandatory: true, note: 'Affidavit affirming NBA accreditation' }
+          { type: 'Affidavit', mandatory: true, note: 'Affidavit affirming programme accreditation eligibility [SOURCE: TO BE VERIFIED]' }
         ];
 
       case 'Site_Change':

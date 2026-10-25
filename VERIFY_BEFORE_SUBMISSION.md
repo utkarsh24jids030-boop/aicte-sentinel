@@ -12,7 +12,11 @@ The table below catalogs every location in the codebase requiring authoritative 
 | 4 | `src/lib/config/norms.ts` | `STUDENT_FACULTY_RATIOS` & `FACULTY_CALCULATION_BASIS` | `UG: 20, DIPLOMA: 25, PG: 15; basis: ANNUAL_INTAKE [SOURCE: TO BE VERIFIED]` | Verify statutory Student-Faculty ratios across programmes and whether ratio applies to annual intake vs total student enrolment across all academic years. |
 | 5 | `src/lib/rules/packs.json` | Rule `LAND-AREA-002` (line 23) | `based on location classification [SOURCE: TO BE VERIFIED]` | Verify exact Land Requirement Table in AICTE APH Chapter I. |
 | 6 | `src/lib/config/norms.ts` | `MINIMUM_LAND_AREA_ACRES` | `metro: 1.5, urban: 2.5, semi-urban: 2.5, rural: 4.0 [SOURCE: TO BE VERIFIED]` | Verify baseline land area requirements by urban/rural agglomeration classification in AICTE APH Land Norms. |
-| 7 | `src/lib/rules/packs.json` | Rule `DATE-VALID-001` (line 261) | `90-day affidavit notarization window [SOURCE: TO BE VERIFIED]` | Verify statutory validity window for non-judicial stamp paper affidavit prior to application closing date. |
+| 7 | `src/lib/rules/packs.json` | Rule `LAND-DEED-001` (lines 11-12) | `continuous lease deed [SOURCE: TO BE VERIFIED]` | Verify minimum lease deed duration (e.g. 30 years vs state-specific concessions) in AICTE APH Land Norms. |
+| 8 | `src/lib/rules/packs.json` | Rule `FACULTY-APPT-002` (line 108) | `statutory pay-scale norms [SOURCE: TO BE VERIFIED]` | Verify statutory central/state pay commission orders for core faculty appointments. |
+| 9 | `src/lib/rules/packs.json` | Rule `ACAD-INTAKE-001` (lines 191-192) | `programme accreditation eligibility [SOURCE: TO BE VERIFIED]` | Verify NBA accreditation eligibility threshold and percentage cap for expansion in AICTE APH Chapter II. |
+| 10 | `src/lib/rules/packs.json` | All Rules (`source_reference`) | `source_reference: "SOURCE: TO BE VERIFIED"` | Audit and replace placeholder with official Approval Process Handbook section / sub-clause citations. |
+| 11 | `src/lib/rules/packs.json` | Rule `DATE-VALID-001` (line 261) | `90-day affidavit notarization window [SOURCE: TO BE VERIFIED]` | Verify statutory validity window for non-judicial stamp paper affidavit prior to application closing date. |
 
 ---
 

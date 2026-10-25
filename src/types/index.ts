@@ -239,6 +239,7 @@ export interface ComplianceRule {
   evidence_fields: string[];
   failure_message: string;
   recommended_action: string;
+  source_reference?: string;
 }
 
 export interface ReadinessBreakdown {

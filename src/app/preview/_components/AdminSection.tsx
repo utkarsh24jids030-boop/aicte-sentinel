@@ -112,6 +112,8 @@ export default function AdminSection() {
               <tr className="bg-slate-100 text-slate-700 font-bold border-b">
                 <th className="p-2.5">Rule ID</th>
                 <th className="p-2.5">Version</th>
+                <th className="p-2.5">Source Reference</th>
+                <th className="p-2.5">Changelog</th>
                 <th className="p-2.5">Category</th>
                 <th className="p-2.5">Rule Name</th>
                 <th className="p-2.5">Severity</th>
@@ -127,6 +129,8 @@ export default function AdminSection() {
                 <tr key={rule.rule_id} className="hover:bg-slate-50">
                   <td className="p-2.5 font-mono font-bold text-blue-900">{rule.rule_id}</td>
                   <td className="p-2.5 font-mono text-slate-500">v{rule.version}</td>
+                  <td className="p-2.5 font-mono text-[10px] text-amber-800 bg-amber-50/50">{rule.source_reference || 'SOURCE: TO BE VERIFIED'}</td>
+                  <td className="p-2.5 font-mono text-[10px] text-slate-600">{rule.changelog?.length ? `${rule.changelog.length} revisions` : '1 revision'}</td>
                   <td className="p-2.5 font-semibold text-slate-800">{rule.category}</td>
                   <td className="p-2.5 font-bold text-slate-900">{rule.name}</td>
                   <td className="p-2.5">

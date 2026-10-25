@@ -243,6 +243,17 @@ export default function AdminPortalPage() {
 
                   <p className="text-slate-600">{rule.failure_message}</p>
 
+                  <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px]">
+                    <span className="font-mono text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                      Ref: {rule.source_reference || 'SOURCE: TO BE VERIFIED'}
+                    </span>
+                    {rule.changelog && rule.changelog.length > 0 && (
+                      <span className="font-mono text-slate-600 bg-slate-100 px-2 py-0.5 rounded border border-slate-200" title={rule.changelog.map(c => `v${c.version} (${c.date}) by ${c.author}: ${c.description}`).join('\n')}>
+                        {rule.changelog.length} revisions (latest: v{rule.version})
+                      </span>
+                    )}
+                  </div>
+
                   <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 pt-1">
                     <span>Category: <strong>{rule.category}</strong></span>
                     <span>•</span>

@@ -228,18 +228,26 @@ export interface SourceResponse {
   timestamp: string;
 }
 
+export interface RuleChangelogEntry {
+  version: string;
+  date: string;
+  author: string;
+  description: string;
+}
+
 export interface ComplianceRule {
   rule_id: string;
   version: string;
   name: string;
-  category: 'Land' | 'Building' | 'Fire safety' | 'Faculty' | 'Governance' | 'Financial' | 'Academic' | 'Documents' | 'Consistency' | 'Dates';
+  category: 'Land' | 'Building' | 'Fire safety' | 'Faculty' | 'Governance' | 'Financial' | 'Academic' | 'Documents' | 'Consistency' | 'Dates' | 'Infrastructure' | 'CrossApplication';
   applies_to: ApplicationType[];
   severity: FindingSeverity;
   logic: string;
   evidence_fields: string[];
   failure_message: string;
   recommended_action: string;
-  source_reference?: string;
+  source_reference: string;
+  changelog?: RuleChangelogEntry[];
 }
 
 export interface ReadinessBreakdown {

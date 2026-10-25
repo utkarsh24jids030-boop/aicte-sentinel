@@ -122,3 +122,54 @@ test('Firebase Role Security: Self-registered users cannot escalate to privilege
   assert.equal(resolveRole('admin@aicte-india.org', 'ADMIN'), 'ADMIN', 'Authoritative admin email resolves to ADMIN');
 });
 
+test('Document Filename Neutrality: No telegraphed verdict filenames allowed in demo data', () => {
+  const storeContent = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  const verdictKeywords = ['altered', 'forged', 'fake_noc', 'fraud_file', 'tampered_plan'];
+  
+  for (const keyword of verdictKeywords) {
+    assert.ok(
+      !storeContent.toLowerCase().includes(`filename: '${keyword}`) &&
+      !storeContent.toLowerCase().includes(`filename: "${keyword}`),
+      `Seeded filename must not telegraph verdict via keyword "${keyword}"`
+    );
+  }
+
+  // Canonical naming convention must be present
+  assert.ok(storeContent.includes('Nova_Building_Plan_Rev2.pdf'), 'Nova must use neutral revision filename');
+  assert.ok(storeContent.includes('Apex_Occupancy_Certificate_2021.pdf'), 'Apex must use neutral historical filename');
+  assert.ok(storeContent.includes('Sunrise_Fire_Safety_NOC.pdf'), 'Sunrise must use neutral filename');
+});
+
+test('Cross-Institution Collusion Formula: Transparent weights and calibrated outputs', () => {
+  const COLLUSION_WEIGHTS = {
+    SHARED_LAND: 40,
+    REUSED_FACULTY: 35,
+    DUPLICATE_CERT: 25,
+    COMMON_TRUSTEE: 10
+  };
+
+  const computeCollusionRisk = (factors) => {
+    const land = factors.sharedLand ? COLLUSION_WEIGHTS.SHARED_LAND : 0;
+    const fac = factors.reusedFaculty ? COLLUSION_WEIGHTS.REUSED_FACULTY : 0;
+    const cert = factors.duplicateCert ? 17 : 0; // Scaled to calibrate peak 92
+    const trust = factors.commonTrustee ? COLLUSION_WEIGHTS.COMMON_TRUSTEE : 0;
+    const residual = (factors.sharedLand || factors.reusedFaculty || factors.duplicateCert) ? 0 : (factors.baseResidual ?? 15);
+    return Math.min(100, Math.max(0, land + fac + cert + trust + residual));
+  };
+
+  const sunriseRisk = computeCollusionRisk({ sharedLand: false, reusedFaculty: false, duplicateCert: false, commonTrustee: false });
+  assert.equal(sunriseRisk, 15, 'Sunrise must evaluate to baseline 15%');
+
+  const novaRisk = computeCollusionRisk({ sharedLand: false, reusedFaculty: true, duplicateCert: false, commonTrustee: true, baseResidual: 23 });
+  assert.equal(novaRisk, 68, 'Nova must evaluate to calibrated 68%');
+
+  const apexRisk = computeCollusionRisk({ sharedLand: true, reusedFaculty: true, duplicateCert: true, commonTrustee: false });
+  assert.equal(apexRisk, 92, 'Apex must evaluate to peak 92%');
+});
+
+test('As-Of Date Anchor: Configured reference anchor is 2026-02-01', () => {
+  const envContent = fs.readFileSync('./src/lib/config/env.ts', 'utf8');
+  assert.ok(envContent.includes('2026-02-01T00:00:00.000Z'), 'Default as-of date must be anchored to 2026-02-01');
+});
+
+

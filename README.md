@@ -215,6 +215,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | `GET` | `/api/radar` | Get cross-institution linkage nodes and edges |
 | `POST` | `/api/evc/observations` | Record EVC on-site inspection observation |
 | `GET` | `/api/audit` | Fetch hash-chained audit events and test chain integrity |
+| `POST` | `/api/admin/reset` | Restore demo applications, documents, and audit logs to baseline |
+| `POST` | `/api/auth/register` | Register institution account (strictly unprivileged role) |
 
 ---
 
@@ -224,3 +226,16 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - **Fail-Closed Verification:** If an authorized registry is offline or inconclusive, the document is routed to manual officer review and is never marked as verified.
 - **Evidence-Linked Findings:** Every alert specifies the finding ID, rule ID, confidence rating, exact evidence locator, and recommended action.
 - **Tamper-Evident Ledger:** All document versions, extracted values, source responses, and officer decisions are tamper-evident and cryptographically hash-chained.
+
+---
+
+## 9. Demo State & Ephemerality Notice
+
+> [!IMPORTANT]
+> **Ephemeral In-Memory Prototype Storage Notice**
+> The current demonstration build uses an in-memory datastore (`src/lib/store.ts`) with best-effort in-memory rate limiting (`src/lib/security/rateLimit.ts`).
+> - **State Ephemerality:** Application data, uploaded documents, manual corrections, and audit events reside in process memory. The state is ephemeral and resets to default seed data on server cold start, process restart, or redeployment. In multi-instance or serverless environments, state is not synchronized across worker instances.
+> - **Rate Limiting:** Best-effort sliding-window limits (10 uploads/min, 20 logins/min per IP) are tracked in process memory.
+> - **Reset Demo Action:** Evaluators can restore baseline test data at any time via the "Reset Demo Data" action on `/admin` and `/auditor` or by calling `POST /api/admin/reset`.
+> - **Production Roadmap:** A production-grade deployment requires durable PostgreSQL storage managed via Prisma ORM (schema prepared in `prisma/schema.sql`), durable S3/GCS object storage for uploaded files, distributed Redis-based rate limiting, and enterprise OpenID Connect / SAML authentication.
+

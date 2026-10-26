@@ -90,14 +90,17 @@ export default function InstitutionApplicationDetailPage({
       });
 
       const data = await res.json();
-      if (data.success) {
+      if (res.ok && data.success) {
         setShowUploadModal(false);
         setSelectedFile(null);
         setUploadTitle('');
         await loadData();
+      } else {
+        alert(data.error || 'Document upload failed. Please verify format and size.');
       }
     } catch (e) {
       console.error(e);
+      alert('Network or server error during upload.');
     } finally {
       setIsUploading(false);
     }
@@ -383,7 +386,7 @@ export default function InstitutionApplicationDetailPage({
                   onChange={(e) => setSelectedFile(e.target.files ? e.target.files[0] : null)}
                   className="w-full text-xs p-2 rounded-xl border border-dashed border-slate-300 text-slate-700 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
-                <span className="text-[11px] text-slate-400 mt-1 block">Supported formats: PDF, JPG, PNG (Max 15 MB)</span>
+                <span className="text-[11px] text-slate-400 mt-1 block">Supported formats: PDF, JPG, PNG (Max 10 MB)</span>
               </div>
 
               <div className="flex items-center justify-end gap-2 pt-3 border-t">

@@ -16,7 +16,9 @@ import {
   Hash, 
   RefreshCw,
   ShieldCheck,
-  Server
+  Server,
+  RotateCcw,
+  ShieldAlert
 } from 'lucide-react';
 import { User, AuditEvent, ComplianceRule } from '@/types';
 import { DEMO_USERS } from '@/lib/store';
@@ -27,6 +29,7 @@ export default function AdminPortalPage() {
   const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
   const [chainIntegrity, setChainIntegrity] = useState<{ isValid: boolean; totalEventsChecked: number } | null>(null);
   const [isVerifyingChain, setIsVerifyingChain] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
   const [rules, setRules] = useState<ComplianceRule[]>(rulePacks as ComplianceRule[]);
 
   const fetchAuditTrail = useCallback(async () => {
@@ -54,6 +57,28 @@ export default function AdminPortalPage() {
     }
   };
 
+  const handleResetDemoData = async () => {
+    if (!confirm('Are you sure you want to reset all demo applications, documents, and audit logs to the initial baseline state?')) {
+      return;
+    }
+    setIsResetting(true);
+    try {
+      const res = await fetch('/api/admin/reset', { method: 'POST' });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        alert('Demo data and audit trail have been reset to initial baseline.');
+        await fetchAuditTrail();
+      } else {
+        alert(data.error || 'Failed to reset demo data.');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error occurred while resetting demo data.');
+    } finally {
+      setIsResetting(false);
+    }
+  };
+
   return (
     <ProtectedRoute allowedRoles={['ADMIN', 'AUDITOR']}>
       <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
@@ -61,6 +86,31 @@ export default function AdminPortalPage() {
         <Navbar />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        
+        {/* Public Demo Mode Safeguard Banner */}
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-800 flex-shrink-0">
+              <ShieldAlert className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-xs font-bold text-amber-900 uppercase tracking-wide">
+                Public Demo Mode - Read-only safeguards active. Destructive operations are sandboxed.
+              </div>
+              <p className="text-[11px] text-amber-700 mt-0.5">
+                Evaluator sandbox with in-memory persistence. State is ephemeral and resets on cold start. You can restore baseline test data at any time.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={handleResetDemoData}
+            disabled={isResetting}
+            className="px-3.5 py-2 bg-amber-700 hover:bg-amber-800 text-white rounded-xl text-xs font-bold shadow-2xs flex items-center gap-1.5 transition-all flex-shrink-0 disabled:opacity-50"
+          >
+            <RotateCcw className={`w-3.5 h-3.5 ${isResetting ? 'animate-spin' : ''}`} />
+            <span>{isResetting ? 'Resetting...' : 'Reset Demo Data'}</span>
+          </button>
+        </div>
         
         {/* Top Header */}
         <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

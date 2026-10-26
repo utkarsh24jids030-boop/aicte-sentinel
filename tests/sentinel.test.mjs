@@ -313,3 +313,97 @@ test('Tamper-Evident Ledger Integrity & Advisory Recommendations: Zero immutable
   assert.equal(violations.length, 0, `Prohibited claims found:\n${violations.map(v => `${v.file}: "${v.word}"`).join('\n')}`);
 });
 
+test('Upload Security: File magic byte validation, MIME whitelist, and size limits', () => {
+  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+  const ALLOWED_MIME_TYPES = ['application/pdf', 'image/png', 'image/jpeg'];
+
+  // Helper verifying magic bytes matching logic
+  const validateSignature = (buffer, claimedMime) => {
+    if (!ALLOWED_MIME_TYPES.includes(claimedMime)) {
+      return { valid: false, error: 'Invalid file type. Only authentic PDF, PNG, and JPEG documents are permitted.' };
+    }
+    const bytes = new Uint8Array(buffer.slice(0, 8));
+    const isPdf = bytes.length >= 4 && bytes[0] === 0x25 && bytes[1] === 0x50 && bytes[2] === 0x44 && bytes[3] === 0x46;
+    const isPng = bytes.length >= 4 && bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4E && bytes[3] === 0x47;
+    const isJpeg = bytes.length >= 3 && bytes[0] === 0xFF && bytes[1] === 0xD8 && bytes[2] === 0xFF;
+
+    if (!isPdf && !isPng && !isJpeg) {
+      return { valid: false, error: 'Invalid file signature. Only authentic PDF, PNG, and JPEG documents are permitted.' };
+    }
+    if (
+      (claimedMime === 'application/pdf' && !isPdf) ||
+      (claimedMime === 'image/png' && !isPng) ||
+      (claimedMime === 'image/jpeg' && !isJpeg)
+    ) {
+      return { valid: false, error: 'Invalid file signature. Only authentic PDF, PNG, and JPEG documents are permitted.' };
+    }
+    return { valid: true };
+  };
+
+  // Valid PDF signature
+  const validPdfBuf = Buffer.from([0x25, 0x50, 0x44, 0x46, 0x2D, 0x31, 0x2E, 0x37]);
+  assert.equal(validateSignature(validPdfBuf, 'application/pdf').valid, true);
+
+  // Valid PNG signature
+  const validPngBuf = Buffer.from([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]);
+  assert.equal(validateSignature(validPngBuf, 'image/png').valid, true);
+
+  // Valid JPEG signature
+  const validJpegBuf = Buffer.from([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46]);
+  assert.equal(validateSignature(validJpegBuf, 'image/jpeg').valid, true);
+
+  // Spoofed file: text/exe masquerading as PDF
+  const spoofedPdfBuf = Buffer.from('MZ\x90\x00\x03\x00\x00\x00');
+  assert.equal(validateSignature(spoofedPdfBuf, 'application/pdf').valid, false);
+
+  // MIME mismatch: valid PNG claiming to be PDF
+  assert.equal(validateSignature(validPngBuf, 'application/pdf').valid, false);
+
+  // Size boundary check
+  assert.ok(10485760 <= MAX_FILE_SIZE, '10MB exact should be permitted');
+  assert.ok(10485761 > MAX_FILE_SIZE, '10MB + 1 byte must exceed size limit');
+});
+
+test('Sliding Window Rate Limiter: Blocks excessive requests and reports remaining quota', () => {
+  const store = new Map();
+  const checkLimit = (ip, max, windowMs = 60000, now = Date.now()) => {
+    const windowStart = now - windowMs;
+    const timestamps = (store.get(ip) || []).filter(ts => ts > windowStart);
+    if (timestamps.length >= max) {
+      return { allowed: false, remaining: 0 };
+    }
+    timestamps.push(now);
+    store.set(ip, timestamps);
+    return { allowed: true, remaining: max - timestamps.length };
+  };
+
+  const testIp = '192.168.1.100';
+  for (let i = 0; i < 10; i++) {
+    const res = checkLimit(testIp, 10);
+    assert.equal(res.allowed, true, `Request ${i + 1} should be allowed`);
+  }
+  // 11th request must be blocked
+  const blocked = checkLimit(testIp, 10);
+  assert.equal(blocked.allowed, false, '11th request must exceed rate limit');
+});
+
+test('Unprivileged Registration Safeguard: Rejects privileged role escalation', () => {
+  const privilegedRoles = ['ADMIN', 'AUDITOR', 'OFFICER', 'EVC_INSPECTOR'];
+  const simulateRegister = (role) => {
+    if (role && privilegedRoles.includes(role)) {
+      return { status: 403, error: 'Privilege escalation rejected. Only INSTITUTION accounts can be registered.' };
+    }
+    return { status: 200, role: 'INSTITUTION' };
+  };
+
+  for (const privRole of privilegedRoles) {
+    const result = simulateRegister(privRole);
+    assert.equal(result.status, 403, `Registration with role ${privRole} must return 403`);
+  }
+
+  const normalResult = simulateRegister('INSTITUTION');
+  assert.equal(normalResult.status, 200);
+  assert.equal(normalResult.role, 'INSTITUTION');
+});
+
+

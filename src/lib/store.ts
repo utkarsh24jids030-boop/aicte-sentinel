@@ -1388,17 +1388,22 @@ export class DataStore {
     if (existing) {
       return existing;
     }
-    this.users.push(user);
+    // Privilege escalation safeguard: non-preconfigured users are strictly INSTITUTION role
+    const safeUser: User = {
+      ...user,
+      role: 'INSTITUTION'
+    };
+    this.users.push(safeUser);
     AuditTrailEngine.recordEvent({
-      actorId: user.id,
-      actorName: user.name,
-      actorRole: user.role,
+      actorId: safeUser.id,
+      actorName: safeUser.name,
+      actorRole: safeUser.role,
       action: 'USER_REGISTERED',
       entityType: 'AUTH',
-      entityId: user.id,
-      afterSummary: `User registered ${user.name} with role ${user.role}`
+      entityId: safeUser.id,
+      afterSummary: `User registered ${safeUser.name} with role ${safeUser.role}`
     });
-    return user;
+    return safeUser;
   }
 
   // INSTITUTIONS
@@ -1657,5 +1662,27 @@ export class DataStore {
 
   static getOfficerActions(applicationId: string): OfficerActionRecord[] {
     return this.officerActions.filter(a => a.applicationId === applicationId);
+  }
+
+  static resetDemoData(): void {
+    this.users = [...DEMO_USERS];
+    this.institutions = [...DEMO_INSTITUTIONS];
+    this.applications = [...DEMO_APPLICATIONS];
+    this.documents = [...DEMO_DOCUMENTS];
+    this.inspectionTasks = [...DEMO_INSPECTION_TASKS];
+    this.officerActions = [];
+    this.findingOverrides = new Map<string, {
+      status: FindingStatus;
+      officerNotes?: string;
+      reviewedBy?: string;
+      reviewedAt?: string;
+    }>([
+      ['FIND-SUN-001', { status: 'Clarification Requested', officerNotes: 'Clarification issued to institution on 2026-01-21 to upload valid renewal receipt before EVC.', reviewedBy: 'Smt. Priyadarshini Rao', reviewedAt: '2026-01-21T09:30:00Z' }],
+      ['FIND-NOV-001', { status: 'Confirmed by Officer', officerNotes: 'Flagged for scrutiny review. Potential discrepancy in declared carpet area schedule.', reviewedBy: 'Smt. Priyadarshini Rao', reviewedAt: '2026-01-23T11:00:00Z' }],
+      ['FIND-NOV-003', { status: 'Escalated for EVC', officerNotes: 'Requires physical verification. Possible cross-institution faculty linkage for Dr. Malhotra.', reviewedBy: 'Smt. Priyadarshini Rao', reviewedAt: '2026-01-23T12:30:00Z' }],
+      ['FIND-APX-001', { status: 'Escalated for EVC', officerNotes: 'Possible overlapping land claim across two related institutions (verify sub-division records).', reviewedBy: 'Smt. Priyadarshini Rao', reviewedAt: '2026-01-26T09:30:00Z' }],
+      ['FIND-APX-002', { status: 'Confirmed by Officer', officerNotes: 'Potential duplicate document submission detected against historical records. Officer confirmed adverse finding.', reviewedBy: 'Smt. Priyadarshini Rao', reviewedAt: '2026-01-26T10:00:00Z' }]
+    ]);
+    AuditTrailEngine.seedInitialEvents(INITIAL_AUDIT_EVENTS);
   }
 }

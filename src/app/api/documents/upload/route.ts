@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { DataStore } from '@/lib/store';
 import { ForensicsEngine } from '@/lib/forensics/engine';
+import { AuditTrailEngine } from '@/lib/audit/trail';
 import { checkRateLimit, getClientIp } from '@/lib/security/rateLimit';
 import { DocumentRecord, DocumentType, ExtractedField } from '@/types';
 
@@ -179,6 +180,27 @@ export async function POST(request: Request) {
     for (const finding of forensicAnalysis.findings) {
       DataStore.getFindings().push(finding);
     }
+
+    // Record extraction and rule evaluation in hash chain
+    AuditTrailEngine.recordEvent({
+      actorId: 'system-ocr-pipeline',
+      actorName: 'Sentinel Extraction Pipeline',
+      actorRole: 'SYSTEM',
+      action: 'EXTRACTION_RUN',
+      entityType: 'DOCUMENT',
+      entityId: docId,
+      afterSummary: `Extracted ${extractedFields.length} statutory fields from ${fileName}`
+    });
+
+    AuditTrailEngine.recordEvent({
+      actorId: 'system-rules-engine',
+      actorName: 'Statutory Compliance Rules Engine',
+      actorRole: 'SYSTEM',
+      action: 'RULE_RUN',
+      entityType: 'APPLICATION',
+      entityId: applicationId,
+      afterSummary: `Evaluated statutory rules pack against application. Flagged ${forensicAnalysis.findings.length} findings for manual review`
+    });
 
     return NextResponse.json({
       success: true,

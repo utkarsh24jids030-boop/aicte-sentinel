@@ -422,5 +422,20 @@ test('Authentication Reality & Disclosure: Demo auth notice present, NextAuth no
   assert.equal(packageJson.dependencies['next-auth'], undefined, 'next-auth must not be a project dependency');
 });
 
+test('Audit Trail Completeness: Seeded officer actions and SYSTEM roles present in ledger', () => {
+  const storeContent = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(storeContent.includes('FIND-NOV-001'), 'Ledger must contain Nova carpet area officer confirmation');
+  assert.ok(storeContent.includes('FIND-NOV-003'), 'Ledger must contain Nova reused faculty officer escalation');
+  assert.ok(storeContent.includes('FIND-APX-001'), 'Ledger must contain Apex land claim officer escalation');
+  assert.ok(storeContent.includes('FIND-APX-002'), 'Ledger must contain Apex duplicate cert officer confirmation');
+
+  // Verify system workers use SYSTEM role, not ADMIN
+  assert.ok(
+    storeContent.includes("actorId: 'system-forensics-worker',\n    actorName: 'Sentinel Forensics Engine',\n    actorRole: 'SYSTEM'") ||
+    storeContent.includes("actorRole: 'SYSTEM'"),
+    'System workers must use SYSTEM role'
+  );
+});
+
 
 

@@ -38,6 +38,19 @@ export async function POST(
     // Update document status
     DataStore.updateDocumentStatus(id, result.status, result.adapterName);
 
+    // Record audit event in cryptographic hash-chain
+    const { AuditTrailEngine } = await import('@/lib/audit/trail');
+    AuditTrailEngine.recordEvent({
+      actorId: 'system-adapter-worker',
+      actorName: `${result.adapterName} (Simulated)`,
+      actorRole: 'SYSTEM',
+      action: 'VERIFICATION_ATTEMPT',
+      entityType: 'ADAPTER',
+      entityId: id,
+      beforeSummary: `Document verification status was "${doc.verificationStatus}"`,
+      afterSummary: `Adapter returned ${result.status} (Source: ${result.sourceResponse.sourceStatus}). Attempt ID: ${result.attempt.id}`
+    });
+
     return NextResponse.json({
       success: true,
       verificationResult: result,

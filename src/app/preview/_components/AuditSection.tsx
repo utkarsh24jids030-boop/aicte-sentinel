@@ -54,7 +54,7 @@ export default function AuditSection() {
           </div>
           <div className="bg-black/30 p-2.5 rounded-lg">
             <span className="text-slate-400 block text-[10px] uppercase">Current Chain Leaf Hash:</span>
-            <span className="text-emerald-300 break-all">{events[events.length - 1]?.hash || 'N/A'}</span>
+            <span className="text-emerald-300 break-all">{AuditTrailEngine.getHeadHash()}</span>
           </div>
         </div>
       </div>

@@ -41,8 +41,18 @@ export default function AuditorPage() {
   const handleVerifyChain = async () => {
     setIsVerifying(true);
     try {
-      await fetchAuditTrail();
-      alert(`Auditor Cryptographic Verification: All ${chainIntegrity?.totalEventsChecked || 4} transactions match computed SHA-256 signatures. Zero tampering detected.`);
+      const res = await fetch('/api/audit');
+      const data = await res.json();
+      setAuditEvents(data.events || []);
+      setChainIntegrity(data.integrity || null);
+      if (data.integrity?.isValid) {
+        alert(`Auditor Cryptographic Verification: Checked ${data.integrity.totalEventsChecked} transactions. SHA-256 hash chain is 100% cryptographically intact with zero tampering detected.`);
+      } else {
+        alert(`Integrity Violation: ${data.integrity?.errorReason || 'Chain break detected'}`);
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error verifying audit chain integrity.');
     } finally {
       setIsVerifying(false);
     }

@@ -84,6 +84,15 @@ export class AuditTrailEngine {
   }
 
   /**
+   * Return the latest leaf/head hash of the cryptographically linked chain
+   */
+  static getHeadHash(): string {
+    return this.events.length > 0
+      ? this.events[this.events.length - 1].hash
+      : this.GENESIS_HASH;
+  }
+
+  /**
    * Verify the entire cryptographic hash chain for integrity
    * Detects any altered event, inserted record, or deleted entry
    */

@@ -50,8 +50,18 @@ export default function AdminPortalPage() {
   const handleVerifyChain = async () => {
     setIsVerifyingChain(true);
     try {
-      await fetchAuditTrail();
-      alert(`Cryptographic Verification Successful: Checked ${chainIntegrity?.totalEventsChecked || 4} audit events. Hash chain is 100% intact and untampered.`);
+      const res = await fetch('/api/audit');
+      const data = await res.json();
+      setAuditEvents(data.events || []);
+      setChainIntegrity(data.integrity || null);
+      if (data.integrity?.isValid) {
+        alert(`Cryptographic Verification Successful: Checked ${data.integrity.totalEventsChecked} audit events. Hash chain is 100% intact and untampered.`);
+      } else {
+        alert(`Verification Failed: ${data.integrity?.errorReason || 'Chain break detected'}`);
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error verifying audit chain integrity.');
     } finally {
       setIsVerifyingChain(false);
     }

@@ -6,7 +6,8 @@ export type UserRole =
   | 'OFFICER'
   | 'EVC_INSPECTOR'
   | 'ADMIN'
-  | 'AUDITOR';
+  | 'AUDITOR'
+  | 'SYSTEM';
 
 export interface User {
   id: string;

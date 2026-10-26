@@ -37,7 +37,7 @@ const routesToTest = [
   },
   { 
     path: '/preview/case/app-sunrise-001', 
-    expected: ['Sunrise Institute of Technology', 'AICTE/2026/SUN-8812', 'Sunrise_Land_Sale_Deed.pdf', 'a1f893e3d489b0128cf7e9124401bbcd87234918237461829374012938471a2b'] 
+    expected: ['Sunrise Institute of Technology', 'AICTE/2026/SUN-8812', 'Sunrise_Land_Sale_Deed.pdf', '19cbc54d24ebf1b001d986484fd02ab70131fdc661fc8f040f9d646597422b01'] 
   },
   { 
     path: '/preview/radar', 

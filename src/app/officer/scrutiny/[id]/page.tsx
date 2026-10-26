@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
 import StatusChip from '@/components/StatusChip';
 import { 
@@ -30,6 +29,7 @@ export default function ScrutinyReportPage({
   const [findings, setFindings] = useState<Finding[]>([]);
   const [readiness, setReadiness] = useState<ReadinessBreakdown | null>(null);
   const [officerRecommendation, setOfficerRecommendation] = useState<string>('CONSIDER_EVC_INSPECTION');
+  const [sealData, setSealData] = useState<{ seal: string; chainHeadHash: string } | null>(null);
   const [concludingRemarks, setConcludingRemarks] = useState(
     'Based on automated regulatory compliance parsing and cross-institution linkage analysis, case warrants physical on-site verification before regulatory approval decision.'
   );
@@ -55,6 +55,21 @@ export default function ScrutinyReportPage({
         } else {
           setOfficerRecommendation('CONSIDER_EVC_INSPECTION');
           setConcludingRemarks('Specific statutory deficiencies identified during automated checks (e.g., document omissions or faculty strength deficit). Suggested for officer review / EVC inspection consideration.');
+        }
+
+        // Fetch cryptographic report seal derived from report content and chain head
+        try {
+          const sealRes = await fetch('/api/reports/verify-seal', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ applicationId: id })
+          });
+          const sealJson = await sealRes.json();
+          if (sealJson.success) {
+            setSealData({ seal: sealJson.seal, chainHeadHash: sealJson.chainHeadHash });
+          }
+        } catch (e) {
+          console.error('Error fetching report seal:', e);
         }
       }
     } catch (e) {
@@ -87,7 +102,6 @@ export default function ScrutinyReportPage({
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col font-sans print:bg-white">
       <div className="print:hidden">
-        <DemoBanner />
         <Navbar />
       </div>
 
@@ -270,13 +284,13 @@ export default function ScrutinyReportPage({
             <div>
               <div className="flex items-center gap-2 text-slate-700 font-bold mb-1">
                 <Hash className="w-4 h-4 text-slate-500" />
-                <span>Cryptographic Audit Trail Stamp</span>
+                <span>Cryptographic Audit Trail Stamp & Seal</span>
               </div>
-              <code className="text-[10px] text-slate-500 font-mono block break-all max-w-sm">
-                SHA-CHAIN: 4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f
+              <code className="text-[10px] text-emerald-800 font-mono block break-all max-w-sm bg-slate-50 p-1.5 rounded border border-slate-200">
+                SEAL: {sealData?.seal || 'COMPUTING-SEAL-SHA256...'}
               </code>
-              <span className="text-[10px] text-slate-400 mt-0.5 block">
-                Tamper-evident record sealed under AICTE Sentinel Ledger.
+              <span className="text-[10px] text-slate-500 mt-1 block font-mono">
+                Chain Head: {sealData?.chainHeadHash ? `${sealData.chainHeadHash.substring(0, 16)}...` : '00000000...'} • Tamper-evident record sealed under AICTE Sentinel Ledger.
               </span>
             </div>
 

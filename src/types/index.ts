@@ -333,11 +333,27 @@ export interface RiskGraphEdge {
   id: string;
   source: string;
   target: string;
-  relationType: 'SHARED_LAND' | 'REUSED_FACULTY' | 'DUPLICATE_CERTIFICATE' | 'SAME_TRUST' | 'SHARED_ADDRESS' | 'IDENTICAL_HASH';
+  relationType: 
+    | 'SHARED_LAND' 
+    | 'REUSED_FACULTY' 
+    | 'DUPLICATE_CERTIFICATE' 
+    | 'SAME_TRUST' 
+    | 'SHARED_ADDRESS' 
+    | 'IDENTICAL_HASH'
+    | 'ORIGINAL_ISSUANCE'
+    | 'EXPIRED_CLEARANCE'
+    | 'METADATA_DISCREPANCY'
+    | 'SOLE_OWNERSHIP';
   label: string;
   riskLevel: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
   evidenceDetails: string;
   institutionsInvolved: string[];
+  confidence?: number;
+  reason?: string;
+  dismissed?: boolean;
+  dismissedReason?: string;
+  dismissedBy?: string;
+  dismissedAt?: string;
 }
 
 export interface LinkageRadarData {

@@ -157,8 +157,8 @@ export class RulesEngine {
               severity: 'Critical',
               confidence: 0.94,
               title: 'Duplicate Occupancy Certificate Reused from Prior Approval',
-              explanation: `Municipal Occupancy Certificate OCC-PUNE-2021-DUP-01 is an exact SHA-256 duplicate of a certificate previously issued to Western Horizon School in 2021.`,
-              evidenceLocator: `SHA256: ${doc.sha256Hash}`,
+              explanation: `Municipal Occupancy Certificate OCC-PUNE-2021-DUP-01 is an exact cryptographic SHA-256 duplicate of archived original certificate doc-wh-occ-2021 issued to Western Horizon Institute of Technology in 2021.`,
+              evidenceLocator: `Stored Original: doc-wh-occ-2021 (Western Horizon 2021) | SHA256: ${doc.sha256Hash}`,
               recommendedAction: 'Option for officer consideration: Issue Show-Cause notice under statutory regulations [SOURCE: TO BE VERIFIED].',
               status: 'Open',
               createdAt: doc.createdAt

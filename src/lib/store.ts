@@ -118,6 +118,23 @@ export const DEMO_INSTITUTIONS: Institution[] = [
     establishedYear: 2025,
     status: 'DEFICIENT',
     createdAt: '2026-01-15T14:15:00Z'
+  },
+  {
+    id: 'inst-western-horizon',
+    aicteId: '1-14092811',
+    name: 'Western Horizon Institute of Technology',
+    trustName: 'Western Horizon Educational Trust',
+    locationType: 'semi-urban',
+    state: 'Maharashtra',
+    district: 'Pune',
+    address: 'Survey No. 287/2, Phase-3 Hinjawadi, Pune - 411057',
+    landSurveyNumber: '287/2',
+    landAreaAcres: 5.0,
+    contactEmail: 'admin@westernhorizon-demo.example',
+    contactPhone: '+91 20 7820 1100',
+    establishedYear: 2018,
+    status: 'SCRUTINY_PENDING',
+    createdAt: '2021-03-01T09:00:00Z'
   }
 ];
 
@@ -190,16 +207,16 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     documentType: 'Land Deed',
     title: 'Registered Sale Deed for Institutional Campus',
     fileName: 'Sunrise_Land_Sale_Deed.pdf',
-    filePath: '/uploads/sunrise/land_deed.pdf',
-    fileSize: 2450120,
+    filePath: '/samples/Sunrise_Land_Sale_Deed.pdf',
+    fileSize: 1125,
     mimeType: 'application/pdf',
-    sha256Hash: 'a1f893e3d489b0128cf7e9124401bbcd87234918237461829374012938471a2b',
+    sha256Hash: '19cbc54d24ebf1b001d986484fd02ab70131fdc661fc8f040f9d646597422b01',
     verificationStatus: 'Verified',
     verificationSource: 'Bhoomi Karnataka State Cadastre Registry (simulated)',
     forensicMetadata: {
-      fileSize: 2450120,
+      fileSize: 1125,
       mimeType: 'application/pdf',
-      sha256Hash: 'a1f893e3d489b0128cf7e9124401bbcd87234918237461829374012938471a2b',
+      sha256Hash: '19cbc54d24ebf1b001d986484fd02ab70131fdc661fc8f040f9d646597422b01',
       pageCount: 18,
       pdfProducer: 'Adobe PDF Library 15.0',
       pdfCreator: 'Acrobat PDFMaker 15 for Windows',
@@ -217,7 +234,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       { id: 'f-sun-4', documentId: 'doc-sun-land', fieldKey: 'grantee_name', fieldLabel: 'Purchaser / Grantee Name', fieldValue: 'Sunrise Education Trust', confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 }
     ],
     versions: [
-      { id: 'v-sun-1', documentId: 'doc-sun-land', versionNumber: 1, fileName: 'Sunrise_Land_Sale_Deed.pdf', filePath: '/uploads/sunrise/land_deed.pdf', fileSize: 2450120, sha256Hash: 'a1f893e3d489b0128cf7e9124401bbcd87234918237461829374012938471a2b', uploadedAt: '2026-01-18T10:00:00Z', uploadedBy: 'Dr. Anand Kumar' }
+      { id: 'v-sun-1', documentId: 'doc-sun-land', versionNumber: 1, fileName: 'Sunrise_Land_Sale_Deed.pdf', filePath: '/samples/Sunrise_Land_Sale_Deed.pdf', fileSize: 1125, sha256Hash: '19cbc54d24ebf1b001d986484fd02ab70131fdc661fc8f040f9d646597422b01', uploadedAt: '2026-01-18T10:00:00Z', uploadedBy: 'Dr. Anand Kumar' }
     ],
     createdAt: '2026-01-18T10:00:00Z',
     updatedAt: '2026-01-18T10:00:00Z'
@@ -229,16 +246,16 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     documentType: 'Fire Safety Certificate',
     title: 'Fire and Emergency Services Clearance Certificate',
     fileName: 'Sunrise_Fire_Safety_NOC.pdf',
-    filePath: '/uploads/sunrise/fire_noc.pdf',
-    fileSize: 840200,
+    filePath: '/samples/Sunrise_Fire_Safety_NOC.pdf',
+    fileSize: 1082,
     mimeType: 'application/pdf',
-    sha256Hash: 'c772b19284fa98012bcefa901248019284719283740192837491029384712034',
+    sha256Hash: '982f7c02390ae4ea3b60f350adcf3265178049782c26ff9a948ac7e243ecd8ab',
     verificationStatus: 'Expired',
     verificationSource: 'Karnataka State Fire and Emergency Services (simulated)',
     forensicMetadata: {
-      fileSize: 840200,
+      fileSize: 1082,
       mimeType: 'application/pdf',
-      sha256Hash: 'c772b19284fa98012bcefa901248019284719283740192837491029384712034',
+      sha256Hash: '982f7c02390ae4ea3b60f350adcf3265178049782c26ff9a948ac7e243ecd8ab',
       pageCount: 3,
       pdfProducer: 'Kyocera Scan to PDF',
       creationDate: '2023-01-16T14:00:00Z',
@@ -254,7 +271,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       { id: 'f-sun-8', documentId: 'doc-sun-fire', fieldKey: 'issuing_station', fieldLabel: 'Issuing Fire Station', fieldValue: 'Sarjapur Fire Station', confidence: 0.91, isManuallyCorrected: false, pageNumber: 2 }
     ],
     versions: [
-      { id: 'v-sun-2', documentId: 'doc-sun-fire', versionNumber: 1, fileName: 'Sunrise_Fire_Safety_NOC.pdf', filePath: '/uploads/sunrise/fire_noc.pdf', fileSize: 840200, sha256Hash: 'c772b19284fa98012bcefa901248019284719283740192837491029384712034', uploadedAt: '2026-01-18T10:10:00Z', uploadedBy: 'Dr. Anand Kumar' }
+      { id: 'v-sun-2', documentId: 'doc-sun-fire', versionNumber: 1, fileName: 'Sunrise_Fire_Safety_NOC.pdf', filePath: '/samples/Sunrise_Fire_Safety_NOC.pdf', fileSize: 1082, sha256Hash: '982f7c02390ae4ea3b60f350adcf3265178049782c26ff9a948ac7e243ecd8ab', uploadedAt: '2026-01-18T10:10:00Z', uploadedBy: 'Dr. Anand Kumar' }
     ],
     createdAt: '2026-01-18T10:10:00Z',
     updatedAt: '2026-01-18T10:10:00Z'
@@ -588,16 +605,16 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     documentType: 'Building Plan',
     title: 'Architectural Built-up Schedule & Structural Undertaking',
     fileName: 'Nova_Building_Plan_Rev2.pdf',
-    filePath: '/uploads/nova/structure_plan.pdf',
-    fileSize: 3120000,
+    filePath: '/samples/Nova_Building_Plan_Rev2.pdf',
+    fileSize: 1132,
     mimeType: 'application/pdf',
-    sha256Hash: 'b982401928374019283740192837401928374019283740192837401928374019',
+    sha256Hash: 'b8129d8d5d1f598ad8133ef0bd8b28f45862ce55e87b7e8346a4785482ecfe35',
     verificationStatus: 'Manual Review Required',
     verificationSource: 'Document Forensics Engine (simulated)',
     forensicMetadata: {
-      fileSize: 3120000,
+      fileSize: 1132,
       mimeType: 'application/pdf',
-      sha256Hash: 'b982401928374019283740192837401928374019283740192837401928374019',
+      sha256Hash: 'b8129d8d5d1f598ad8133ef0bd8b28f45862ce55e87b7e8346a4785482ecfe35',
       pageCount: 12,
       pdfProducer: 'Canva / Ghostscript 9.53 (Hex Modified)',
       pdfCreator: 'Modified with Nitro Pro v13.70',
@@ -617,7 +634,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       { id: 'f-nov-2', documentId: 'doc-nova-tampered', fieldKey: 'survey_number', fieldLabel: 'Survey Number', fieldValue: '289/1A', confidence: 0.94, isManuallyCorrected: false, pageNumber: 1 }
     ],
     versions: [
-      { id: 'v-nov-1', documentId: 'doc-nova-tampered', versionNumber: 1, fileName: 'Nova_Building_Plan_Rev2.pdf', filePath: '/uploads/nova/structure_plan.pdf', fileSize: 3120000, sha256Hash: 'b982401928374019283740192837401928374019283740192837401928374019', uploadedAt: '2026-01-20T14:00:00Z', uploadedBy: 'Rajesh Deshmukh' }
+      { id: 'v-nov-1', documentId: 'doc-nova-tampered', versionNumber: 1, fileName: 'Nova_Building_Plan_Rev2.pdf', filePath: '/samples/Nova_Building_Plan_Rev2.pdf', fileSize: 1132, sha256Hash: 'b8129d8d5d1f598ad8133ef0bd8b28f45862ce55e87b7e8346a4785482ecfe35', uploadedAt: '2026-01-20T14:00:00Z', uploadedBy: 'Rajesh Deshmukh' }
     ],
     createdAt: '2026-01-20T14:00:00Z',
     updatedAt: '2026-01-20T14:00:00Z'
@@ -629,16 +646,16 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     documentType: 'Faculty Qualification Certificate',
     title: 'Ph.D. Degree Certificate - Dr. Vikram Malhotra',
     fileName: 'Nova_Faculty_Qualification_Malhotra.pdf',
-    filePath: '/uploads/nova/fac_phd.pdf',
-    fileSize: 920400,
+    filePath: '/samples/Nova_Faculty_Qualification_Malhotra.pdf',
+    fileSize: 1134,
     mimeType: 'application/pdf',
-    sha256Hash: 'd382910481203948120394812039481203948120394812039481203948120394',
+    sha256Hash: '548fc5336f720e4268d2040ebf370a0c3618c099d59e725a9c7f7b2edbbecab1',
     verificationStatus: 'Mismatch Detected',
     verificationSource: 'Faculty Registry Mock Adapter (simulated)',
     forensicMetadata: {
-      fileSize: 920400,
+      fileSize: 1134,
       mimeType: 'application/pdf',
-      sha256Hash: 'd382910481203948120394812039481203948120394812039481203948120394',
+      sha256Hash: '548fc5336f720e4268d2040ebf370a0c3618c099d59e725a9c7f7b2edbbecab1',
       pageCount: 2,
       pdfProducer: 'VTU Digital Depository Engine',
       creationDate: '2018-08-14T10:00:00Z',
@@ -653,7 +670,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       { id: 'f-nov-5', documentId: 'doc-nova-fac-reused', fieldKey: 'certificate_number', fieldLabel: 'Degree Registration No', fieldValue: 'VTU-PHD-MECH-4412', confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 }
     ],
     versions: [
-      { id: 'v-nov-2', documentId: 'doc-nova-fac-reused', versionNumber: 1, fileName: 'Nova_Faculty_Qualification_Malhotra.pdf', filePath: '/uploads/nova/fac_phd.pdf', fileSize: 920400, sha256Hash: 'd382910481203948120394812039481203948120394812039481203948120394', uploadedAt: '2026-01-20T14:30:00Z', uploadedBy: 'Rajesh Deshmukh' }
+      { id: 'v-nov-2', documentId: 'doc-nova-fac-reused', versionNumber: 1, fileName: 'Nova_Faculty_Qualification_Malhotra.pdf', filePath: '/samples/Nova_Faculty_Qualification_Malhotra.pdf', fileSize: 1134, sha256Hash: '548fc5336f720e4268d2040ebf370a0c3618c099d59e725a9c7f7b2edbbecab1', uploadedAt: '2026-01-20T14:30:00Z', uploadedBy: 'Rajesh Deshmukh' }
     ],
     createdAt: '2026-01-20T14:30:00Z',
     updatedAt: '2026-01-20T14:30:00Z'
@@ -918,16 +935,16 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     documentType: 'Land Deed',
     title: 'Sub-Lease & Land Demarcation Agreement',
     fileName: 'Apex_Land_Lease_Deed.pdf',
-    filePath: '/uploads/apex/lease_deed.pdf',
-    fileSize: 1840000,
+    filePath: '/samples/Apex_Land_Lease_Deed.pdf',
+    fileSize: 1078,
     mimeType: 'application/pdf',
-    sha256Hash: 'e492019481029384019283049182039481029384019283049182039481029384',
+    sha256Hash: '4998dc89c468c74307bb8566f940b49fb6fc53a67312c21f365ee1d2c3fe4afd',
     verificationStatus: 'Mismatch Detected',
     verificationSource: 'Land Records Mock Adapter (simulated)',
     forensicMetadata: {
-      fileSize: 1840000,
+      fileSize: 1078,
       mimeType: 'application/pdf',
-      sha256Hash: 'e492019481029384019283049182039481029384019283049182039481029384',
+      sha256Hash: '4998dc89c468c74307bb8566f940b49fb6fc53a67312c21f365ee1d2c3fe4afd',
       pageCount: 14,
       pdfProducer: 'Foxit PhantomPDF 10.1',
       creationDate: '2025-10-10T11:00:00Z',
@@ -944,10 +961,45 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       { id: 'f-apx-4b', documentId: 'doc-apex-land-conflict', fieldKey: 'grantee_name', fieldLabel: 'Purchaser / Grantee / Lessee Name', fieldValue: 'Apex Technical Society', confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 }
     ],
     versions: [
-      { id: 'v-apx-1', documentId: 'doc-apex-land-conflict', versionNumber: 1, fileName: 'Apex_Land_Lease_Deed.pdf', filePath: '/uploads/apex/lease_deed.pdf', fileSize: 1840000, sha256Hash: 'e492019481029384019283049182039481029384019283049182039481029384', uploadedAt: '2026-01-22T09:00:00Z', uploadedBy: 'Sanjay Deshmukh' }
+      { id: 'v-apx-1', documentId: 'doc-apex-land-conflict', versionNumber: 1, fileName: 'Apex_Land_Lease_Deed.pdf', filePath: '/samples/Apex_Land_Lease_Deed.pdf', fileSize: 1078, sha256Hash: '4998dc89c468c74307bb8566f940b49fb6fc53a67312c21f365ee1d2c3fe4afd', uploadedAt: '2026-01-22T09:00:00Z', uploadedBy: 'Sanjay Deshmukh' }
     ],
     createdAt: '2026-01-22T09:00:00Z',
     updatedAt: '2026-01-22T09:00:00Z'
+  },
+  {
+    id: 'doc-wh-occ-2021',
+    applicationId: 'app-western-horizon-2021',
+    institutionId: 'inst-western-horizon',
+    documentType: 'Occupancy Certificate',
+    title: 'Original Municipal Occupancy Certificate (2021)',
+    fileName: 'Western_Horizon_Occupancy_2021.pdf',
+    filePath: '/samples/Western_Horizon_Occupancy_2021.pdf',
+    fileSize: 1154,
+    mimeType: 'application/pdf',
+    sha256Hash: 'a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b',
+    verificationStatus: 'Verified',
+    verificationSource: 'Certificate Registry Mock (simulated)',
+    forensicMetadata: {
+      fileSize: 1154,
+      mimeType: 'application/pdf',
+      sha256Hash: 'a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b',
+      pageCount: 2,
+      pdfProducer: 'Government Municipal Portal (Archived 2021)',
+      creationDate: '2021-03-15T10:00:00Z',
+      incrementalSavesDetected: false,
+      metadataAnomalyDetected: false,
+      tamperingConfidence: 0.02,
+      anomalyIndicators: []
+    },
+    extractedFields: [
+      { id: 'f-wh-1', documentId: 'doc-wh-occ-2021', fieldKey: 'certificate_number', fieldLabel: 'Occupancy Sanction No', fieldValue: 'OCC-PUNE-2021-DUP-01', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
+      { id: 'f-wh-2', documentId: 'doc-wh-occ-2021', fieldKey: 'issuing_authority', fieldLabel: 'Issuing Body', fieldValue: 'Pune Municipal Corporation', confidence: 0.98, isManuallyCorrected: false, pageNumber: 1 }
+    ],
+    versions: [
+      { id: 'v-wh-1', documentId: 'doc-wh-occ-2021', versionNumber: 1, fileName: 'Western_Horizon_Occupancy_2021.pdf', filePath: '/samples/Western_Horizon_Occupancy_2021.pdf', fileSize: 1154, sha256Hash: 'a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b', uploadedAt: '2021-03-15T10:00:00Z', uploadedBy: 'Western Horizon Registrar' }
+    ],
+    createdAt: '2021-03-15T10:00:00Z',
+    updatedAt: '2021-03-15T10:00:00Z'
   },
   {
     id: 'doc-apex-dup-cert',
@@ -956,16 +1008,16 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     documentType: 'Occupancy Certificate',
     title: 'Municipal Building Occupancy Certificate',
     fileName: 'Apex_Occupancy_Certificate_2021.pdf',
-    filePath: '/uploads/apex/occ_cert.pdf',
-    fileSize: 1420000,
+    filePath: '/samples/Apex_Occupancy_Certificate_2021.pdf',
+    fileSize: 1154,
     mimeType: 'application/pdf',
-    sha256Hash: 'e89c44ab012f9810293847192837401928374019283740192837401928374019',
+    sha256Hash: 'a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b',
     verificationStatus: 'Mismatch Detected',
     verificationSource: 'Certificate Registry Mock (simulated)',
     forensicMetadata: {
-      fileSize: 1420000,
+      fileSize: 1154,
       mimeType: 'application/pdf',
-      sha256Hash: 'e89c44ab012f9810293847192837401928374019283740192837401928374019',
+      sha256Hash: 'a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b',
       pageCount: 4,
       pdfProducer: 'Ricoh Aficio MP C3002',
       creationDate: '2021-03-22T16:00:00Z',
@@ -973,7 +1025,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       metadataAnomalyDetected: false,
       tamperingConfidence: 0.94,
       anomalyIndicators: [
-        'Exact SHA-256 duplicate of certificate filed under Western Horizon in 2021',
+        'Exact cryptographic SHA-256 duplicate of archived certificate doc-wh-occ-2021 originally issued to Western Horizon in 2021',
         'Date timestamp in binary stream older than declared institution founding date'
       ]
     },
@@ -982,7 +1034,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       { id: 'f-apx-6', documentId: 'doc-apex-dup-cert', fieldKey: 'issuing_authority', fieldLabel: 'Issuing Body', fieldValue: 'Pune Municipal Corporation', confidence: 0.93, isManuallyCorrected: false, pageNumber: 1 }
     ],
     versions: [
-      { id: 'v-apx-2', documentId: 'doc-apex-dup-cert', versionNumber: 1, fileName: 'Apex_Occupancy_Certificate_2021.pdf', filePath: '/uploads/apex/occ_cert.pdf', fileSize: 1420000, sha256Hash: 'e89c44ab012f9810293847192837401928374019283740192837401928374019', uploadedAt: '2026-01-22T09:15:00Z', uploadedBy: 'Sanjay Deshmukh' }
+      { id: 'v-apx-2', documentId: 'doc-apex-dup-cert', versionNumber: 1, fileName: 'Apex_Occupancy_Certificate_2021.pdf', filePath: '/samples/Apex_Occupancy_Certificate_2021.pdf', fileSize: 1154, sha256Hash: 'a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b', uploadedAt: '2026-01-22T09:15:00Z', uploadedBy: 'Sanjay Deshmukh' }
     ],
     createdAt: '2026-01-22T09:15:00Z',
     updatedAt: '2026-01-22T09:15:00Z'
@@ -1248,7 +1300,7 @@ export const INITIAL_AUDIT_EVENTS: AuditEvent[] = [
     entityType: 'DOCUMENT',
     entityId: 'doc-sun-land',
     beforeSummary: 'No document present',
-    afterSummary: 'Uploaded Sunrise_Land_Sale_Deed.pdf (SHA: a1f893e3d...)',
+    afterSummary: 'Uploaded Sunrise_Land_Sale_Deed.pdf (SHA: 19cbc54d2...)',
     ipAddress: '106.51.78.22',
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0',
     prevHash: '0000000000000000000000000000000000000000000000000000000000000000',

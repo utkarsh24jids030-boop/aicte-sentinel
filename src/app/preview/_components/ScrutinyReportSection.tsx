@@ -1,6 +1,8 @@
 import React from 'react';
 import { DataStore } from '@/lib/store';
 import { Application } from '@/types';
+import { AuditTrailEngine } from '@/lib/audit/trail';
+import { computeReportSeal } from '@/lib/security/reportSeal';
 import { formatSeverity, maskPII } from './helpers';
 
 interface ScrutinyReportSectionProps {
@@ -61,7 +63,8 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
         }
 
         const reportId = `REP-SCRUTINY-2026-${app.id.toUpperCase()}`;
-        const hashStamp = `STAMP-SHA256-${app.id}-98a7bc6d5e4f3a2b1c0d9e8f7a6b5c4d`;
+        const headHash = AuditTrailEngine.getHeadHash();
+        const hashStamp = computeReportSeal(reportId, app.id, app.readinessScore, recommendation, headHash);
 
         return (
           <article 

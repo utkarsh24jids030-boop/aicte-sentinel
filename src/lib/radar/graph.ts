@@ -62,6 +62,22 @@ export class LinkageRadarEngine {
         x: 820,
         y: 360
       },
+      {
+        id: 'inst-western-horizon',
+        type: 'INSTITUTION',
+        label: 'Western Horizon Institute of Technology',
+        subLabel: 'AICTE: 1-14092811 | Archived Docket (2021)',
+        riskLevel: 'LOW',
+        metadata: {
+          aicteId: '1-14092811',
+          state: 'Maharashtra',
+          status: 'Archived Application',
+          storedOriginalDocId: 'doc-wh-occ-2021',
+          activeAlerts: []
+        },
+        x: 950,
+        y: 120
+      },
 
       // 2. TRUST / SOCIETY NODES
       {
@@ -146,8 +162,9 @@ export class LinkageRadarEngine {
         subLabel: 'Municipal Occupancy Certificate',
         riskLevel: 'CRITICAL',
         metadata: {
-          hash: 'e89c44ab012f981...',
-          alert: 'Same municipal sanction certificate identifier previously recorded for Western Horizon campus.'
+          hash: 'a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b',
+          originalRecordId: 'doc-wh-occ-2021',
+          alert: 'Identical SHA-256 duplicate: original issued to Western Horizon (doc-wh-occ-2021), resubmitted by Apex Polytechnic.'
         },
         x: 950,
         y: 280
@@ -290,14 +307,28 @@ export class LinkageRadarEngine {
         institutionsInvolved: ['Nova Engineering College', 'Apex Polytechnic College']
       },
       {
+        id: 'edge-wh-cert-orig',
+        source: 'inst-western-horizon',
+        target: 'cert-occ-dup',
+        relationType: 'ORIGINAL_ISSUANCE',
+        label: 'Original Municipal Filing (2021)',
+        riskLevel: 'LOW',
+        evidenceDetails: 'Original issued occupancy certificate filed under archived docket doc-wh-occ-2021 with SHA-256 a4b4baef...',
+        institutionsInvolved: ['Western Horizon Institute of Technology', 'Apex Polytechnic College'],
+        confidence: 0.99,
+        reason: 'Archival municipal record match'
+      },
+      {
         id: 'edge-apex-cert-dup',
         source: 'inst-apex',
         target: 'cert-occ-dup',
         relationType: 'DUPLICATE_CERTIFICATE',
         label: 'ADVISORY: Potential Duplicate Certificate',
         riskLevel: 'CRITICAL',
-        evidenceDetails: 'Occupancy certificate OCC-PUNE-2021-DUP-01 previously submitted for Western Horizon campus in 2021.',
-        institutionsInvolved: ['Apex Polytechnic College']
+        evidenceDetails: 'Occupancy certificate OCC-PUNE-2021-DUP-01 is an exact cryptographic SHA-256 duplicate of doc-wh-occ-2021 (Western Horizon 2021).',
+        institutionsInvolved: ['Apex Polytechnic College', 'Western Horizon Institute of Technology'],
+        confidence: 0.99,
+        reason: 'Identical cryptographic SHA-256 digest'
       }
     ];
 

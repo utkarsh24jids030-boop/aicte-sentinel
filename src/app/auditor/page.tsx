@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
 import StatusChip from '@/components/StatusChip';
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -10,7 +9,9 @@ import {
   CheckCircle2, 
   Building2,
   RotateCcw,
-  ShieldAlert
+  ShieldAlert,
+  FileCheck,
+  ExternalLink
 } from 'lucide-react';
 import { AuditEvent } from '@/types';
 import { DataStore } from '@/lib/store';
@@ -21,6 +22,8 @@ export default function AuditorPage() {
   const [chainIntegrity, setChainIntegrity] = useState<{ isValid: boolean; totalEventsChecked: number } | null>(null);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
+  const [verifyingSealId, setVerifyingSealId] = useState<string | null>(null);
+  const [verifiedSeals, setVerifiedSeals] = useState<Record<string, { seal: string; chainHeadHash: string }>>({});
   const applications = DataStore.getApplications();
 
   const fetchAuditTrail = useCallback(async () => {
@@ -80,10 +83,35 @@ export default function AuditorPage() {
     }
   };
 
+  const handleVerifySeal = async (appId: string, appName: string) => {
+    setVerifyingSealId(appId);
+    try {
+      const res = await fetch('/api/reports/verify-seal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ applicationId: appId })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setVerifiedSeals(prev => ({
+          ...prev,
+          [appId]: { seal: data.seal, chainHeadHash: data.chainHeadHash }
+        }));
+        alert(`Cryptographic Report Seal Verified for ${appName}:\n\nReport ID: ${data.reportId}\nSeal: ${data.seal}\nChain Head Hash: ${data.chainHeadHash}\nStatus: Authentic & Tamper-Evident`);
+      } else {
+        alert(data.error || 'Failed to verify report seal.');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error verifying report seal.');
+    } finally {
+      setVerifyingSealId(null);
+    }
+  };
+
   return (
     <ProtectedRoute allowedRoles={['AUDITOR', 'ADMIN']}>
       <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
-        <DemoBanner />
         <Navbar />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -181,12 +209,35 @@ export default function AuditorPage() {
                   <span>Readiness: {app.readinessScore}/100</span>
                   <span>Linkage Risk: {app.linkageRiskScore}/100</span>
                 </div>
-                <Link
-                  href={`/officer/case/${app.id}`}
-                  className="block text-center py-1.5 bg-white border border-slate-300 rounded-lg text-slate-700 font-semibold hover:bg-slate-100 mt-2"
-                >
-                  View Case Audit Log
-                </Link>
+
+                {verifiedSeals[app.id] ? (
+                  <div className="bg-emerald-50 border border-emerald-200 rounded p-1.5 font-mono text-[10px] text-emerald-800 break-all">
+                    <span className="font-bold block text-emerald-900">VERIFIED SEAL:</span>
+                    {verifiedSeals[app.id].seal}
+                  </div>
+                ) : (
+                  <div className="font-mono text-[10px] text-slate-400">
+                    Seal: Hash-chained to ledger
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <button
+                    onClick={() => handleVerifySeal(app.id, app.institutionName)}
+                    disabled={verifyingSealId === app.id}
+                    className="py-1.5 px-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 transition-all disabled:opacity-50"
+                  >
+                    <FileCheck className="w-3 h-3" />
+                    <span>{verifyingSealId === app.id ? 'Checking...' : 'Verify Seal'}</span>
+                  </button>
+                  <Link
+                    href={`/officer/scrutiny/${app.id}`}
+                    className="py-1.5 px-2 bg-white border border-slate-300 rounded-lg text-slate-700 font-semibold hover:bg-slate-100 flex items-center justify-center gap-1 text-[11px]"
+                  >
+                    <span>View Report</span>
+                    <ExternalLink className="w-3 h-3 text-slate-400" />
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

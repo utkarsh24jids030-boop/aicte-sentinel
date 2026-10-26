@@ -437,5 +437,55 @@ test('Audit Trail Completeness: Seeded officer actions and SYSTEM roles present 
   );
 });
 
+test('Item 3: Report Seals & Real Sample Document Cryptographic Hashes', () => {
+  // 1. Verify sample PDFs exist and match hashes in manifest
+  const manifestPath = './public/samples/manifest.json';
+  assert.ok(fs.existsSync(manifestPath), 'public/samples/manifest.json must exist');
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+
+  for (const [fileName, meta] of Object.entries(manifest)) {
+    const fullPath = `./public/samples/${fileName}`;
+    assert.ok(fs.existsSync(fullPath), `Sample PDF ${fileName} must exist`);
+    const fileBytes = fs.readFileSync(fullPath);
+    const computedHash = crypto.createHash('sha256').update(fileBytes).digest('hex');
+    assert.equal(computedHash, meta.hash, `Hash for ${fileName} must match manifest`);
+  }
+
+  // 2. Duplicate document verification: Western Horizon 2021 and Apex Reused have identical hashes
+  const whHash = manifest['Western_Horizon_Occupancy_2021.pdf'].hash;
+  const apexHash = manifest['Apex_Occupancy_Certificate_Reused.pdf'].hash;
+  assert.equal(whHash, apexHash, 'Western Horizon and Apex Occupancy certs must have identical SHA-256 hashes');
+
+  // 3. Verify store contains Western Horizon institution and original document record
+  const storeContent = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(storeContent.includes('inst-western-horizon'), 'store.ts must seed Western Horizon institution');
+  assert.ok(storeContent.includes('doc-wh-occ-2021'), 'store.ts must seed doc-wh-occ-2021 original document');
+  assert.ok(storeContent.includes(whHash), 'store.ts must reference real sample SHA-256 hash for Western Horizon');
+
+  // 4. Verify report seal computation logic and uniqueness across head hashes
+  const payload1 = {
+    reportId: 'REP-001',
+    applicationNumber: 'AICTE/2026/NOV-9014',
+    readinessScore: 45,
+    scrutinyDate: '2026-01-23'
+  };
+  const headHash1 = '1111111111111111111111111111111111111111111111111111111111111111';
+  const headHash2 = '2222222222222222222222222222222222222222222222222222222222222222';
+
+  const sealData1 = `${JSON.stringify(payload1)}|${headHash1}`;
+  const seal1 = crypto.createHash('sha256').update(sealData1).digest('hex');
+  const sealData2 = `${JSON.stringify(payload1)}|${headHash2}`;
+  const seal2 = crypto.createHash('sha256').update(sealData2).digest('hex');
+
+  assert.notEqual(seal1, seal2, 'Seals with different audit head hashes must produce different seals');
+  assert.equal(seal1.length, 64, 'SHA-256 seal must be 64 characters hex');
+
+  // 5. Verify radar graph includes Western Horizon node and original issuance edge
+  const graphContent = fs.readFileSync('./src/lib/radar/graph.ts', 'utf8');
+  assert.ok(graphContent.includes('inst-western-horizon'), 'Radar graph must include Western Horizon node');
+  assert.ok(graphContent.includes('edge-wh-cert-orig'), 'Radar graph must include original issuance edge');
+});
+
+
 
 

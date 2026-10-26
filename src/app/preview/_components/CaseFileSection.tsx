@@ -4,6 +4,7 @@ import { RulesEngine } from '@/lib/rules/engine';
 import { Application, DocumentRecord, Finding } from '@/types';
 import { formatSeverity, formatStatus, maskIdentifier, maskPII } from './helpers';
 import VerificationStatusLegend from '@/components/VerificationStatusLegend';
+import InfrastructureEvidencePanel from '@/components/InfrastructureEvidencePanel';
 
 interface CaseFileSectionProps {
   appId?: string;
@@ -467,6 +468,15 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                   );
                 })}
               </div>
+            </div>
+
+            {/* Infrastructure Evidence & Vision-Lite Automated Checks (PS Item 6) */}
+            <div className="pt-4 border-t border-slate-200">
+              <InfrastructureEvidencePanel
+                applicationId={app.id}
+                evidence={DataStore.getInfrastructureEvidence(app.id)}
+                canUpload={false}
+              />
             </div>
           </article>
         );

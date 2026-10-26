@@ -7,12 +7,14 @@ import Navbar from '@/components/Navbar';
 import ReadinessGauge from '@/components/ReadinessGauge';
 import StatusChip from '@/components/StatusChip';
 import DocumentViewerModal from '@/components/DocumentViewerModal';
+import InfrastructureEvidencePanel from '@/components/InfrastructureEvidencePanel';
 import { 
   Application, 
   DocumentRecord, 
   DocumentType, 
   ReadinessBreakdown, 
-  Finding 
+  Finding,
+  InfrastructureEvidence
 } from '@/types';
 import { 
   Building2, 
@@ -41,6 +43,7 @@ export default function InstitutionApplicationDetailPage({
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
   const [readiness, setReadiness] = useState<ReadinessBreakdown | null>(null);
   const [findings, setFindings] = useState<Finding[]>([]);
+  const [infrastructureEvidence, setInfrastructureEvidence] = useState<InfrastructureEvidence[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<DocumentRecord | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -112,6 +115,7 @@ export default function InstitutionApplicationDetailPage({
         setDocuments(data.documents || []);
         setReadiness(data.readiness || null);
         setFindings(data.findings || []);
+        setInfrastructureEvidence(data.infrastructureEvidence || []);
       }
     } finally {
       setIsLoading(false);
@@ -414,6 +418,16 @@ export default function InstitutionApplicationDetailPage({
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Infrastructure Evidence & Vision-Lite Automated Checks (PS Item 6) */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
+          <InfrastructureEvidencePanel
+            applicationId={id}
+            evidence={infrastructureEvidence}
+            canUpload={true}
+            onEvidenceUploaded={loadData}
+          />
         </div>
 
       </main>

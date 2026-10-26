@@ -8,12 +8,14 @@ import ReadinessGauge from '@/components/ReadinessGauge';
 import StatusChip from '@/components/StatusChip';
 import FindingCard from '@/components/FindingCard';
 import DocumentViewerModal from '@/components/DocumentViewerModal';
+import InfrastructureEvidencePanel from '@/components/InfrastructureEvidencePanel';
 import { 
   Application, 
   DocumentRecord, 
   Finding, 
   ReadinessBreakdown, 
-  FindingStatus 
+  FindingStatus,
+  InfrastructureEvidence
 } from '@/types';
 import { 
   FileSearch, 
@@ -25,11 +27,12 @@ import {
   ArrowLeft, 
   Download, 
   RefreshCw, 
-  Send,
-  Eye,
-  CheckCircle2,
-  Clock,
-  Printer
+  Send, 
+  Eye, 
+  CheckCircle2, 
+  Clock, 
+  Printer,
+  Camera
 } from 'lucide-react';
 
 export default function OfficerCaseFilePage({
@@ -42,9 +45,10 @@ export default function OfficerCaseFilePage({
   const [application, setApplication] = useState<Application | null>(null);
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
   const [findings, setFindings] = useState<Finding[]>([]);
+  const [infrastructureEvidence, setInfrastructureEvidence] = useState<InfrastructureEvidence[]>([]);
   const [readiness, setReadiness] = useState<ReadinessBreakdown | null>(null);
   const [selectedDoc, setSelectedDoc] = useState<DocumentRecord | null>(null);
-  const [activeTab, setActiveTab] = useState<'findings' | 'documents' | 'summary'>('findings');
+  const [activeTab, setActiveTab] = useState<'findings' | 'documents' | 'infrastructure' | 'summary'>('findings');
   const [isLoading, setIsLoading] = useState(true);
 
   const loadCaseData = useCallback(async () => {
@@ -56,6 +60,7 @@ export default function OfficerCaseFilePage({
         setApplication(data.application);
         setDocuments(data.documents || []);
         setFindings(data.findings || []);
+        setInfrastructureEvidence(data.infrastructureEvidence || []);
         setReadiness(data.readiness || null);
       }
     } finally {
@@ -234,6 +239,18 @@ export default function OfficerCaseFilePage({
           </button>
 
           <button
+            onClick={() => setActiveTab('infrastructure')}
+            className={`py-3 px-4 border-b-2 transition-all flex items-center gap-2 ${
+              activeTab === 'infrastructure'
+                ? 'border-[#002b66] text-[#002b66] font-bold'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <Camera className="w-4 h-4" />
+            <span>Infrastructure Evidence ({infrastructureEvidence.length})</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('summary')}
             className={`py-3 px-4 border-b-2 transition-all flex items-center gap-2 ${
               activeTab === 'summary'
@@ -329,7 +346,18 @@ export default function OfficerCaseFilePage({
           </div>
         )}
 
-        {/* 3. READINESS BREAKDOWN TAB */}
+        {/* 3. INFRASTRUCTURE EVIDENCE TAB */}
+        {activeTab === 'infrastructure' && (
+          <div className="space-y-6">
+            <InfrastructureEvidencePanel
+              applicationId={application.id}
+              evidence={infrastructureEvidence}
+              canUpload={false}
+            />
+          </div>
+        )}
+
+        {/* 4. READINESS BREAKDOWN TAB */}
         {activeTab === 'summary' && readiness && (
           <div className="space-y-6">
             <ReadinessGauge readiness={readiness} />

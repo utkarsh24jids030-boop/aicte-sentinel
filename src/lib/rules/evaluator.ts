@@ -2,9 +2,9 @@
 // AST-based Lexer, Parser, and Sandboxed Evaluator (NO eval(), NO new Function())
 // Problem Statement SIH26261 - Smart India Hackathon 2026
 
-import { Application, DocumentRecord, Institution } from '@/types';
-import { getAsOfDate } from '@/lib/config/env';
-import { getMinimumLandArea, computeRequiredFaculty, resolveProgrammeLevel, LocationType, MIN_EXTRACTION_CONFIDENCE_THRESHOLD } from '@/lib/config/norms';
+import type { Application, DocumentRecord, Institution } from '@/types';
+import { getAsOfDate } from '../config/env';
+import { getMinimumLandArea, computeRequiredFaculty, resolveProgrammeLevel, type LocationType, MIN_EXTRACTION_CONFIDENCE_THRESHOLD } from '../config/norms';
 
 // ==========================================
 // 1. TOKEN DEFINITIONS

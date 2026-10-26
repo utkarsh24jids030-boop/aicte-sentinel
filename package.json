@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node tests/sentinel.test.mjs"
+    "test": "node --test tests/sentinel.test.mjs tests/evaluator.test.mjs tests/rules.test.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

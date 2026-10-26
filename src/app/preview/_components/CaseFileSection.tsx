@@ -222,6 +222,12 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                             <span className="font-semibold text-slate-800">{doc.verificationSource || 'Internal Validation'}</span>
                           </div>
                           <div>
+                            <span className="text-slate-500">Extraction Engine:</span>{' '}
+                            <span className="font-mono text-[11px] font-semibold text-blue-800">
+                              {doc.extractionEngine || 'Baseline PDF Text Stream Extractor'}
+                            </span>
+                          </div>
+                          <div>
                             <span className="text-slate-500">Uploaded By:</span>{' '}
                             <span className="font-medium text-slate-800">{doc.versions[0]?.uploadedBy || 'Applicant'} on {new Date(doc.createdAt).toLocaleDateString()}</span>
                           </div>

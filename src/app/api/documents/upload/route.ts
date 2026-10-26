@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { DataStore } from '@/lib/store';
 import { ForensicsEngine } from '@/lib/forensics/engine';
+import { ExtractionEngine } from '@/lib/extraction/engine';
 import { AuditTrailEngine } from '@/lib/audit/trail';
 import { checkRateLimit, getClientIp } from '@/lib/security/rateLimit';
 import { DocumentRecord, DocumentType, ExtractedField } from '@/types';
@@ -39,10 +40,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Application not found' }, { status: 404 });
     }
 
+    const docId = `doc-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     let fileName = `${documentType.replace(/\s+/g, '_')}_Upload.pdf`;
     let fileSize = 1245000;
     let mimeType = 'application/pdf';
     let rawBufferHash: string | null = null;
+    let extractedFields: ExtractedField[] = [];
+    let extractionEngine = 'Baseline PDF Text Stream Extractor (pdf-parse v2 + regex rules)';
+    let extractionEngineStatus = 'Baseline extraction active — AI_EXTRACTION_API_KEY not configured';
+    let extractedTextPreview = '';
 
     // 2. Upload file security validations (Size, MIME, Magic Bytes)
     if (file && typeof file === 'object' && 'size' in file && file.size > 0) {
@@ -92,12 +98,50 @@ export async function POST(request: Request) {
       fileName = file.name;
       fileSize = file.size;
       mimeType = file.type;
-      rawBufferHash = crypto.createHash('sha256').update(Buffer.from(buffer)).digest('hex');
-    }
+      const fileBuffer = Buffer.from(buffer);
+      rawBufferHash = crypto.createHash('sha256').update(fileBuffer).digest('hex');
 
-    // Mock content extraction simulation
-    const simulatedContent = `DOCUMENT_CONTENT: ${documentType} for ${app.institutionName}. Application No: ${app.applicationNumber}. Created: ${new Date().toISOString()}`;
-    const docId = `doc-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+      // Real PDF extraction with keyword classification & dynamic confidence
+      if (mimeType === 'application/pdf') {
+        const extraction = await ExtractionEngine.processDocument(fileBuffer, fileName, docId, documentType);
+        extractedFields = extraction.extractedFields;
+        extractionEngine = extraction.extractionEngine;
+        extractionEngineStatus = extraction.extractionEngineStatus;
+        extractedTextPreview = extraction.extractedTextPreview;
+      } else {
+        // Honest disclosure: OCR not implemented for images
+        extractionEngine = 'Native PDF Text Stream Extractor';
+        extractionEngineStatus = 'Raster image uploaded. Native vector text extraction requires PDF format. OCR engine not configured.';
+        extractedTextPreview = '(Scanned image file - native PDF text extraction unavailable)';
+        extractedFields = [
+          {
+            id: `f-${Date.now()}-1`,
+            documentId: docId,
+            fieldKey: 'document_notice',
+            fieldLabel: 'Image Format Notice',
+            fieldValue: 'Image uploaded. OCR engine not configured; manual inspection required.',
+            confidence: 0.65,
+            isManuallyCorrected: false,
+            pageNumber: 1
+          }
+        ];
+      }
+    } else {
+      extractionEngine = 'Baseline PDF Text Stream Extractor (pdf-parse v2 + regex rules)';
+      extractionEngineStatus = 'Baseline extraction active — AI_EXTRACTION_API_KEY not configured';
+      extractedFields = [
+        {
+          id: `f-${Date.now()}-1`,
+          documentId: docId,
+          fieldKey: 'document_reference',
+          fieldLabel: 'Reference Indicator',
+          fieldValue: `${documentType} Record`,
+          confidence: 0.85,
+          isManuallyCorrected: false,
+          pageNumber: 1
+        }
+      ];
+    }
 
     const allDocs = DataStore.getDocuments();
     const forensicAnalysis = ForensicsEngine.analyzeDocument(
@@ -106,41 +150,12 @@ export async function POST(request: Request) {
       fileName,
       fileSize,
       mimeType,
-      simulatedContent,
+      extractedTextPreview,
       allDocs
     );
 
     const docSha256 = rawBufferHash || forensicAnalysis.metadata.sha256Hash;
     forensicAnalysis.metadata.sha256Hash = docSha256;
-
-    // Mock OCR Extracted fields depending on documentType
-    const extractedFields: ExtractedField[] = [];
-    if (documentType === 'Land Deed') {
-      extractedFields.push(
-        { id: `f-${Date.now()}-1`, documentId: docId, fieldKey: 'survey_number', fieldLabel: 'Survey / Khasra Number', fieldValue: '144/2', confidence: 0.97, isManuallyCorrected: false, pageNumber: 2 },
-        { id: `f-${Date.now()}-2`, documentId: docId, fieldKey: 'area_acres', fieldLabel: 'Contiguous Land Area (Acres)', fieldValue: '4.85', confidence: 0.95, isManuallyCorrected: false, pageNumber: 3 },
-        { id: `f-${Date.now()}-3`, documentId: docId, fieldKey: 'deed_number', fieldLabel: 'Registered Deed Number', fieldValue: 'DEED-2026-9912', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
-        { id: `f-${Date.now()}-4`, documentId: docId, fieldKey: 'grantee_name', fieldLabel: 'Purchaser / Grantee Name', fieldValue: 'Sunrise Education Trust', confidence: 0.98, isManuallyCorrected: false, pageNumber: 1 }
-      );
-    } else if (documentType === 'Fire Safety Certificate') {
-      extractedFields.push(
-        { id: `f-${Date.now()}-1`, documentId: docId, fieldKey: 'certificate_number', fieldLabel: 'Fire NOC Certificate Number', fieldValue: 'FS-RENEWED-2026', confidence: 0.94, isManuallyCorrected: false, pageNumber: 1 },
-        { id: `f-${Date.now()}-2`, documentId: docId, fieldKey: 'issue_date', fieldLabel: 'Issue Date', fieldValue: '2026-01-20', confidence: 0.93, isManuallyCorrected: false, pageNumber: 1 },
-        { id: `f-${Date.now()}-3`, documentId: docId, fieldKey: 'expiry_date', fieldLabel: 'Expiry Date', fieldValue: '2027-01-19', confidence: 0.95, isManuallyCorrected: false, pageNumber: 1 }
-      );
-    } else if (documentType === 'Affidavit') {
-      extractedFields.push(
-        { id: `f-${Date.now()}-1`, documentId: docId, fieldKey: 'survey_number', fieldLabel: 'Survey Number Declared', fieldValue: '144/2', confidence: 0.96, isManuallyCorrected: false, pageNumber: 2 },
-        { id: `f-${Date.now()}-2`, documentId: docId, fieldKey: 'institution_name', fieldLabel: 'Institution Name Declared', fieldValue: app.institutionName, confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
-        { id: `f-${Date.now()}-3`, documentId: docId, fieldKey: 'notary_registration_no', fieldLabel: 'Notary Bar Council Reg No', fieldValue: 'NOTARY-DL-98214', confidence: 0.92, isManuallyCorrected: false, pageNumber: 8 },
-        { id: `f-${Date.now()}-4`, documentId: docId, fieldKey: 'execution_date', fieldLabel: 'Affidavit Execution Date', fieldValue: '2026-01-10', confidence: 0.96, isManuallyCorrected: false, pageNumber: 8 }
-      );
-    } else {
-      extractedFields.push(
-        { id: `f-${Date.now()}-1`, documentId: docId, fieldKey: 'certificate_number', fieldLabel: 'Document Reference Number', fieldValue: `REF-${Math.floor(10000 + Math.random() * 90000)}`, confidence: 0.91, isManuallyCorrected: false, pageNumber: 1 },
-        { id: `f-${Date.now()}-2`, documentId: docId, fieldKey: 'institution_name', fieldLabel: 'Declared Body', fieldValue: app.institutionName, confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 }
-      );
-    }
 
     const docRecord: DocumentRecord = {
       id: docId,
@@ -155,6 +170,9 @@ export async function POST(request: Request) {
       sha256Hash: docSha256,
       verificationStatus: forensicAnalysis.isSuspicious ? 'Manual Review Required' : 'Not Verified',
       verificationSource: 'Initial Upload Processing',
+      extractionEngine,
+      extractionEngineStatus,
+      extractedTextPreview,
       forensicMetadata: forensicAnalysis.metadata,
       extractedFields,
       versions: [

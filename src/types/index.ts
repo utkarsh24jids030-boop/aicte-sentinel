@@ -167,6 +167,9 @@ export interface DocumentRecord {
   sha256Hash: string;
   verificationStatus: VerificationStatus;
   verificationSource?: string;
+  extractionEngine?: string;
+  extractionEngineStatus?: string;
+  extractedTextPreview?: string;
   forensicMetadata: ForensicMetadata;
   extractedFields: ExtractedField[];
   versions: DocumentVersion[];

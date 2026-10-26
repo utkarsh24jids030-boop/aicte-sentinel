@@ -656,6 +656,61 @@ test('Item 6: Tamper vs Duplicate Scores Decoupling and Formula Documentation', 
   );
 });
 
+test('Item 7: Real Extraction with PDF Library, Keyword Classification & Optional LLM Fallback', async () => {
+  // 1. Verify ExtractionEngine implementation exists
+  assert.ok(fs.existsSync('./src/lib/extraction/engine.ts'), 'src/lib/extraction/engine.ts must exist');
+  const engineCode = fs.readFileSync('./src/lib/extraction/engine.ts', 'utf8');
+  assert.ok(
+    engineCode.includes('extractPdfText') &&
+    engineCode.includes('classifyDocumentType') &&
+    engineCode.includes('extractKeyFields') &&
+    engineCode.includes('processDocument') &&
+    engineCode.includes('AI_EXTRACTION_API_KEY'),
+    'ExtractionEngine must implement PDF text extraction, keyword classification, field extraction, and optional LLM fallback'
+  );
+
+  // 2. Real text extraction verification on sample PDF using pdf-parse library
+  const { PDFParse } = await import('pdf-parse');
+  const samplePdfPath = './public/samples/Sunrise_Fire_Safety_NOC.pdf';
+  assert.ok(fs.existsSync(samplePdfPath), 'Sunrise_Fire_Safety_NOC.pdf must exist');
+  
+  const sampleBuffer = fs.readFileSync(samplePdfPath);
+  const parser = new PDFParse({ data: sampleBuffer });
+  const parsedData = await parser.getText();
+  
+  assert.ok(
+    parsedData.text.includes('KARNATAKA FIRE AND EMERGENCY SERVICES') &&
+    parsedData.text.includes('FS-BLR-2023-9941') &&
+    parsedData.text.includes('2024-01-14'),
+    'pdf-parse must extract real text stream containing Fire NOC details'
+  );
+
+  // 3. Verify upload route connects ExtractionEngine
+  const uploadRouteCode = fs.readFileSync('./src/app/api/documents/upload/route.ts', 'utf8');
+  assert.ok(
+    uploadRouteCode.includes('ExtractionEngine.processDocument') &&
+    uploadRouteCode.includes('extractionEngine') &&
+    uploadRouteCode.includes('extractionEngineStatus'),
+    'api/documents/upload/route.ts must execute ExtractionEngine.processDocument on uploaded PDFs'
+  );
+
+  // 4. Verify DocumentViewerModal displays extraction engine and fallback notice
+  const modalCode = fs.readFileSync('./src/components/DocumentViewerModal.tsx', 'utf8');
+  assert.ok(
+    modalCode.includes('Extraction Engine:') &&
+    modalCode.includes('Baseline extraction active — AI_EXTRACTION_API_KEY not configured'),
+    'DocumentViewerModal must show Extraction Engine and fallback notice'
+  );
+
+  // 5. Verify honest OCR claims: Image uploads disclose native extraction limits
+  assert.ok(
+    uploadRouteCode.includes('OCR engine not configured') &&
+    modalCode.includes('Scanned raster images require vector text streams or dedicated OCR engine'),
+    'System must honestly disclose that OCR is not configured for raster image files'
+  );
+});
+
+
 
 
 

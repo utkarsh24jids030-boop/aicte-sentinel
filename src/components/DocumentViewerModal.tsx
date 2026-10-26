@@ -427,9 +427,19 @@ export default function DocumentViewerModal({
           {/* 3. EXTRACTED FIELDS TAB */}
           {activeTab === 'fields' && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between text-xs text-slate-600">
-                <span>Extracted via AI OCR & regex parser. Review and correct any misrecognized characters.</span>
-                <span className="font-semibold text-slate-800">Confidence Threshold: 80%</span>
+              <div className="p-3 bg-blue-50/70 rounded-xl border border-blue-200 text-xs space-y-1">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-blue-900">Extraction Engine:</span>
+                    <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-300">
+                      {document.extractionEngine || 'Baseline PDF Text Stream Extractor (pdf-parse v2 + regex rules)'}
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-slate-500 font-medium">Statutory Verification Threshold: 75%</span>
+                </div>
+                <p className="text-[11px] text-slate-600">
+                  {document.extractionEngineStatus || 'Baseline extraction active — AI_EXTRACTION_API_KEY not configured. Scanned raster images require vector text streams or dedicated OCR engine.'}
+                </p>
               </div>
 
               <div className="border border-slate-200 rounded-xl overflow-hidden shadow-2xs">

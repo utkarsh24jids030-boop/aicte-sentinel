@@ -25,7 +25,7 @@ const MOCK_DIGILOCKER_DB: Record<string, {
 }> = {
   // Sunrise Institute
   'DL-AFF-SUNRISE-2026': {
-    issuer: 'Department of Revenue & Notary Registry',
+    issuer: 'Department of Revenue & Notary Registry (simulated)',
     docType: 'Affidavit',
     holderName: 'Dr. Anand Kumar (Chairman, Sunrise Education Trust)',
     identifier: 'NOTARY-DL-98214',
@@ -34,7 +34,7 @@ const MOCK_DIGILOCKER_DB: Record<string, {
     metadata: { stampValue: 100, verifiedSigner: 'Adv. S. Ramanathan, Notary Govt of India' }
   },
   'DL-FAC-SUNRISE-001': {
-    issuer: 'Anna University Depository',
+    issuer: 'Anna University Depository (simulated)',
     docType: 'Faculty Qualification Certificate',
     holderName: 'Dr. Ramesh Sundaram',
     identifier: 'AU-DOC-PHD-2015-884',
@@ -44,7 +44,7 @@ const MOCK_DIGILOCKER_DB: Record<string, {
   },
   // Nova Engineering
   'DL-FAC-NOVA-REUSED-099': {
-    issuer: 'Visvesvaraya Technological University',
+    issuer: 'Visvesvaraya Technological University (simulated)',
     docType: 'Faculty Qualification Certificate',
     holderName: 'Dr. Vikram Malhotra',
     identifier: 'VTU-PHD-MECH-4412',
@@ -57,7 +57,7 @@ const MOCK_DIGILOCKER_DB: Record<string, {
   },
   // Apex Polytechnic
   'DL-APEX-UNAVAILABLE-DOC': {
-    issuer: 'State Technical Board',
+    issuer: 'State Technical Board (simulated)',
     docType: 'NOC',
     holderName: 'Apex Polytechnic College',
     identifier: 'DTE-APEX-NOC-990',
@@ -80,7 +80,7 @@ const MOCK_CERT_REGISTRY_DB: Record<string, {
 }> = {
   // Sunrise Fire Safety Certificate - EXPIRED
   'FS-BLR-2023-9941': {
-    issuingAuthority: 'Karnataka State Fire and Emergency Services',
+    issuingAuthority: 'Karnataka State Fire and Emergency Services (simulated)',
     certType: 'Fire Safety Certificate',
     holderName: 'Sunrise Institute of Technology',
     certNumber: 'FS-BLR-2023-9941',
@@ -91,7 +91,7 @@ const MOCK_CERT_REGISTRY_DB: Record<string, {
   },
   // Sunrise Occupancy Certificate
   'OCC-BBMP-2020-118': {
-    issuingAuthority: 'Bruhat Bengaluru Mahanagara Palike (Town Planning)',
+    issuingAuthority: 'Bruhat Bengaluru Mahanagara Palike (Town Planning) (simulated)',
     certType: 'Occupancy Certificate',
     holderName: 'Sunrise Institute of Technology',
     certNumber: 'OCC-BBMP-2020-118',
@@ -102,7 +102,7 @@ const MOCK_CERT_REGISTRY_DB: Record<string, {
   },
   // Apex Polytechnic Duplicate Certificate
   'OCC-PUNE-2021-DUP-01': {
-    issuingAuthority: 'Pune Municipal Corporation',
+    issuingAuthority: 'Pune Municipal Corporation (simulated)',
     certType: 'Occupancy Certificate',
     holderName: 'Apex Educational Campus',
     certNumber: 'OCC-PUNE-2021-DUP-01',
@@ -242,7 +242,7 @@ export class MockVerificationService {
     };
 
     const sourceResponse: SourceResponse = {
-      sourceName: 'National DigiLocker Sandbox API v2.4',
+      sourceName: 'National DigiLocker Sandbox API v2.4 (simulated)',
       sourceStatus,
       details,
       timestamp: new Date().toISOString()
@@ -292,7 +292,7 @@ export class MockVerificationService {
     };
 
     const sourceResponse: SourceResponse = {
-      sourceName: 'Unified Municipal Certificate Verification Registry (UMCVR)',
+      sourceName: 'Unified Municipal Certificate Verification Registry (UMCVR) (simulated)',
       sourceStatus,
       details,
       timestamp: new Date().toISOString()
@@ -346,7 +346,7 @@ export class MockVerificationService {
     };
 
     const sourceResponse: SourceResponse = {
-      sourceName: `State Digital Land Records & Revenue Cadastre (${state})`,
+      sourceName: `State Digital Land Records & Revenue Cadastre (${state}) (simulated)`,
       sourceStatus,
       details,
       timestamp: new Date().toISOString()
@@ -396,7 +396,7 @@ export class MockVerificationService {
     };
 
     const sourceResponse: SourceResponse = {
-      sourceName: 'AICTE National Faculty Directory (NFD)',
+      sourceName: 'AICTE National Faculty Directory (NFD) (simulated)',
       sourceStatus,
       details,
       timestamp: new Date().toISOString()

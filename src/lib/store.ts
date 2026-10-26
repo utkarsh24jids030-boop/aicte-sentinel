@@ -195,7 +195,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'a1f893e3d489b0128cf7e9124401bbcd87234918237461829374012938471a2b',
     verificationStatus: 'Verified',
-    verificationSource: 'Bhoomi Karnataka State Cadastre Registry',
+    verificationSource: 'Bhoomi Karnataka State Cadastre Registry (simulated)',
     forensicMetadata: {
       fileSize: 2450120,
       mimeType: 'application/pdf',
@@ -234,7 +234,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'c772b19284fa98012bcefa901248019284719283740192837491029384712034',
     verificationStatus: 'Expired',
-    verificationSource: 'Karnataka State Fire and Emergency Services',
+    verificationSource: 'Karnataka State Fire and Emergency Services (simulated)',
     forensicMetadata: {
       fileSize: 840200,
       mimeType: 'application/pdf',
@@ -271,7 +271,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'f490128374901823740192837401928374019283740192837401928374019283',
     verificationStatus: 'Manual Review Required',
-    verificationSource: 'DigiLocker Mock Adapter',
+    verificationSource: 'DigiLocker Mock Adapter (simulated)',
     forensicMetadata: {
       fileSize: 1120400,
       mimeType: 'application/pdf',
@@ -311,7 +311,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b',
     verificationStatus: 'Verified',
-    verificationSource: 'BBMP Town Planning Portal',
+    verificationSource: 'BBMP Town Planning Portal (simulated)',
     forensicMetadata: {
       fileSize: 4200100,
       mimeType: 'application/pdf',
@@ -346,7 +346,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8c',
     verificationStatus: 'Verified',
-    verificationSource: 'Karnataka Empanelled Engineers Board',
+    verificationSource: 'Karnataka Empanelled Engineers Board (simulated)',
     forensicMetadata: {
       fileSize: 980000,
       mimeType: 'application/pdf',
@@ -381,7 +381,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2c',
     verificationStatus: 'Verified',
-    verificationSource: 'Certificate Registry Mock',
+    verificationSource: 'Certificate Registry Mock (simulated)',
     forensicMetadata: {
       fileSize: 1240000,
       mimeType: 'application/pdf',
@@ -416,7 +416,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4d',
     verificationStatus: 'Verified',
-    verificationSource: 'AICTE Faculty Portal',
+    verificationSource: 'AICTE Faculty Portal (simulated)',
     forensicMetadata: {
       fileSize: 1850000,
       mimeType: 'application/pdf',
@@ -451,7 +451,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5e',
     verificationStatus: 'Verified',
-    verificationSource: 'DigiLocker Mock Adapter',
+    verificationSource: 'DigiLocker Mock Adapter (simulated)',
     forensicMetadata: {
       fileSize: 890000,
       mimeType: 'application/pdf',
@@ -486,7 +486,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f',
     verificationStatus: 'Verified',
-    verificationSource: 'ICAI UDIN Verification Portal',
+    verificationSource: 'ICAI UDIN Verification Portal (simulated)',
     forensicMetadata: {
       fileSize: 2100000,
       mimeType: 'application/pdf',
@@ -521,7 +521,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a',
     verificationStatus: 'Verified',
-    verificationSource: 'AICTE Central Document Repository',
+    verificationSource: 'AICTE Central Document Repository (simulated)',
     forensicMetadata: {
       fileSize: 560000,
       mimeType: 'application/pdf',
@@ -555,7 +555,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b',
     verificationStatus: 'Verified',
-    verificationSource: 'Karnataka Sub-Registrar Records',
+    verificationSource: 'Karnataka Sub-Registrar Records (simulated)',
     forensicMetadata: {
       fileSize: 1750000,
       mimeType: 'application/pdf',
@@ -593,7 +593,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'b982401928374019283740192837401928374019283740192837401928374019',
     verificationStatus: 'Manual Review Required',
-    verificationSource: 'Document Forensics Engine',
+    verificationSource: 'Document Forensics Engine (simulated)',
     forensicMetadata: {
       fileSize: 3120000,
       mimeType: 'application/pdf',
@@ -634,7 +634,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'd382910481203948120394812039481203948120394812039481203948120394',
     verificationStatus: 'Mismatch Detected',
-    verificationSource: 'Faculty Registry Mock Adapter',
+    verificationSource: 'Faculty Registry Mock Adapter (simulated)',
     forensicMetadata: {
       fileSize: 920400,
       mimeType: 'application/pdf',
@@ -670,7 +670,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c',
     verificationStatus: 'Verified',
-    verificationSource: 'Maharashtra Land Records Registry',
+    verificationSource: 'Maharashtra Land Records Registry (simulated)',
     forensicMetadata: {
       fileSize: 2100000,
       mimeType: 'application/pdf',
@@ -707,7 +707,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d',
     verificationStatus: 'Verified',
-    verificationSource: 'DigiLocker Mock Adapter',
+    verificationSource: 'DigiLocker Mock Adapter (simulated)',
     forensicMetadata: {
       fileSize: 1050000,
       mimeType: 'application/pdf',
@@ -747,7 +747,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e',
     verificationStatus: 'Verified',
-    verificationSource: 'Certificate Registry Mock',
+    verificationSource: 'Certificate Registry Mock (simulated)',
     forensicMetadata: {
       fileSize: 1350000,
       mimeType: 'application/pdf',
@@ -782,7 +782,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f',
     verificationStatus: 'Verified',
-    verificationSource: 'AICTE Faculty Portal',
+    verificationSource: 'AICTE Faculty Portal (simulated)',
     forensicMetadata: {
       fileSize: 1650000,
       mimeType: 'application/pdf',
@@ -817,7 +817,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a',
     verificationStatus: 'Verified',
-    verificationSource: 'AICTE Central Document Repository',
+    verificationSource: 'AICTE Central Document Repository (simulated)',
     forensicMetadata: {
       fileSize: 580000,
       mimeType: 'application/pdf',
@@ -851,7 +851,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a',
     verificationStatus: 'Verified',
-    verificationSource: 'Maharashtra Charity Commissioner',
+    verificationSource: 'Maharashtra Charity Commissioner (simulated)',
     forensicMetadata: {
       fileSize: 1820000,
       mimeType: 'application/pdf',
@@ -886,7 +886,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a',
     verificationStatus: 'Verified',
-    verificationSource: 'ICAI UDIN Verification Portal',
+    verificationSource: 'ICAI UDIN Verification Portal (simulated)',
     forensicMetadata: {
       fileSize: 1950000,
       mimeType: 'application/pdf',
@@ -923,7 +923,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'e492019481029384019283049182039481029384019283049182039481029384',
     verificationStatus: 'Mismatch Detected',
-    verificationSource: 'Land Records Mock Adapter',
+    verificationSource: 'Land Records Mock Adapter (simulated)',
     forensicMetadata: {
       fileSize: 1840000,
       mimeType: 'application/pdf',
@@ -961,7 +961,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'e89c44ab012f9810293847192837401928374019283740192837401928374019',
     verificationStatus: 'Mismatch Detected',
-    verificationSource: 'Certificate Registry Mock',
+    verificationSource: 'Certificate Registry Mock (simulated)',
     forensicMetadata: {
       fileSize: 1420000,
       mimeType: 'application/pdf',
@@ -999,7 +999,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '9840192830491820394810293840192830491820394810293840192830491820',
     verificationStatus: 'Source Unavailable',
-    verificationSource: 'DigiLocker Mock Adapter',
+    verificationSource: 'DigiLocker Mock Adapter (simulated)',
     forensicMetadata: {
       fileSize: 760000,
       mimeType: 'application/pdf',
@@ -1034,7 +1034,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8',
     verificationStatus: 'Verified',
-    verificationSource: 'DigiLocker Mock Adapter',
+    verificationSource: 'DigiLocker Mock Adapter (simulated)',
     forensicMetadata: {
       fileSize: 990000,
       mimeType: 'application/pdf',
@@ -1073,7 +1073,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1',
     verificationStatus: 'Verified',
-    verificationSource: 'Maharashtra Societies Registration Office',
+    verificationSource: 'Maharashtra Societies Registration Office (simulated)',
     forensicMetadata: {
       fileSize: 1450000,
       mimeType: 'application/pdf',
@@ -1108,7 +1108,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2',
     verificationStatus: 'Verified',
-    verificationSource: 'Pune Metropolitan Regional Development Authority',
+    verificationSource: 'Pune Metropolitan Regional Development Authority (simulated)',
     forensicMetadata: {
       fileSize: 3200000,
       mimeType: 'application/pdf',
@@ -1143,7 +1143,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'd2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3',
     verificationStatus: 'Verified',
-    verificationSource: 'Maharashtra Empanelled Structural Engineers',
+    verificationSource: 'Maharashtra Empanelled Structural Engineers (simulated)',
     forensicMetadata: {
       fileSize: 850000,
       mimeType: 'application/pdf',
@@ -1178,7 +1178,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: 'e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4',
     verificationStatus: 'Verified',
-    verificationSource: 'AICTE Faculty Portal',
+    verificationSource: 'AICTE Faculty Portal (simulated)',
     forensicMetadata: {
       fileSize: 1450000,
       mimeType: 'application/pdf',

@@ -12,17 +12,17 @@ export default function InstitutionSection() {
   const wizardSteps = [
     { step: 1, title: 'Institutional Profile', status: 'COMPLETED', desc: 'Trust deed, cadastral survey, campus acreage verification' },
     { step: 2, title: 'Academic Programmes & Intake', status: 'COMPLETED', desc: 'Sanctioned programmes (CSE, ECE, ME) and faculty quota balance' },
-    { step: 3, title: 'Statutory Document Vault', status: 'COMPLETED', desc: 'SHA-256 hashed PDFs linked to DigiLocker & land registries' },
+    { step: 3, title: 'Statutory Document Vault', status: 'COMPLETED', desc: 'SHA-256 hashed PDFs linked to DigiLocker (simulated) & land registries (simulated)' },
     { step: 4, title: 'Compliance Self-Assessment', status: 'ACTIVE', desc: 'Real-time rule engine scoring and deficiency rectification preview' },
     { step: 5, title: 'Final AICTE Submission', status: 'PENDING', desc: 'Digital signature seal and hash-chained audit logging' }
   ];
 
   const checklistItems = [
-    { doc: 'Registered Land Deed', mandatory: true, status: 'Verified', note: 'Survey 144/2 (4.85 Acres) verified on Bhoomi Registry' },
+    { doc: 'Registered Land Deed', mandatory: true, status: 'Verified', note: 'Survey 144/2 (4.85 Acres) verified on Bhoomi Registry (simulated)' },
     { doc: 'Fire Safety NOC', mandatory: true, status: 'Expired', note: 'Certificate expired on 2024-01-14. Renewal NOC required immediately' },
-    { doc: 'Approved Building Plan', mandatory: true, status: 'Verified', note: 'BBMP sanctioned plan (14,200 sq.m built-up area)' },
-    { doc: 'Faculty Ph.D. Certificates', mandatory: true, status: 'Verified', note: 'Anna University repository verified for HoDs' },
-    { doc: 'Audited Financial Statements', mandatory: true, status: 'Verified', note: 'FY 2024-25 balance sheet verified with ICAI UDIN' }
+    { doc: 'Approved Building Plan', mandatory: true, status: 'Verified', note: 'BBMP (simulated) sanctioned plan (14,200 sq.m built-up area)' },
+    { doc: 'Faculty Ph.D. Certificates', mandatory: true, status: 'Verified', note: 'Anna University repository (simulated) verified for HoDs' },
+    { doc: 'Audited Financial Statements', mandatory: true, status: 'Verified', note: 'FY 2024-25 balance sheet verified with ICAI UDIN (simulated)' }
   ];
 
   return (

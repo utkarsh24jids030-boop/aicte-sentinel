@@ -133,7 +133,7 @@ export default function LandingPage() {
                     {app.id === 'app-sunrise-001' && (
                       <div className="flex items-start gap-2 text-slate-700">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
-                        <span>Mostly complete EoA with valid DigiLocker land deed (4.85 acres).</span>
+                        <span>Mostly complete EoA with valid DigiLocker (simulated) land deed (4.85 acres).</span>
                       </div>
                     )}
 
@@ -223,7 +223,7 @@ export default function LandingPage() {
               <ShieldCheck className="w-8 h-8 text-emerald-600 mb-3" />
               <h3 className="font-bold text-sm text-slate-900 mb-1">Verification Passports</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Fail-closed verification model connecting to mock DigiLocker, Certificate Registry, Land Records, and AICTE Faculty Registry. Unverified files never pass autonomously.
+                Fail-closed verification model connecting to mock DigiLocker (simulated), Certificate Registry (simulated), Land Records (simulated), and AICTE Faculty Registry (simulated). Unverified files never pass autonomously.
               </p>
             </div>
 

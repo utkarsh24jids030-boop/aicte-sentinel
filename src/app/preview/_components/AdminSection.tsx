@@ -8,40 +8,40 @@ export default function AdminSection() {
 
   const adapters = [
     {
-      name: 'DigiLocker Mock Adapter',
-      target: 'National DigiLocker Repository (MeitY)',
-      protocol: 'REST / OAuth2 PKCE',
+      name: 'DigiLocker Mock Adapter (simulated)',
+      target: 'National DigiLocker Repository (MeitY) (simulated)',
+      protocol: 'REST / OAuth2 PKCE (simulated)',
       latency: '240ms',
       failClosed: 'Fail-Closed (Source Unavailable on Timeout/Offline)',
       status: 'ONLINE',
-      records: '15,000+ Mock Digital Certificates'
+      records: '15,000+ Mock Digital Certificates (simulated)'
     },
     {
-      name: 'Certificate Registry Mock Adapter',
-      target: 'State Fire & Safety Clearinghouses',
-      protocol: 'SOAP / XML & JSON Gateway',
+      name: 'Certificate Registry Mock Adapter (simulated)',
+      target: 'State Fire & Safety Clearinghouses (simulated)',
+      protocol: 'REST / HTTPS Gateway (simulated)',
       latency: '410ms',
       failClosed: 'Fail-Closed (Unverified / Expired never pass)',
       status: 'ONLINE',
-      records: 'Karnataka, Maharashtra, Delhi Fire Depots'
+      records: 'Karnataka, Maharashtra, Delhi Fire Depots (simulated)'
     },
     {
-      name: 'Land Records Cadastre Mock Adapter',
-      target: 'State Digital Land Cadastres (Bhoomi / Mahabhulekh)',
-      protocol: 'GIS Web Feature Service (WFS)',
+      name: 'Land Records Cadastre Mock Adapter (simulated)',
+      target: 'State Digital Land Cadastres (Bhoomi / Mahabhulekh) (simulated)',
+      protocol: 'REST / HTTPS GeoJSON (simulated)',
       latency: '310ms',
       failClosed: 'Fail-Closed (Manual review required if unindexed)',
       status: 'ONLINE',
-      records: 'Cadastral parcel polygons & encumbrance registers'
+      records: 'Cadastral parcel polygons & encumbrance registers (simulated)'
     },
     {
-      name: 'AICTE Faculty Directory (NFD) Mock',
-      target: 'AICTE Central Faculty Portal & Aadhaar e-Sign',
-      protocol: 'gRPC / Mutual TLS',
+      name: 'AICTE Faculty Directory (NFD) Mock (simulated)',
+      target: 'AICTE Central Faculty Portal (simulated)',
+      protocol: 'REST / HTTPS (simulated)',
       latency: '180ms',
       failClosed: 'Fail-Closed (Dual affiliation strictly triggers Mismatch)',
       status: 'ONLINE',
-      records: 'Faculty PAN / Aadhaar concurrent cross-matching'
+      records: 'Faculty PAN concurrent cross-matching (simulated)'
     }
   ];
 

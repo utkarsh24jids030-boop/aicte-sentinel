@@ -202,7 +202,7 @@ export class LinkageRadarEngine {
         relationType: 'SHARED_LAND',
         label: 'Sole Ownership',
         riskLevel: 'LOW',
-        evidenceDetails: 'Unencumbered 4.85 acres verified in Bhoomi registry.',
+        evidenceDetails: 'Unencumbered 4.85 acres verified in Bhoomi registry (simulated).',
         institutionsInvolved: ['Sunrise Institute of Technology']
       },
       {

@@ -292,10 +292,10 @@ export default function AdminPortalPage() {
         {activeTab === 'adapters' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { name: 'DigiLocker Mock Adapter', desc: 'Simulates National Academic Depository (NAD) and state document registry verification', status: 'ONLINE', latency: '42ms' },
-              { name: 'Certificate Registry Mock', desc: 'Simulates Municipal Town Planning & State Fire NOC verification gateways', status: 'ONLINE', latency: '88ms' },
-              { name: 'Land Records Mock Adapter', desc: 'Simulates State Revenue & Cadastre land survey number registry (Bhoomi / Bhulekh)', status: 'ONLINE', latency: '65ms' },
-              { name: 'Faculty Registry Mock Adapter', desc: 'Simulates AICTE Central Faculty Directory cross-institution employment registry', status: 'ONLINE', latency: '35ms' }
+              { name: 'DigiLocker Mock Adapter (simulated)', desc: 'Simulates National Academic Depository (NAD) (simulated) and state document registry verification', status: 'ONLINE', latency: '42ms' },
+              { name: 'Certificate Registry Mock (simulated)', desc: 'Simulates Municipal Town Planning & State Fire NOC verification gateways (simulated)', status: 'ONLINE', latency: '88ms' },
+              { name: 'Land Records Mock Adapter (simulated)', desc: 'Simulates State Revenue & Cadastre land survey number registry (Bhoomi / Bhulekh) (simulated)', status: 'ONLINE', latency: '65ms' },
+              { name: 'Faculty Registry Mock Adapter (simulated)', desc: 'Simulates AICTE Central Faculty Directory cross-institution employment registry (simulated)', status: 'ONLINE', latency: '35ms' }
             ].map((ad, idx) => (
               <div key={idx} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs text-xs space-y-3">
                 <div className="flex items-center justify-between">

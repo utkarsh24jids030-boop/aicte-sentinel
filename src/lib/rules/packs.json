@@ -331,8 +331,8 @@
       "faculty_qualification.degree_certificate_no",
       "faculty_qualification.university"
     ],
-    "failure_message": "Principal / HoD highest degree certificate could not be authenticated via University / National Academic Depository.",
-    "recommended_action": "Provide verified NAD/DigiLocker document URI for faculty credentials.",
+    "failure_message": "Principal / HoD highest degree certificate could not be authenticated via University / National Academic Depository (simulated).",
+    "recommended_action": "Provide verified NAD/DigiLocker (simulated) document URI for faculty credentials.",
     "source_reference": "SOURCE: TO BE VERIFIED",
     "changelog": [
       {
@@ -891,7 +891,7 @@
     "logic": "!has_document('Faculty Qualification Certificate') || extracted('Faculty Qualification Certificate', 'pan_number') != null",
     "evidence_fields": [
       "faculty.pan_number",
-      "faculty.aadhaar_hash",
+      "faculty.identity_hash",
       "cross_institution.application_number"
     ],
     "failure_message": "Core faculty member or Principal concurrently declared across multiple institutions in active academic year [SOURCE: TO BE VERIFIED].",

@@ -2,7 +2,7 @@
 // Dynamic evaluation of institutional applications against AICTE statutory regulations
 // Problem Statement SIH26261 - Smart India Hackathon 2026
 
-import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Finding, DocumentType, Institution, LocationType } from '@/types';
+import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Finding, DocumentType, Institution, LocationType, AICTEInstitutionalRecord } from '@/types';
 import rulePacks from './packs.json';
 import { getAsOfDate } from '@/lib/config/env';
 import { MINIMUM_LAND_AREA_ACRES, resolveProgrammeLevel, computeRequiredFaculty, FACULTY_CALCULATION_BASIS, MIN_EXTRACTION_CONFIDENCE_THRESHOLD } from '@/lib/config/norms';
@@ -46,7 +46,8 @@ export class RulesEngine {
     documents: DocumentRecord[],
     allApps?: Application[],
     allDocs?: DocumentRecord[],
-    institutions?: Institution[]
+    institutions?: Institution[],
+    institutionalRecord?: AICTEInstitutionalRecord
   ): { breakdown: ReadinessBreakdown; ruleFindings: Finding[] } {
     const applicableRules = this.getRulesForApplicationType(app.type);
     const deficiencies: ReadinessBreakdown['deficiencies'] = [];
@@ -61,7 +62,7 @@ export class RulesEngine {
 
     // 1. STATUTORY COMPLIANCE RULES EVALUATION
     for (const rule of applicableRules) {
-      const evaluationResult = this.evaluateSingleRule(rule, app, documents, institution);
+      const evaluationResult = this.evaluateSingleRule(rule, app, documents, institution, institutionalRecord);
 
       if (!evaluationResult.passed) {
         if (rule.severity === 'Critical') criticalCount++;
@@ -303,7 +304,8 @@ export class RulesEngine {
     rule: ComplianceRule,
     app: Application,
     documents: DocumentRecord[],
-    institution?: Institution
+    institution?: Institution,
+    institutionalRecord?: AICTEInstitutionalRecord
   ): { passed: boolean; failureMessage?: string; relatedDocType?: DocumentType; relatedDocId?: string } {
     const findDoc = (type: string) => documents.find(d => d.documentType === type);
     const getField = (docType: string, key: string) => {
@@ -597,6 +599,63 @@ export class RulesEngine {
                 relatedDocId: aff.id
               };
             }
+          }
+        }
+        return { passed: true };
+      }
+
+      case 'REC-INTAKE-001': {
+        if (institutionalRecord && institutionalRecord.approvedTotalIntake > 0) {
+          if (app.type === 'Intake_Increase' && app.proposedIntake > institutionalRecord.approvedTotalIntake * 1.5) {
+            return {
+              passed: false,
+              failureMessage: `Proposed intake (${app.proposedIntake}) exceeds baseline approved intake (${institutionalRecord.approvedTotalIntake}) in AICTE internal institutional records beyond permissible 1.5x expansion ceiling [SOURCE: TO BE VERIFIED].`
+            };
+          }
+          if (app.type === 'EoA' && app.proposedIntake > institutionalRecord.approvedTotalIntake) {
+            return {
+              passed: false,
+              failureMessage: `Proposed intake (${app.proposedIntake}) exceeds baseline approved intake (${institutionalRecord.approvedTotalIntake}) in AICTE internal institutional records for Extension of Approval [SOURCE: TO BE VERIFIED].`
+            };
+          }
+        }
+        return { passed: true };
+      }
+
+      case 'REC-PROG-002': {
+        if (institutionalRecord && institutionalRecord.approvedProgrammes && institutionalRecord.approvedProgrammes.length > 0) {
+          if (['EoA', 'Intake_Increase'].includes(app.type)) {
+            const approvedNames = new Set(
+              institutionalRecord.approvedProgrammes.map(p => p.programme.toLowerCase().replace(/[^a-z0-9]/g, ''))
+            );
+            const unapproved: string[] = [];
+            for (const progStr of app.programmes) {
+              const baseName = progStr.replace(/\s*\(\d+\)\s*$/, '').trim();
+              const normName = baseName.toLowerCase().replace(/[^a-z0-9]/g, '');
+              const match = Array.from(approvedNames).some(ap => ap.includes(normName) || normName.includes(ap));
+              if (!match) {
+                unapproved.push(baseName);
+              }
+            }
+            if (unapproved.length > 0) {
+              return {
+                passed: false,
+                failureMessage: `Application declares unapproved programmes not found in AICTE institutional records master: ${unapproved.join(', ')} [SOURCE: TO BE VERIFIED].`
+              };
+            }
+          }
+        }
+        return { passed: true };
+      }
+
+      case 'REC-PRIOR-003': {
+        if (['EoA', 'Intake_Increase'].includes(app.type)) {
+          if (!institutionalRecord || institutionalRecord.priorEoAStatus !== 'APPROVED') {
+            const statusLabel = institutionalRecord?.priorEoAStatus || 'MISSING';
+            return {
+              passed: false,
+              failureMessage: `Application seeks Extension of Approval (EoA) but institutional records indicate prior approval status is ${statusLabel} [SOURCE: TO BE VERIFIED].`
+            };
           }
         }
         return { passed: true };

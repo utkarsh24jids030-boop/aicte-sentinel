@@ -850,6 +850,41 @@ test('Official PS Item 2: Verification Status Set of exactly 6 values and Status
   assert.ok(scrutinyPreview.includes('Verification Pending'), 'ScrutinyReportSection must compute pending documents');
 });
 
+test('Official PS Item 3: Simulated AICTE Institutional Records Source and Cross-Verification Rules', () => {
+  const typesFile = fs.readFileSync('./src/types/index.ts', 'utf8');
+  assert.ok(typesFile.includes('AICTEInstitutionalRecord'), 'types must define AICTEInstitutionalRecord');
+  assert.ok(typesFile.includes('priorEoAStatus:'), 'must include priorEoAStatus');
+  assert.ok(typesFile.includes('approvedProgrammes:'), 'must include approvedProgrammes');
+  assert.ok(typesFile.includes('facultyRecords:'), 'must include facultyRecords');
+  assert.ok(typesFile.includes('deficiencyHistory:'), 'must include deficiencyHistory');
+  assert.ok(typesFile.includes('terPaymentStatus:'), 'must include terPaymentStatus');
+  assert.ok(typesFile.includes('applicationHistory:'), 'must include applicationHistory');
+
+  const storeFile = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(storeFile.includes('DEMO_INSTITUTIONAL_RECORDS'), 'store.ts must define DEMO_INSTITUTIONAL_RECORDS');
+  assert.ok(storeFile.includes('getInstitutionalRecord'), 'DataStore must provide getInstitutionalRecord');
+  assert.ok(storeFile.includes('isSimulated: true'), 'Records must be marked simulated');
+
+  const packsFile = fs.readFileSync('./src/lib/rules/packs.json', 'utf8');
+  const packs = JSON.parse(packsFile);
+  const rIntake = packs.find(r => r.rule_id === 'REC-INTAKE-001');
+  const rProg = packs.find(r => r.rule_id === 'REC-PROG-002');
+  const rPrior = packs.find(r => r.rule_id === 'REC-PRIOR-003');
+
+  assert.ok(rIntake, 'REC-INTAKE-001 must exist in packs.json');
+  assert.equal(rIntake.source_reference, 'SOURCE: TO BE VERIFIED', 'Source reference must stay SOURCE: TO BE VERIFIED');
+
+  assert.ok(rProg, 'REC-PROG-002 must exist in packs.json');
+  assert.equal(rProg.source_reference, 'SOURCE: TO BE VERIFIED', 'Source reference must stay SOURCE: TO BE VERIFIED');
+
+  assert.ok(rPrior, 'REC-PRIOR-003 must exist in packs.json');
+  assert.equal(rPrior.source_reference, 'SOURCE: TO BE VERIFIED', 'Source reference must stay SOURCE: TO BE VERIFIED');
+
+  const casePreview = fs.readFileSync('./src/app/preview/_components/CaseFileSection.tsx', 'utf8');
+  assert.ok(casePreview.includes('AICTE Institutional Records Source'), 'CaseFileSection must display Institutional Records Source');
+  assert.ok(casePreview.includes('SIMULATED INTERNAL SOURCE'), 'CaseFileSection must label internal source as simulated');
+});
+
 
 
 

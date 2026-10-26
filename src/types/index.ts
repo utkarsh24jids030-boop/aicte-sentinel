@@ -435,3 +435,52 @@ export interface ScrutinyReportData {
   officerConcludingRemarks: string;
   hashChainStamp: string;
 }
+
+// AICTE Institutional Records Source (Simulated Internal Registry)
+export type TERPaymentStatus = 'PAID' | 'PENDING' | 'MISSING';
+
+export interface ApprovedProgrammeRecord {
+  programme: string;
+  level: 'UG' | 'PG' | 'Diploma';
+  approvedIntake: number;
+}
+
+export interface DeficiencyHistoryRecord {
+  academicYear: string;
+  deficiencyType: string;
+  description: string;
+  rectificationStatus: 'RESOLVED' | 'UNRESOLVED' | 'PENDING_INSPECTION';
+}
+
+export interface ApplicationHistoryRecord {
+  applicationNumber: string;
+  academicYear: string;
+  type: string;
+  outcome: 'APPROVED' | 'REJECTED' | 'CONDITIONAL' | 'UNDER_SCRUTINY';
+  orderDate?: string;
+}
+
+export interface FacultyMasterRecord {
+  facultyId: string;
+  name: string;
+  designation: string;
+  department: string;
+  panLast4: string;
+  status: 'ACTIVE' | 'ON_LEAVE' | 'RELIEVED';
+}
+
+export interface AICTEInstitutionalRecord {
+  institutionId: string;
+  institutionName: string;
+  aictePermanentId: string;
+  priorEoAStatus: 'APPROVED' | 'WITHDRAWN' | 'NOT_APPLICABLE' | 'DEFICIENT';
+  priorEoAYear?: string;
+  approvedProgrammes: ApprovedProgrammeRecord[];
+  approvedTotalIntake: number;
+  facultyRecords: FacultyMasterRecord[];
+  deficiencyHistory: DeficiencyHistoryRecord[];
+  terPaymentStatus: TERPaymentStatus;
+  terTransactionReference?: string;
+  applicationHistory: ApplicationHistoryRecord[];
+  isSimulated: true;
+}

@@ -221,8 +221,8 @@ test('Boundary Conditions: Sponsoring Entity Name Scoping (Strict Isolation)', (
 // ==========================================
 // 3. STATUTORY RULE PACKS: PASS & FAIL COVERAGE
 // ==========================================
-test('Statutory Rules Pack: Verify All 26 Rules Have Defined Pass & Fail Logic', () => {
-  assert.equal(rulePacks.length, 26, `Must have exactly 26 statutory rules, found ${rulePacks.length}`);
+test('Statutory Rules Pack: Verify All Rules Have Defined Pass & Fail Logic', () => {
+  assert.ok(rulePacks.length >= 26, `Must have at least 26 statutory rules, found ${rulePacks.length}`);
 
   const requiredRuleIds = [
     'LAND-DEED-001',
@@ -250,7 +250,10 @@ test('Statutory Rules Pack: Verify All 26 Rules Have Defined Pass & Fail Logic',
     'INFRA-LAB-001',
     'FACULTY-CADRE-001',
     'CROSS-CERT-DUP-001',
-    'CROSS-FACULTY-DUP-001'
+    'CROSS-FACULTY-DUP-001',
+    'REC-INTAKE-001',
+    'REC-PROG-002',
+    'REC-PRIOR-003'
   ];
 
   for (const rid of requiredRuleIds) {

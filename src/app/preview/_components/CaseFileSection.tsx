@@ -116,6 +116,80 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
               </div>
             </div>
 
+            {/* AICTE Institutional Records Source (Simulated Internal Registry) */}
+            {(() => {
+              const instRecord = DataStore.getInstitutionalRecord(app.institutionId);
+              if (!instRecord) return null;
+              return (
+                <div className="p-4 rounded-xl border border-indigo-200 bg-indigo-50/40 space-y-3 text-xs">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-indigo-100 pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-indigo-950 uppercase tracking-wide">
+                        AICTE Institutional Records Source
+                      </span>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-100 text-indigo-800 border border-indigo-300">
+                        SIMULATED INTERNAL SOURCE
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-slate-500 font-mono">
+                      Permanent ID: {instRecord.aictePermanentId}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="p-2.5 rounded-lg bg-white border border-indigo-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block">Prior EoA Status</span>
+                      <span className={`font-bold text-xs ${instRecord.priorEoAStatus === 'APPROVED' ? 'text-emerald-700' : 'text-amber-700'}`}>
+                        {instRecord.priorEoAStatus} {instRecord.priorEoAYear ? `(AY ${instRecord.priorEoAYear})` : ''}
+                      </span>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-white border border-indigo-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block">Approved Intake Baseline</span>
+                      <span className="font-mono font-bold text-slate-900 text-xs">
+                        {instRecord.approvedTotalIntake} Seats
+                      </span>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-white border border-indigo-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block">TER Payment Status</span>
+                      <span className={`font-bold text-xs ${instRecord.terPaymentStatus === 'PAID' ? 'text-emerald-700' : 'text-rose-700'}`}>
+                        {instRecord.terPaymentStatus} {instRecord.terTransactionReference ? `(${instRecord.terTransactionReference})` : ''}
+                      </span>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-white border border-indigo-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block">Internal Faculty Records</span>
+                      <span className="font-mono font-bold text-slate-900 text-xs">
+                        {instRecord.facultyRecords.length} Active Faculty
+                      </span>
+                    </div>
+                  </div>
+
+                  {instRecord.approvedProgrammes.length > 0 && (
+                    <div className="pt-1">
+                      <span className="text-[11px] font-bold text-slate-700 block mb-1">
+                        Sanctioned Programmes in Master Record:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {instRecord.approvedProgrammes.map((p, idx) => (
+                          <span key={idx} className="px-2 py-0.5 rounded bg-white border border-slate-200 text-[11px] text-slate-800 font-mono">
+                            {p.programme} ({p.level} - {p.approvedIntake} seats)
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {instRecord.deficiencyHistory.length > 0 && (
+                    <div className="pt-1 text-[11px] text-slate-600">
+                      <span className="font-bold text-slate-700">Historical Regulatory Record: </span>
+                      {instRecord.deficiencyHistory.map((d, idx) => (
+                        <span key={idx}>AY {d.academicYear}: {d.description} ({d.rectificationStatus})</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
             {/* Advisory Findings Stream */}
             <div className="space-y-4">
               <h3 className="text-lg font-bold text-slate-900 flex items-center justify-between border-b pb-2">

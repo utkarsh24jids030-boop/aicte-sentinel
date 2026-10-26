@@ -11,7 +11,8 @@ import {
   InspectionTask,
   OfficerActionRecord,
   AuditEvent,
-  VerificationAttempt
+  VerificationAttempt,
+  AICTEInstitutionalRecord
 } from '@/types';
 import { AuditTrailEngine } from './audit/trail';
 import { RulesEngine } from './rules/engine';
@@ -138,6 +139,95 @@ export const DEMO_INSTITUTIONS: Institution[] = [
     createdAt: '2021-03-01T09:00:00Z'
   }
 ];
+
+// SIMULATED AICTE INSTITUTIONAL MASTER RECORDS
+// Internal records source for regulatory verification against historical sanctions
+export const DEMO_INSTITUTIONAL_RECORDS: Record<string, AICTEInstitutionalRecord> = {
+  'inst-sunrise': {
+    institutionId: 'inst-sunrise',
+    institutionName: 'Sunrise Institute of Technology',
+    aictePermanentId: '1-10928371',
+    priorEoAStatus: 'APPROVED',
+    priorEoAYear: '2025-2026',
+    approvedProgrammes: [
+      { programme: 'Computer Science & Engg', level: 'UG', approvedIntake: 180 },
+      { programme: 'Electronics & Comm', level: 'UG', approvedIntake: 120 },
+      { programme: 'Mechanical Engg', level: 'UG', approvedIntake: 60 }
+    ],
+    approvedTotalIntake: 360,
+    facultyRecords: [
+      { facultyId: 'FAC-SUN-001', name: 'Dr. Anand Kumar', designation: 'Principal & Professor', department: 'Computer Science & Engineering', panLast4: '1092', status: 'ACTIVE' },
+      { facultyId: 'FAC-SUN-002', name: 'Dr. Meera Nambiar', designation: 'Associate Professor', department: 'Electronics & Communication', panLast4: '4821', status: 'ACTIVE' },
+      { facultyId: 'FAC-SUN-003', name: 'Prof. Rajesh Sharma', designation: 'Assistant Professor', department: 'Mechanical Engineering', panLast4: '3319', status: 'ACTIVE' }
+    ],
+    deficiencyHistory: [
+      { academicYear: '2024-2025', deficiencyType: 'FIRE_SAFETY_RENEWAL', description: 'Fire NOC renewal certificate delay; compliance affidavit accepted by Hearing Committee.', rectificationStatus: 'RESOLVED' }
+    ],
+    terPaymentStatus: 'PAID',
+    terTransactionReference: 'TER-2026-SUN-99214',
+    applicationHistory: [
+      { applicationNumber: 'AICTE/2025/SUN-8819', academicYear: '2025-2026', type: 'EoA', outcome: 'APPROVED', orderDate: '2025-04-30' },
+      { applicationNumber: 'AICTE/2024/SUN-7712', academicYear: '2024-2025', type: 'EoA', outcome: 'APPROVED', orderDate: '2024-05-15' }
+    ],
+    isSimulated: true
+  },
+  'inst-nova': {
+    institutionId: 'inst-nova',
+    institutionName: 'Nova Engineering College',
+    aictePermanentId: '1-90142851',
+    priorEoAStatus: 'APPROVED',
+    priorEoAYear: '2025-2026',
+    approvedProgrammes: [
+      { programme: 'Computer Science & Engg', level: 'UG', approvedIntake: 180 },
+      { programme: 'Information Technology', level: 'UG', approvedIntake: 60 },
+      { programme: 'Mechanical Engg', level: 'UG', approvedIntake: 60 },
+      { programme: 'Civil Engg', level: 'UG', approvedIntake: 60 }
+    ],
+    approvedTotalIntake: 360,
+    facultyRecords: [
+      { facultyId: 'FAC-NOV-001', name: 'Dr. Suresh Varma', designation: 'Principal', department: 'Civil Engineering', panLast4: '7712', status: 'ACTIVE' },
+      { facultyId: 'FAC-NOV-002', name: 'Dr. Vikram Malhotra', designation: 'Professor', department: 'Mechanical Engineering', panLast4: '9999', status: 'ACTIVE' }
+    ],
+    deficiencyHistory: [
+      { academicYear: '2023-2024', deficiencyType: 'CAD_LAB_EQUIPMENT', description: 'Deficiency in workstation count in CAD center.', rectificationStatus: 'RESOLVED' }
+    ],
+    terPaymentStatus: 'PAID',
+    terTransactionReference: 'TER-2026-NOV-88123',
+    applicationHistory: [
+      { applicationNumber: 'AICTE/2025/NOV-8120', academicYear: '2025-2026', type: 'EoA', outcome: 'APPROVED', orderDate: '2025-05-02' }
+    ],
+    isSimulated: true
+  },
+  'inst-apex': {
+    institutionId: 'inst-apex',
+    institutionName: 'Apex Polytechnic College',
+    aictePermanentId: '1-88419201',
+    priorEoAStatus: 'NOT_APPLICABLE',
+    approvedProgrammes: [],
+    approvedTotalIntake: 0,
+    facultyRecords: [],
+    deficiencyHistory: [],
+    terPaymentStatus: 'PENDING',
+    applicationHistory: [],
+    isSimulated: true
+  },
+  'inst-western-horizon': {
+    institutionId: 'inst-western-horizon',
+    institutionName: 'Western Horizon Institute of Technology',
+    aictePermanentId: '1-14092811',
+    priorEoAStatus: 'APPROVED',
+    priorEoAYear: '2024-2025',
+    approvedProgrammes: [
+      { programme: 'Civil Engineering', level: 'UG', approvedIntake: 60 }
+    ],
+    approvedTotalIntake: 60,
+    facultyRecords: [],
+    deficiencyHistory: [],
+    terPaymentStatus: 'PAID',
+    applicationHistory: [],
+    isSimulated: true
+  }
+};
 
 // 3 DEMO APPLICATIONS (Base Data - Scores and Tiers are computed dynamically by RulesEngine)
 export const DEMO_APPLICATIONS: Application[] = [
@@ -1467,6 +1557,7 @@ export class DataStore {
   private static documents = [...DEMO_DOCUMENTS];
   private static inspectionTasks = [...DEMO_INSPECTION_TASKS];
   private static officerActions: OfficerActionRecord[] = [];
+  private static institutionalRecords: Record<string, AICTEInstitutionalRecord> = { ...DEMO_INSTITUTIONAL_RECORDS };
 
   // Seeded officer action overrides layered onto computed findings
   private static findingOverrides = new Map<string, {
@@ -1567,11 +1658,21 @@ export class DataStore {
     return this.institutions.find(i => i.id === id);
   }
 
+  // AICTE INSTITUTIONAL RECORDS SOURCE (SIMULATED)
+  static getInstitutionalRecord(institutionId: string): AICTEInstitutionalRecord | undefined {
+    return this.institutionalRecords[institutionId];
+  }
+
+  static getAllInstitutionalRecords(): AICTEInstitutionalRecord[] {
+    return Object.values(this.institutionalRecords);
+  }
+
   // APPLICATIONS — ALWAYS COMPUTED VIA RULES ENGINE & RADAR GRAPH
   static getApplications(): Application[] {
     return this.applications.map(app => {
       const docs = this.getDocuments(app.id);
-      const { breakdown } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions);
+      const instRecord = this.getInstitutionalRecord(app.institutionId);
+      const { breakdown } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions, instRecord);
       const riskData = LinkageRadarEngine.getRadarForInstitution(app.institutionName);
       const linkageRiskScore = riskData.overallLinkageRiskScore;
 
@@ -1597,7 +1698,8 @@ export class DataStore {
     const app = this.applications.find(a => a.id === id);
     if (!app) return undefined;
     const docs = this.getDocuments(app.id);
-    const { breakdown } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions);
+    const instRecord = this.getInstitutionalRecord(app.institutionId);
+    const { breakdown } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions, instRecord);
     const riskData = LinkageRadarEngine.getRadarForInstitution(app.institutionName);
     const linkageRiskScore = riskData.overallLinkageRiskScore;
 
@@ -1870,7 +1972,8 @@ export class DataStore {
 
     for (const app of targetApps) {
       const docs = this.getDocuments(app.id);
-      const { ruleFindings } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions);
+      const instRecord = this.getInstitutionalRecord(app.institutionId);
+      const { ruleFindings } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions, instRecord);
 
       for (const f of ruleFindings) {
         // Overlay officer review action state if present
@@ -1970,6 +2073,7 @@ export class DataStore {
     this.documents = [...DEMO_DOCUMENTS];
     this.inspectionTasks = [...DEMO_INSPECTION_TASKS];
     this.officerActions = [];
+    this.institutionalRecords = { ...DEMO_INSTITUTIONAL_RECORDS };
     this.findingOverrides = new Map<string, {
       status: FindingStatus;
       officerNotes?: string;

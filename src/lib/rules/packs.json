@@ -911,5 +911,89 @@
         "description": "Rule harmonized with statutory verification placeholders [SOURCE: TO BE VERIFIED]."
       }
     ]
+  },
+  {
+    "rule_id": "REC-INTAKE-001",
+    "version": "2026.3",
+    "name": "Proposed Intake vs AICTE Approved Internal Record Baseline",
+    "category": "Internal_Records",
+    "applies_to": [
+      "EoA",
+      "Intake_Increase",
+      "New_Institution",
+      "Site_Change"
+    ],
+    "severity": "High",
+    "logic": "proposed_intake <= (internal_approved_intake * 1.5)",
+    "evidence_fields": [
+      "application.proposed_intake",
+      "internal_record.approved_total_intake"
+    ],
+    "failure_message": "Proposed intake exceeds baseline approved intake in AICTE internal institutional records beyond permissible expansion ceiling without prior sanction [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Reconcile proposed intake against AICTE institutional master database or submit statutory expansion sanction order [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.3",
+        "date": "2026-02-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Cross-verification rule comparing submission intake against simulated AICTE institutional master database."
+      }
+    ]
+  },
+  {
+    "rule_id": "REC-PROG-002",
+    "version": "2026.3",
+    "name": "Programmes Claimed vs AICTE Internal Approved Records",
+    "category": "Internal_Records",
+    "applies_to": [
+      "EoA",
+      "Intake_Increase"
+    ],
+    "severity": "High",
+    "logic": "programmes_claimed_subset_of(internal_approved_programmes)",
+    "evidence_fields": [
+      "application.programmes",
+      "internal_record.approved_programmes"
+    ],
+    "failure_message": "One or more programmes declared in submission are not recorded in AICTE internal approved master records [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Submit prior AICTE approval orders or formal curriculum sanction approval for unrecorded programmes [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.3",
+        "date": "2026-02-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Cross-verification rule verifying claimed programmes against simulated AICTE approved programme repository."
+      }
+    ]
+  },
+  {
+    "rule_id": "REC-PRIOR-003",
+    "version": "2026.3",
+    "name": "Prior Extension of Approval (EoA) Master Record Presence",
+    "category": "Internal_Records",
+    "applies_to": [
+      "EoA",
+      "Intake_Increase"
+    ],
+    "severity": "Critical",
+    "logic": "internal_record.prior_eoa_status == 'APPROVED'",
+    "evidence_fields": [
+      "internal_record.prior_eoa_status",
+      "internal_record.aicte_permanent_id"
+    ],
+    "failure_message": "Application seeks Extension of Approval (EoA) but no prior valid AICTE approval record exists in internal master database [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Verify institution permanent ID and submit certified copies of historical AICTE approval orders [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.3",
+        "date": "2026-02-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Statutory rule enforcing presence of valid prior approval record in AICTE database for EoA / Intake Increase."
+      }
+    ]
   }
 ]
+

@@ -270,7 +270,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     fileSize: 1120400,
     mimeType: 'application/pdf',
     sha256Hash: 'f490128374901823740192837401928374019283740192837401928374019283',
-    verificationStatus: 'Verified',
+    verificationStatus: 'Manual Review Required',
     verificationSource: 'DigiLocker Mock Adapter',
     forensicMetadata: {
       fileSize: 1120400,

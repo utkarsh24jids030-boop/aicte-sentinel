@@ -4,7 +4,7 @@
 
 import { Application, DocumentRecord, Institution } from '@/types';
 import { getAsOfDate } from '@/lib/config/env';
-import { getMinimumLandArea, computeRequiredFaculty, resolveProgrammeLevel, LocationType } from '@/lib/config/norms';
+import { getMinimumLandArea, computeRequiredFaculty, resolveProgrammeLevel, LocationType, MIN_EXTRACTION_CONFIDENCE_THRESHOLD } from '@/lib/config/norms';
 
 // ==========================================
 // 1. TOKEN DEFINITIONS
@@ -357,7 +357,12 @@ export class SafeLogicEvaluator {
       const doc = findDoc(docType);
       if (!doc) return null;
       const field = doc.extractedFields.find(f => f.fieldKey === key);
-      return field ? field.fieldValue : null;
+      if (!field) return null;
+      // Fail-closed protocol: low confidence fields (< 0.75) are untrusted unless manually corrected
+      if (!field.isManuallyCorrected && field.confidence < MIN_EXTRACTION_CONFIDENCE_THRESHOLD) {
+        return null;
+      }
+      return field.fieldValue;
     };
 
     const totalIntake = ctx.app.proposedIntake || ctx.app.currentIntake || 0;

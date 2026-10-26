@@ -5,7 +5,7 @@
 import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Finding, DocumentType, Institution, LocationType } from '@/types';
 import rulePacks from './packs.json';
 import { getAsOfDate } from '@/lib/config/env';
-import { MINIMUM_LAND_AREA_ACRES, resolveProgrammeLevel, computeRequiredFaculty, FACULTY_CALCULATION_BASIS } from '@/lib/config/norms';
+import { MINIMUM_LAND_AREA_ACRES, resolveProgrammeLevel, computeRequiredFaculty, FACULTY_CALCULATION_BASIS, MIN_EXTRACTION_CONFIDENCE_THRESHOLD } from '@/lib/config/norms';
 import { SafeLogicEvaluator } from './evaluator';
 
 /**
@@ -167,7 +167,33 @@ export class RulesEngine {
         }
       }
 
-      // 3. FAIL-CLOSED / SOURCE UNAVAILABLE FINDINGS
+      // 3. FAIL-CLOSED / SOURCE UNAVAILABLE / LOW CONFIDENCE FINDINGS
+      // Low Extraction Confidence Check (< 0.75 threshold)
+      for (const field of doc.extractedFields) {
+        if (!field.isManuallyCorrected && field.confidence < MIN_EXTRACTION_CONFIDENCE_THRESHOLD) {
+          const fid = `FIND-${app.id}-CONF-${field.id}`;
+          if (!findings.some(f => f.id === fid)) {
+            findings.push({
+              id: fid,
+              applicationId: app.id,
+              documentId: doc.id,
+              category: 'VERIFICATION_MISMATCH',
+              severity: 'Medium',
+              confidence: field.confidence,
+              title: `Fail-Closed: Low OCR Confidence on ${field.fieldLabel}`,
+              explanation: `Field "${field.fieldLabel}" (${field.fieldKey}) extracted with confidence of ${Math.round(field.confidence * 100)}% (< 75% threshold). Under fail-closed protocol, field requires manual officer review [SOURCE: TO BE VERIFIED].`,
+              evidenceLocator: `Doc: ${doc.fileName} | Page ${field.pageNumber || 1} | Extracted: "${field.fieldValue}"`,
+              recommendedAction: 'Scrutiny Officer must manually inspect the original document scan and verify or correct the field value.',
+              status: 'Open',
+              createdAt: doc.createdAt
+            });
+          }
+          if (doc.verificationStatus === 'Verified') {
+            doc.verificationStatus = 'Manual Review Required';
+          }
+        }
+      }
+
       if (doc.verificationStatus === 'Source Unavailable') {
         const fid = app.id === 'app-apex-003' ? 'FIND-APX-003' : `FIND-${app.id}-UNAVAIL-${doc.id}`;
         if (!findings.some(f => f.id === fid)) {
@@ -280,6 +306,11 @@ export class RulesEngine {
       const doc = findDoc(docType);
       if (!doc) return undefined;
       const field = doc.extractedFields.find(f => f.fieldKey === key);
+      if (!field) return undefined;
+      // Fail-closed on low confidence (< 0.75) unless manually corrected
+      if (!field.isManuallyCorrected && field.confidence < MIN_EXTRACTION_CONFIDENCE_THRESHOLD) {
+        return undefined;
+      }
       return field?.fieldValue;
     };
 

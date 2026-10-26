@@ -79,6 +79,19 @@ test('Fail-Closed Verification Behavior: Unavailable source must NEVER mark veri
   assert.equal(verifyMock('RECORD_NOT_FOUND'), 'Source Unavailable', 'Unindexed claim must fail-closed to Source Unavailable');
   assert.equal(verifyMock('RECORD_EXPIRED'), 'Expired', 'Expired NOC must transition to Expired status');
   assert.equal(verifyMock('MISMATCH'), 'Mismatch Detected', 'Conflicting data must transition to Mismatch Detected');
+
+  // Extraction confidence fail-closed protocol (< 0.75 threshold)
+  const resolveConfidenceStatus = (confidence, isManuallyCorrected = false) => {
+    if (!isManuallyCorrected && confidence < 0.75) {
+      return 'Manual Review Required';
+    }
+    return 'Verified';
+  };
+
+  assert.equal(resolveConfidenceStatus(0.62), 'Manual Review Required', 'Low confidence field (0.62) must trigger Manual Review Required');
+  assert.equal(resolveConfidenceStatus(0.74), 'Manual Review Required', 'Confidence 0.74 (< 0.75) must trigger Manual Review Required');
+  assert.equal(resolveConfidenceStatus(0.75), 'Verified', 'Confidence 0.75 satisfies statutory threshold');
+  assert.equal(resolveConfidenceStatus(0.62, true), 'Verified', 'Manually corrected field can be Verified');
 });
 
 test('Cryptographic Audit Trail: Hash-chaining and tamper detection verification', (t) => {

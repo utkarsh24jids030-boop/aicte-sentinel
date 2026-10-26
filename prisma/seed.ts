@@ -24,7 +24,7 @@ async function main() {
       landSurveyNumber: '144/2',
       landAreaAcres: 4.85,
       locationType: 'urban',
-      contactEmail: 'admissions@sunrise.edu',
+      contactEmail: 'admissions@sunrise-demo.example',
       contactPhone: '+91 80 2844 9100',
       establishedYear: 2012,
       status: 'SCRUTINY_PENDING'
@@ -75,11 +75,11 @@ async function main() {
 
   // 2. Seed Demo Users
   await prisma.user.upsert({
-    where: { email: 'institution@sunrise.edu' },
+    where: { email: 'institution@sunrise-demo.example' },
     update: {},
     create: {
       id: 'user-inst-sunrise',
-      email: 'institution@sunrise.edu',
+      email: 'institution@sunrise-demo.example',
       name: 'Dr. Anand Kumar',
       role: 'INSTITUTION',
       designation: 'Principal & Authorized Representative',
@@ -88,11 +88,11 @@ async function main() {
   });
 
   await prisma.user.upsert({
-    where: { email: 'officer@aicte-india.org' },
+    where: { email: 'officer@sentinel-demo.example' },
     update: {},
     create: {
       id: 'user-officer-rao',
-      email: 'officer@aicte-india.org',
+      email: 'officer@sentinel-demo.example',
       name: 'Smt. Priyadarshini Rao',
       role: 'OFFICER',
       designation: 'Senior Scrutiny Officer (Bureau of Approvals)'
@@ -100,11 +100,11 @@ async function main() {
   });
 
   await prisma.user.upsert({
-    where: { email: 'inspector@aicte-evc.gov.in' },
+    where: { email: 'inspector@sentinel-demo.example' },
     update: {},
     create: {
       id: 'user-evc-chandran',
-      email: 'inspector@aicte-evc.gov.in',
+      email: 'inspector@sentinel-demo.example',
       name: 'Prof. Harish Chandran',
       role: 'EVC_INSPECTOR',
       designation: 'EVC Expert Committee Lead & Senior Assessor'
@@ -112,11 +112,11 @@ async function main() {
   });
 
   await prisma.user.upsert({
-    where: { email: 'admin@aicte-india.org' },
+    where: { email: 'admin@sentinel-demo.example' },
     update: {},
     create: {
       id: 'user-admin-singh',
-      email: 'admin@aicte-india.org',
+      email: 'admin@sentinel-demo.example',
       name: 'Vikramaditya Singh',
       role: 'ADMIN',
       designation: 'AICTE Sentinel Lead System Administrator'
@@ -124,11 +124,11 @@ async function main() {
   });
 
   await prisma.user.upsert({
-    where: { email: 'auditor@cag.gov.in' },
+    where: { email: 'auditor@sentinel-demo.example' },
     update: {},
     create: {
       id: 'user-auditor-sundaram',
-      email: 'auditor@cag.gov.in',
+      email: 'auditor@sentinel-demo.example',
       name: 'Meenakshi Sundaram',
       role: 'AUDITOR',
       designation: 'Independent Regulatory & Vigilance Auditor'

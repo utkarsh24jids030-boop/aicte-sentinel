@@ -6,11 +6,11 @@ import { DataStore, DEMO_USERS } from '../store';
 import { AuditTrailEngine } from '../audit/trail';
 
 export const DEMO_CREDENTIALS = [
-  { role: 'INSTITUTION' as UserRole, email: 'institution@sunrise.edu', password: 'Password@123', name: 'Dr. Anand Kumar', desc: 'Sunrise Institute of Technology' },
-  { role: 'OFFICER' as UserRole, email: 'officer@aicte-india.org', password: 'Password@123', name: 'Smt. Priyadarshini Rao', desc: 'AICTE Senior Scrutiny Officer' },
-  { role: 'EVC_INSPECTOR' as UserRole, email: 'inspector@aicte-evc.gov.in', password: 'Password@123', name: 'Prof. Harish Chandran', desc: 'EVC Inspection Committee Lead' },
-  { role: 'ADMIN' as UserRole, email: 'admin@aicte-india.org', password: 'Password@123', name: 'Vikramaditya Singh', desc: 'AICTE Sentinel Lead Admin' },
-  { role: 'AUDITOR' as UserRole, email: 'auditor@cag.gov.in', password: 'Password@123', name: 'Meenakshi Sundaram', desc: 'Independent Vigilance Auditor' }
+  { role: 'INSTITUTION' as UserRole, email: 'institution@sunrise-demo.example', password: 'Password@123', name: 'Dr. Anand Kumar', desc: 'Sunrise Institute of Technology' },
+  { role: 'OFFICER' as UserRole, email: 'officer@sentinel-demo.example', password: 'Password@123', name: 'Smt. Priyadarshini Rao', desc: 'AICTE Senior Scrutiny Officer' },
+  { role: 'EVC_INSPECTOR' as UserRole, email: 'inspector@sentinel-demo.example', password: 'Password@123', name: 'Prof. Harish Chandran', desc: 'EVC Inspection Committee Lead' },
+  { role: 'ADMIN' as UserRole, email: 'admin@sentinel-demo.example', password: 'Password@123', name: 'Vikramaditya Singh', desc: 'AICTE Sentinel Lead Admin' },
+  { role: 'AUDITOR' as UserRole, email: 'auditor@sentinel-demo.example', password: 'Password@123', name: 'Meenakshi Sundaram', desc: 'Independent Vigilance Auditor' }
 ];
 
 export class AuthService {

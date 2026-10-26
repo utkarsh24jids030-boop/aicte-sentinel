@@ -124,11 +124,11 @@ test('Firebase Role Security: Self-registered users cannot escalate to privilege
   const resolveRole = (email, requestedRole) => {
     // Official emails mapped to fixed roles
     const officialMap = {
-      'admin@aicte-india.org': 'ADMIN',
-      'officer@aicte-india.org': 'OFFICER',
-      'inspector@aicte-evc.gov.in': 'EVC_INSPECTOR',
-      'auditor@cag.gov.in': 'AUDITOR',
-      'institution@sunrise.edu': 'INSTITUTION'
+      'admin@sentinel-demo.example': 'ADMIN',
+      'officer@sentinel-demo.example': 'OFFICER',
+      'inspector@sentinel-demo.example': 'EVC_INSPECTOR',
+      'auditor@sentinel-demo.example': 'AUDITOR',
+      'institution@sunrise-demo.example': 'INSTITUTION'
     };
     if (officialMap[email.toLowerCase()]) {
       return officialMap[email.toLowerCase()];
@@ -139,8 +139,8 @@ test('Firebase Role Security: Self-registered users cannot escalate to privilege
 
   assert.equal(resolveRole('attacker@evil.com', 'ADMIN'), 'INSTITUTION', 'Self-registration must not grant ADMIN role');
   assert.equal(resolveRole('newuser@gmail.com', 'OFFICER'), 'INSTITUTION', 'Self-registration must not grant OFFICER role');
-  assert.equal(resolveRole('officer@aicte-india.org', 'OFFICER'), 'OFFICER', 'Authoritative officer email resolves to OFFICER');
-  assert.equal(resolveRole('admin@aicte-india.org', 'ADMIN'), 'ADMIN', 'Authoritative admin email resolves to ADMIN');
+  assert.equal(resolveRole('officer@sentinel-demo.example', 'OFFICER'), 'OFFICER', 'Authoritative officer email resolves to OFFICER');
+  assert.equal(resolveRole('admin@sentinel-demo.example', 'ADMIN'), 'ADMIN', 'Authoritative admin email resolves to ADMIN');
 });
 
 test('Document Filename Neutrality: No telegraphed verdict filenames allowed in demo data', () => {

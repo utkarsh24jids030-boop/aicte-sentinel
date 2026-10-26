@@ -33,7 +33,7 @@ function LoginFormContent() {
   const { login, register, resetPassword, user } = useAuth();
 
   const [mode, setMode] = useState<AuthMode>('LOGIN');
-  const [email, setEmail] = useState('officer@aicte-india.org');
+  const [email, setEmail] = useState('officer@sentinel-demo.example');
   const [password, setPassword] = useState('Password@123');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [fullName, setFullName] = useState('');
@@ -230,7 +230,7 @@ function LoginFormContent() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        placeholder="name@aicte-india.org"
+                        placeholder="name@sentinel-demo.example"
                         className="w-full text-xs pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-hidden focus:ring-2 focus:ring-blue-600 focus:border-transparent text-slate-900"
                       />
                     </div>

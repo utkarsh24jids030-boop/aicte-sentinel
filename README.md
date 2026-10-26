@@ -19,11 +19,11 @@ AICTE Sentinel includes a **1-Click Quick Role Switcher** in the top navigation 
 
 | Role | Name | Email | Focus Area |
 |---|---|---|---|
-| **AICTE Scrutiny Officer** | Smt. Priyadarshini Rao | `officer@aicte-india.org` | Risk-ranked queue, case files, finding review, scrutiny report |
-| **Institution User** | Dr. Anand Kumar | `institution@sunrise.edu` | Application wizard, document upload, readiness gauge, deficiency rectification |
-| **EVC Inspector** | Prof. Harish Chandran | `inspector@aicte-evc.gov.in` | Mobile inspection brief, GPS verification, photo/observation capture |
-| **Admin** | Vikramaditya Singh | `admin@aicte-india.org` | Rule packs, mock verification adapters, user RBAC |
-| **Auditor** | Meenakshi Sundaram | `auditor@cag.gov.in` | Read-only vigilance view, SHA-256 hash-chain integrity verification |
+| **AICTE Scrutiny Officer** | Smt. Priyadarshini Rao | `officer@sentinel-demo.example` | Risk-ranked queue, case files, finding review, scrutiny report |
+| **Institution User** | Dr. Anand Kumar | `institution@sunrise-demo.example` | Application wizard, document upload, readiness gauge, deficiency rectification |
+| **EVC Inspector** | Prof. Harish Chandran | `inspector@sentinel-demo.example` | Mobile inspection brief, GPS verification, photo/observation capture |
+| **Admin** | Vikramaditya Singh | `admin@sentinel-demo.example` | Rule packs, mock verification adapters, user RBAC |
+| **Auditor** | Meenakshi Sundaram | `auditor@sentinel-demo.example` | Read-only vigilance view, SHA-256 hash-chain integrity verification |
 
 ---
 

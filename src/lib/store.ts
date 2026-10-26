@@ -20,7 +20,7 @@ import { LinkageRadarEngine } from './radar/graph';
 export const DEMO_USERS: User[] = [
   {
     id: 'user-inst-sunrise',
-    email: 'institution@sunrise.edu',
+    email: 'institution@sunrise-demo.example',
     name: 'Dr. Anand Kumar',
     role: 'INSTITUTION',
     designation: 'Principal & Authorized Representative',
@@ -30,7 +30,7 @@ export const DEMO_USERS: User[] = [
   },
   {
     id: 'user-officer-rao',
-    email: 'officer@aicte-india.org',
+    email: 'officer@sentinel-demo.example',
     name: 'Smt. Priyadarshini Rao',
     role: 'OFFICER',
     designation: 'Senior Scrutiny Officer (Bureau of Approvals)',
@@ -39,7 +39,7 @@ export const DEMO_USERS: User[] = [
   },
   {
     id: 'user-evc-chandran',
-    email: 'inspector@aicte-evc.gov.in',
+    email: 'inspector@sentinel-demo.example',
     name: 'Prof. Harish Chandran',
     role: 'EVC_INSPECTOR',
     designation: 'EVC Expert Committee Lead & Senior Assessor',
@@ -48,7 +48,7 @@ export const DEMO_USERS: User[] = [
   },
   {
     id: 'user-admin-singh',
-    email: 'admin@aicte-india.org',
+    email: 'admin@sentinel-demo.example',
     name: 'Vikramaditya Singh',
     role: 'ADMIN',
     designation: 'AICTE Sentinel Lead System Administrator',
@@ -57,7 +57,7 @@ export const DEMO_USERS: User[] = [
   },
   {
     id: 'user-auditor-sundaram',
-    email: 'auditor@cag.gov.in',
+    email: 'auditor@sentinel-demo.example',
     name: 'Meenakshi Sundaram',
     role: 'AUDITOR',
     designation: 'Independent Regulatory & Vigilance Auditor',
@@ -79,7 +79,7 @@ export const DEMO_INSTITUTIONS: Institution[] = [
     address: 'Survey No. 144/2, Sarjapur Outer Ring Road, Bengaluru - 560035',
     landSurveyNumber: '144/2',
     landAreaAcres: 4.85,
-    contactEmail: 'admissions@sunrise.edu',
+    contactEmail: 'admissions@sunrise-demo.example',
     contactPhone: '+91 80 2844 9100',
     establishedYear: 2012,
     status: 'SCRUTINY_PENDING',
@@ -96,7 +96,7 @@ export const DEMO_INSTITUTIONS: Institution[] = [
     address: 'Survey No. 289/1A, Phase-3 Hinjawadi Infotech Park, Pune - 411057',
     landSurveyNumber: '289/1A',
     landAreaAcres: 3.2,
-    contactEmail: 'contact@novaengg.ac.in',
+    contactEmail: 'contact@nova-demo.example',
     contactPhone: '+91 20 6711 4400',
     establishedYear: 2016,
     status: 'DEFICIENT',
@@ -113,7 +113,7 @@ export const DEMO_INSTITUTIONS: Institution[] = [
     address: 'Survey No. 289/1A (Plot-B), Hinjawadi Phase-3, Pune - 411057',
     landSurveyNumber: '289/1A',
     landAreaAcres: 2.1,
-    contactEmail: 'office@apexpolytechnic.edu.in',
+    contactEmail: 'office@apex-demo.example',
     contactPhone: '+91 20 8920 1199',
     establishedYear: 2025,
     status: 'DEFICIENT',

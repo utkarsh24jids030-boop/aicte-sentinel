@@ -153,7 +153,7 @@ const MOCK_LAND_RECORDS_DB: Record<string, {
     acreage: 2.1,
     status: 'MISMATCH',
     activeEncumbrance: true,
-    notes: 'COLLUSION ALERT: Survey Number 289/1A already claimed by Nova Engineering College in Application AICTE/2026/NOV-9014!'
+    notes: 'LINKAGE ADVISORY: Survey Number 289/1A previously declared in Application AICTE/2026/NOV-9014 (requires verification of sub-division records).'
   }
 };
 

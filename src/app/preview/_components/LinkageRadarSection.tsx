@@ -7,30 +7,30 @@ export default function LinkageRadarSection() {
   const { nodes, edges, overallLinkageRiskScore, riskSummary } = radarData;
 
   return (
-    <section id="collusion-radar" className="space-y-8 bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
+    <section id="linkage-radar" className="space-y-8 bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
       <div className="border-b border-slate-200 pb-4">
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-rose-700 uppercase tracking-wider">
-            Fraud Intelligence
+            Compliance Intelligence
           </span>
           <span className="bg-rose-100 text-rose-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
             Entity Resolution Graph
           </span>
         </div>
         <h2 className="text-2xl font-bold text-slate-900 mt-1">
-          Collusion Radar: Cross-Institutional Linkage Analysis
+          Linkage Radar: Cross-Institutional Linkage Analysis
         </h2>
         <p className="text-sm text-slate-600 mt-1">
-          Detects clandestine multi-college syndicates sharing campus land parcels, circulating duplicate fire/building certificates, and double-counting full-time faculty across institutions.
+          Identifies possible cross-institution linkages such as overlapping land survey claims, shared certificate numbers, and concurrent faculty declarations across institutions.
         </p>
       </div>
 
       {/* Summary Score Cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
-          <div className="text-[10px] font-bold text-slate-500 uppercase">Collusion Risk Score</div>
+          <div className="text-[10px] font-bold text-slate-500 uppercase">Linkage Risk Score</div>
           <div className="text-3xl font-black font-mono text-rose-600 mt-1">{overallLinkageRiskScore}%</div>
-          <span className="text-[10px] text-slate-400">High Fraud Affinity</span>
+          <span className="text-[10px] text-slate-400">Elevated Linkage Affinity</span>
         </div>
         <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
           <div className="text-[10px] font-bold text-slate-500 uppercase">Critical Clusters</div>
@@ -181,7 +181,7 @@ export default function LinkageRadarSection() {
       {/* Edge Table (Requirements: Readable without JS) */}
       <div className="space-y-3">
         <h3 className="text-base font-bold text-slate-900">
-          Collusion & Sharing Linkages ({edges.length} Edges)
+          Cross-Institution Linkages ({edges.length} Edges)
         </h3>
         <div className="overflow-x-auto border border-slate-200 rounded-xl">
           <table className="w-full text-left text-xs border-collapse">

@@ -36,11 +36,11 @@ export default function LandingPage() {
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight mb-4">
-              AICTE Sentinel: Next-Gen Approval Scrutiny & Fraud Intelligence
+              AICTE Sentinel: Next-Gen Approval Scrutiny & Compliance Intelligence
             </h1>
 
             <p className="text-base sm:text-lg text-blue-100 mb-8 leading-relaxed">
-              An AI-powered decision-support platform for institutional approval validation, document forensic authentication, statutory compliance verification, and cross-institution fraud detection.
+              An AI-powered decision-support platform for institutional approval validation, document forensic authentication, statutory compliance verification, and cross-institution anomaly detection.
             </p>
 
             <blockquote className="border-l-4 border-amber-400 pl-4 py-1 text-sm italic text-amber-200/90 mb-8">
@@ -60,7 +60,7 @@ export default function LandingPage() {
                 className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-sm transition-all flex items-center gap-2"
               >
                 <Radar className="w-4 h-4 text-rose-400" />
-                <span>Open Collusion Radar</span>
+                <span>Open Linkage Radar</span>
               </Link>
               <Link
                 href="/institution"
@@ -74,7 +74,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 3 Seeded Demonstration Fraud Scenarios */}
+      {/* 3 Seeded Demonstration Regulatory Scenarios */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="mb-8">
           <div className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">
@@ -84,7 +84,7 @@ export default function LandingPage() {
             Three Live Demo Institutions & Regulatory Scenarios
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Pre-seeded with synthetic, deliberate compliance anomalies, cross-institution collusions, and forensic challenges.
+            Pre-seeded with synthetic, deliberate compliance anomalies, cross-institution linkages, and forensic challenges.
           </p>
         </div>
 
@@ -105,7 +105,7 @@ export default function LandingPage() {
               >
                 {isCritical && (
                   <div className="absolute top-0 right-0 bg-rose-600 text-white text-[10px] font-bold px-3 py-0.5 rounded-bl-lg">
-                    CRITICAL FRAUD ALERT
+                    HIGH LINKAGE ANOMALY
                   </div>
                 )}
 
@@ -139,21 +139,21 @@ export default function LandingPage() {
 
                     {findings.slice(0, 4).map((f) => {
                       const isForensic = f.category === 'FORENSIC_ANOMALY';
-                      const isCollusion = f.category === 'CROSS_INSTITUTION_COLLUSION';
+                      const isLinkage = f.category === 'CROSS_INSTITUTION_LINKAGE' || f.category === 'CROSS_INSTITUTION_COLLUSION';
                       const isCrit = f.severity === 'Critical';
 
                       return (
                         <div 
                           key={f.id} 
                           className={`flex items-start gap-2 ${
-                            isCrit || isCollusion ? 'text-rose-700' :
+                            isCrit || isLinkage ? 'text-rose-700' :
                             isForensic ? 'text-purple-700' :
                             f.severity === 'High' ? 'text-amber-800' : 'text-slate-700'
                           }`}
                         >
                           {isForensic ? (
                             <Fingerprint className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                          ) : isCollusion ? (
+                          ) : isLinkage ? (
                             <Radar className="w-4 h-4 text-rose-600 mt-0.5 flex-shrink-0" />
                           ) : (
                             <AlertTriangle className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
@@ -182,7 +182,7 @@ export default function LandingPage() {
                     app.riskTier === 'Critical' ? 'text-rose-700' :
                     app.riskTier === 'High' ? 'text-orange-600' : 'text-slate-600'
                   }`}>
-                    Risk Tier: {app.riskTier} {app.collusionRiskScore > 50 ? `(${app.collusionRiskScore}%)` : ''}
+                    Risk Tier: {app.riskTier} {app.linkageRiskScore > 50 ? `(${app.linkageRiskScore}%)` : ''}
                   </span>
                   <Link
                     href={`/officer/case/${app.id}`}
@@ -190,7 +190,7 @@ export default function LandingPage() {
                       app.riskTier === 'Critical' ? 'text-rose-700 hover:text-rose-900' : 'text-blue-700 hover:text-blue-900'
                     }`}
                   >
-                    <span>{app.riskTier === 'Critical' ? 'Inspect Fraud File' : 'Inspect Case'}</span>
+                    <span>{app.riskTier === 'Critical' ? 'Inspect Anomaly File' : 'Inspect Case'}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -237,9 +237,9 @@ export default function LandingPage() {
 
             <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50">
               <Radar className="w-8 h-8 text-rose-600 mb-3" />
-              <h3 className="font-bold text-sm text-slate-900 mb-1">Collusion Radar</h3>
+              <h3 className="font-bold text-sm text-slate-900 mb-1">Linkage Radar</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Entity-resolution graph exposing cross-institution collusion: shared land parcels, reused faculty credentials, duplicate certificates, and interlocking trusts.
+                Entity-resolution graph exposing cross-institution linkages: shared land parcels, concurrent faculty declarations, duplicate certificates, and interlocking trusts.
               </p>
             </div>
 

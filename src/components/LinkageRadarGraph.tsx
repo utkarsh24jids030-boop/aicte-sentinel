@@ -48,20 +48,20 @@ export default function LinkageRadarGraph({ data, onSelectInstitution }: Linkage
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden flex flex-col">
-      {/* Top Bar with Collusion Risk Metrics & Filters */}
+      {/* Top Bar with Linkage Risk Metrics & Filters */}
       <div className="p-4 sm:p-5 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
               <Share2 className="w-5 h-5 text-rose-600" />
-              <span>Cross-Institution Collusion & Fraud Radar</span>
+              <span>Cross-Institution Linkage Radar</span>
             </h3>
             <span className="bg-rose-100 text-rose-800 text-xs font-bold px-2 py-0.5 rounded-full border border-rose-300">
-              Peak Network Risk: {data.overallCollusionRiskScore}%
+              Peak Network Linkage Risk: {data.overallLinkageRiskScore}%
             </span>
           </div>
           <p className="text-xs text-slate-500">
-            Automated entity-resolution graph detecting cross-institutional land double-pledging, duplicate faculty, and shared assets.
+            Automated entity-resolution graph identifying possible cross-institutional land parcel overlaps, concurrent faculty claims, and shared documents.
           </p>
         </div>
 
@@ -238,7 +238,7 @@ export default function LinkageRadarGraph({ data, onSelectInstitution }: Linkage
           <div className="absolute bottom-3 left-4 bg-slate-900/80 backdrop-blur-xs border border-slate-800 rounded-lg p-2 text-[10px] text-slate-300 flex items-center gap-4 z-20">
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
-              <span>Critical Collusion Link</span>
+              <span>Critical Linkage Edge</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
@@ -258,7 +258,7 @@ export default function LinkageRadarGraph({ data, onSelectInstitution }: Linkage
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-bold text-rose-600 uppercase tracking-wider flex items-center gap-1">
                   <ShieldAlert className="w-3.5 h-3.5" />
-                  <span>Collusion Edge Inspector</span>
+                  <span>Linkage Edge Inspector</span>
                 </span>
                 <StatusChip status={selectedEdge.riskLevel} size="sm" />
               </div>
@@ -321,7 +321,7 @@ export default function LinkageRadarGraph({ data, onSelectInstitution }: Linkage
                   onClick={() => onSelectInstitution(selectedNode.label)}
                   className="w-full py-2 bg-[#002b66] hover:bg-[#001f4d] text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 shadow-2xs transition-all"
                 >
-                  <span>Filter Collusion to this Campus</span>
+                  <span>Filter Linkages to this Campus</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </button>
               )}
@@ -329,12 +329,12 @@ export default function LinkageRadarGraph({ data, onSelectInstitution }: Linkage
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-center text-slate-400 py-12">
               <Share2 className="w-10 h-10 mb-2 stroke-1" />
-              <p className="text-xs">Click any node or link in the radar to inspect fraudulent relationships.</p>
+              <p className="text-xs">Click any node or link in the radar to inspect entity relationships.</p>
             </div>
           )}
 
           <div className="mt-6 pt-3 border-t border-slate-100 text-[11px] text-slate-400 text-center">
-            AICTE Cross-Institutional Forensic Intelligence Engine v2026.3
+            AICTE Cross-Institutional Compliance Intelligence Engine v2026.3
           </div>
         </div>
       </div>

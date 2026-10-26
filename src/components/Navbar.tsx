@@ -47,7 +47,7 @@ export default function Navbar() {
     { label: 'Portal Home', href: '/', roles: ['INSTITUTION', 'OFFICER', 'EVC_INSPECTOR', 'ADMIN', 'AUDITOR'] },
     { label: 'Institution Portal', href: '/institution', roles: ['INSTITUTION', 'ADMIN'] },
     { label: 'Officer Queue', href: '/officer', roles: ['OFFICER', 'ADMIN'] },
-    { label: 'Collusion Radar', href: '/officer/radar', roles: ['OFFICER', 'ADMIN', 'AUDITOR'] },
+    { label: 'Linkage Radar', href: '/officer/radar', roles: ['OFFICER', 'ADMIN', 'AUDITOR'] },
     { label: 'EVC Inspection', href: '/evc', roles: ['EVC_INSPECTOR', 'OFFICER', 'ADMIN'] },
     { label: 'Audit Trail', href: '/admin', roles: ['ADMIN', 'AUDITOR', 'OFFICER'] }
   ];
@@ -68,7 +68,7 @@ export default function Navbar() {
                   SIH26261
                 </span>
               </div>
-              <p className="text-[11px] text-blue-200 font-medium">Regulatory Decision-Support & Fraud Intelligence</p>
+              <p className="text-[11px] text-blue-200 font-medium">Regulatory Decision-Support & Compliance Intelligence</p>
             </div>
           </Link>
 

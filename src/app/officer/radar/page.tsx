@@ -49,7 +49,7 @@ function RadarContent() {
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
               <Radar className="w-6 h-6 text-rose-600" />
-              <span>Cross-Institution Collusion & Fraud Radar</span>
+              <span>Cross-Institution Linkage Radar</span>
             </h1>
           </div>
           <p className="text-xs text-slate-500 mt-1">

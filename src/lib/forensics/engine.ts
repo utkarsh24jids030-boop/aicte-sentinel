@@ -168,10 +168,10 @@ export class ForensicsEngine {
               category: 'CROSS_INSTITUTION_LINKAGE',
               severity: 'Critical',
               confidence: 0.95,
-              title: `Cross-Institution Collusion: Reused ${field.fieldLabel}`,
+              title: `Cross-Institution Linkage: Shared ${field.fieldLabel}`,
               explanation: `The declared ${field.fieldLabel} "${field.fieldValue}" is concurrently active in Application ID "${matchingDoc.applicationId}" for document "${matchingDoc.title}". Dual institutional claim identified.`,
               evidenceLocator: `Field: ${field.fieldKey} = ${field.fieldValue} (Also present in Doc ID ${matchingDoc.id})`,
-              recommendedAction: 'Trigger Collusion Radar investigation and notify AICTE Vigilance & EVC Teams for simultaneous surprise inspection.',
+              recommendedAction: 'Option for officer consideration: Inspect Linkage Radar graph and consider physical verification during EVC inspection.',
               status: 'Open',
               createdAt: new Date().toISOString()
             });

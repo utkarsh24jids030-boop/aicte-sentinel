@@ -858,7 +858,7 @@
       "cross_institution.application_number"
     ],
     "failure_message": "Statutory certificate number or cryptographic signature duplicate detected across multiple institution applications [SOURCE: TO BE VERIFIED].",
-    "recommended_action": "Issue immediate Show-Cause notice under statutory regulations [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Option for officer consideration: Issue Show-Cause notice under statutory regulations [SOURCE: TO BE VERIFIED].",
     "source_reference": "SOURCE: TO BE VERIFIED",
     "changelog": [
       {

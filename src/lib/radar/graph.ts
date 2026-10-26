@@ -109,11 +109,11 @@ export class LinkageRadarEngine {
       {
         id: 'land-shared-pune',
         type: 'LAND_PARCEL',
-        label: 'COLLUSION: Survey No. 289/1A',
+        label: 'LINKAGE: Survey No. 289/1A',
         subLabel: 'Hinjawadi Phase-3, Pune (Overlapping Claim)',
         riskLevel: 'CRITICAL',
         metadata: {
-          alert: 'Claimed by BOTH Nova Engineering (3.2 Acres) and Apex Polytechnic (2.1 Acres) on same Khasra partition!',
+          alert: 'Claimed by both Nova Engineering (3.2 Acres) and Apex Polytechnic (2.1 Acres) on same partition (requires verification of sub-division records).',
           subRegistrar: 'Haveli-4 Pune'
         },
         x: 650,
@@ -124,14 +124,14 @@ export class LinkageRadarEngine {
       {
         id: 'fac-malhotra',
         type: 'FACULTY',
-        label: 'COLLUSION: Dr. Vikram Malhotra',
+        label: 'LINKAGE: Dr. Vikram Malhotra',
         subLabel: 'PAN: XYZPK9876Q | Ph.D. Mech',
         riskLevel: 'CRITICAL',
         metadata: {
           degree: 'VTU-PHD-MECH-4412',
           novaRole: 'Declared as Full-Time Professor at Nova Engineering College',
           apexRole: 'Declared as Full-Time Principal at Apex Polytechnic College',
-          alert: 'Simultaneous biometric & salary claims across two distinct AICTE institutions'
+          alert: 'Simultaneous appointment declarations recorded across two distinct AICTE institutions.'
         },
         x: 680,
         y: 80
@@ -141,12 +141,12 @@ export class LinkageRadarEngine {
       {
         id: 'cert-occ-dup',
         type: 'CERTIFICATE',
-        label: 'DUPLICATE: OCC-PUNE-2021-DUP-01',
+        label: 'LINKAGE: OCC-PUNE-2021-DUP-01',
         subLabel: 'Municipal Occupancy Certificate',
         riskLevel: 'CRITICAL',
         metadata: {
           hash: 'e89c44ab012f981...',
-          alert: 'Same municipal sanction certificate reused by Apex Polytechnic for unbuilt wing'
+          alert: 'Same municipal sanction certificate identifier previously recorded for Western Horizon campus.'
         },
         x: 950,
         y: 280
@@ -243,7 +243,7 @@ export class LinkageRadarEngine {
         source: 'inst-nova',
         target: 'land-shared-pune',
         relationType: 'SHARED_LAND',
-        label: 'CRITICAL: Land Parcel Conflict',
+        label: 'ADVISORY: Land Parcel Linkage',
         riskLevel: 'CRITICAL',
         evidenceDetails: 'Nova Engineering claims 3.2 acres of Survey 289/1A in Application AICTE/2026/NOV-9014.',
         institutionsInvolved: ['Nova Engineering College', 'Apex Polytechnic College']
@@ -253,7 +253,7 @@ export class LinkageRadarEngine {
         source: 'inst-apex',
         target: 'land-shared-pune',
         relationType: 'SHARED_LAND',
-        label: 'CRITICAL: Overlapping Survey No.',
+        label: 'ADVISORY: Overlapping Survey No.',
         riskLevel: 'CRITICAL',
         evidenceDetails: 'Apex Polytechnic simultaneously claims 2.1 acres of Survey 289/1A in Application AICTE/2026/APX-1044.',
         institutionsInvolved: ['Nova Engineering College', 'Apex Polytechnic College']
@@ -263,7 +263,7 @@ export class LinkageRadarEngine {
         source: 'inst-nova',
         target: 'fac-malhotra',
         relationType: 'REUSED_FACULTY',
-        label: 'CRITICAL: Reused Faculty (Prof)',
+        label: 'ADVISORY: Concurrent Faculty (Prof)',
         riskLevel: 'CRITICAL',
         evidenceDetails: 'Dr. Vikram Malhotra listed as Full-Time Professor in Mechanical Dept at Nova.',
         institutionsInvolved: ['Nova Engineering College', 'Apex Polytechnic College']
@@ -273,7 +273,7 @@ export class LinkageRadarEngine {
         source: 'inst-apex',
         target: 'fac-malhotra',
         relationType: 'REUSED_FACULTY',
-        label: 'CRITICAL: Reused Faculty (Principal)',
+        label: 'ADVISORY: Concurrent Faculty (Principal)',
         riskLevel: 'CRITICAL',
         evidenceDetails: 'Dr. Vikram Malhotra simultaneously declared as Institutional Principal at Apex.',
         institutionsInvolved: ['Nova Engineering College', 'Apex Polytechnic College']
@@ -293,7 +293,7 @@ export class LinkageRadarEngine {
         source: 'inst-apex',
         target: 'cert-occ-dup',
         relationType: 'DUPLICATE_CERTIFICATE',
-        label: 'CRITICAL: Reused Certificate',
+        label: 'ADVISORY: Potential Duplicate Certificate',
         riskLevel: 'CRITICAL',
         evidenceDetails: 'Occupancy certificate OCC-PUNE-2021-DUP-01 previously submitted for Western Horizon campus in 2021.',
         institutionsInvolved: ['Apex Polytechnic College']

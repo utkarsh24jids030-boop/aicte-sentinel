@@ -21,7 +21,7 @@ export default function PreviewLayout({
     { label: 'Preview Index', href: '/preview' },
     { label: 'Complete Single-Page View (/preview/all)', href: '/preview/all' },
     { label: 'Officer Queue', href: '/preview/officer' },
-    { label: 'Collusion Radar', href: '/preview/radar' },
+    { label: 'Linkage Radar', href: '/preview/radar' },
     { label: 'EVC Inspections', href: '/preview/evc' },
     { label: 'Institution View', href: '/preview/institution' },
     { label: 'Rule Packs & Adapters', href: '/preview/admin' },

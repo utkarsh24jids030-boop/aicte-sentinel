@@ -159,7 +159,7 @@ export class RulesEngine {
               title: 'Duplicate Occupancy Certificate Reused from Prior Approval',
               explanation: `Municipal Occupancy Certificate OCC-PUNE-2021-DUP-01 is an exact SHA-256 duplicate of a certificate previously issued to Western Horizon School in 2021.`,
               evidenceLocator: `SHA256: ${doc.sha256Hash}`,
-              recommendedAction: 'Issue immediate Show-Cause notice under statutory regulations [SOURCE: TO BE VERIFIED].',
+              recommendedAction: 'Option for officer consideration: Issue Show-Cause notice under statutory regulations [SOURCE: TO BE VERIFIED].',
               status: 'Open',
               createdAt: doc.createdAt
             });
@@ -236,10 +236,10 @@ export class RulesEngine {
             category: 'CROSS_INSTITUTION_LINKAGE',
             severity: 'Critical',
             confidence: 0.99,
-            title: 'Severe Land Survey Conflict: Overlapping Survey No. 289/1A',
-            explanation: 'Land Survey Number 289/1A in Hinjawadi Pune claimed by Apex Polytechnic (2.1 Acres) is concurrently claimed by Nova Engineering College (3.2 Acres). Total physical parcel is only 3.2 acres.',
+            title: 'Possible Land Survey Conflict: Overlapping Survey No. 289/1A',
+            explanation: 'Land Survey Number 289/1A in Hinjawadi Pune claimed by Apex Polytechnic (2.1 Acres) is concurrently claimed by Nova Engineering College (3.2 Acres). Total physical parcel is 3.2 acres (verify sub-division records).',
             evidenceLocator: 'Survey: 289/1A Hinjawadi Pune | Overlapping in AICTE/2026/NOV-9014 & AICTE/2026/APX-1044',
-            recommendedAction: 'Order District Revenue Collector verification to survey physical boundaries and verify title deeds.',
+            recommendedAction: 'Option for officer consideration: Request District Revenue verification to survey physical boundaries and inspect title sub-division records.',
             status: 'Open',
             createdAt: app.submittedAt || new Date().toISOString()
           });
@@ -264,10 +264,10 @@ export class RulesEngine {
           category: 'CROSS_INSTITUTION_LINKAGE',
           severity: 'Critical',
           confidence: 0.99,
-          title: 'Cross-Institution Collusion: Faculty Reused across Institutions',
+          title: 'Cross-Institution Linkage: Faculty Declared across Institutions',
           explanation: 'Dr. Vikram Malhotra (PAN: XYZPK9876Q) declared as Full-Time Professor at Nova Engineering College is concurrently listed as Principal at Apex Polytechnic College (Application AICTE/2026/APX-1044).',
           evidenceLocator: 'PAN: XYZPK9876Q | Degree: VTU-PHD-MECH-4412 | Active in Nova & Apex',
-          recommendedAction: 'Refer to AICTE Vigilance Committee and dispatch simultaneous surprise inspection to both campuses.',
+          recommendedAction: 'Option for officer consideration: Consider vigilance referral and dispatch physical biometric verification during EVC inspection.',
           status: 'Open',
           createdAt: app.submittedAt || new Date().toISOString()
         });

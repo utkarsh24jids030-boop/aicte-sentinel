@@ -151,7 +151,7 @@ export default function OfficerCaseFilePage({
               className="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-2xs flex items-center gap-1.5 transition-colors"
             >
               <Radar className="w-4 h-4" />
-              <span>View in Collusion Radar</span>
+              <span>View in Linkage Radar</span>
             </Link>
 
             <Link
@@ -183,11 +183,11 @@ export default function OfficerCaseFilePage({
           </div>
 
           <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
-            <span className="text-[11px] font-semibold text-slate-400 block mb-0.5">Collusion Risk Score</span>
-            <div className={`text-2xl font-extrabold ${application.collusionRiskScore > 70 ? 'text-rose-600' : application.collusionRiskScore > 40 ? 'text-amber-600' : 'text-slate-600'}`}>
-              {application.collusionRiskScore}<span className="text-xs font-normal text-slate-400">/100</span>
+            <span className="text-[11px] font-semibold text-slate-400 block mb-0.5">Linkage Risk Score</span>
+            <div className={`text-2xl font-extrabold ${application.linkageRiskScore > 70 ? 'text-rose-600' : application.linkageRiskScore > 40 ? 'text-amber-600' : 'text-slate-600'}`}>
+              {application.linkageRiskScore}<span className="text-xs font-normal text-slate-400">/100</span>
             </div>
-            <span className="text-[11px] text-slate-500">Cross-institution fraud proximity</span>
+            <span className="text-[11px] text-slate-500">Cross-institution linkage proximity</span>
           </div>
 
           <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">

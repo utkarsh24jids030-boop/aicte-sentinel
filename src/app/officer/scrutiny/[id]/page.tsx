@@ -29,9 +29,9 @@ export default function ScrutinyReportPage({
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
   const [findings, setFindings] = useState<Finding[]>([]);
   const [readiness, setReadiness] = useState<ReadinessBreakdown | null>(null);
-  const [officerRecommendation, setOfficerRecommendation] = useState<string>('RECOMMEND_EVC_INSPECTION');
+  const [officerRecommendation, setOfficerRecommendation] = useState<string>('CONSIDER_EVC_INSPECTION');
   const [concludingRemarks, setConcludingRemarks] = useState(
-    'Based on automated regulatory compliance parsing and cross-institution collusion detection, case warrants physical on-site verification before regulatory approval decision.'
+    'Based on automated regulatory compliance parsing and cross-institution linkage analysis, case warrants physical on-site verification before regulatory approval decision.'
   );
 
   const fetchCase = React.useCallback(async () => {
@@ -44,12 +44,17 @@ export default function ScrutinyReportPage({
         setFindings(data.findings || []);
         setReadiness(data.readiness || null);
 
-        if (data.application.riskTier === 'Critical') {
-          setOfficerRecommendation('REFER_TO_VIGILANCE_COMMITTEE');
-          setConcludingRemarks('Severe cross-institutional fraud identified (overlapping land survey parcel & duplicate certificates). Recommended for immediate vigilance inquiry.');
+        const hasLinkages = data.application.linkageRiskScore >= 70 || (data.findings && data.findings.some((f: Finding) => f.category === 'CROSS_INSTITUTION_LINKAGE'));
+
+        if (data.application.riskTier === 'Critical' || hasLinkages) {
+          setOfficerRecommendation('CONSIDER_VIGILANCE_REFERRAL');
+          setConcludingRemarks('Potential cross-institution linkages and document discrepancies detected requiring manual verification of sub-division records and physical site claims. Suggested for officer review / EVC inspection / vigilance referral consideration.');
         } else if (data.application.readinessScore >= 70 && data.findings.length === 0) {
-          setOfficerRecommendation('RECOMMEND_APPROVAL');
-          setConcludingRemarks('All statutory norms, fire safety, and land deeds verified authentic against state registries. Recommended for grant of Extension of Approval (EoA).');
+          setOfficerRecommendation('CONSIDER_APPROVAL');
+          setConcludingRemarks('All submitted declarations and statutory records are verified authentic against simulated state registries with zero unresolved anomalies. Suggested for officer review / approval consideration.');
+        } else {
+          setOfficerRecommendation('CONSIDER_EVC_INSPECTION');
+          setConcludingRemarks('Specific statutory deficiencies identified during automated checks (e.g., document omissions or faculty strength deficit). Suggested for officer review / EVC inspection consideration.');
         }
       }
     } catch (e) {

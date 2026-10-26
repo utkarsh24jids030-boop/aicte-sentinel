@@ -20,7 +20,7 @@ export default function PreviewAllPage() {
           AICTE Sentinel — Comprehensive Master System Preview
         </h1>
         <p className="text-sm text-slate-600 max-w-4xl leading-relaxed">
-          This continuous single-page view consolidates the entire statutory scrutiny workflow: officer queues, full multi-institutional case files, verification passports, entity resolution collusion graphs, field inspection checklists, applicant readiness breakdowns, compliance rule packs, and immutable audit trails. All rendered directly on the server without client-side authentication gates or lazy scripts.
+          This continuous single-page view consolidates the entire statutory scrutiny workflow: officer queues, full multi-institutional case files, verification passports, entity resolution linkage graphs, field inspection checklists, applicant readiness breakdowns, compliance rule packs, and immutable audit trails. All rendered directly on the server without client-side authentication gates or lazy scripts.
         </p>
 
         {/* In-page quick jump navigation */}
@@ -28,7 +28,7 @@ export default function PreviewAllPage() {
           <span className="font-bold text-slate-500 py-1">Quick Jump:</span>
           <a href="#officer-queue" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">1. Officer Queue</a>
           <a href="#case-files" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">2. Case Files & Passports</a>
-          <a href="#collusion-radar" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">3. Collusion Radar</a>
+          <a href="#linkage-radar" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">3. Linkage Radar</a>
           <a href="#scrutiny-reports" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">4. Scrutiny Reports</a>
           <a href="#evc-inspections" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">5. EVC Inspections</a>
           <a href="#institution-portal" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">6. Institution Portal</a>

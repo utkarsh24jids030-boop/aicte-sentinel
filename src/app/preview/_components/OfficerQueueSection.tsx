@@ -20,7 +20,7 @@ export default function OfficerQueueSection() {
           Risk-Ranked Institutional Approval Applications
         </h2>
         <p className="text-sm text-slate-600 mt-1">
-          Automated multi-factor risk triage ordering applications by statutory deficiency severity and cross-institutional fraud probability.
+          Automated multi-factor risk triage ordering applications by statutory deficiency severity and cross-institutional linkage risk.
         </p>
       </div>
 
@@ -33,7 +33,7 @@ export default function OfficerQueueSection() {
               <th className="p-3">Type</th>
               <th className="p-3">Intake (Cur / Prop)</th>
               <th className="p-3">Readiness Score</th>
-              <th className="p-3">Collusion Risk</th>
+              <th className="p-3">Linkage Risk</th>
               <th className="p-3">Risk Tier</th>
               <th className="p-3">Status</th>
               <th className="p-3">Findings</th>
@@ -73,7 +73,7 @@ export default function OfficerQueueSection() {
                     </div>
                   </td>
                   <td className="p-3 font-mono font-bold text-slate-800">
-                    {app.collusionRiskScore}%
+                    {app.linkageRiskScore}%
                   </td>
                   <td className="p-3">
                     <span className={`px-2 py-0.5 rounded-full border text-[11px] font-bold ${formatSeverity(app.riskTier)}`}>

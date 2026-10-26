@@ -64,8 +64,8 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                 </div>
                 <div className="w-px h-8 bg-slate-200" />
                 <div>
-                  <div className="text-[10px] uppercase font-bold text-slate-500">Collusion Risk</div>
-                  <div className="text-2xl font-black font-mono text-rose-600">{app.collusionRiskScore}%</div>
+                  <div className="text-[10px] uppercase font-bold text-slate-500">Linkage Risk</div>
+                  <div className="text-2xl font-black font-mono text-rose-600">{app.linkageRiskScore}%</div>
                 </div>
                 <div className="w-px h-8 bg-slate-200" />
                 <div>
@@ -124,7 +124,7 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
 
               {findings.length === 0 ? (
                 <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-semibold">
-                  No automated non-compliance deficiencies or fraud anomalies flagged for this application.
+                  No automated non-compliance deficiencies or compliance anomalies flagged for this application.
                 </div>
               ) : (
                 <div className="space-y-4">

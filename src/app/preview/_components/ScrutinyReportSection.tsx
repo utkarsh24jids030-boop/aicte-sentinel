@@ -36,21 +36,28 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
         const unavailableDocs = documents.filter(d => d.verificationStatus === 'Source Unavailable').length;
 
         // Recommendation logic
-        let recommendation = 'RECOMMEND_EVC_INSPECTION';
-        let recommendationLabel = 'Recommend Physical Expert Visiting Committee (EVC) Inspection';
+        let recommendation = 'CONSIDER_EVC_INSPECTION';
+        let recommendationLabel = 'Suggested for officer review: Consider Physical EVC Inspection';
         let recommendationClass = 'bg-amber-100 text-amber-900 border-amber-300';
-        let concludingRemarks = 'Statutory compliance gaps and entity linkages warrant thorough on-site physical inspection before approval grant.';
+        let concludingRemarks = 'Statutory compliance gaps identified during automated checks. Suggested for officer review / EVC inspection consideration.';
 
-        if (app.riskTier === 'Critical') {
-          recommendation = 'REFER_TO_VIGILANCE_COMMITTEE';
-          recommendationLabel = 'Refer to Standing Appellate & Vigilance Committee';
+        const hasLinkages = app.linkageRiskScore >= 70 || findings.some(f => f.category === 'CROSS_INSTITUTION_LINKAGE');
+
+        if (app.riskTier === 'Critical' || hasLinkages) {
+          recommendation = 'CONSIDER_VIGILANCE_REFERRAL';
+          recommendationLabel = 'Suggested for officer review: Consider Vigilance Referral / Physical Inspection';
           recommendationClass = 'bg-rose-100 text-rose-900 border-rose-300';
-          concludingRemarks = 'Critical cross-institutional fraud identified (overlapping land survey parcel & duplicate certificates). Recommended for immediate regulatory inquiry.';
+          concludingRemarks = 'Potential cross-institution linkages and document discrepancies detected requiring manual verification of sub-division records and physical site claims. Suggested for officer review / EVC inspection / vigilance referral consideration.';
         } else if (app.readinessScore >= 70 && findings.length === 0) {
-          recommendation = 'RECOMMEND_APPROVAL';
-          recommendationLabel = 'Recommend Grant of Extension of Approval (EoA)';
+          recommendation = 'CONSIDER_APPROVAL';
+          recommendationLabel = 'Suggested for officer review: Approval Consideration';
           recommendationClass = 'bg-emerald-100 text-emerald-900 border-emerald-300';
-          concludingRemarks = 'All statutory land, fire safety, and faculty norms verified authentic. Recommended for grant of Extension of Approval.';
+          concludingRemarks = 'All submitted declarations and statutory records are verified authentic against simulated state registries with zero unresolved anomalies. Suggested for officer review / approval consideration.';
+        } else {
+          recommendation = 'CONSIDER_EVC_INSPECTION';
+          recommendationLabel = 'Suggested for officer review: Consider EVC Inspection / Clarification';
+          recommendationClass = 'bg-amber-100 text-amber-900 border-amber-300';
+          concludingRemarks = 'Specific statutory deficiencies identified during automated checks (e.g., document omissions or faculty strength deficit). Suggested for officer review / EVC inspection consideration.';
         }
 
         const reportId = `REP-SCRUTINY-2026-${app.id.toUpperCase()}`;
@@ -111,8 +118,8 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
                   <tr>
                     <th className="p-3 text-slate-600 font-bold uppercase">Readiness Score</th>
                     <td className="p-3 font-mono font-bold text-blue-900 text-sm">{app.readinessScore} / 100</td>
-                    <th className="p-3 text-slate-600 font-bold uppercase">Collusion Risk Score</th>
-                    <td className="p-3 font-mono font-bold text-rose-600 text-sm">{app.collusionRiskScore}% ({app.riskTier} Tier)</td>
+                    <th className="p-3 text-slate-600 font-bold uppercase">Linkage Risk Score</th>
+                    <td className="p-3 font-mono font-bold text-rose-600 text-sm">{app.linkageRiskScore}% ({app.riskTier} Tier)</td>
                   </tr>
                 </tbody>
               </table>
@@ -154,7 +161,7 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
             {/* Key Deficiencies & Findings */}
             <div>
               <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2">
-                2. Automated Statutory Non-Compliance & Fraud Findings ({findings.length})
+                2. Automated Statutory Non-Compliance & Anomaly Findings ({findings.length})
               </h3>
               {findings.length === 0 ? (
                 <div className="p-3 bg-emerald-50 text-emerald-800 rounded-lg text-xs font-medium">

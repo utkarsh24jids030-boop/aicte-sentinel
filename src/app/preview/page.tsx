@@ -14,14 +14,14 @@ export default function PreviewIndexPage() {
     {
       title: 'Risk-Ranked Officer Queue',
       href: '/preview/officer',
-      description: 'Prioritized scrutiny queue of applications ordered by readiness score deductions and collusion fraud risk.',
+      description: 'Prioritized scrutiny queue of applications ordered by readiness score deductions and linkage risk.',
       badge: 'Officer View'
     },
     {
-      title: 'Collusion Radar & Linkage Graph',
+      title: 'Linkage Radar & Entity Graph',
       href: '/preview/radar',
-      description: 'Entity resolution graph with plain HTML tables of nodes and edges exposing shared land parcels and duplicate faculty.',
-      badge: 'Fraud Intelligence'
+      description: 'Entity resolution graph with plain HTML tables of nodes and edges exposing shared land parcels and concurrent faculty claims.',
+      badge: 'Compliance Intelligence'
     },
     {
       title: 'EVC Field Inspection Copilot',
@@ -108,7 +108,7 @@ export default function PreviewIndexPage() {
                 <th className="p-3">Institution Name</th>
                 <th className="p-3">Type</th>
                 <th className="p-3">Readiness</th>
-                <th className="p-3">Collusion Risk</th>
+                <th className="p-3">Linkage Risk</th>
                 <th className="p-3 text-right">Direct Preview Links</th>
               </tr>
             </thead>
@@ -119,7 +119,7 @@ export default function PreviewIndexPage() {
                   <td className="p-3 font-bold text-slate-800">{app.institutionName}</td>
                   <td className="p-3 text-slate-600">{app.type}</td>
                   <td className="p-3 font-mono font-bold text-blue-900">{app.readinessScore}/100</td>
-                  <td className="p-3 font-mono font-bold text-rose-600">{app.collusionRiskScore}%</td>
+                  <td className="p-3 font-mono font-bold text-rose-600">{app.linkageRiskScore}%</td>
                   <td className="p-3 text-right space-x-2">
                     <a
                       href={`/preview/case/${app.id}`}

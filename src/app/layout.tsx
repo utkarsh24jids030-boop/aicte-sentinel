@@ -6,8 +6,8 @@ import { AuthProvider } from '@/context/AuthContext';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'AICTE Sentinel — SIH 2026 PS 26261 Institutional Approval & Fraud Intelligence',
-  description: 'AI-powered decision-support platform for AICTE institutional approval validation, document forensic authentication, statutory compliance, and cross-institution fraud detection.',
+  title: 'AICTE Sentinel — SIH 2026 PS 26261 Institutional Approval & Compliance Intelligence',
+  description: 'AI-powered decision-support platform for AICTE institutional approval validation, document forensic authentication, statutory compliance, and cross-institution anomaly detection.',
 };
 
 export default function RootLayout({

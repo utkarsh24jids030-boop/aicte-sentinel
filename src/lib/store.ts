@@ -1339,7 +1339,7 @@ export class DataStore {
       'FIND-NOV-001',
       {
         status: 'Confirmed by Officer',
-        officerNotes: 'Flagged for surprise scrutiny. High probability of fabricated carpet area schedule.',
+        officerNotes: 'Flagged for scrutiny review. Potential discrepancy in declared carpet area schedule.',
         reviewedBy: 'Smt. Priyadarshini Rao',
         reviewedAt: '2026-01-23T11:00:00Z'
       }
@@ -1348,7 +1348,7 @@ export class DataStore {
       'FIND-NOV-003',
       {
         status: 'Escalated for EVC',
-        officerNotes: 'High severity collusion. Dr. Malhotra must be physically interviewed with biometric verification.',
+        officerNotes: 'Requires physical verification. Possible cross-institution faculty linkage for Dr. Malhotra.',
         reviewedBy: 'Smt. Priyadarshini Rao',
         reviewedAt: '2026-01-23T12:30:00Z'
       }
@@ -1357,7 +1357,7 @@ export class DataStore {
       'FIND-APX-001',
       {
         status: 'Escalated for EVC',
-        officerNotes: 'Clear double-pledging of educational land parcel between two related institutions.',
+        officerNotes: 'Possible overlapping land claim across two related institutions (verify sub-division records).',
         reviewedBy: 'Smt. Priyadarshini Rao',
         reviewedAt: '2026-01-26T09:30:00Z'
       }
@@ -1366,7 +1366,7 @@ export class DataStore {
       'FIND-APX-002',
       {
         status: 'Confirmed by Officer',
-        officerNotes: 'Blatant document recycling. Officer confirmed adverse finding.',
+        officerNotes: 'Potential duplicate document submission detected against historical records. Officer confirmed adverse finding.',
         reviewedBy: 'Smt. Priyadarshini Rao',
         reviewedAt: '2026-01-26T10:00:00Z'
       }

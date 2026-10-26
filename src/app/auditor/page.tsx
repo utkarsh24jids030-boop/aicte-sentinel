@@ -89,9 +89,9 @@ export default function AuditorPage() {
               <CheckCircle2 className="w-7 h-7" />
             </div>
             <div>
-              <h3 className="font-bold text-base text-slate-900">Immutable Hash Chain: 100% Cryptographically Intact</h3>
+              <h3 className="font-bold text-base text-slate-900">Tamper-Evident Hash Chain: 100% Cryptographically Intact</h3>
               <p className="text-xs text-slate-600 mt-0.5 max-w-xl">
-                Every document ingestion, officer adjudication, and verification attempt forms an unbreakable sequence where each block stores the previous block SHA-256 hash.
+                Every document ingestion, officer adjudication, and verification attempt forms an unbroken verification sequence where each block stores the previous block SHA-256 hash.
               </p>
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function AuditorPage() {
                 <h4 className="font-bold text-slate-900">{app.institutionName}</h4>
                 <div className="flex justify-between text-slate-500 text-[11px]">
                   <span>Readiness: {app.readinessScore}/100</span>
-                  <span>Collusion Risk: {app.collusionRiskScore}/100</span>
+                  <span>Linkage Risk: {app.linkageRiskScore ?? app.collusionRiskScore}/100</span>
                 </div>
                 <Link
                   href={`/officer/case/${app.id}`}
@@ -132,7 +132,7 @@ export default function AuditorPage() {
           </div>
         </div>
 
-        {/* Full Immutable Audit Trail Table */}
+        {/* Full Tamper-Evident Audit Trail Table */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
           <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-xs text-slate-800 flex justify-between">
             <span>Audit Trail Ledger Records</span>

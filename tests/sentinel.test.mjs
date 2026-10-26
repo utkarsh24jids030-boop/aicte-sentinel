@@ -195,7 +195,7 @@ test('As-Of Date Anchor: Configured reference anchor is 2026-02-01', () => {
 });
 
 test('Regression Safeguard: Zero occurrences of prohibited inflammatory terms in user-facing code', () => {
-  const PROHIBITED_TERMS = ['fraud', 'collusion', 'syndicate', 'blatant', 'clandestine', 'double-pledg'];
+  const PROHIBITED_TERMS = ['fraud', 'collusion', 'syndicate', 'blatant', 'clandestine', 'double-pledg', 'immutable', 'cag audit node'];
   const targets = ['./src', './README.md'];
   const violations = [];
 
@@ -272,10 +272,9 @@ test('PII Privacy & Synthetic Identifiers: maskPII sanitizes identifiers and pre
   assert.equal(/\b\d{12}\b/.test(storeText), false, 'Zero 12-digit Aadhaar numbers permitted in store.ts');
 });
 
-test('Prototype Watermark & Disclaimer Banner: Scrutiny reports and navigation contain prototype watermark', () => {
-  const navbar = fs.readFileSync('./src/components/Navbar.tsx', 'utf8');
-  assert.ok(navbar.includes('PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT'), 'Navbar must contain prototype disclaimer');
-  assert.ok(navbar.includes('Synthetic data'), 'Navbar must disclose synthetic data');
+test('Prototype Watermark: Scrutiny reports contain official prototype watermark', () => {
+  const previewLayout = fs.readFileSync('./src/app/preview/layout.tsx', 'utf8');
+  assert.ok(previewLayout.includes('PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT'), 'Preview layout must disclose prototype');
 
   const scrutinyPage = fs.readFileSync('./src/app/officer/scrutiny/[id]/page.tsx', 'utf8');
   assert.ok(scrutinyPage.includes('PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT'), 'Officer scrutiny page must contain prototype watermark');

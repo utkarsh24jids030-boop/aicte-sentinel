@@ -755,6 +755,51 @@ test('Item 8: Synthetic Benchmark Dataset & Server-Rendered Metrics', () => {
   assert.ok(!metricsSectionCode.includes("'use client'"), 'MetricsSection must be a server component');
 });
 
+test('Item 10: Repo Hygiene, License, Architecture Diagram & Design Document', () => {
+  // 1. Verify docs/DESIGN.md exists and is written as a design document, not a build prompt
+  assert.ok(fs.existsSync('./docs/DESIGN.md'), 'docs/DESIGN.md must exist');
+  assert.ok(!fs.existsSync('./AICTE_Sentinel_SIH_2026_Specification.md'), 'AICTE_Sentinel_SIH_2026_Specification.md must be removed');
+  const designDoc = fs.readFileSync('./docs/DESIGN.md', 'utf8');
+  assert.ok(designDoc.includes('System Design & Architectural Specification'), 'docs/DESIGN.md title must be a design specification');
+  assert.ok(!designDoc.startsWith('Build a production-quality'), 'docs/DESIGN.md must not open with prompt text');
+  assert.ok(designDoc.includes('AICTE Sentinel does not replace regulatory judgment'), 'docs/DESIGN.md must preserve governance positioning');
+
+  // 2. Verify LICENSE exists with MIT terms
+  assert.ok(fs.existsSync('./LICENSE'), 'LICENSE file must exist in repo root');
+  const licenseContent = fs.readFileSync('./LICENSE', 'utf8');
+  assert.ok(licenseContent.includes('MIT License'), 'LICENSE must specify MIT License');
+  assert.ok(licenseContent.includes('Permission is hereby granted, free of charge'), 'LICENSE must include standard MIT grant');
+
+  // 3. Verify README hygiene
+  const readmeContent = fs.readFileSync('./README.md', 'utf8');
+  assert.ok(
+    readmeContent.includes('git clone https://github.com/utkarsh24jids030-boop/aicte-sentinel.git'),
+    'README must have correct clone URL for aicte-sentinel'
+  );
+  assert.ok(
+    readmeContent.includes('cd aicte-sentinel'),
+    'README must instruct cd aicte-sentinel'
+  );
+  assert.ok(
+    !readmeContent.includes('Movies_Recommendation.git'),
+    'README must not reference Movies_Recommendation'
+  );
+  assert.ok(
+    !readmeContent.includes('build-passing-brightgreen'),
+    'README must not include fake static build passing badge'
+  );
+
+  // 4. Verify Architecture diagram covers AICTE portal integration, Jan Parichay SSO, REST adapters, and simulated boundary
+  assert.ok(
+    readmeContent.includes('AICTE NATIONAL APPROVAL ECOSYSTEM') &&
+    readmeContent.includes('Jan Parichay') &&
+    readmeContent.includes('DigiLocker REST') &&
+    readmeContent.includes('(SIMULATED)'),
+    'README architecture diagram must illustrate AICTE portal integration, SSO, REST adapters, and simulated components'
+  );
+});
+
+
 
 
 

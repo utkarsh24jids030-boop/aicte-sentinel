@@ -3,13 +3,13 @@
 > **Smart India Hackathon 2026 — Problem Statement SIH26261**  
 > **Core positioning:** *"AICTE Sentinel does not replace regulatory judgment — it makes every judgment auditable."*
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](http://localhost:3000)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16%2B-blue)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8)](https://tailwindcss.com)
 [![Prisma ORM](https://img.shields.io/badge/Prisma-PostgreSQL-indigo)](https://prisma.io)
 
-AICTE Sentinel is a decision-support and compliance-intelligence web application engineered for Smart India Hackathon 2026. It assists the All India Council for Technical Education (AICTE) Bureau of Approvals in validating institutional approval applications, authenticating legal and academic documents, enforcing versioned compliance rules, and detecting multi-institution linkages (such as shared land parcels, reused faculty credentials, and duplicate municipal certificates).
+AICTE Sentinel is a decision-support and compliance-intelligence web application engineered for Smart India Hackathon 2026. It assists the All India Council for Technical Education (AICTE) Bureau of Approvals in validating institutional approval applications, authenticating legal and academic documents, enforcing versioned compliance rules, and detecting multi-institution linkages (such as shared land parcels, reused faculty credentials, and duplicate municipal certificates). Complete technical design and module specifications are documented in [docs/DESIGN.md](docs/DESIGN.md).
 
 ---
 
@@ -63,41 +63,64 @@ The platform comes pre-seeded with three realistic institutional cases illustrat
 
 ---
 
-## 3. Architecture Overview
+## 3. Architecture & AICTE Portal Integration Overview
+
+The following diagram illustrates how AICTE Sentinel integrates with the AICTE National Approval Ecosystem, Single Sign-On (SSO), and external verification registries:
 
 ```
-                      ┌────────────────────────────────────────┐
-                      │          AICTE Sentinel Web UI         │
-                      │  Next.js 16 App Router + Tailwind CSS  │
-                      └───────────────────┬────────────────────┘
-                                          │
-            ┌─────────────────────────────┼─────────────────────────────┐
-            ▼                             ▼                             ▼
-┌───────────────────────┐   ┌───────────────────────────┐   ┌───────────────────────┐
-│  Institution Portal   │   │   AICTE Officer Portal    │   │  EVC Inspection View  │
-│ - New App Wizard      │   │ - Risk-Ranked Queue       │   │ - Automated Briefs    │
-│ - Document Locker     │   │ - Case File Adjudication  │   │ - Mobile Checklists   │
-│ - Readiness Gauge     │   │ - Scrutiny Reports        │   │ - Geotagged Evidence  │
-└───────────┬───────────┘   └─────────────┬─────────────┘   └───────────┬───────────┘
-            │                             │                             │
-            └─────────────────────────────┼─────────────────────────────┘
-                                          ▼
-                      ┌────────────────────────────────────────┐
-                      │    Decision-Support Intelligence Core  │
-                      ├────────────────────────────────────────┤
-                      │ • Forensics: SHA-256, PDF Metadata     │
-                      │ • Passports: 6-State Fail-Closed Model │
-                      │ • Rules: 22 Statutory Compliance Rules │
-                      │ • Linkage Radar: Entity Graph Network  │
-                      │ • Audit Trail: SHA-256 Hash Chain      │
-                      └───────────────────┬────────────────────┘
-                                          │
-            ┌─────────────────────────────┼─────────────────────────────┐
-            ▼                             ▼                             ▼
-┌───────────────────────┐   ┌───────────────────────────┐   ┌───────────────────────┐
-│ DigiLocker Mock Reg.  │   │ Certificate Registry Mock │   │ Land / Faculty Mock   │
-└───────────────────────┘   └───────────────────────────┘   └───────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│                          AICTE NATIONAL APPROVAL ECOSYSTEM                                   │
+└──────────────────────────────────────────────┬──────────────────────────────────────────────┘
+                                               │
+                                 ┌─────────────┴─────────────┐
+                                 │   Jan Parichay / SSO      │ (Production Target)
+                                 │  [Simulated in Demo Mode] │
+                                 └─────────────┬─────────────┘
+                                               │
+                                               ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 AICTE SENTINEL PLATFORM                                     │
+│                         (Next.js 16 App Router + TypeScript)                                │
+├─────────────────────────────────────────────────────────────────────────────────────────────┤
+│  USER ACCESS PORTALS                                                                        │
+│  ┌───────────────────────┐   ┌───────────────────────────┐   ┌───────────────────────────┐  │
+│  │  Institution Portal   │   │   AICTE Officer Scrutiny  │   │   EVC Inspection Mobile   │  │
+│  │ - 5-Step Application  │   │ - Risk-Prioritized Queue  │   │ - On-Site Mobile Checklist│  │
+│  │ - Document Locker     │   │ - Case File Adjudication  │   │ - Geotagged Observations  │  │
+│  │ - Readiness Index     │   │ - Scrutiny Reports & Seal │   │ - Physical ground truth   │  │
+│  └───────────┬───────────┘   └─────────────┬─────────────┘   └─────────────┬─────────────┘  │
+│              └─────────────────────────────┼───────────────────────────────┘                │
+│                                            ▼                                                │
+│  REGULATORY DECISION-SUPPORT INTELLIGENCE CORE                                              │
+│  ┌───────────────────────────────────────────────────────────────────────────────────────┐  │
+│  │ • Document Text Extractor (pdf-parse v2 + Keyword Classification + Optional LLM)      │  │
+│  │ • Forensics Engine (Tamper Score formula + SHA-256 Hashes + Revisions)               │  │
+│  │ • Statutory Compliance Rules Engine (26 APH Norms: Land, Faculty, Fire, Carpet Area)  │  │
+│  │ • Linkage Radar (Entity Graph Resolution: Shared Land, Reused Faculty, Duplicate Cert)│  │
+│  │ • Tamper-Evident Audit Ledger (SHA-256 Hash Chaining + Report Seals)                  │  │
+│  └─────────────────────────────────────────┬─────────────────────────────────────────────┘  │
+└────────────────────────────────────────────┼────────────────────────────────────────────────┘
+                                             │ REST Adapters (Fail-Closed Architecture)
+             ┌───────────────────────────────┼───────────────────────────────┐
+             ▼                               ▼                               ▼
+┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐
+│  DigiLocker REST        │     │  Land Cadastre (Bhoomi) │     │  State DTE NOC Adapter  │
+│  Adapter (SIMULATED)    │     │  Adapter (SIMULATED)    │     │  Adapter (SIMULATED)    │
+│  Target: National       │     │  Target: State Revenue  │     │  Target: State Higher & │
+│  DigiLocker API         │     │  & Land Records APIs    │     │  Technical Education    │
+└─────────────────────────┘     └─────────────────────────┘     └─────────────────────────┘
+             │                               │                               │
+             ▼                               ▼                               ▼
+┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐
+│  National Faculty Reg.  │     │  Durable DB / Storage   │     │  Audit Trail Integrity  │
+│  Adapter (SIMULATED)    │     │  [In-Memory in Demo;    │     │  Live SHA-256 Validator │
+│  Target: AICTE Faculty  │     │   PostgreSQL / S3       │     │  Zero-Tampering Proof   │
+│  Database / APAAR       │     │   for Production]       │     │  for Vigilance Auditors │
+└─────────────────────────┘     └─────────────────────────┘     └─────────────────────────┘
 ```
+
+> [!NOTE]
+> **Simulation Boundary Transparency:** As labelled throughout the UI with `(simulated)`, all external verification adapters (DigiLocker, Land Cadastre, State DTE, Faculty Registry) and SSO authentications in this demonstration operate via controlled synthetic mock responders that model real-world government API latency, success responses, and fail-closed timeout degradation. For complete architectural details, see [docs/DESIGN.md](docs/DESIGN.md).
 
 ---
 
@@ -167,8 +190,8 @@ Located in `src/lib/rules/packs.json`:
 ### Installation & Execution
 ```bash
 # 1. Clone repository
-git clone https://github.com/utkarsh24jids030-boop/Movies_Recommendation.git
-cd "AICTE SIH"
+git clone https://github.com/utkarsh24jids030-boop/aicte-sentinel.git
+cd aicte-sentinel
 
 # 2. Install dependencies
 npm install

@@ -1,0 +1,42 @@
+{
+  "Sunrise_Land_Sale_Deed.pdf": {
+    "hash": "19cbc54d24ebf1b001d986484fd02ab70131fdc661fc8f040f9d646597422b01",
+    "size": 1125,
+    "path": "/samples/Sunrise_Land_Sale_Deed.pdf"
+  },
+  "Sunrise_Fire_Safety_NOC.pdf": {
+    "hash": "982f7c02390ae4ea3b60f350adcf3265178049782c26ff9a948ac7e243ecd8ab",
+    "size": 1082,
+    "path": "/samples/Sunrise_Fire_Safety_NOC.pdf"
+  },
+  "Nova_Faculty_Qualification_Malhotra.pdf": {
+    "hash": "548fc5336f720e4268d2040ebf370a0c3618c099d59e725a9c7f7b2edbbecab1",
+    "size": 1134,
+    "path": "/samples/Nova_Faculty_Qualification_Malhotra.pdf"
+  },
+  "Nova_Building_Plan_Rev2.pdf": {
+    "hash": "b8129d8d5d1f598ad8133ef0bd8b28f45862ce55e87b7e8346a4785482ecfe35",
+    "size": 1132,
+    "path": "/samples/Nova_Building_Plan_Rev2.pdf"
+  },
+  "Western_Horizon_Occupancy_2021.pdf": {
+    "hash": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b",
+    "size": 1154,
+    "path": "/samples/Western_Horizon_Occupancy_2021.pdf"
+  },
+  "Apex_Occupancy_Certificate_2021.pdf": {
+    "hash": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b",
+    "size": 1154,
+    "path": "/samples/Apex_Occupancy_Certificate_2021.pdf"
+  },
+  "Apex_Occupancy_Certificate_Reused.pdf": {
+    "hash": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b",
+    "size": 1154,
+    "path": "/samples/Apex_Occupancy_Certificate_Reused.pdf"
+  },
+  "Apex_Land_Lease_Deed.pdf": {
+    "hash": "4998dc89c468c74307bb8566f940b49fb6fc53a67312c21f365ee1d2c3fe4afd",
+    "size": 1078,
+    "path": "/samples/Apex_Land_Lease_Deed.pdf"
+  }
+}

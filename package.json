@@ -7,13 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node tests/sentinel.test.mjs"
+    "test": "node --test tests/sentinel.test.mjs tests/evaluator.test.mjs tests/rules.test.mjs",
+    "evaluate": "tsx scripts/evaluate.ts",
+    "generate:dataset": "tsx scripts/generate-synthetic-dataset.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",
     "firebase": "^13.1.0",
     "lucide-react": "^1.61.0",
     "next": "16.4.3",
+    "pdf-parse": "^2.4.5",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "recharts": "^3.10.1",
@@ -22,11 +25,13 @@
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
+    "@types/pdf-parse": "^1.1.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.3",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

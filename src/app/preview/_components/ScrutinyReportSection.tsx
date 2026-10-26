@@ -1,8 +1,10 @@
 import React from 'react';
 import { DataStore } from '@/lib/store';
-import { RulesEngine } from '@/lib/rules/engine';
-import { Application, DocumentRecord, Finding } from '@/types';
-import { formatSeverity, formatStatus } from './helpers';
+import { Application } from '@/types';
+import { AuditTrailEngine } from '@/lib/audit/trail';
+import { computeReportSeal } from '@/lib/security/reportSeal';
+import { formatSeverity, maskPII } from './helpers';
+import VerificationStatusLegend from '@/components/VerificationStatusLegend';
 
 interface ScrutinyReportSectionProps {
   appId?: string;
@@ -27,48 +29,71 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
         const institution = DataStore.getInstitutionById(app.institutionId);
         const documents = DataStore.getDocuments(app.id);
         const findings = DataStore.getFindings(app.id);
-        const { breakdown } = RulesEngine.evaluateApplication(app, documents);
 
         // Verification matrix counts
         const totalDocs = documents.length;
         const verifiedDocs = documents.filter(d => d.verificationStatus === 'Verified').length;
         const mismatchDocs = documents.filter(d => d.verificationStatus === 'Mismatch Detected').length;
         const expiredDocs = documents.filter(d => d.verificationStatus === 'Expired').length;
-        const manualDocs = documents.filter(d => d.verificationStatus === 'Manual Review Required' || d.verificationStatus === 'Not Verified').length;
+        const pendingDocs = documents.filter(d => d.verificationStatus === 'Verification Pending').length;
         const unavailableDocs = documents.filter(d => d.verificationStatus === 'Source Unavailable').length;
+        const manualDocs = documents.filter(d => d.verificationStatus === 'Manual Review Required').length;
 
         // Recommendation logic
-        let recommendation = 'RECOMMEND_EVC_INSPECTION';
-        let recommendationLabel = 'Recommend Physical Expert Visiting Committee (EVC) Inspection';
+        let recommendation = 'CONSIDER_EVC_INSPECTION';
+        let recommendationLabel = 'Suggested for officer review: Consider Physical EVC Inspection';
         let recommendationClass = 'bg-amber-100 text-amber-900 border-amber-300';
-        let concludingRemarks = 'Statutory compliance gaps and entity linkages warrant thorough on-site physical inspection before approval grant.';
+        let concludingRemarks = 'Statutory compliance gaps identified during automated checks. Suggested for officer review / EVC inspection consideration.';
 
-        if (app.riskTier === 'Critical') {
-          recommendation = 'REFER_TO_VIGILANCE_COMMITTEE';
-          recommendationLabel = 'Refer to Standing Appellate & Vigilance Committee';
+        const hasLinkages = app.linkageRiskScore >= 70 || findings.some(f => f.category === 'CROSS_INSTITUTION_LINKAGE');
+
+        if (app.riskTier === 'Critical' || hasLinkages) {
+          recommendation = 'CONSIDER_VIGILANCE_REFERRAL';
+          recommendationLabel = 'Suggested for officer review: Consider Vigilance Referral / Physical Inspection';
           recommendationClass = 'bg-rose-100 text-rose-900 border-rose-300';
-          concludingRemarks = 'Critical cross-institutional fraud identified (overlapping land survey parcel & duplicate certificates). Recommended for immediate regulatory inquiry.';
+          concludingRemarks = 'Potential cross-institution linkages and document discrepancies detected requiring manual verification of sub-division records and physical site claims. Suggested for officer review / EVC inspection / vigilance referral consideration.';
         } else if (app.readinessScore >= 70 && findings.length === 0) {
-          recommendation = 'RECOMMEND_APPROVAL';
-          recommendationLabel = 'Recommend Grant of Extension of Approval (EoA)';
+          recommendation = 'CONSIDER_APPROVAL';
+          recommendationLabel = 'Suggested for officer review: Approval Consideration';
           recommendationClass = 'bg-emerald-100 text-emerald-900 border-emerald-300';
-          concludingRemarks = 'All statutory land, fire safety, and faculty norms verified authentic. Recommended for grant of Extension of Approval.';
+          concludingRemarks = 'All submitted declarations and statutory records are verified authentic against simulated state registries with zero unresolved anomalies. Suggested for officer review / approval consideration.';
+        } else {
+          recommendation = 'CONSIDER_EVC_INSPECTION';
+          recommendationLabel = 'Suggested for officer review: Consider EVC Inspection / Clarification';
+          recommendationClass = 'bg-amber-100 text-amber-900 border-amber-300';
+          concludingRemarks = 'Specific statutory deficiencies identified during automated checks (e.g., document omissions or faculty strength deficit). Suggested for officer review / EVC inspection consideration.';
         }
 
         const reportId = `REP-SCRUTINY-2026-${app.id.toUpperCase()}`;
-        const hashStamp = `STAMP-SHA256-${app.id}-98a7bc6d5e4f3a2b1c0d9e8f7a6b5c4d`;
+        const headHash = AuditTrailEngine.getHeadHash();
+        const hashStamp = computeReportSeal(reportId, app.id, app.readinessScore, recommendation, headHash);
 
         return (
           <article 
             key={app.id} 
             id={`scrutiny-${app.id}`} 
-            className="p-6 md:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6"
+            className="relative p-6 md:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6 overflow-hidden"
           >
+            {/* Diagonal Background Watermark */}
+            <div 
+              aria-hidden="true" 
+              className="pointer-events-none select-none absolute inset-0 flex items-center justify-center overflow-hidden z-0 opacity-[0.03] print:opacity-[0.07]"
+            >
+              <span className="text-4xl sm:text-6xl font-black uppercase tracking-widest text-slate-900 -rotate-45 whitespace-nowrap">
+                PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT
+              </span>
+            </div>
+
+            {/* Prototype Watermark Banner (Screen & Print) */}
+            <div className="relative z-10 p-2 text-center rounded-lg border-2 border-dashed border-amber-500 bg-amber-50 text-amber-900 font-extrabold text-xs tracking-wider uppercase print:border-black print:bg-slate-100 print:text-black">
+              PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT • SYNTHETIC DATA FOR DEMONSTRATION ONLY
+            </div>
+
             {/* Header Stamp */}
-            <div className="border-b-2 border-slate-900 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="relative z-10 border-b-2 border-slate-900 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <div className="text-[11px] font-bold text-blue-900 uppercase tracking-widest">
-                  All India Council for Technical Education (AICTE) • Bureau of Approvals
+                  All India Council for Technical Education (AICTE) • Regulation Bureau
                 </div>
                 <h2 className="text-xl md:text-2xl font-black text-slate-900 mt-1">
                   Statutory Scrutiny Evaluation Report
@@ -113,8 +138,8 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
                   <tr>
                     <th className="p-3 text-slate-600 font-bold uppercase">Readiness Score</th>
                     <td className="p-3 font-mono font-bold text-blue-900 text-sm">{app.readinessScore} / 100</td>
-                    <th className="p-3 text-slate-600 font-bold uppercase">Collusion Risk Score</th>
-                    <td className="p-3 font-mono font-bold text-rose-600 text-sm">{app.collusionRiskScore}% ({app.riskTier} Tier)</td>
+                    <th className="p-3 text-slate-600 font-bold uppercase">Linkage Risk Score</th>
+                    <td className="p-3 font-mono font-bold text-rose-600 text-sm">{app.linkageRiskScore}% ({app.riskTier} Tier)</td>
                   </tr>
                 </tbody>
               </table>
@@ -125,38 +150,43 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
               <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2">
                 1. Fail-Closed Verification Summary Matrix
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 text-center text-xs">
-                <div className="p-3 rounded-xl bg-slate-100 border border-slate-200">
-                  <div className="text-slate-500 font-bold">Total Documents</div>
-                  <div className="text-xl font-bold font-mono text-slate-900 mt-1">{totalDocs}</div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5 text-center text-xs">
+                <div className="p-2.5 rounded-xl bg-slate-100 border border-slate-200">
+                  <div className="text-slate-500 font-bold">Total Docs</div>
+                  <div className="text-lg font-bold font-mono text-slate-900 mt-1">{totalDocs}</div>
                 </div>
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
-                  <div className="text-emerald-700 font-bold">Verified Authentic</div>
-                  <div className="text-xl font-bold font-mono text-emerald-800 mt-1">{verifiedDocs}</div>
+                <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+                  <div className="text-emerald-700 font-bold">Verified</div>
+                  <div className="text-lg font-bold font-mono text-emerald-800 mt-1">{verifiedDocs}</div>
                 </div>
-                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200">
-                  <div className="text-rose-700 font-bold">Mismatch Detected</div>
-                  <div className="text-xl font-bold font-mono text-rose-800 mt-1">{mismatchDocs}</div>
+                <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200">
+                  <div className="text-rose-700 font-bold">Mismatch</div>
+                  <div className="text-lg font-bold font-mono text-rose-800 mt-1">{mismatchDocs}</div>
                 </div>
-                <div className="p-3 rounded-xl bg-amber-50 border border-amber-200">
-                  <div className="text-amber-700 font-bold">Expired NOCs</div>
-                  <div className="text-xl font-bold font-mono text-amber-800 mt-1">{expiredDocs}</div>
+                <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200">
+                  <div className="text-amber-700 font-bold">Expired</div>
+                  <div className="text-lg font-bold font-mono text-amber-800 mt-1">{expiredDocs}</div>
                 </div>
-                <div className="p-3 rounded-xl bg-purple-50 border border-purple-200">
-                  <div className="text-purple-700 font-bold">Source Unavailable</div>
-                  <div className="text-xl font-bold font-mono text-purple-800 mt-1">{unavailableDocs}</div>
+                <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200">
+                  <div className="text-blue-700 font-bold">Pending</div>
+                  <div className="text-lg font-bold font-mono text-blue-800 mt-1">{pendingDocs}</div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="text-slate-600 font-bold">Manual Review</div>
-                  <div className="text-xl font-bold font-mono text-slate-800 mt-1">{manualDocs}</div>
+                <div className="p-2.5 rounded-xl bg-purple-50 border border-purple-200">
+                  <div className="text-purple-700 font-bold">Unavailable</div>
+                  <div className="text-lg font-bold font-mono text-purple-800 mt-1">{unavailableDocs}</div>
+                </div>
+                <div className="p-2.5 rounded-xl bg-orange-50 border border-orange-200">
+                  <div className="text-orange-700 font-bold">Manual Review</div>
+                  <div className="text-lg font-bold font-mono text-orange-800 mt-1">{manualDocs}</div>
                 </div>
               </div>
+              <VerificationStatusLegend compact className="mt-3" />
             </div>
 
             {/* Key Deficiencies & Findings */}
             <div>
               <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2">
-                2. Automated Statutory Non-Compliance & Fraud Findings ({findings.length})
+                2. Automated Statutory Non-Compliance & Anomaly Findings ({findings.length})
               </h3>
               {findings.length === 0 ? (
                 <div className="p-3 bg-emerald-50 text-emerald-800 rounded-lg text-xs font-medium">
@@ -189,11 +219,11 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
                           </td>
                           <td className="p-2.5 font-semibold text-slate-700">{f.category}</td>
                           <td className="p-2.5">
-                            <div className="font-bold text-slate-900">{f.title}</div>
-                            <div className="text-slate-600 mt-0.5">{f.explanation}</div>
+                            <div className="font-bold text-slate-900">{maskPII(f.title)}</div>
+                            <div className="text-slate-600 mt-0.5">{maskPII(f.explanation)}</div>
                           </td>
-                          <td className="p-2.5 font-mono text-indigo-700">{f.evidenceLocator}</td>
-                          <td className="p-2.5 text-slate-800">{f.recommendedAction}</td>
+                          <td className="p-2.5 font-mono text-indigo-700">{maskPII(f.evidenceLocator)}</td>
+                          <td className="p-2.5 text-slate-800">{maskPII(f.recommendedAction)}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -225,12 +255,17 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
             </div>
 
             {/* Cryptographic Hash Chain Seal */}
-            <div className="p-3 rounded-lg bg-slate-900 text-slate-300 font-mono text-[11px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div className="relative z-10 p-3 rounded-lg bg-slate-900 text-slate-300 font-mono text-[11px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
                 <span>AICTE Cryptographic Hash-Chain Seal: {hashStamp}</span>
               </div>
-              <span className="text-slate-400">Untampered • Verifiable on CAG Audit Node</span>
+              <span className="text-slate-400">Untampered • Verifiable via Tamper-Evident SHA-256 Ledger</span>
+            </div>
+
+            {/* Footer Prototype Notice */}
+            <div className="relative z-10 text-center text-[10px] text-slate-500 font-bold uppercase pt-4 border-t border-slate-200 print:block">
+              AICTE SENTINEL PROTOTYPE DEMONSTRATOR • NOT AN OFFICIAL AICTE DOCUMENT • ALL COMPLIANCE OUTPUTS ADVISORY ONLY
             </div>
           </article>
         );

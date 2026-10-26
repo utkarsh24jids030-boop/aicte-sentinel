@@ -29,14 +29,31 @@ export async function POST(
       const pan = doc.extractedFields.find(f => f.fieldKey === 'pan')?.fieldValue || 'ABCDE1234F';
       const name = doc.extractedFields.find(f => f.fieldKey === 'faculty_name')?.fieldValue || 'Dr. Ramesh Sundaram';
       result = MockVerificationService.verifyFacultyRegistry(id, pan, name);
+    } else if (doc.documentType === 'NOC') {
+      const nocNo = doc.extractedFields.find(f => f.fieldKey === 'noc_number')?.fieldValue || 'DTE-APEX-NOC-990';
+      const inst = app ? DataStore.getInstitutionById(app.institutionId) : undefined;
+      result = MockVerificationService.verifyStateDTE(id, nocNo, inst?.state || 'Maharashtra', institutionName);
     } else {
       // DigiLocker default
       const identifier = doc.extractedFields.find(f => f.fieldKey === 'notary_registration_no')?.fieldValue || 'DL-AFF-SUNRISE-2026';
       result = MockVerificationService.verifyDigiLocker(id, identifier, institutionName);
     }
 
-    // Update document status
-    DataStore.updateDocumentStatus(id, result.status, result.adapterName);
+    // Update document status & record verification attempt
+    DataStore.updateDocumentStatus(id, result.status, result.adapterName, result.attempt);
+
+    // Record audit event in cryptographic hash-chain
+    const { AuditTrailEngine } = await import('@/lib/audit/trail');
+    AuditTrailEngine.recordEvent({
+      actorId: 'system-adapter-worker',
+      actorName: `${result.adapterName} (Simulated)`,
+      actorRole: 'SYSTEM',
+      action: 'VERIFICATION_ATTEMPT',
+      entityType: 'ADAPTER',
+      entityId: id,
+      beforeSummary: `Document verification status was "${doc.verificationStatus}"`,
+      afterSummary: `Adapter returned ${result.status} (Source: ${result.sourceResponse.sourceStatus}). Attempt ID: ${result.attempt.id}`
+    });
 
     return NextResponse.json({
       success: true,

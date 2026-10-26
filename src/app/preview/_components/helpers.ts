@@ -1,19 +1,13 @@
 import React from 'react';
+import { maskPII } from '@/lib/security/privacy';
+
+export { maskPII };
 
 /**
  * Mask sensitive ID/PAN patterns for public read-only preview
  */
 export function maskIdentifier(value: string | undefined | null): string {
-  if (!value) return '';
-  // Mask Indian PAN format (5 letters, 4 digits, 1 letter)
-  if (/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i.test(value)) {
-    return `XXXXX${value.substring(5)}`;
-  }
-  // Mask Aadhaar format (12 digits)
-  if (/^[0-9]{12}$/.test(value)) {
-    return `XXXXXXXX${value.substring(8)}`;
-  }
-  return value;
+  return maskPII(value);
 }
 
 export function formatSeverity(severity: string) {
@@ -37,7 +31,7 @@ export function formatStatus(status: string) {
       return 'bg-emerald-100 text-emerald-800 border-emerald-300';
     case 'Mismatch Detected':
     case 'MISMATCH':
-    case 'Fraudulent':
+    case 'Discrepant':
     case 'Rejected':
     case 'DEFICIENT':
       return 'bg-rose-100 text-rose-800 border-rose-300';
@@ -49,6 +43,10 @@ export function formatStatus(status: string) {
     case 'SERVICE_OFFLINE':
     case 'RECORD_NOT_FOUND':
       return 'bg-purple-100 text-purple-800 border-purple-300';
+    case 'Verification Pending':
+      return 'bg-blue-100 text-blue-800 border-blue-300';
+    case 'Manual Review Required':
+      return 'bg-orange-100 text-orange-800 border-orange-300';
     default:
       return 'bg-slate-100 text-slate-800 border-slate-300';
   }

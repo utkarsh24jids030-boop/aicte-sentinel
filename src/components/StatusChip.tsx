@@ -23,7 +23,7 @@ export default function StatusChip({ status, size = 'sm', className = '' }: Stat
     case 'Mismatch Detected':
     case 'Rejected':
     case 'Critical':
-    case 'Fraudulent':
+    case 'Discrepant':
       bg = 'bg-rose-50 text-rose-800 border-rose-300';
       icon = <AlertOctagon className="w-3.5 h-3.5 text-rose-600" />;
       break;

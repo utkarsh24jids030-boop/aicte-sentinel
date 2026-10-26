@@ -4,6 +4,7 @@ import { AuditEvent } from '@/types';
 
 export default function AuditSection() {
   const events = AuditTrailEngine.getEvents(200);
+  const accessEvents = AuditTrailEngine.getAccessEvents(100);
   const integrity = AuditTrailEngine.verifyChainIntegrity();
 
   return (
@@ -14,14 +15,14 @@ export default function AuditSection() {
             Vigilance & Oversight
           </span>
           <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
-            CAG & Vigilance Audit Node
+            Independent Vigilance Audit Trail
           </span>
         </div>
         <h2 className="text-2xl font-bold text-slate-900 mt-1">
           Cryptographically Hash-Chained Audit Trail & Ledger
         </h2>
         <p className="text-sm text-slate-600 mt-1">
-          Immutable SHA-256 hash-linked ledger recording all document uploads, forensic scans, registry verifications, and regulatory approvals.
+          Tamper-evident SHA-256 hash-linked ledger recording all document uploads, forensic scans, registry verifications, and regulatory approvals.
         </p>
       </div>
 
@@ -54,15 +55,82 @@ export default function AuditSection() {
           </div>
           <div className="bg-black/30 p-2.5 rounded-lg">
             <span className="text-slate-400 block text-[10px] uppercase">Current Chain Leaf Hash:</span>
-            <span className="text-emerald-300 break-all">{events[events.length - 1]?.hash || 'N/A'}</span>
+            <span className="text-emerald-300 break-all">{AuditTrailEngine.getHeadHash()}</span>
           </div>
+        </div>
+      </div>
+
+      {/* Record-View Access Oversight Log (Item 8 - Shown to Auditor Role) */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-base font-bold text-slate-900">
+              Record-View Access Log ({accessEvents.length})
+            </h3>
+            <p className="text-xs text-slate-500">
+              Access oversight trail recording who viewed which application or document and when (shown to Auditor role).
+            </p>
+          </div>
+          <span className="px-2.5 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold font-mono">
+            Auditor Oversight Active
+          </span>
+        </div>
+
+        <div className="overflow-x-auto border border-slate-200 rounded-xl">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="bg-slate-100 text-slate-700 font-bold border-b">
+                <th className="p-2.5">Timestamp (UTC)</th>
+                <th className="p-2.5">Viewer Name</th>
+                <th className="p-2.5">Role</th>
+                <th className="p-2.5">Resource Type</th>
+                <th className="p-2.5">Viewed Resource</th>
+                <th className="p-2.5">Institution</th>
+                <th className="p-2.5">Client IP Address</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200">
+              {accessEvents.map((acc) => (
+                <tr key={acc.id} className="hover:bg-slate-50 font-mono text-[11px]">
+                  <td className="p-2.5 text-slate-600 whitespace-nowrap">
+                    {acc.timestamp}
+                  </td>
+                  <td className="p-2.5 font-sans font-bold text-slate-900">
+                    {acc.actorName}
+                  </td>
+                  <td className="p-2.5 font-sans">
+                    <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border">
+                      {acc.actorRole}
+                    </span>
+                  </td>
+                  <td className="p-2.5">
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                      acc.viewedType === 'APPLICATION' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
+                    }`}>
+                      {acc.viewedType}
+                    </span>
+                  </td>
+                  <td className="p-2.5 font-sans font-medium text-slate-900">
+                    {acc.viewedTitle}
+                    <div className="text-[10px] font-mono text-slate-400">{acc.viewedId}</div>
+                  </td>
+                  <td className="p-2.5 font-sans text-slate-700">
+                    {acc.institutionName || 'N/A'}
+                  </td>
+                  <td className="p-2.5 text-slate-500 whitespace-nowrap">
+                    {acc.ipAddress || 'Internal'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
       {/* Audit Event Ledger Table */}
       <div className="space-y-3">
         <h3 className="text-base font-bold text-slate-900">
-          Immutable Audit Log Events ({events.length})
+          Tamper-Evident Audit Log Events ({events.length})
         </h3>
 
         <div className="overflow-x-auto border border-slate-200 rounded-xl">
@@ -97,10 +165,35 @@ export default function AuditSection() {
                     <span className="font-semibold text-slate-800">{evt.entityType}</span>
                     <div>{evt.entityId}</div>
                   </td>
-                  <td className="p-2.5 max-w-sm text-slate-700">
+                  <td className="p-2.5 max-w-sm text-slate-700 space-y-1">
                     <div className="font-medium text-slate-900">{evt.afterSummary}</div>
                     {evt.beforeSummary && (
-                      <div className="text-[10px] text-slate-400 mt-0.5">Prev: {evt.beforeSummary}</div>
+                      <div className="text-[10px] text-slate-400">Prev: {evt.beforeSummary}</div>
+                    )}
+                    {/* Extended Ledger Metadata (Item 8) */}
+                    {(evt.ruleId || evt.sourceChecked || evt.sourceResponseStatus || evt.alertRaisedId) && (
+                      <div className="flex flex-wrap items-center gap-1 text-[10px] pt-0.5">
+                        {evt.ruleId && (
+                          <span className="bg-indigo-50 text-indigo-800 border border-indigo-200 px-1.5 py-0.5 rounded font-mono font-bold">
+                            Rule: {evt.ruleId} {evt.ruleVersion ? `v${evt.ruleVersion}` : ''}
+                          </span>
+                        )}
+                        {evt.sourceChecked && (
+                          <span className="bg-amber-50 text-amber-800 border border-amber-200 px-1.5 py-0.5 rounded font-mono">
+                            {evt.sourceChecked}
+                          </span>
+                        )}
+                        {evt.sourceResponseStatus && (
+                          <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-1.5 py-0.5 rounded font-mono font-bold">
+                            {evt.sourceResponseStatus}
+                          </span>
+                        )}
+                        {evt.alertRaisedId && (
+                          <span className="bg-rose-50 text-rose-800 border border-rose-200 px-1.5 py-0.5 rounded font-mono font-bold">
+                            Alert: {evt.alertRaisedId}
+                          </span>
+                        )}
+                      </div>
                     )}
                   </td>
                   <td className="p-2.5 font-mono text-[10px] text-slate-500 max-w-xs space-y-1">

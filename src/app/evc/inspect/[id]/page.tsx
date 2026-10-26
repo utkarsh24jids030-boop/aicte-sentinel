@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useMemo, use } from 'react';
 import Link from 'next/link';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
@@ -21,7 +21,7 @@ import {
   Plus
 } from 'lucide-react';
 import { InspectionTask, InspectionObservation } from '@/types';
-import { DataStore, DEMO_APPLICATIONS, DEMO_DOCUMENTS, DEMO_FINDINGS } from '@/lib/store';
+import { DataStore, DEMO_APPLICATIONS, DEMO_DOCUMENTS } from '@/lib/store';
 import { EvcCopilotEngine, InspectionBrief } from '@/lib/evc/copilot';
 
 export default function MobileInspectionFormPage({
@@ -31,9 +31,18 @@ export default function MobileInspectionFormPage({
 }) {
   const { id } = use(params);
 
-  const [task, setTask] = useState<InspectionTask | null>(null);
-  const [brief, setBrief] = useState<InspectionBrief | null>(null);
-  const [observations, setObservations] = useState<InspectionObservation[]>([]);
+  const initialTask = useMemo(() => DataStore.getInspectionTaskById(id) || DataStore.getInspectionTasks()[0] || null, [id]);
+  const initialApp = useMemo(() => initialTask ? (DataStore.getApplicationById(initialTask.applicationId) || DEMO_APPLICATIONS[2]) : null, [initialTask]);
+  const initialBrief = useMemo(() => {
+    if (!initialTask || !initialApp) return null;
+    const docs = DataStore.getDocuments(initialTask.applicationId);
+    const finds = DataStore.getFindings(initialTask.applicationId);
+    return EvcCopilotEngine.generateBrief(initialTask, initialApp, docs, finds);
+  }, [initialTask, initialApp]);
+
+  const [task, setTask] = useState<InspectionTask | null>(initialTask);
+  const [brief, setBrief] = useState<InspectionBrief | null>(initialBrief);
+  const [observations, setObservations] = useState<InspectionObservation[]>(() => initialTask?.observations || []);
 
   // Form State
   const [category, setCategory] = useState<InspectionObservation['category']>('Land & Boundary');
@@ -43,20 +52,6 @@ export default function MobileInspectionFormPage({
   const [isCapturingGeo, setIsCapturingGeo] = useState(false);
   const [coords, setCoords] = useState<{ lat: number; lng: number }>({ lat: 18.591244, lng: 73.738912 });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    const t = DataStore.getInspectionTaskById(id) || DataStore.getInspectionTasks()[0];
-    if (t) {
-      setTask(t);
-      setObservations(t.observations);
-
-      const app = DataStore.getApplicationById(t.applicationId) || DEMO_APPLICATIONS[2];
-      const docs = DataStore.getDocuments(t.applicationId);
-      const finds = DataStore.getFindings(t.applicationId);
-      const generatedBrief = EvcCopilotEngine.generateBrief(t, app, docs, finds);
-      setBrief(generatedBrief);
-    }
-  }, [id]);
 
   const handleCaptureLocation = () => {
     setIsCapturingGeo(true);
@@ -102,7 +97,7 @@ export default function MobileInspectionFormPage({
       if (data.success && data.observation) {
         setObservations([data.observation, ...observations]);
         setNotes('');
-        alert('Observation recorded and hash-sealed into AICTE immutable audit trail.');
+        alert('Observation recorded and hash-sealed into AICTE tamper-evident audit trail.');
       }
     } catch (e) {
       console.error(e);
@@ -241,7 +236,7 @@ export default function MobileInspectionFormPage({
                 {[
                   { val: 'Verified', label: 'Verified Satisfactory', color: 'bg-emerald-600 text-white' },
                   { val: 'Deficient', label: 'Deficient / Non-compliant', color: 'bg-amber-600 text-white' },
-                  { val: 'Fraudulent', label: 'Fraudulent / False Claim', color: 'bg-rose-600 text-white' },
+                  { val: 'Discrepant', label: 'Severe Discrepancy / Disputed Claim', color: 'bg-rose-600 text-white' },
                   { val: 'Inconclusive', label: 'Inconclusive / Pending', color: 'bg-slate-700 text-white' }
                 ].map((item) => (
                   <button

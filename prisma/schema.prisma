@@ -87,7 +87,7 @@ enum FindingStatus {
 enum FindingCategory {
   FORENSIC_ANOMALY
   COMPLIANCE_BREACH
-  CROSS_INSTITUTION_COLLUSION
+  CROSS_INSTITUTION_LINKAGE
   VERIFICATION_MISMATCH
 }
 
@@ -117,6 +117,7 @@ model Institution {
   address          String
   landSurveyNumber String
   landAreaAcres    Float
+  locationType     String        @default("semi-urban")
   contactEmail     String
   contactPhone     String
   establishedYear  Int
@@ -137,7 +138,7 @@ model Application {
   academicYear       String             @default("2026-2027")
   status             ApplicationStatus  @default(Draft)
   readinessScore     Int                @default(0)
-  collusionRiskScore Int                @default(0)
+  linkageRiskScore   Int                @default(0)
   riskTier           RiskTier           @default(Low)
   programmes         String             // JSON string array
   currentIntake      Int                @default(0)

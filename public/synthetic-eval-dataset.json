@@ -1,0 +1,3672 @@
+{
+  "metadata": {
+    "datasetName": "Synthetic Scrutiny Regulatory Benchmark Dataset",
+    "isSynthetic": true,
+    "seed": 20260201,
+    "generationDate": "2026-02-01",
+    "totalApplications": 120,
+    "cleanCount": 43,
+    "deficientCount": 77
+  },
+  "applications": [
+    {
+      "id": "app-eval-001",
+      "applicationNumber": "AICTE/2026/SYN-1001",
+      "institutionId": "inst-eval-001",
+      "institutionName": "Nova Technical University Campus (1)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 0.92,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 26,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.92 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "72343d7254b8fcd85449ba56f8bb41e8373b1f6113ea5f3ee25205544062cb02",
+        "fireNoc": "44deb664cd3d7976ba5787038ff4dccfb38022db1fc35aed9123038f681c631e",
+        "buildingPlan": "6f4a18917b7e903a3a1083f7e90fe34982c83e4eff840c5a06cefacd6b9edcff",
+        "occupancyCert": "45614dc07ecc612b570b5f4a74ce1da0d178937e98b39b1232871448e9e1935d"
+      }
+    },
+    {
+      "id": "app-eval-002",
+      "applicationNumber": "AICTE/2026/SYN-1002",
+      "institutionId": "inst-eval-002",
+      "institutionName": "Vanguard Institute of Higher Learning (2)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 5.43,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 26,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "cc721aa6e88c57965aa6fc71a1b4c5038b58b0658eb518dafc3b56be42a369d6",
+        "fireNoc": "a8fae9e773d708bc7c2b8caed0ca507048385ac61ff70f41eabfabc8cdac1804",
+        "buildingPlan": "ef06af826725d093613dfb7c8816955613d83914a9401440bba6a601f29dfca1",
+        "occupancyCert": "0c4af9ca9ac8677f63fdfa4b0957d02e089bc06f9cbeaa9f03797e78e39b7b48"
+      }
+    },
+    {
+      "id": "app-eval-003",
+      "applicationNumber": "AICTE/2026/SYN-1003",
+      "institutionId": "inst-eval-003",
+      "institutionName": "Zenith College of Engineering (3)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 5.95,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 26,
+      "instructionalCarpetAreaSqm": 2880,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "CARPET_AREA_DEFICIT",
+          "severity": "High",
+          "description": "Carpet area (2880 sqm) below 10.5 sqm/student requirement.",
+          "expectedRuleId": "INFRA-CARPET-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "2cb4edc272ad7bf9ff442b4cd0200839575d231865bc568b35225c3d883179df",
+        "fireNoc": "19c8347daa2ba447fff56b42af1f3b30f298d6d3903a6ab3fc9d08f4946a6af2",
+        "buildingPlan": "f35ccc3d7e2655c5b7a13505a162c7ef11d88459e57bb819c88eaf100dec95f3",
+        "occupancyCert": "12942dcf87cb19fb442a08b4c838a24b01ecba5bd26c4836dde32ac180467608"
+      }
+    },
+    {
+      "id": "app-eval-004",
+      "applicationNumber": "AICTE/2026/SYN-1004",
+      "institutionId": "inst-eval-004",
+      "institutionName": "Galaxy College of Engineering (4)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 2.77,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 20,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "9305d8820d83dddde37f2fa0a48ec3d4a3a2a868d04298402f02bcef9322b0a3",
+        "fireNoc": "b5b104e7c352590eb8058d63fb1995a7a9e0298b4281b6b0d0b2d3f826870198",
+        "buildingPlan": "a9bd0b05878d13256f720932be7fabc5c25ab7b030ff03e651b916b4b0c5d281",
+        "occupancyCert": "574bee6a825553e1ff0732050c034f7a84cb12ae8e74b247352a2acc657c5890"
+      }
+    },
+    {
+      "id": "app-eval-005",
+      "applicationNumber": "AICTE/2026/SYN-1005",
+      "institutionId": "inst-eval-005",
+      "institutionName": "Apex School of Computing & Engineering (5)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 5.58,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 20,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "9f007537f69028f41ab75c71d52c532908faa5b61ab7b4811f5571e584fd5f2e",
+        "fireNoc": "83ce4c52b399363de3550981e6bd30600bfce06d5ba3718b9f193bb06f553a8d",
+        "buildingPlan": "b34273dce148952e9e556760ec7c383439235f5aa62afe235663082efe3a6483",
+        "occupancyCert": "f6ae52941b78db25b6a1bb4fe5ff3af28067e560b7c23a6eebf1dcb3a8dd9a05"
+      }
+    },
+    {
+      "id": "app-eval-006",
+      "applicationNumber": "AICTE/2026/SYN-1006",
+      "institutionId": "inst-eval-006",
+      "institutionName": "Zenith Institute of Higher Learning (6)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 3.38,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 20,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "c1e4b0066266e265f4b1289df2e4a81f95d9f2bd3f1b2a099d225ad5742452bb",
+        "fireNoc": "283156790344b3aa96ab974b829da0164181daf0c25077cbef6306e5e4ddff93",
+        "buildingPlan": "f71d7af4b76723a6a69468163a24e9e03a0280d99c592ceb87c80bac39dcb046",
+        "occupancyCert": "3defcf3df06cc1e8a2acb880a2c0a491c4397c2034a1984b82d66d899e0a091c"
+      }
+    },
+    {
+      "id": "app-eval-007",
+      "applicationNumber": "AICTE/2026/SYN-1007",
+      "institutionId": "inst-eval-007",
+      "institutionName": "Nova Institute of Technology (7)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 4.21,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 33,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "REUSED_FACULTY",
+          "severity": "Critical",
+          "description": "Faculty PAN declared simultaneously across distinct institutions.",
+          "expectedRuleId": "CROSS-FACULTY-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": true,
+      "documentSha256Hashes": {
+        "landDeed": "76caef190ac1c95b5766b07749dc12bad8bedcc27c3bb2ea05574c44d7ce2d3a",
+        "fireNoc": "290514454bc149d6e70ac55ede2a05af22f3af7e531672552197737e9350bec0",
+        "buildingPlan": "1116cffe9a5b682f0b9e29a4c9076fbe83084d00ac35dc48efa2776db1e277ce",
+        "occupancyCert": "2ef55d74d9d63f456017aed58092689781b40c8817bfc9686eb5968adf14214f"
+      }
+    },
+    {
+      "id": "app-eval-008",
+      "applicationNumber": "AICTE/2026/SYN-1008",
+      "institutionId": "inst-eval-008",
+      "institutionName": "Olympus Institute of Technology (8)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 4.87,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 25,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "5b40c1612076e90881e0a7ea47dce4d3bbda417af3dcf355fac822b2a95fbfa1",
+        "fireNoc": "63ba541c1057f7b1a5450b9199f02106c929ff2dde8e4a60fb7365eb74a9f892",
+        "buildingPlan": "ea6386c0d1d3b0b0bcee85f9dbf7e0b7fc05f61c4661180c064ec388bb8afc7e",
+        "occupancyCert": "03f40175401831d4c0addb0c50b67afcf00af76cc035fc164b5e9400e1c1885e"
+      }
+    },
+    {
+      "id": "app-eval-009",
+      "applicationNumber": "AICTE/2026/SYN-1009",
+      "institutionId": "inst-eval-009",
+      "institutionName": "Sunrise Institute of Technology (9)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 5.6,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 19,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "14116b5c1c58a26be230e2e244d501a9225ccfc0c94d7374e09ce80a4e3ff3d2",
+        "fireNoc": "1c237b9469053b01204516f3fd4f19f6a703d377eb99675a19751abbc206e953",
+        "buildingPlan": "d7353aef0d6ae7152c6a1de77c7ecf169393686e8adced647391f0ec84bce30b",
+        "occupancyCert": "f850ea4ada4b198bccdbf23bdb89238a8d37c37bfdaf662c28c1554a07de0bed"
+      }
+    },
+    {
+      "id": "app-eval-010",
+      "applicationNumber": "AICTE/2026/SYN-1010",
+      "institutionId": "inst-eval-010",
+      "institutionName": "Vanguard School of Computing & Engineering (10)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 3.19,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 30,
+      "instructionalCarpetAreaSqm": 3360,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "CARPET_AREA_DEFICIT",
+          "severity": "High",
+          "description": "Carpet area (3360 sqm) below 10.5 sqm/student requirement.",
+          "expectedRuleId": "INFRA-CARPET-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "05b60245152a9b3477d50a11757a4099ed46e6199bf778e1d9672e6d7e62c23c",
+        "fireNoc": "aeecdded568bc4a1ef54a77c26c461db260a927a0162521d26fc3887ad02fef6",
+        "buildingPlan": "1e4a649fafbb80232f42fdc9a3f492a08944fdc5fabc0c2529675122dd2962be",
+        "occupancyCert": "0300426350e8c38778646e9931f703d26102f0be62d036e0a8adbc9e95a88725"
+      }
+    },
+    {
+      "id": "app-eval-011",
+      "applicationNumber": "AICTE/2026/SYN-1011",
+      "institutionId": "inst-eval-011",
+      "institutionName": "Beacon Polytechnic Institute (11)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 2.64,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 360,
+      "facultyCount": 24,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "68d8d4d6d996be9bdaf77270d543ea045cd210c754dc90adaa0d05f6e55c79ab",
+        "fireNoc": "9434d448ad4df020c42790364d713241a9202ca1b8fbb37ab972fbbbf7c7b08b",
+        "buildingPlan": "648602a731c5d24e709a60bc49fe925b4839a89efc67b1592d9041605a63d503",
+        "occupancyCert": "0995d264eaaeef6dd324d61e6e6f3b933c669d89cea85abbca5c50e27146a133"
+      }
+    },
+    {
+      "id": "app-eval-012",
+      "applicationNumber": "AICTE/2026/SYN-1012",
+      "institutionId": "inst-eval-012",
+      "institutionName": "Heritage Polytechnic Institute (12)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 5.34,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 240,
+      "facultyCount": 18,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "4691a240d6dea3afc58d721bf3919cf502d6c3be2e6c98bb000e8489804415fa",
+        "fireNoc": "85b498a7ba5d8ab4ded3dbed0c91f6aeb51bd8a6235a91e557710c9ba3213173",
+        "buildingPlan": "8d848950c6107e779658a44d878c10e3efeb4289cc702a31f90b3c0f676972c4",
+        "occupancyCert": "988de48032268c38ec312d6d680c1d2511745ee01a05ce49e47f19afb8c7f5fb"
+      }
+    },
+    {
+      "id": "app-eval-013",
+      "applicationNumber": "AICTE/2026/SYN-1013",
+      "institutionId": "inst-eval-013",
+      "institutionName": "Sunrise College of Engineering (13)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 0.86,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 15,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.86 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "cefd289dc40238215d2f11a61185a6f74983c63f21d68fcae4cccdf9963ac9d2",
+        "fireNoc": "4f363d1d08e22fec194de13752254ebc307d8b328ce5249c7e471f27a0991f90",
+        "buildingPlan": "1f3d4b27ff3b8b760c4517ee2c272c095ac111c5d5cdac4604b728023d98a79e",
+        "occupancyCert": "dabf5ef1999ecaf715f6239f640b63e812f6dc306f16cf972caf868c1e7dc23a"
+      }
+    },
+    {
+      "id": "app-eval-014",
+      "applicationNumber": "AICTE/2026/SYN-1014",
+      "institutionId": "inst-eval-014",
+      "institutionName": "Apex Institute of Technology (14)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 2.95,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 30,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "b7c0fa2b3a6f1b6af771e0938c2c8c548eedb226d9f33735333723554f08892f",
+        "fireNoc": "1dec8a20dfe92de8d5999d84afef8f12fb835b6deed903f98cf996fb6d0556c5",
+        "buildingPlan": "24c10fd3b99bd595a7a30d605354326b3dae04233636509a15900965858e608e",
+        "occupancyCert": "477ab72682495e9d6d8d5323f722122ed6950575accee185b1ac849bfdb9b4fc"
+      }
+    },
+    {
+      "id": "app-eval-015",
+      "applicationNumber": "AICTE/2026/SYN-1015",
+      "institutionId": "inst-eval-015",
+      "institutionName": "Apex School of Computing & Engineering (15)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 6.48,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 35,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "8eca21456f46f28065360dc51c394822799ebb824452e785ef304de4aa3eb341",
+        "fireNoc": "da0af37fa7d558b7f5440fd18ccf4d647ff74a6e0c43140d76b91246de26a030",
+        "buildingPlan": "180934abd41d50110b7adc6412c9211ab3e99ece43f471c7007b0257f994d3ce",
+        "occupancyCert": "d1ab9836c2ce572cb8912de454d525cc6554d69808cc9d7385560327b64ada0b"
+      }
+    },
+    {
+      "id": "app-eval-016",
+      "applicationNumber": "AICTE/2026/SYN-1016",
+      "institutionId": "inst-eval-016",
+      "institutionName": "Apex Polytechnic Institute (16)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 1.13,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 28,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (1.13 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "d8e09f5be858dc1c583c39e25742c0904da34d297d6e9c825d9ce759ea978d8f",
+        "fireNoc": "bda9a9701c162ad73eec874c3426a7b90c99828ba6679f35b0d8fc8d0636ac5d",
+        "buildingPlan": "10770ecbd4f12eae9e95791c85c1071f97ca04dfa3c6a090e40515e541010cfb",
+        "occupancyCert": "3895fa6f3cb4e973d6b7e60ac9725883609198968ddaa4b8e38cb30e836ffc58"
+      }
+    },
+    {
+      "id": "app-eval-017",
+      "applicationNumber": "AICTE/2026/SYN-1017",
+      "institutionId": "inst-eval-017",
+      "institutionName": "Apex Institute of Technology (17)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 5.66,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 25,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "de8c73422832ce16755b87b8a9b529e7d482015c71a87b7c2764c53db59e140c",
+        "fireNoc": "1b9b4953773c5bca42b9818e0540d4687b38693faf0a735e5c8bd4c0b8aa3904",
+        "buildingPlan": "fdfe6be58bcabe9ce31c157a2ffa37041df31e6e8f2ba4608200e4a6de2d7f50",
+        "occupancyCert": "d6d60a97e82c0a2131ca6be2c592ebc78cd365740269d7be76e9372e3e3aed9d"
+      }
+    },
+    {
+      "id": "app-eval-018",
+      "applicationNumber": "AICTE/2026/SYN-1018",
+      "institutionId": "inst-eval-018",
+      "institutionName": "Apex School of Computing & Engineering (18)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 2.55,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 33,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "8eecbd8dfd3e36ecbeb98ab471226ab7a8435cc4225265bc455e1b1b54144fbe",
+        "fireNoc": "b144c7601512b82e25892257320c77ebb2d3e35dd6b98ac08e2d0e8000d43225",
+        "buildingPlan": "ed1be3bcd43163d3cf53562c199e7ea6253ac457eb899833fbeb6197c94f64eb",
+        "occupancyCert": "1edc93c18466cd7834f1b42d78230884eaf5df6ec4fdb30fa84caf502bc8ba34"
+      }
+    },
+    {
+      "id": "app-eval-019",
+      "applicationNumber": "AICTE/2026/SYN-1019",
+      "institutionId": "inst-eval-019",
+      "institutionName": "Silicon Technical University Campus (19)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 5.07,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 19,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (19) insufficient for intake (480).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "4764de1daf37c42cf3120d484ce4ab45ac6151a16430e6746cc26532de98cb9f",
+        "fireNoc": "2bb5456d715f77b5397f06208fcf3b9be1199b6bf7fc1a93fa8b9e490409c4a9",
+        "buildingPlan": "3267baa63028f6ab36ee59f4ee420d69e6b92f0b4cc57dea2f36b1b4205f9985",
+        "occupancyCert": "82ede4793d132356e95a54d424a5aa73f683a69a0bdea1bc9c5d25ac5d3fc23b"
+      }
+    },
+    {
+      "id": "app-eval-020",
+      "applicationNumber": "AICTE/2026/SYN-1020",
+      "institutionId": "inst-eval-020",
+      "institutionName": "Sunrise College of Engineering (20)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Telangana",
+      "declaredLandAcres": 4.49,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 300,
+      "facultyCount": 20,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "fdf09a6cd837b7f537727d68e42a05e3491e1a0792ee6e77e81fc687309cea64",
+        "fireNoc": "e108b2a3131fdbf33023c9143c5158f7f1091c3f14ffa61de10a7dff892d143f",
+        "buildingPlan": "7e678e04fc31252be00f81df3005e02de8023e8bfd2b0f44155a74206c3a85ee",
+        "occupancyCert": "73d2ed4818ae65c66daa82f106186aa38a2a4f1395371da37453ebe2bec3aa84"
+      }
+    },
+    {
+      "id": "app-eval-021",
+      "applicationNumber": "AICTE/2026/SYN-1021",
+      "institutionId": "inst-eval-021",
+      "institutionName": "Beacon Institute of Higher Learning (21)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 3.65,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 12,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "d8d7ba4f62dbe28787b4c6c1f4d38d5bad6e0f6eb72047b7410642ac2548b372",
+        "fireNoc": "db2a33774a0272891375d69fe1d7e033567cf6623eafc09947286014d12e3396",
+        "buildingPlan": "5bd4acb948f25c47832ea37eed2161e1ccaa338232985fac19377408dc2906f3",
+        "occupancyCert": "aea3d49062336dc8ca101c8f31f406b495ccdc456398ee9005105ef72c237367"
+      }
+    },
+    {
+      "id": "app-eval-022",
+      "applicationNumber": "AICTE/2026/SYN-1022",
+      "institutionId": "inst-eval-022",
+      "institutionName": "Radiant Technical University Campus (22)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 0.94,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 18,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.94 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "73e3ae7ce6879d5d802c35dbc3d5bb71bf6f64ecaf52cecc3cf9dc007a85cdbc",
+        "fireNoc": "7b96d1a047c61748b52f2105c8023ffc818140a0037b13676ac21c8486e852aa",
+        "buildingPlan": "fb3acca174f8cf397e0187224e543ebdf736da77bb30dd8a2571b3828c314305",
+        "occupancyCert": "00a25d02cb3422bc057ffce15a3fc7d10aed4c16ce900e6e6ef9bb3ad07d2e8f"
+      }
+    },
+    {
+      "id": "app-eval-023",
+      "applicationNumber": "AICTE/2026/SYN-1023",
+      "institutionId": "inst-eval-023",
+      "institutionName": "Vanguard School of Computing & Engineering (23)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 0.49,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 18,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.49 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "f41c1bf5cb79c0cfa713dc96b60e16c51b963b84b227d0607ee131ca284e141b",
+        "fireNoc": "474526edd0719b00100cbd2b6f42e0745dff68b9b6a6edab81d7f008d4adf495",
+        "buildingPlan": "079126a4a56abbcd8576c077d8d5b21330ace284d82c69d48f1e6298c3afef80",
+        "occupancyCert": "5794f87e1d011e021e67bad042e85df8fbc28d90be5b5e77606d03389142c731"
+      }
+    },
+    {
+      "id": "app-eval-024",
+      "applicationNumber": "AICTE/2026/SYN-1024",
+      "institutionId": "inst-eval-024",
+      "institutionName": "Sunrise College of Engineering (24)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 3.1,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 480,
+      "facultyCount": 34,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "ea382a2bc9631df9e4c24bcf25a89ba1ad0452e1bee44478a7c46b8e985e7c6a",
+        "fireNoc": "04bc7be5d7cf44ac93f1aa5955a0134cde445f08fca1be1c2933868f0ac19d74",
+        "buildingPlan": "efddc40d644c13d675c48da6e4631b95ebfde8395161e3a2c01f1f23aebee31f",
+        "occupancyCert": "278dd1a25c4615c32b2ab2a9dd76019e10cccc97da151c1d91e8e477015a706c"
+      }
+    },
+    {
+      "id": "app-eval-025",
+      "applicationNumber": "AICTE/2026/SYN-1025",
+      "institutionId": "inst-eval-025",
+      "institutionName": "Starlight Technical University Campus (25)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 2.7,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 26,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "12cec59c542e23afa174d2606d30b5a8e82d36ef44004e385d0f1816e342e5ef",
+        "fireNoc": "2188f8221b89538624e5bf9f5d2ce6667729ebe49485826e1cbb352f95f552d9",
+        "buildingPlan": "93804fb38898d9d7ba574f2ebe6e6ede201bcd84d0f4544295249fb7586958a0",
+        "occupancyCert": "08837fad2df63ac78e88f0c3761b231539af2fe8fb4510d3758a15b02ffdc333"
+      }
+    },
+    {
+      "id": "app-eval-026",
+      "applicationNumber": "AICTE/2026/SYN-1026",
+      "institutionId": "inst-eval-026",
+      "institutionName": "Sunrise Institute of Higher Learning (26)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 5.2,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 30,
+      "instructionalCarpetAreaSqm": 3360,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "CARPET_AREA_DEFICIT",
+          "severity": "High",
+          "description": "Carpet area (3360 sqm) below 10.5 sqm/student requirement.",
+          "expectedRuleId": "INFRA-CARPET-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "95828e0e808082e3436645882205b925a72d136015547e60ead939f1f04cbdcf",
+        "fireNoc": "d65995f8c81e468c53f5f51e04c5c502f55f24e54af7e43640eb8ebc7fad8cca",
+        "buildingPlan": "9fac2650cb4df6d6ea0ad6f7f52e8b6b3d7eee36330f963c7ea7b8fe9479b5a9",
+        "occupancyCert": "2a01c50dae27f3456e8afb8c6b65063c9d5484fa68a8b8b6083cbbf8b619c479"
+      }
+    },
+    {
+      "id": "app-eval-027",
+      "applicationNumber": "AICTE/2026/SYN-1027",
+      "institutionId": "inst-eval-027",
+      "institutionName": "Imperial School of Computing & Engineering (27)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 3.97,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 22,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "DUPLICATE_DOCUMENT",
+          "severity": "Critical",
+          "description": "Occupancy certificate matches identical hash of archived certificate.",
+          "expectedRuleId": "CROSS-CERT-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": true,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "a9fc31e9a46569983268a42d20c5108e64ed14268ba275e4c3a45ae057e8dda1",
+        "fireNoc": "aea4fea99c204c59fa3ca81d330b5525ba7acd6fcb1e5eee7477f14f689e1f61",
+        "buildingPlan": "9b78ef9bb7c144d3cfd5438ce27f2ebc5f106ffe88ba9bb62590697e633668e2",
+        "occupancyCert": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b"
+      }
+    },
+    {
+      "id": "app-eval-028",
+      "applicationNumber": "AICTE/2026/SYN-1028",
+      "institutionId": "inst-eval-028",
+      "institutionName": "Beacon College of Engineering (28)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Telangana",
+      "declaredLandAcres": 0.54,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 26,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.54 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "2d9705a5a3aeaad6e02606e59ecb0798d69a5e5e86a28c2fb1c26e76725c98ce",
+        "fireNoc": "0aee9daee4216e4376f4598c80d10f49211e6382f0ce06c5ff4e71a4d6548354",
+        "buildingPlan": "ab3406e4a46c967d7ee1373574655c8c82a3c531d1603da8b72cfc8cd8bc4f8e",
+        "occupancyCert": "9af35d37b9aa13a47b0739e47ca7f737a977c81d9234dc37d9a81a24aaf924d8"
+      }
+    },
+    {
+      "id": "app-eval-029",
+      "applicationNumber": "AICTE/2026/SYN-1029",
+      "institutionId": "inst-eval-029",
+      "institutionName": "Apex Institute of Technology (29)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 6.5,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 420,
+      "facultyCount": 28,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "DUPLICATE_DOCUMENT",
+          "severity": "Critical",
+          "description": "Occupancy certificate matches identical hash of archived certificate.",
+          "expectedRuleId": "CROSS-CERT-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": true,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "cce3fe6c5c09918aadb057b75d24f9f1bad55cf46a11e235100cc952a6b311e6",
+        "fireNoc": "ced6a4bc4c5dd39a315a78698d8ea70af6c4b73c2da434eeae18f46b101c4919",
+        "buildingPlan": "2a7e28cd5899419e5e37b4184018a957ef4506391578944ba85714bdbe593b29",
+        "occupancyCert": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b"
+      }
+    },
+    {
+      "id": "app-eval-030",
+      "applicationNumber": "AICTE/2026/SYN-1030",
+      "institutionId": "inst-eval-030",
+      "institutionName": "Horizon Institute of Technology (30)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 2.08,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 300,
+      "facultyCount": 20,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (2.08 acres) below statutory minimum (2.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "266057184773cc50556f1dc5935732c1b3e72fa5d3f600469a2b4504b2509db4",
+        "fireNoc": "208eff56ddd305b438f3b16b1981928a5d278d6d3c0652c6203ec71649b6c110",
+        "buildingPlan": "cd3f6ad36b1b91cd79f3d9a9db0f0f96bd5db4bdc7c47e0986d204b1c84f466e",
+        "occupancyCert": "aa62d2b268871d96ea68570ce9c92fb3125546db23242f359bf523b08aa8c239"
+      }
+    },
+    {
+      "id": "app-eval-031",
+      "applicationNumber": "AICTE/2026/SYN-1031",
+      "institutionId": "inst-eval-031",
+      "institutionName": "Galaxy Technical University Campus (31)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 0.6,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 29,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.6 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "edccfc3d7a57166811e017048fc89dabe86077adb881ea05f86716eefb62ffad",
+        "fireNoc": "a397b4a1d6aea94fbe6da0008cb2dafc048d3e25ec0424d2df4324d5cd68a27d",
+        "buildingPlan": "a8df2564f2d982827d70644075363c242e48ab8f97c1de5f7f958ddebb3122a9",
+        "occupancyCert": "bf7c2e9637f1b3fc8253a7f5baa2f3f42105d4c5842756ec54d6b01d7a87c80c"
+      }
+    },
+    {
+      "id": "app-eval-032",
+      "applicationNumber": "AICTE/2026/SYN-1032",
+      "institutionId": "inst-eval-032",
+      "institutionName": "Olympus College of Engineering (32)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 5.15,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 23,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "ad4d29e991556dc6e82e452fe16ea7afdf4553515f6342f0cb9f612122d1a24c",
+        "fireNoc": "53959bf52dda6c0f605bc28ae02fe7e9fe5c085ad235909e8e948f4620f1a257",
+        "buildingPlan": "ef90c49613e343fde91a4f7c7eb689211c0f048c406f74db13b886eeaf835e7f",
+        "occupancyCert": "94dadd826659788f54961431abe1fb5b2341adcc29848ef787fec09795e26af1"
+      }
+    },
+    {
+      "id": "app-eval-033",
+      "applicationNumber": "AICTE/2026/SYN-1033",
+      "institutionId": "inst-eval-033",
+      "institutionName": "Vanguard School of Computing & Engineering (33)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 6.13,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 30,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "REUSED_FACULTY",
+          "severity": "Critical",
+          "description": "Faculty PAN declared simultaneously across distinct institutions.",
+          "expectedRuleId": "CROSS-FACULTY-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": true,
+      "documentSha256Hashes": {
+        "landDeed": "b8ff9c5d7b566762da358044819aea2a9d42c590c7c7c5b23834e41e18a9c339",
+        "fireNoc": "b9221f9fb4afa455a5ed6e19c9cff3e306bf2438b2b8859f08bcb70a0ca30053",
+        "buildingPlan": "c46987614c125ba7f24fc287a64f1fc2a5b5281dd7a1e020d61377db006a7ee1",
+        "occupancyCert": "a7e0b62812a11e67586506b4b5330bfe4006cd94d96ae59b0726f1a450d886cf"
+      }
+    },
+    {
+      "id": "app-eval-034",
+      "applicationNumber": "AICTE/2026/SYN-1034",
+      "institutionId": "inst-eval-034",
+      "institutionName": "Horizon School of Computing & Engineering (34)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 5.42,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 13,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "596b34c705916228752f0587ff307c54c82896cca3594419078cdb5abdcd391e",
+        "fireNoc": "1195a52556e994ce5b5dbd961c49684986922eb1812b8c5f4bb55de9c417673e",
+        "buildingPlan": "86bb5edb5051a742feddf5247ab355dc077d57454d07cc55cb8fa6b74a651d11",
+        "occupancyCert": "dc392e6bb13696bdd5109b7a6cfa31e78f871ebe9f29ac29333125a41d5c74ef"
+      }
+    },
+    {
+      "id": "app-eval-035",
+      "applicationNumber": "AICTE/2026/SYN-1035",
+      "institutionId": "inst-eval-035",
+      "institutionName": "Sunrise School of Computing & Engineering (35)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 3.68,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 9,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (9) insufficient for intake (240).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "a18b9274a55837aba6972464623a9cc700ed00f45b427a7960d502c572d241ea",
+        "fireNoc": "5f91b6b9315d0cdcb9c4d3821a860441bb0fd69156ec1cb8281a0de51005c2d6",
+        "buildingPlan": "28effda5bc5099b29aa580c75d7b7be71e4fc2c7be7719ebec5619bfa70ebce7",
+        "occupancyCert": "f2626c41f638f397264ad74eefcc063bf9b48a3e19830e3452e7d2af22327fb9"
+      }
+    },
+    {
+      "id": "app-eval-036",
+      "applicationNumber": "AICTE/2026/SYN-1036",
+      "institutionId": "inst-eval-036",
+      "institutionName": "Imperial School of Computing & Engineering (36)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 3.97,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 26,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "c991782539b0ce9f1ff5fd4a3c38a4d6978c7118234f91fa85ff11e7d76c2c80",
+        "fireNoc": "e90b7e919a515474ddd6ba36928d76388daa64a546256cae48da226b390c19aa",
+        "buildingPlan": "ab0adb95d3ad095ff551709706ec49c3f4a4e2d334cbfebc510649e89e24a62b",
+        "occupancyCert": "a4e43a6fffca192b8198afd9d0931580301cb66705dda81f86af2b8944099ac7"
+      }
+    },
+    {
+      "id": "app-eval-037",
+      "applicationNumber": "AICTE/2026/SYN-1037",
+      "institutionId": "inst-eval-037",
+      "institutionName": "Vanguard College of Engineering (37)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 6.22,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 300,
+      "facultyCount": 21,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "a59dcbe67e7e495e5b6991728fda80d1753123aff71df19abb91fcae66f7a861",
+        "fireNoc": "be38f4605b918d888fc5ac5696fd1ec2e9ef1506736a6e84c3d17cf59bb5a102",
+        "buildingPlan": "c4efc8c418ed893ccd8e201fc49b95eb18524c1895a2e352c2b48b2eeb88c881",
+        "occupancyCert": "25ec118f949536f8a49bcc385b4d209393b63a9ce979d21ed177548d9a678362"
+      }
+    },
+    {
+      "id": "app-eval-038",
+      "applicationNumber": "AICTE/2026/SYN-1038",
+      "institutionId": "inst-eval-038",
+      "institutionName": "Pinnacle Polytechnic Institute (38)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 4.09,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 28,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "cbee3717f78f99d4c5b0542749d1fa077940f755147e74034717bd8d23f1e4d0",
+        "fireNoc": "67a12aacc7a2fad495967de6a8a05b1b747880ef6a03dbc470b615b0efd65632",
+        "buildingPlan": "1678007cdf7cfcd76ff7f250be2d0a524d42197420203c2d707502480878e982",
+        "occupancyCert": "d65657ee01c0deeb77f27882598755c85874c3cb3bb2af9a8923d50601bffcdf"
+      }
+    },
+    {
+      "id": "app-eval-039",
+      "applicationNumber": "AICTE/2026/SYN-1039",
+      "institutionId": "inst-eval-039",
+      "institutionName": "Zenith School of Computing & Engineering (39)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 3.72,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 33,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "DUPLICATE_DOCUMENT",
+          "severity": "Critical",
+          "description": "Occupancy certificate matches identical hash of archived certificate.",
+          "expectedRuleId": "CROSS-CERT-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": true,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "8351072ef31bc19104fd84b62c805504e658808658089be9ffaca26d285acd40",
+        "fireNoc": "96b4fd111cf40c3d9abe1278efd23bd06f7ee017696d8cff22404bda74c6dd7a",
+        "buildingPlan": "72dbe0ab1910cd348d3b157bab42b3e82f31229b8d1cb8846765c43581d396ec",
+        "occupancyCert": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b"
+      }
+    },
+    {
+      "id": "app-eval-040",
+      "applicationNumber": "AICTE/2026/SYN-1040",
+      "institutionId": "inst-eval-040",
+      "institutionName": "Heritage College of Engineering (40)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 3.84,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 16,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "4c342b269707ba61c60205da8a45e904643874c905c63756a61ae096d00a3761",
+        "fireNoc": "14c7e8082443c4455983ce5589eed12b2e0357a059f396753ece0e19a3591847",
+        "buildingPlan": "e25f6d81d835491c22c825375b4229eb4d6828bfe5f9d1976a5bbb2dd5812215",
+        "occupancyCert": "5a9aec9a3ec1ccf1a850e1662f76367ef544fe46e2421da67025ae40b47202ab"
+      }
+    },
+    {
+      "id": "app-eval-041",
+      "applicationNumber": "AICTE/2026/SYN-1041",
+      "institutionId": "inst-eval-041",
+      "institutionName": "Galaxy School of Computing & Engineering (41)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 3.58,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 17,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "fc468ef038ef25fb3e16544be710644ed14daa3f61d06034ecd79406e1e8da8b",
+        "fireNoc": "0a620eed54403b2ddda8b4c2ea11dc14d62c8dcdd5ff703e38027b82c3f475a9",
+        "buildingPlan": "f91ffe6c552eb1cf00f81791cc5077ac0fc572c3d923fdd5a39b3d988737716f",
+        "occupancyCert": "d7256d83f2bfab91feb841955db49c880bc565d5707c61b332a54064b73f20db"
+      }
+    },
+    {
+      "id": "app-eval-042",
+      "applicationNumber": "AICTE/2026/SYN-1042",
+      "institutionId": "inst-eval-042",
+      "institutionName": "Vanguard Institute of Higher Learning (42)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 4.16,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 34,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "DUPLICATE_DOCUMENT",
+          "severity": "Critical",
+          "description": "Occupancy certificate matches identical hash of archived certificate.",
+          "expectedRuleId": "CROSS-CERT-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": true,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "4e13d01ee23f957180b20d850989fd352f10d54232f7b02fee7fe9f196a2991a",
+        "fireNoc": "613d2ee08266550a8e2c067c008cf59dbe76bb735c70876be815caa8daedf93c",
+        "buildingPlan": "5ade8a64dc64204dc8434e007928e5b3fa48d08d15e24086a1840d2f19606080",
+        "occupancyCert": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b"
+      }
+    },
+    {
+      "id": "app-eval-043",
+      "applicationNumber": "AICTE/2026/SYN-1043",
+      "institutionId": "inst-eval-043",
+      "institutionName": "Radiant School of Computing & Engineering (43)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 5.68,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 360,
+      "facultyCount": 24,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "88d60c148449672127120c8d34d5db93873060491235acc0ed41af65f3a966e7",
+        "fireNoc": "7a7e4b4b7699d2617207f7efff0e3255d195bab0f1b3e413e78431801398be28",
+        "buildingPlan": "dcd7ff457f385c7f6b27d6ce7874c26e6785b9875840cca45fb148e6e215f1ec",
+        "occupancyCert": "66bba5df128f80911ba17ff796e4fd5ce47fa8179845b939b16067f078aa5ef3"
+      }
+    },
+    {
+      "id": "app-eval-044",
+      "applicationNumber": "AICTE/2026/SYN-1044",
+      "institutionId": "inst-eval-044",
+      "institutionName": "Vanguard School of Computing & Engineering (44)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 4.76,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 16,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (16) insufficient for intake (420).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "8ff01e4f978985c1b2d6f2d80fba4d16836595fbda838553302d0835b74855ea",
+        "fireNoc": "7b2f065754bb60c11c0a3badfe3ef181e02adbfb8af191850a6065af14fa7ce5",
+        "buildingPlan": "d7f4bc04925caf8f1a6eea982a6f114a327b9ad9c7ec807fe6554297e5a98e53",
+        "occupancyCert": "30b0be162810cd18a535004ca5454294707ea6bee98b45913243f523a2771c1a"
+      }
+    },
+    {
+      "id": "app-eval-045",
+      "applicationNumber": "AICTE/2026/SYN-1045",
+      "institutionId": "inst-eval-045",
+      "institutionName": "Heritage College of Engineering (45)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 4.87,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 25,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "f6aa88d31bb1c0105dfb7bdcc02f7f3fcce8a2505ce7bdca4dbee5e7ed551f6a",
+        "fireNoc": "5cab0d12d88d96b9bb36fb137b40193fd369a4110caf7190d83e1d5f5e3ba225",
+        "buildingPlan": "5fd401029f8eba54f709790ba10d7b06c5de66174574ee2dbb055721c2e36514",
+        "occupancyCert": "f48ce561c669e28d1ff60eed4aa8c41025909899ff26158d1e379aa37e584ad0"
+      }
+    },
+    {
+      "id": "app-eval-046",
+      "applicationNumber": "AICTE/2026/SYN-1046",
+      "institutionId": "inst-eval-046",
+      "institutionName": "Vanguard Polytechnic Institute (46)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 2.82,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 19,
+      "instructionalCarpetAreaSqm": 1920,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "CARPET_AREA_DEFICIT",
+          "severity": "High",
+          "description": "Carpet area (1920 sqm) below 10.5 sqm/student requirement.",
+          "expectedRuleId": "INFRA-CARPET-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "c5464d5ae5ddb15fded75e517ab0d5db935d458982accfe2c2ab60b36959e391",
+        "fireNoc": "41c4bea73723a1e5a7ef1d3f25089e39630db7a7539938ec62b563668afed208",
+        "buildingPlan": "179187785e69694c7fbd54de429a235b2b457526026114b2488ac439e284dfee",
+        "occupancyCert": "5935ca92bdee49e63f58e46023e2aea9121c6c84f6409ad8e1ccd953d5083c85"
+      }
+    },
+    {
+      "id": "app-eval-047",
+      "applicationNumber": "AICTE/2026/SYN-1047",
+      "institutionId": "inst-eval-047",
+      "institutionName": "Olympus Institute of Higher Learning (47)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 5.08,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 17,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "de56b0051170f2ba115146d52ca01acd89b0477e001c1494795531a30d0df035",
+        "fireNoc": "1bfd4c3c1174ce48a1b369dc0885e96628f02408aefcffc6beda08893a2b52ef",
+        "buildingPlan": "b766d23d0fdf5c8beed6a40b70ce47bae11f0267ce70f552300d042f579a3aff",
+        "occupancyCert": "2029c013ae5b7bd2a69ff091030740b4611334a7c79fe55aecd087ef2db5216d"
+      }
+    },
+    {
+      "id": "app-eval-048",
+      "applicationNumber": "AICTE/2026/SYN-1048",
+      "institutionId": "inst-eval-048",
+      "institutionName": "Zenith Technical University Campus (48)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 4.61,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 31,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "d026411314646a172cd53d9fe8a3b869d55d44267b1ef1a162f70a7954f9d104",
+        "fireNoc": "6df1aacbaa109efd3de1c66a80a65cf2a522dcaacede2629ce10ff43a264ad82",
+        "buildingPlan": "cc1f845fa21a3c7c6493cbf6fe3fbeb32643a8e75bf6cd4c41aeb488caa2ef77",
+        "occupancyCert": "71d7764b5012de83db71d19d6d3bddbbf077f57013c066e996542bb62276ba57"
+      }
+    },
+    {
+      "id": "app-eval-049",
+      "applicationNumber": "AICTE/2026/SYN-1049",
+      "institutionId": "inst-eval-049",
+      "institutionName": "Starlight Technical University Campus (49)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 3.67,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 25,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "DUPLICATE_DOCUMENT",
+          "severity": "Critical",
+          "description": "Occupancy certificate matches identical hash of archived certificate.",
+          "expectedRuleId": "CROSS-CERT-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": true,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "f970c67c06978eb2d0cf565b8af9bcddb5a1466b4b952d288e48f3bfbe1338a2",
+        "fireNoc": "4a4003ebd2de21c08aa340077fe6efbac14d6f0434f30e8eb334615e665a69cf",
+        "buildingPlan": "f30d1b99a74b45c4e1a30d5785fc98f2d88a4b2978fbaf762ccd9d23784c22c7",
+        "occupancyCert": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b"
+      }
+    },
+    {
+      "id": "app-eval-050",
+      "applicationNumber": "AICTE/2026/SYN-1050",
+      "institutionId": "inst-eval-050",
+      "institutionName": "Horizon Institute of Higher Learning (50)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 3.99,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 14,
+      "instructionalCarpetAreaSqm": 1440,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "CARPET_AREA_DEFICIT",
+          "severity": "High",
+          "description": "Carpet area (1440 sqm) below 10.5 sqm/student requirement.",
+          "expectedRuleId": "INFRA-CARPET-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "5518ad07a43df3f38b03c69ce31478aa841c981f08ea9a5781e3f800d253be36",
+        "fireNoc": "59371cde5e2e501ca230d295e61928100e9a864bcc1ed6ae82f0affcdeda28b0",
+        "buildingPlan": "52895ca62df69e55c592c7c64ba602d1c3587f7c9e0b373939ced03c604c4999",
+        "occupancyCert": "3a86cf3391a1280b026a5563d6cabf83ccf794f35ca3bc74282f399a05f84954"
+      }
+    },
+    {
+      "id": "app-eval-051",
+      "applicationNumber": "AICTE/2026/SYN-1051",
+      "institutionId": "inst-eval-051",
+      "institutionName": "Silicon Institute of Technology (51)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 4.51,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 31,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "4a85a9d48d9fa81af0c2c3a42537b1a57439fff654235a0557bd8900883f76ad",
+        "fireNoc": "975a22fb19f74313c098bf2ba7d9106a4f21a35a884293729358695ceb8df51b",
+        "buildingPlan": "5cfabff842fe50682357a28ac6f38516362c13a642b76b7cc442d98a6ffc0c12",
+        "occupancyCert": "693205b2d509b2b269e3d68fc4c26069710a8f9911513c02a1138c4a0c15aed9"
+      }
+    },
+    {
+      "id": "app-eval-052",
+      "applicationNumber": "AICTE/2026/SYN-1052",
+      "institutionId": "inst-eval-052",
+      "institutionName": "Galaxy Institute of Higher Learning (52)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 6.28,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 480,
+      "facultyCount": 35,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "b4cc8080bd07ead16566e4e86fee226266c61201d0c8292921e82814856564fc",
+        "fireNoc": "27cec0107130c561f9b172537a4d578197b4d6793c7f529445040c40545cf90c",
+        "buildingPlan": "6944a42c93e5793c31ec9f125e26d5551fdd53f9eea2ffd65acd01521a59d0d5",
+        "occupancyCert": "2f31ddba97c02819bf517e4c9c4046f612226cf9cfbbfbd0d9c71da06d2dba2b"
+      }
+    },
+    {
+      "id": "app-eval-053",
+      "applicationNumber": "AICTE/2026/SYN-1053",
+      "institutionId": "inst-eval-053",
+      "institutionName": "Vanguard College of Engineering (53)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 4.02,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 12,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (12) insufficient for intake (300).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "432ed5bc49e2ac7ee5d17d7537abb1739331faa7af38c89a1c9fa3ccd7f9419c",
+        "fireNoc": "136d1db9620ae1c64171fbf043012231024f95af0e40c302e44585905fc48170",
+        "buildingPlan": "c10e85ad1c28d5c5e1b2604ff8f4c43f524781c0f4810e4754c69b3852a92dd7",
+        "occupancyCert": "ffd4ef437726856c050dcf732829b577ec14663a8889098d1cfc6cf85224ac65"
+      }
+    },
+    {
+      "id": "app-eval-054",
+      "applicationNumber": "AICTE/2026/SYN-1054",
+      "institutionId": "inst-eval-054",
+      "institutionName": "Apex Institute of Technology (54)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 3.68,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 14,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "c4b1a9ae32170e16aa30744e83a971b36ea179d4e5dfb80be5494b7d7d863d25",
+        "fireNoc": "9c2511ea3775eef355501d7c6dcbe685fb51cbc1dc8d74d18e8d64ab74ee312a",
+        "buildingPlan": "33e3327773e2cecb4e7b9af467992666f11581ee9d90794d23f7763c4fa435e6",
+        "occupancyCert": "027eb288641b7088bf3c61aa5d4f8878e2cc10cca1665f78b90886bd1d955004"
+      }
+    },
+    {
+      "id": "app-eval-055",
+      "applicationNumber": "AICTE/2026/SYN-1055",
+      "institutionId": "inst-eval-055",
+      "institutionName": "Imperial College of Engineering (55)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 4.52,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 19,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "720f1435ca873584b0ee09c10ad009d22d6232fdb9a5d10d0de3ecf2ff2b9f88",
+        "fireNoc": "412e7f2061d08c3bbbb92ddc672a0d766cb1451f999fb2cceeb2d429434423f3",
+        "buildingPlan": "13a74c6d27a9ed886939e4d6491c6f7874987360b2506bb3674be51fc3a0c10e",
+        "occupancyCert": "d7b59da221bc19a14361221d44f7c42606fe065be538d6716c952d61ace2500e"
+      }
+    },
+    {
+      "id": "app-eval-056",
+      "applicationNumber": "AICTE/2026/SYN-1056",
+      "institutionId": "inst-eval-056",
+      "institutionName": "Zenith Institute of Higher Learning (56)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 4.79,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 12,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (12) insufficient for intake (300).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "a22d130ebfcec4875765f92aede5ef37ae89c268ca7fbd40cbc186607a450be7",
+        "fireNoc": "088b91fd86320421bd76f178114affc63b72453ca80bd79bd638b9c3bb203aca",
+        "buildingPlan": "f4445676c90cdc82d47cbd79bda4dce7882751fec7f238903ac93a77ef4dfe62",
+        "occupancyCert": "527c2ce08d2862aaccc99c6d2abdf3fe566338eb329b1c5fc3a5de9944d7301f"
+      }
+    },
+    {
+      "id": "app-eval-057",
+      "applicationNumber": "AICTE/2026/SYN-1057",
+      "institutionId": "inst-eval-057",
+      "institutionName": "Zenith Polytechnic Institute (57)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Telangana",
+      "declaredLandAcres": 4.62,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 9,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (9) insufficient for intake (240).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "b7f7cab85f007c0d25f180325399f40649f44246937f0e86f619a232e94503c0",
+        "fireNoc": "1d6e1960d0006147fe223953c577aa2b8ee62dbe72b0d6844eb2a03d906f0644",
+        "buildingPlan": "786ddcb071fc27c9eb7d0d29fdca990536718ab04686422103c1e00ca3506404",
+        "occupancyCert": "a78873caf21247a6ee2122b34d0ad1c71d1458b1c9ea63d84d0d0bb6d24cbe12"
+      }
+    },
+    {
+      "id": "app-eval-058",
+      "applicationNumber": "AICTE/2026/SYN-1058",
+      "institutionId": "inst-eval-058",
+      "institutionName": "Radiant Institute of Technology (58)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 5.24,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 240,
+      "facultyCount": 9,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (9) insufficient for intake (240).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "55f63cbb9e80cbfa385e2e6e43ad1d945e6f555300645a350c3afa6ea3f73892",
+        "fireNoc": "f4edeb15da6f6375c2b51952a5ddf98ea83023c75240307b467677631b9fa4c7",
+        "buildingPlan": "8f3fcce0429281246176cad291eba0bac5da6e61c3800564f0aa54172222c9d4",
+        "occupancyCert": "d4afc89b74352ac576811fd5e84fc95746a2f1b5e85a406ef17984229199f542"
+      }
+    },
+    {
+      "id": "app-eval-059",
+      "applicationNumber": "AICTE/2026/SYN-1059",
+      "institutionId": "inst-eval-059",
+      "institutionName": "Beacon Institute of Technology (59)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 0.58,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 27,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.58 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "a281bd53d59242f8c4ff2cb3c4c0bc82649623eb4e5c58c8314385f48f374149",
+        "fireNoc": "e66cecf102492078c05e8baaa6282a52881953a121467374c476945985c81ac0",
+        "buildingPlan": "ab4de779df05e521a91b4f8b10cd2d994e0200d71517213af563bd2aad03a9ae",
+        "occupancyCert": "a99f3165d4f47b7a99479c513beb4686052cc91b50cbd3c975cfc64462abdc41"
+      }
+    },
+    {
+      "id": "app-eval-060",
+      "applicationNumber": "AICTE/2026/SYN-1060",
+      "institutionId": "inst-eval-060",
+      "institutionName": "Beacon Institute of Higher Learning (60)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 1.98,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 300,
+      "facultyCount": 20,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (1.98 acres) below statutory minimum (2.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "e21248790fd85fd303059d441e88f5433dcceec4a7b8d10a2c251cd026248a6e",
+        "fireNoc": "da136bc55735b29d24d5b1946416a6a1effe88db390960ef48fac9cad1db14cd",
+        "buildingPlan": "8b94a76585d45648ecae61a3bcfd4d6d4b5d3a000751577576806abadb8e7e8c",
+        "occupancyCert": "8d2b1247724faf67663f07b1371882e0ef5ecff9e32ef83fd69b0632b047705e"
+      }
+    },
+    {
+      "id": "app-eval-061",
+      "applicationNumber": "AICTE/2026/SYN-1061",
+      "institutionId": "inst-eval-061",
+      "institutionName": "Sunrise Technical University Campus (61)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 5.36,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 28,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "77ff43cf93cc6e6a147fe28d801630f1f19880b549bef3876a61576418adf4d2",
+        "fireNoc": "07d0623a3844ffe75e7030501a31b86c1cc1e313fa53604bbfa6c50b8379491c",
+        "buildingPlan": "4f299af3c22943642b937afab4b7176342e1ec9b7087a3885a09c4ad78e96041",
+        "occupancyCert": "536585649271d24d4a853236c283a47f08f9d5455a3d44f2557e3f7dc8120e64"
+      }
+    },
+    {
+      "id": "app-eval-062",
+      "applicationNumber": "AICTE/2026/SYN-1062",
+      "institutionId": "inst-eval-062",
+      "institutionName": "Radiant Institute of Technology (62)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 5.21,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 420,
+      "facultyCount": 28,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "f9fea2291a86c2ce5fb3c8223cfd1a09062c66a697f755712e13c4abc3826115",
+        "fireNoc": "bc817bcb5f25f7daac81962c0e67e702c6184629ac5f94f0a799d448bf198fa2",
+        "buildingPlan": "a98a31b595c284abb525692e515b75714f2a0c714b3085af49f794398ec31a0c",
+        "occupancyCert": "a9611dce1a19de3216ca1c2864dcf974c8b0ff8194aa1d0ea2dbd59d320460b9"
+      }
+    },
+    {
+      "id": "app-eval-063",
+      "applicationNumber": "AICTE/2026/SYN-1063",
+      "institutionId": "inst-eval-063",
+      "institutionName": "Apex School of Computing & Engineering (63)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 6.3,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 34,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "f4f486b6bd4ff536617f099c438cff5e1667b9a02e94935b1803cc8af8ed3c31",
+        "fireNoc": "a211ca3fba26a766236c5decd65a234c7c209c115c96bd7bea0b4af3714c5ef9",
+        "buildingPlan": "3331d28a41b95f48c50978d4e3165011c23d2248b15b2ac825284700f7a40a2e",
+        "occupancyCert": "22eb0f48290ec19e582e8d03d49c4768991cb4fb125366cd2175c77adb1ca794"
+      }
+    },
+    {
+      "id": "app-eval-064",
+      "applicationNumber": "AICTE/2026/SYN-1064",
+      "institutionId": "inst-eval-064",
+      "institutionName": "Beacon Technical University Campus (64)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 5.59,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 20,
+      "instructionalCarpetAreaSqm": 2400,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "CARPET_AREA_DEFICIT",
+          "severity": "High",
+          "description": "Carpet area (2400 sqm) below 10.5 sqm/student requirement.",
+          "expectedRuleId": "INFRA-CARPET-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "9d45cc2a6347a84a4fcedde18f6ec2e95ce83a60b44330de92012d509078e24c",
+        "fireNoc": "ecef197e7ec58520e03af1cc17ac5c1721b3d9e585d0c67a9c97ea6c0f88ce34",
+        "buildingPlan": "79b2e9c5b6bf759f0e529f8651e6d779c9186998ef1b5f6ca88f592478845dd3",
+        "occupancyCert": "677228cb6789e7b83b84a8613325dd40f86e00f55b8e653e93f362897db041a3"
+      }
+    },
+    {
+      "id": "app-eval-065",
+      "applicationNumber": "AICTE/2026/SYN-1065",
+      "institutionId": "inst-eval-065",
+      "institutionName": "Beacon Technical University Campus (65)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 2.65,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 12,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "ce827f3fe5da29e77956c14c54ec43ccfe2d61267f7e068774ff9fe8ed7f85c6",
+        "fireNoc": "cdcf00b1af4ea58b7813df17128f47d7e17cdc78d3e665d2b7423ab8690a5ede",
+        "buildingPlan": "4bb33249b8d1fdb6921d5bd88de8742fd45493ae6156c70d54fd742ea26444e8",
+        "occupancyCert": "412e2c0c2fb3dad3a22825da7a18e809532f028adb2721229cba22e94a5b3e75"
+      }
+    },
+    {
+      "id": "app-eval-066",
+      "applicationNumber": "AICTE/2026/SYN-1066",
+      "institutionId": "inst-eval-066",
+      "institutionName": "Starlight Institute of Higher Learning (66)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 4.2,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 30,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "2018b47b74659954cfdbcb7410b3ef573057154ecb24d7f94b4143f3912c5458",
+        "fireNoc": "ef463bc588869b2362769cdda6cf4e5987e31be075efb6991cd3bc84236df927",
+        "buildingPlan": "4b973ac5387a55a44b4cb7b9d37030f4320f79dc278e1ca18480230fa4325766",
+        "occupancyCert": "969a84ed0a10b1ca9fc70e96600e1398285bd22d285d44e543c49f2347dfeb3e"
+      }
+    },
+    {
+      "id": "app-eval-067",
+      "applicationNumber": "AICTE/2026/SYN-1067",
+      "institutionId": "inst-eval-067",
+      "institutionName": "Apex Technical University Campus (67)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Telangana",
+      "declaredLandAcres": 4.7,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 32,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "efad652db50cf3d81c4942c3e75002973e7ed3f423a95c556ae6fec7c261e5ea",
+        "fireNoc": "e71adca74712649202af5f8e4f1c9455f1f7819c8be0672e2fc034ed0d7e2875",
+        "buildingPlan": "32c20b6cfffd0886f1da5ac8dacd0ae8cb5f1b8d670f5e3dda88ea76456b8a05",
+        "occupancyCert": "07536010d80cf73984a7191f8c7772b7f825eca9dcc9a5a320dd730f84baabfd"
+      }
+    },
+    {
+      "id": "app-eval-068",
+      "applicationNumber": "AICTE/2026/SYN-1068",
+      "institutionId": "inst-eval-068",
+      "institutionName": "Galaxy College of Engineering (68)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 3.68,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 23,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "dc179f9c087906849067e77040df373d4a68a6eecf1305e367e35e23c064130e",
+        "fireNoc": "f02dfd09d620bc52d9ab806153f6df28b043fd722e4ba9f8462fbd086eb602d8",
+        "buildingPlan": "05d3b41b7d63f7109482ac258434683fe1b4709739653d84a560031d68431e9d",
+        "occupancyCert": "96f391ea05b60c334e8fcc3f80877dab359c15340cb1b1374d02c0ea6ef79921"
+      }
+    },
+    {
+      "id": "app-eval-069",
+      "applicationNumber": "AICTE/2026/SYN-1069",
+      "institutionId": "inst-eval-069",
+      "institutionName": "Olympus Technical University Campus (69)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 6.01,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 16,
+      "instructionalCarpetAreaSqm": 1920,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "CARPET_AREA_DEFICIT",
+          "severity": "High",
+          "description": "Carpet area (1920 sqm) below 10.5 sqm/student requirement.",
+          "expectedRuleId": "INFRA-CARPET-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "6b2079b498691a0366fb3400ecec6502b83e122524ce059d3035dfe1634993af",
+        "fireNoc": "da422c07348f1da852c9d9eecf837ccb7bd2e4848730b906fe7f473a8e1e0db1",
+        "buildingPlan": "41b880ac736e932162e4127d00bba08b102f64b060b15fe3af20008fc442d30c",
+        "occupancyCert": "3ef831894a052a5e178d693970c4140797cf7f2a9f4ea2f3bd97482a21d31843"
+      }
+    },
+    {
+      "id": "app-eval-070",
+      "applicationNumber": "AICTE/2026/SYN-1070",
+      "institutionId": "inst-eval-070",
+      "institutionName": "Silicon School of Computing & Engineering (70)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 2.58,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 420,
+      "facultyCount": 29,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "a08c4852c43f639d5a5f247bb04aa08d5fbc7db6e26f782cfcf889080dbdbaf7",
+        "fireNoc": "ef36df4147433b3ba97acafd5d6f584e99097548724ebcbf0e41231a943dc016",
+        "buildingPlan": "59f0e84e70b64c2a02352a52fe130e792634cc50df67f9e0016623fcf12b0a9e",
+        "occupancyCert": "58d5c52cefa86f069063aef79594d70361d3d15380bcd6ede3a4ec083235cc98"
+      }
+    },
+    {
+      "id": "app-eval-071",
+      "applicationNumber": "AICTE/2026/SYN-1071",
+      "institutionId": "inst-eval-071",
+      "institutionName": "Nova College of Engineering (71)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 0.54,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 29,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.54 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "1fff95a543f3879bd26fda69d5900aed8fabb3f09980e0a256f20ca1ec04c934",
+        "fireNoc": "f2b9ff3a67c278e3b991f4d56b63a7f97d340b72e1a479bd8669507cc3407b6f",
+        "buildingPlan": "f15746ab42e676909decd6798fc4753c20c3bae4c5069949e6b872135c0344c9",
+        "occupancyCert": "d0b0d3da3aed23f5326e9b4709be86accce53e8a341ff6ca66bf53e1f45377b2"
+      }
+    },
+    {
+      "id": "app-eval-072",
+      "applicationNumber": "AICTE/2026/SYN-1072",
+      "institutionId": "inst-eval-072",
+      "institutionName": "Nova Institute of Technology (72)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 3.93,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 19,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "REUSED_FACULTY",
+          "severity": "Critical",
+          "description": "Faculty PAN declared simultaneously across distinct institutions.",
+          "expectedRuleId": "CROSS-FACULTY-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": true,
+      "documentSha256Hashes": {
+        "landDeed": "8553c588b0ef2f8609bbef2d4ea721bd89febd1e76c4e855ed109177ffabc634",
+        "fireNoc": "2abef864ef9c6e33812ceaf764acb563014548f467e8dbccc7c616fd42ea1539",
+        "buildingPlan": "a6fdf7a9f971353b7651e1b317c68fbafff28f6b7f47cead164d37a54d91dd44",
+        "occupancyCert": "915c2afa30808d3464008f196e6069e9cef9d4d89bb45c26e63029493a7cc1e9"
+      }
+    },
+    {
+      "id": "app-eval-073",
+      "applicationNumber": "AICTE/2026/SYN-1073",
+      "institutionId": "inst-eval-073",
+      "institutionName": "Olympus School of Computing & Engineering (73)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 3,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 7,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (7) insufficient for intake (180).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "255e7d25f1dcd380df7b285dc9822667e5804a9413ee156f62878805907a665b",
+        "fireNoc": "a2c1a6c4a387416c9452e56674703e035b2644eeddcb8ffafc673f67c1a87b70",
+        "buildingPlan": "06c7639feda95b96aa8f2ce9c0bb878b3b4130683b8329f96656c79638adc99f",
+        "occupancyCert": "e5e87f68a7b5d7291d6c461a3aa983d015306c270a3cea9f4dd2feb10db0bcdf"
+      }
+    },
+    {
+      "id": "app-eval-074",
+      "applicationNumber": "AICTE/2026/SYN-1074",
+      "institutionId": "inst-eval-074",
+      "institutionName": "Starlight School of Computing & Engineering (74)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 5.81,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 14,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "REUSED_FACULTY",
+          "severity": "Critical",
+          "description": "Faculty PAN declared simultaneously across distinct institutions.",
+          "expectedRuleId": "CROSS-FACULTY-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": true,
+      "documentSha256Hashes": {
+        "landDeed": "053da3efd78b665f5da50b4d72fa3f4fc7d250ba2aa93b79ce69bd575175486b",
+        "fireNoc": "58f7c858630bb5668f6d01cc815b1cdf8715e605d01d3cb7169d0557a77303f3",
+        "buildingPlan": "fe7516164376a9bd7ed664f4066c2da9be9d16510fdfb5db72fa83c16c71aa85",
+        "occupancyCert": "869af51083676630d41cfda698262bdc6d9e345e4cdb7db9610823c964d461d7"
+      }
+    },
+    {
+      "id": "app-eval-075",
+      "applicationNumber": "AICTE/2026/SYN-1075",
+      "institutionId": "inst-eval-075",
+      "institutionName": "Silicon Technical University Campus (75)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 2.55,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 15,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "672ab1948e6be5553c93098313bd51836cf4fc5c2754230fd20e3f85cf394a26",
+        "fireNoc": "87b295fa5d589378f95830a71cc923f6c36817a0b2971ff48564724c082882b7",
+        "buildingPlan": "54cbc4aad918996826ff2d69fb3126de2c68bfdbec00bad5a97818b93614636d",
+        "occupancyCert": "22f1cec86035822bb1af789c594610b252acb08cbda03aa11954cf733cfa233c"
+      }
+    },
+    {
+      "id": "app-eval-076",
+      "applicationNumber": "AICTE/2026/SYN-1076",
+      "institutionId": "inst-eval-076",
+      "institutionName": "Nova Technical University Campus (76)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 4.83,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 240,
+      "facultyCount": 16,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "4da9a4b2950e7d3010bdfe552de349a2c503ebad6bd0e38b1e26ad3bb8e763c4",
+        "fireNoc": "23d1a2ac0d7f9c45d4d5f4c67b34b916c8075526b7322c433b1a0a82f236aad9",
+        "buildingPlan": "25a0c92fb55e7663f2d0a86499d27e754fa84939f8d045ec08cac8865ebc226f",
+        "occupancyCert": "556d74be86c4d24e3f970c44d4d1b3696e2e11e5239aef3cf5f23bb2da06f716"
+      }
+    },
+    {
+      "id": "app-eval-077",
+      "applicationNumber": "AICTE/2026/SYN-1077",
+      "institutionId": "inst-eval-077",
+      "institutionName": "Silicon Institute of Technology (77)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 3.8,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 23,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "012efc1af29fead27621d9e57a44f3e58227209ef422a39dc38ca6e164cdabb9",
+        "fireNoc": "d647db2d9348877652cad910067d9f820453896f4ecf07e4bd053a0c6ef1e066",
+        "buildingPlan": "a25ed6e1cf773ad9830bc0b6873434f2c4a504a89f21516441f0ba65d3970d43",
+        "occupancyCert": "51a5fd52ea52d3d53d0d557d90173fb858acfdecbd56a5902bd2bf5bccad2a8e"
+      }
+    },
+    {
+      "id": "app-eval-078",
+      "applicationNumber": "AICTE/2026/SYN-1078",
+      "institutionId": "inst-eval-078",
+      "institutionName": "Pinnacle School of Computing & Engineering (78)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 2.55,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 33,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "0a3c639b14ef52137dada4a908559d8bd1257d8d829b2040d1735a85bf17d603",
+        "fireNoc": "62bcb842fc94cbe95eb82e8d812411aeac8673a8d0a6d7aab375a4063b2251b0",
+        "buildingPlan": "23abb30ff21db84e7faef0e4cb7f6d84bceb684de5a70ad7a4de0029ffb9e0bb",
+        "occupancyCert": "6f0a5b9a77bd86acc496552054b669aebd49ab1feddb0d56d7b92f6a248cce6d"
+      }
+    },
+    {
+      "id": "app-eval-079",
+      "applicationNumber": "AICTE/2026/SYN-1079",
+      "institutionId": "inst-eval-079",
+      "institutionName": "Apex Polytechnic Institute (79)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 3.35,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 21,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "88c55e05f24f367c4f00998dc2de5047ec70608b920b07144369895eca1bbca7",
+        "fireNoc": "06d5f8063ef66871304254efbbc2fec8f47800c5568c89cef707c283fd49f5de",
+        "buildingPlan": "c325e608cb63eaf348c428ef74a5dfe66b0b0bb28b32a3b123900f7db172c5d4",
+        "occupancyCert": "316a9a7d1f47dffed7f8b00eee75a2743ef0e6dc89bd87433ab83dd89dccd41f"
+      }
+    },
+    {
+      "id": "app-eval-080",
+      "applicationNumber": "AICTE/2026/SYN-1080",
+      "institutionId": "inst-eval-080",
+      "institutionName": "Silicon Technical University Campus (80)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 6.21,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 14,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (14) insufficient for intake (360).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "38ef178c7e06975566b4875be26aa087da19cc03fa5f89263cbe7ba5bcc6c2a6",
+        "fireNoc": "7d421128b706e158a3572f7d2358cdbf5bdc0c632082d7a10fe26d322f43c3e3",
+        "buildingPlan": "76554b4a33236244a7def7a57e82fbce1c041bbe3c3b6d276c6256f20a124ace",
+        "occupancyCert": "62acd0def2e9ead6f67f451441a8be6b179bdd62c1f80140010acd7a61f4eb26"
+      }
+    },
+    {
+      "id": "app-eval-081",
+      "applicationNumber": "AICTE/2026/SYN-1081",
+      "institutionId": "inst-eval-081",
+      "institutionName": "Heritage Institute of Higher Learning (81)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 2.56,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 16,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "31a24ea1b454221aa1af7ac6e74f4c64cf453a6c3a4baf443c67ebfd765fa236",
+        "fireNoc": "f4ca3db561100ae712d4d09a309218a991d2a8238693ac73968974b26f69de5e",
+        "buildingPlan": "ae7f971f6ecb774edc56506b92b151f952900c1c29e9cce4048d0097173756e7",
+        "occupancyCert": "2152a524483cd66da88584735ba2fa384efd062e6f34ccbd57b29e51b0bf3aaa"
+      }
+    },
+    {
+      "id": "app-eval-082",
+      "applicationNumber": "AICTE/2026/SYN-1082",
+      "institutionId": "inst-eval-082",
+      "institutionName": "Apex School of Computing & Engineering (82)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 4.53,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 27,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "1cf4f6db6a7c4ddb11d796947dee7c8c749f144bd7f025cf5678451524ca55c7",
+        "fireNoc": "5783392a2acc283f8bf648a6bcfe2da502e21c49a293be5957e90775864386f8",
+        "buildingPlan": "910350943d935da550961239472dd7e0b2f4ecf7e9e7674184cebf0a208cfa4e",
+        "occupancyCert": "ec2880ae0ab412b662f44653b895e26b396e4cae4ecd67aef832851c8ca9d649"
+      }
+    },
+    {
+      "id": "app-eval-083",
+      "applicationNumber": "AICTE/2026/SYN-1083",
+      "institutionId": "inst-eval-083",
+      "institutionName": "Nova Institute of Technology (83)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 2.61,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 240,
+      "facultyCount": 16,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "361f75777982ca82641af8890292f7292dec5401948c98a783a5ffeaa8f88077",
+        "fireNoc": "c1a9a0479c93f76f598395282280c0d42e12297957b7b8bf81daea4d169ecdb2",
+        "buildingPlan": "b7cc00fe3268dddee6f0f49807bdf1b334cc7fde16ffa6f9895e6f858887d26c",
+        "occupancyCert": "aa8064dd61749e4316259a94195f6388b369f68ff3e15351d106767a714d614b"
+      }
+    },
+    {
+      "id": "app-eval-084",
+      "applicationNumber": "AICTE/2026/SYN-1084",
+      "institutionId": "inst-eval-084",
+      "institutionName": "Imperial Institute of Technology (84)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 2.95,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 30,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "f8829ce462c4f1ef5235e9c4975b08fc1c6fb1583610b71efac641e858c46e8a",
+        "fireNoc": "8fa194c20d9a3d4b820907efe483fb766b7d903e93d6145e854314f96596e182",
+        "buildingPlan": "1fde5abcff3a3c4b0e84c7969e627727c370b4926f24c103227b560788f731a9",
+        "occupancyCert": "651226b6f509db82deb8d422740fd2ad54cb4a6fbf92fa3b14b62d42f4bf0d8c"
+      }
+    },
+    {
+      "id": "app-eval-085",
+      "applicationNumber": "AICTE/2026/SYN-1085",
+      "institutionId": "inst-eval-085",
+      "institutionName": "Sunrise School of Computing & Engineering (85)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 5.27,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 29,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "26ce29e0ac4c1404ce33b77ae3d9763c9ee48b5fe661c0dbbfcd11d709ff1049",
+        "fireNoc": "bf43eb089f343d3e85f9af813029110b8f600e9fc913dc4ff3dc644293dcb7c1",
+        "buildingPlan": "814741e026922b198fc4846817320c54f500476d6d24f44158c71516f7152bc8",
+        "occupancyCert": "9495016cf990c4ca3915ef02e4516f081d2436ad5e0f24a0cdd398db5c4bf153"
+      }
+    },
+    {
+      "id": "app-eval-086",
+      "applicationNumber": "AICTE/2026/SYN-1086",
+      "institutionId": "inst-eval-086",
+      "institutionName": "Nova School of Computing & Engineering (86)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 0.5,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 29,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.5 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "7bcc8acad1ea262f788374495f4dff88703a3e32aaf68148d678da89ee0a2f16",
+        "fireNoc": "8ac7b930bac9e0991965cccdeecde7f376c559b7bbab952f3995a0b80c8eb2c6",
+        "buildingPlan": "2e1725f550dd70aed48673d1eabc31b280645c97647af1382f9965e66338d0c4",
+        "occupancyCert": "36406a3d1cd305feaaa0357d3844baf739a3e0b3f24b7bdf924ecd425a1562fa"
+      }
+    },
+    {
+      "id": "app-eval-087",
+      "applicationNumber": "AICTE/2026/SYN-1087",
+      "institutionId": "inst-eval-087",
+      "institutionName": "Olympus Institute of Higher Learning (87)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 4.34,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 12,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "0a00bc505964291a4e6d71d9f63785fd8cb49a3f912d8a633985e0083689731c",
+        "fireNoc": "8cfc3e331ec3bcb0028706c64e206669706971e7ce8ccac89aaf004da28987eb",
+        "buildingPlan": "80a311a57bdf71150752f837d08c56d649a7efe99319a41f67eb8a9e7f20de55",
+        "occupancyCert": "fc7544f8cf64be63b7a71de11276193ac6a4a760eae777e6081a7b3e2a9a2bde"
+      }
+    },
+    {
+      "id": "app-eval-088",
+      "applicationNumber": "AICTE/2026/SYN-1088",
+      "institutionId": "inst-eval-088",
+      "institutionName": "Zenith Polytechnic Institute (88)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 3.51,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 15,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "5766dff96526558832637253aeb1c519746a1f95184d932f13fa20c12b1ebc62",
+        "fireNoc": "21d32bde38361683c4e139114059fb899fd6e2862e31ac53402c4e15620ae482",
+        "buildingPlan": "5ec2fc3bcfbdb5d038c1f5517dc221e85481aff2e95dff8995e759356249f4a8",
+        "occupancyCert": "033ba885103802ac07f16d45ba21dad4fa36a6897f4960688cfa6fa82c569088"
+      }
+    },
+    {
+      "id": "app-eval-089",
+      "applicationNumber": "AICTE/2026/SYN-1089",
+      "institutionId": "inst-eval-089",
+      "institutionName": "Zenith College of Engineering (89)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 5.74,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 31,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "67b0dc1dcd8fb84677380776da64b612cc6ff5bf5d8df124cf388cf0a55ce59f",
+        "fireNoc": "0c16c31b3e16cc477b6990ff1f48f8a86e0482cfda7f2cf9dbfab892d115ee12",
+        "buildingPlan": "38527faaa75692c81d37f3841290cf6a44895cc6a0b917bcdce5a49bdf45d1c6",
+        "occupancyCert": "47c6fa9282c9cf6e6777c3aa5e8989666052d3fe100f75d88b3f1fa60688b162"
+      }
+    },
+    {
+      "id": "app-eval-090",
+      "applicationNumber": "AICTE/2026/SYN-1090",
+      "institutionId": "inst-eval-090",
+      "institutionName": "Imperial Institute of Higher Learning (90)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 6.13,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 25,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "REUSED_FACULTY",
+          "severity": "Critical",
+          "description": "Faculty PAN declared simultaneously across distinct institutions.",
+          "expectedRuleId": "CROSS-FACULTY-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": true,
+      "documentSha256Hashes": {
+        "landDeed": "ca33e1c4007b288950a44b1a67cc0d86a307ca3cfe700b80c541512eacab6f4e",
+        "fireNoc": "e31783d4e4250d634a0b2d3488cee5b2899868a0fe30de0694d30d9d34dab9f7",
+        "buildingPlan": "251ac175ca2ebfbf5241b2d210da40227b8015843df7b2ccd765b3194a9bc037",
+        "occupancyCert": "fbf7b2ed67098073e28b853c31f9e669d42dc57e81625230fdb1acf780f01705"
+      }
+    },
+    {
+      "id": "app-eval-091",
+      "applicationNumber": "AICTE/2026/SYN-1091",
+      "institutionId": "inst-eval-091",
+      "institutionName": "Starlight Polytechnic Institute (91)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 2.97,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 18,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "d4fac70116419988850ae558dab25482c936ad8d1e7c0184fdd4638ac9a1ba22",
+        "fireNoc": "8f12dda51c6cfe8ea49bcf568fd4150ad2284bd4b28c651e781f7b8853cd2640",
+        "buildingPlan": "6702d275f7ef4b9eda186e3c9db3444259250ee311b15d0e6113b52de4110d82",
+        "occupancyCert": "f234eda8c1626cb1a0fbcba183105bb6ee21fd9b36c68b63a06153121be897d9"
+      }
+    },
+    {
+      "id": "app-eval-092",
+      "applicationNumber": "AICTE/2026/SYN-1092",
+      "institutionId": "inst-eval-092",
+      "institutionName": "Apex Polytechnic Institute (92)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 3.12,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 15,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "6a37fa24203e545958457404845c97ccbbff42248af59752a44e65fc876bace1",
+        "fireNoc": "6d83a71397b4dd7ee81db95d846d421853bc4a678bf692a120a6c6bfece615c1",
+        "buildingPlan": "219e53e87afa17a602eb9a101e5d383259c9c8bd155eadb8d4fa8c9ea83d597f",
+        "occupancyCert": "9fe2b556d58848cdd3dceb5fd7e3873ac1f33c317f0f5d76f9d93615e060db93"
+      }
+    },
+    {
+      "id": "app-eval-093",
+      "applicationNumber": "AICTE/2026/SYN-1093",
+      "institutionId": "inst-eval-093",
+      "institutionName": "Apex Institute of Higher Learning (93)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 5.7,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 14,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "f55cabd5279628f679aeca916a4a06fc29ec942d5f59bda2cd644b7bc37daee2",
+        "fireNoc": "1ff80dec0275fda69f2380dc66fcc72c7696fe0d10950ebc5abc14645a288249",
+        "buildingPlan": "8e0ab2fd219b4a31ebe3cbc991ec94e6934b7705ca570536ca3e681d5b93c9c1",
+        "occupancyCert": "62b0b366c12aea7094be6782907dffd4405c8a01234ddc3093f039eeab55e569"
+      }
+    },
+    {
+      "id": "app-eval-094",
+      "applicationNumber": "AICTE/2026/SYN-1094",
+      "institutionId": "inst-eval-094",
+      "institutionName": "Starlight Institute of Technology (94)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 2.7,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 31,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "05b5e885aaae416eec1e203a9f7ac62153ca31eb30df07a9634ef9cdacdc15e5",
+        "fireNoc": "18b262c1f626d41a82ef0df329dd181630bdd16c27aabf5f0a8a9abf3985f844",
+        "buildingPlan": "37587f822b1eaa32c951bce87648501bf945c0808bb371226484ab1170891c56",
+        "occupancyCert": "6aa239bc6ce310820a988835e17da1c3938801d4505691e954f4e5303fc3ff05"
+      }
+    },
+    {
+      "id": "app-eval-095",
+      "applicationNumber": "AICTE/2026/SYN-1095",
+      "institutionId": "inst-eval-095",
+      "institutionName": "Imperial Technical University Campus (95)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 1.03,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 31,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (1.03 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "dd3c2c3079022c357e28fc25f03f9bbe0692ed3265fa9e5ab10965936f658bac",
+        "fireNoc": "dab1daac6935dd800304f87692014eb0afc57f4d3fdf3211e15558dfafff4118",
+        "buildingPlan": "95dd9254972ad168af5c7efff293d85d524f64af21c30e67dc0a10bc71c0cbc2",
+        "occupancyCert": "5d4805f36db5b6eadaab4fe316c9a5d3a94a9a6cac67420809225f5a9e6f4c41"
+      }
+    },
+    {
+      "id": "app-eval-096",
+      "applicationNumber": "AICTE/2026/SYN-1096",
+      "institutionId": "inst-eval-096",
+      "institutionName": "Imperial Institute of Technology (96)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 1.53,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 360,
+      "facultyCount": 26,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (1.53 acres) below statutory minimum (2.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "8a3a5559b6de5db19de61ee0c881c9a1b93bc00fd4f5809aabb89a1d464be52b",
+        "fireNoc": "292e62a69cff6177395173b421dd19b69689c98be0ddf94b24d84a5c76d109d9",
+        "buildingPlan": "b12f44cb856f3f46144d8333c790baa9b1f0c301a4f9efa2a54ace67c10c5bfd",
+        "occupancyCert": "a84add172435c2b9e8e697cc534b00d04d5602a49db0c90ca4f175a8898eb098"
+      }
+    },
+    {
+      "id": "app-eval-097",
+      "applicationNumber": "AICTE/2026/SYN-1097",
+      "institutionId": "inst-eval-097",
+      "institutionName": "Beacon College of Engineering (97)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Telangana",
+      "declaredLandAcres": 3.05,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 20,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "b9bc5b2fa6fa95f1fb058e704bdce732477111a2fa9e4836b8d8a18c76b21ba8",
+        "fireNoc": "66407c54a59906f80f1bca4249b58602b7941a6795138f73d648284db6152600",
+        "buildingPlan": "ba899a102123832207b82213b0f926561d13c62f166cfe9d0789ed1a1c424958",
+        "occupancyCert": "055b1c9e4025ca85b24fee7ff478e02fd3dba7e77e37f9cbb20b5ee4167d1018"
+      }
+    },
+    {
+      "id": "app-eval-098",
+      "applicationNumber": "AICTE/2026/SYN-1098",
+      "institutionId": "inst-eval-098",
+      "institutionName": "Apex Institute of Higher Learning (98)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 4.59,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 24,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "DUPLICATE_DOCUMENT",
+          "severity": "Critical",
+          "description": "Occupancy certificate matches identical hash of archived certificate.",
+          "expectedRuleId": "CROSS-CERT-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": true,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "7f6dbab1c98dff60b27723cd42d452325cf66ace66573a12a9d9039dbc25259a",
+        "fireNoc": "c8878bb949b834dfbbb0c1695ad701fc640a85ee066f2e3ea4e207c2bca22fec",
+        "buildingPlan": "ec78c52397239f42dfc1972d01dede92fcb25c540c0bac7a2eeb4b705a77cc34",
+        "occupancyCert": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b"
+      }
+    },
+    {
+      "id": "app-eval-099",
+      "applicationNumber": "AICTE/2026/SYN-1099",
+      "institutionId": "inst-eval-099",
+      "institutionName": "Imperial Institute of Technology (99)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Telangana",
+      "declaredLandAcres": 3.4,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 12,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (12) insufficient for intake (300).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "9bbc9b3dc8ca14cd4c3e308ed2fb128a4c576430a462dde57893adf227948381",
+        "fireNoc": "ae4751fdfb9a10b8b28a6584768773eea3fdaa392292dc3f06187c6775325f33",
+        "buildingPlan": "bc6abd501be14115f1c2427e8bdf267cf5b6707f747326cfd379d29a214cfadb",
+        "occupancyCert": "85da29cf47a8a93b4dbc245c74afff7f6b081400c81026043e62ffe72f34197a"
+      }
+    },
+    {
+      "id": "app-eval-100",
+      "applicationNumber": "AICTE/2026/SYN-1100",
+      "institutionId": "inst-eval-100",
+      "institutionName": "Apex School of Computing & Engineering (100)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 4.01,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 9,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "FACULTY_DEFICIT",
+          "severity": "Critical",
+          "description": "Faculty count (9) insufficient for intake (240).",
+          "expectedRuleId": "FACULTY-CADRE-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "18f4f2a3a15f56eb9430db05e2cffb912320d91bf300f6362237eb3c85beec9f",
+        "fireNoc": "4e6c3511bf9a8bb4e73e28ef490655a19316e8021360527cc7ccd9f01e4d6c61",
+        "buildingPlan": "0a6fc3524af6044058c96e11950658de3fb37483b3adfe33fe4fbbd0435ade56",
+        "occupancyCert": "f263a5dd3945b4eb4983097b3dc8f97f2e8f9e24d0007403bef77b2c9c560465"
+      }
+    },
+    {
+      "id": "app-eval-101",
+      "applicationNumber": "AICTE/2026/SYN-1101",
+      "institutionId": "inst-eval-101",
+      "institutionName": "Apex Polytechnic Institute (101)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 4.62,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 300,
+      "facultyCount": 22,
+      "instructionalCarpetAreaSqm": 3450,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "f742c9c8ad041808d131011f1ced57f0db7ecd023f18f4abce89457f2b1886d2",
+        "fireNoc": "7710721e8132f2a14323838900034cc8b165d7fcbb7f49af0c7eb022baf02357",
+        "buildingPlan": "d67808f28bfea02376ecd97da8b533b0aeffa092eb23f76f153e8f9ad1308232",
+        "occupancyCert": "f4f1222077b857a7f8c413d939c6220a7472c74e18ffc9e1068ab8a6ee9d1c8d"
+      }
+    },
+    {
+      "id": "app-eval-102",
+      "applicationNumber": "AICTE/2026/SYN-1102",
+      "institutionId": "inst-eval-102",
+      "institutionName": "Horizon School of Computing & Engineering (102)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Rajasthan",
+      "declaredLandAcres": 4.4,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 28,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "a6515b792376051ad4495c9ac55155a8b322bb614c574063404e3a83454cbd1d",
+        "fireNoc": "6aed78122dd7100b59e184317a46a0d1015c5237b1ed44fdd2b83371257ba457",
+        "buildingPlan": "8548d6bb6655619e9c80bef56ea31c915fa3c923676405ae0f6bd03d1b26a3c9",
+        "occupancyCert": "4dd617cff789eddb5af16c5521d80ce29698eab7f88d2481d1fe93f1f2036ea2"
+      }
+    },
+    {
+      "id": "app-eval-103",
+      "applicationNumber": "AICTE/2026/SYN-1103",
+      "institutionId": "inst-eval-103",
+      "institutionName": "Beacon Technical University Campus (103)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 3.85,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 17,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "SHARED_LAND_PARCEL",
+          "severity": "Critical",
+          "description": "Simultaneous partition claim on shared cadastral survey 289/1A.",
+          "expectedRuleId": "CROSS-LAND-SHARED-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": true,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "5fea3acea10dc517c39ee23c3715efd9ec7bf0e2178d3c8cf9eff48d58f5394f",
+        "fireNoc": "98bdbf68a2ed6f6d25aa75aa5e99545a6a455b211e647afba06f6edd7c95aca2",
+        "buildingPlan": "d92ec38f0c22a37122e53f04e31f3c032c08764af8cd463adb4e8766cba4e85c",
+        "occupancyCert": "80ced3d6bdf7a82787b459d2970a0a5088f1997d73dd65f4ecd88f1827f38243"
+      }
+    },
+    {
+      "id": "app-eval-104",
+      "applicationNumber": "AICTE/2026/SYN-1104",
+      "institutionId": "inst-eval-104",
+      "institutionName": "Galaxy Polytechnic Institute (104)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 5.02,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 27,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "a1cdd207e73e1d101313bfd83ac72410f788cfbf446d582916ec33273eb98d9c",
+        "fireNoc": "3cee63056682ffb2a373f46ea149379e20673b2156ff91346a9a8835ef424022",
+        "buildingPlan": "ec7182c49483ee4fb9dbf50115671d751551289a817da172746c02aef2b3ebb7",
+        "occupancyCert": "3524e24517e188542fcca7f88619218fd706fe60efbe0591f9c8c68165a4c637"
+      }
+    },
+    {
+      "id": "app-eval-105",
+      "applicationNumber": "AICTE/2026/SYN-1105",
+      "institutionId": "inst-eval-105",
+      "institutionName": "Zenith Technical University Campus (105)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 3.01,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 32,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "DUPLICATE_DOCUMENT",
+          "severity": "Critical",
+          "description": "Occupancy certificate matches identical hash of archived certificate.",
+          "expectedRuleId": "CROSS-CERT-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": true,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "f87b3e2854e2731a8fe132c790c1058fb2351efff097fd8a07a74714c3fd7ac2",
+        "fireNoc": "4a9fe80b0b7527a81d4fe755e158f85cb43c339f43971ef4b2f92d03099fc2ac",
+        "buildingPlan": "296ee5eedffe81662fc4b637e22ecae0a7f8e3731d4052d56cea24f5b1909972",
+        "occupancyCert": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b"
+      }
+    },
+    {
+      "id": "app-eval-106",
+      "applicationNumber": "AICTE/2026/SYN-1106",
+      "institutionId": "inst-eval-106",
+      "institutionName": "Apex Institute of Technology (106)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 5.21,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 480,
+      "facultyCount": 35,
+      "instructionalCarpetAreaSqm": 5520,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "d2636c226081eac9968eed1a6994b8f769613777e587b578d6d18ec435f5e44e",
+        "fireNoc": "3c70d1d20a605ece05d473860c528e8abe3bc0de463cef7bfef72beef1cb0040",
+        "buildingPlan": "83b9bbb9b71cdccb8cf9e4f44f9ea9c1ffb1baf063ec736aad432046179fb8f0",
+        "occupancyCert": "1b2b89e870773ca4e8dd1c4967d7d73cc801e9da8a278bbb6dd7fd6aed8ee375"
+      }
+    },
+    {
+      "id": "app-eval-107",
+      "applicationNumber": "AICTE/2026/SYN-1107",
+      "institutionId": "inst-eval-107",
+      "institutionName": "Heritage Polytechnic Institute (107)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 4.55,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 31,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "15ed8658ec295b49efd2e5969463f190e3cb47f5b0647c24afdc855b5294d0bc",
+        "fireNoc": "55e700825d932b10d0d6b8bf6bcdd614dcfbffade28f4e283bde8f0148a967b8",
+        "buildingPlan": "24e6dbf629139898dd5e888d92222a12c8726831f6e6c966a522b9704f29412f",
+        "occupancyCert": "4a4f9ca10c10301445644189a917d531b5418feba93e4ca8302b2ac4ad6e3d40"
+      }
+    },
+    {
+      "id": "app-eval-108",
+      "applicationNumber": "AICTE/2026/SYN-1108",
+      "institutionId": "inst-eval-108",
+      "institutionName": "Silicon School of Computing & Engineering (108)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 1.75,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 420,
+      "facultyCount": 29,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (1.75 acres) below statutory minimum (2.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "d647a77b95b7b2e7d9dfeb54e9e8e118bf4b3491ec34de995ff13b356deb94f1",
+        "fireNoc": "36d9bab9a7b639011552eebd75c46feeef1711f213c4df4ce249cb429e5b4ed5",
+        "buildingPlan": "665cc929c78ecde11780fe1e42d435cfb8df64e90b4807889d34fc487ac6bbf0",
+        "occupancyCert": "fedb1284a336f06eb18fdad93ab542676b112b86bbc77aadcc11a32ad2b4c66e"
+      }
+    },
+    {
+      "id": "app-eval-109",
+      "applicationNumber": "AICTE/2026/SYN-1109",
+      "institutionId": "inst-eval-109",
+      "institutionName": "Zenith Polytechnic Institute (109)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Telangana",
+      "declaredLandAcres": 3.66,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 13,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "dce9764786511deffbcd3b5e1aa315686f8052b3814fd521ec948e00f9cc251a",
+        "fireNoc": "7266b1452cc163d4b81ed83cde30e4a53552851489d3e1e5555fe6778d2c8910",
+        "buildingPlan": "21df06ecf0db48b23c9b80dda2831fd7937d34dfc8aa89b49aaf17cf78f89860",
+        "occupancyCert": "23dff3f0406447a6e334f0de7e650427c67ecce439dd022595b209a0f0a55ed5"
+      }
+    },
+    {
+      "id": "app-eval-110",
+      "applicationNumber": "AICTE/2026/SYN-1110",
+      "institutionId": "inst-eval-110",
+      "institutionName": "Starlight Polytechnic Institute (110)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 6.36,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 26,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "885b28fd29327fbe844e229aeb32f6d2c1b012d61ae6dd2af104b0195fb10790",
+        "fireNoc": "d11cff3241a9c3dacd9fe4b59dd93d481f51520e98ab3463906aedd687968215",
+        "buildingPlan": "6021407911a02220b04ad71d9436e4e6cfcf4fc33693142fface036ee81534ff",
+        "occupancyCert": "8218af8ae8431acb8c9bf00ffb74688d5fa1e06c4c9f5fb47d9eaa48d38d103f"
+      }
+    },
+    {
+      "id": "app-eval-111",
+      "applicationNumber": "AICTE/2026/SYN-1111",
+      "institutionId": "inst-eval-111",
+      "institutionName": "Apex Polytechnic Institute (111)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Gujarat",
+      "declaredLandAcres": 0.49,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 14,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.49 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "9fd29bb680988ed8f655fa633f1410bbb0994e40b3bdc57766bb51c54854056f",
+        "fireNoc": "85a554e7e9a21af282284f6e5c94e180fddf1d04eacd1bc04769442241ccbcf3",
+        "buildingPlan": "da7fb6d9ba03cb05f224a214a5a5be43c64ed47e87637d4c733ecc73b0d0ad33",
+        "occupancyCert": "5a5234910c570d18ac105d256b654aa8c68749b65e4ba4491da2c499c28e53c1"
+      }
+    },
+    {
+      "id": "app-eval-112",
+      "applicationNumber": "AICTE/2026/SYN-1112",
+      "institutionId": "inst-eval-112",
+      "institutionName": "Sunrise Institute of Higher Learning (112)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 4.3,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 16,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "64c58355454050c210f0f5bbfbfc6e7da03afe43a73570140a2dafd5d11990ea",
+        "fireNoc": "d41f8676394289bd62757fcf0a9ad48bba297160276c33d3692fea4548a1c826",
+        "buildingPlan": "1ffb60f240dc80bcaef7f2c3508aaa1937b63735fc900d351e2f538f852d9509",
+        "occupancyCert": "6961b1032f01abba837d818b1ce088829691ed5f932c3020d50c45096635a83c"
+      }
+    },
+    {
+      "id": "app-eval-113",
+      "applicationNumber": "AICTE/2026/SYN-1113",
+      "institutionId": "inst-eval-113",
+      "institutionName": "Vanguard College of Engineering (113)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 6.18,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 360,
+      "facultyCount": 26,
+      "instructionalCarpetAreaSqm": 4140,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "DUPLICATE_DOCUMENT",
+          "severity": "Critical",
+          "description": "Occupancy certificate matches identical hash of archived certificate.",
+          "expectedRuleId": "CROSS-CERT-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": true,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "a232dbf00e47f66d5c3a27c09bd952e246540d1ae8860cabc00f85b5ba564236",
+        "fireNoc": "28f791edd8c7d25e70d31d26eedf946f0ee8e03fe6c14dd82911ebd2ab16c2e0",
+        "buildingPlan": "7575475924eab471274a438b8a26f8e838159f2b25b43a4e7ffef1da568f98e5",
+        "occupancyCert": "a4b4baef10c2ce4e86d71eb867a0d746f5990796a1a48d9881b3c3a5317ec47b"
+      }
+    },
+    {
+      "id": "app-eval-114",
+      "applicationNumber": "AICTE/2026/SYN-1114",
+      "institutionId": "inst-eval-114",
+      "institutionName": "Beacon Institute of Higher Learning (114)",
+      "applicationType": "Intake_Increase",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 0.8,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 19,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (0.8 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "a3f5079deff8cd1e7f0a576ecc08d90241670bab1c0d858f54853ce33ecc01e0",
+        "fireNoc": "b66db8a49c822fd71213881c40f1c28a9645ea451668031593355e33a712154f",
+        "buildingPlan": "d371459dcf44a1472b8ae113efb818e531f5bd859784efa2860c9ca232d2fb31",
+        "occupancyCert": "a6e8fa0b52ba3fe86e9ca8408599539491a90839eade90fdaff9ee26b40a02af"
+      }
+    },
+    {
+      "id": "app-eval-115",
+      "applicationNumber": "AICTE/2026/SYN-1115",
+      "institutionId": "inst-eval-115",
+      "institutionName": "Starlight Technical University Campus (115)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Karnataka",
+      "declaredLandAcres": 5.48,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 420,
+      "facultyCount": 29,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [],
+      "isDeficient": false,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "cbdcfa03920248efca5b649f051a44d06fab5db8b1e04dcd07fdb81cb9270f00",
+        "fireNoc": "797be8c3b0ad928e393ae056c1673452e3455a63e035097090b3fb71b497db04",
+        "buildingPlan": "3a5afed01bee28c24f7c213e8967dc1ddb100c8710de341e00fbaead909abce5",
+        "occupancyCert": "f9e95dbde184bb454362e788b475341e1cbd12d7bef3ae198ad097b782e8f8e4"
+      }
+    },
+    {
+      "id": "app-eval-116",
+      "applicationNumber": "AICTE/2026/SYN-1116",
+      "institutionId": "inst-eval-116",
+      "institutionName": "Apex College of Engineering (116)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 2.52,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 300,
+      "facultyCount": 23,
+      "instructionalCarpetAreaSqm": 2400,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "CARPET_AREA_DEFICIT",
+          "severity": "High",
+          "description": "Carpet area (2400 sqm) below 10.5 sqm/student requirement.",
+          "expectedRuleId": "INFRA-CARPET-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "676d4f27e37cd953babddd55f3309a3e6e9bb1f4afca726c080dc811934a5331",
+        "fireNoc": "b44b99ce3afcbb9f7832541d5aca89021d8057df70f0f9a4fab62189fba03760",
+        "buildingPlan": "8f3828213991a8b688190f4828172caf3317af2f3bf050335a4a76a8fc88a433",
+        "occupancyCert": "6c63176d64a56f8c9468e5cd86db1a5fc3d1941df847d1d85e23a2a6fe2b24ab"
+      }
+    },
+    {
+      "id": "app-eval-117",
+      "applicationNumber": "AICTE/2026/SYN-1117",
+      "institutionId": "inst-eval-117",
+      "institutionName": "Sunrise Institute of Technology (117)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Kerala",
+      "declaredLandAcres": 1.1,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 180,
+      "facultyCount": 14,
+      "instructionalCarpetAreaSqm": 2070,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (1.1 acres) below statutory minimum (1.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "260e5258d235eea8d9914f48d503bcb7cdd1c9fdc7a03625bb5d9729cda0681e",
+        "fireNoc": "e23acc8d6a033125872572122c77f2d33db2c376a65937b84fdbc874ca8faceb",
+        "buildingPlan": "f1049ddfb4c494a3320fad2976bdee64ee75b6cc1cebcbc9a3f9da30cf03f79e",
+        "occupancyCert": "87035739ee37c8c92c0bcdbd5575d6d14b785aa56edd27a6aa7d6abbe0a26054"
+      }
+    },
+    {
+      "id": "app-eval-118",
+      "applicationNumber": "AICTE/2026/SYN-1118",
+      "institutionId": "inst-eval-118",
+      "institutionName": "Zenith Polytechnic Institute (118)",
+      "applicationType": "EoA",
+      "academicYear": "2026-27",
+      "state": "Uttar Pradesh",
+      "declaredLandAcres": 3.02,
+      "requiredLandAcres": 1.5,
+      "studentIntake": 240,
+      "facultyCount": 16,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "REUSED_FACULTY",
+          "severity": "Critical",
+          "description": "Faculty PAN declared simultaneously across distinct institutions.",
+          "expectedRuleId": "CROSS-FACULTY-DUP-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": true,
+      "documentSha256Hashes": {
+        "landDeed": "e089d89bcfb781fb78a9c67151111c519f748dd7ed58a5686405179ad9b993af",
+        "fireNoc": "b2128ccca0a0ee16f0ee67c83c11d53aaa60c596137cff590ac006a25f48fc52",
+        "buildingPlan": "b402f81f30e424f3d80f69c04b76b79b3a9be02eed576e150413ebb50ea5b21c",
+        "occupancyCert": "3f613001e62f9145b1fd6822c271032f616415d05749be833a2a7a28221c6407"
+      }
+    },
+    {
+      "id": "app-eval-119",
+      "applicationNumber": "AICTE/2026/SYN-1119",
+      "institutionId": "inst-eval-119",
+      "institutionName": "Pinnacle Institute of Higher Learning (119)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Tamil Nadu",
+      "declaredLandAcres": 5.45,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 420,
+      "facultyCount": 31,
+      "instructionalCarpetAreaSqm": 4830,
+      "fireNocExpiryDate": "2024-01-14",
+      "seededDefects": [
+        {
+          "defectType": "EXPIRED_FIRE_NOC",
+          "severity": "Critical",
+          "description": "Fire safety certificate expired on 2024-01-14.",
+          "expectedRuleId": "FIRE-NOC-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "4e99fd7ab35c4035bb1d9a4ffa71345b80672fe5b9ed5b6411939f6f54bf19c0",
+        "fireNoc": "7b334c9724ca0b6ac88a0de6acbf0a84edbd80e65fc0b946e433a010d567a0bf",
+        "buildingPlan": "83e12f8a040b42a281fa43295c078bb1e1f467729453c7c423be5fd49dfba1e0",
+        "occupancyCert": "88fcc4e2de0675e331a0c458765c932d57594cf9852feb0781ec785176c4e46d"
+      }
+    },
+    {
+      "id": "app-eval-120",
+      "applicationNumber": "AICTE/2026/SYN-1120",
+      "institutionId": "inst-eval-120",
+      "institutionName": "Beacon College of Engineering (120)",
+      "applicationType": "New_Institution",
+      "academicYear": "2026-27",
+      "state": "Maharashtra",
+      "declaredLandAcres": 1.82,
+      "requiredLandAcres": 2.5,
+      "studentIntake": 240,
+      "facultyCount": 18,
+      "instructionalCarpetAreaSqm": 2760,
+      "fireNocExpiryDate": "2027-01-15",
+      "seededDefects": [
+        {
+          "defectType": "LAND_AREA_DEFICIT",
+          "severity": "Critical",
+          "description": "Declared land (1.82 acres) below statutory minimum (2.5 acres).",
+          "expectedRuleId": "LAND-MIN-001"
+        }
+      ],
+      "isDeficient": true,
+      "hasDuplicateCert": false,
+      "hasOverlappingLand": false,
+      "hasReusedFaculty": false,
+      "documentSha256Hashes": {
+        "landDeed": "c760ae64c978b730fc96b1185352d99cbb1b56b0ed2fffc7bde47f0afd2e666a",
+        "fireNoc": "ed7ae2f591a3cca68224c7781548c7281e6de6459ff6174e26adffbdd5042add",
+        "buildingPlan": "0297162b489e36ede79bcae0cff7aabf41e49470a81256000180b35d3e1ff9a3",
+        "occupancyCert": "73531e3e367d822854fe8bb3761b3ebb8318163de2f48643e84457fddddfda9f"
+      }
+    }
+  ]
+}

@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       academicYear: '2026-2027',
       status: 'Draft',
       readinessScore: 10,
-      collusionRiskScore: 0,
+      linkageRiskScore: 0,
       riskTier: 'Low',
       programmes: programmes || ['Computer Science & Engg (120)', 'Electronics & Comm (60)'],
       currentIntake: currentIntake || 180,

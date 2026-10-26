@@ -4,263 +4,1026 @@
     "version": "2026.3",
     "name": "Registered Land Ownership or Lease Deed Presence",
     "category": "Land",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase", "Site_Change"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change"
+    ],
     "severity": "Critical",
     "logic": "has_document('Land Deed') && extracted('Land Deed', 'deed_number') != null",
-    "evidence_fields": ["land_deed.deed_number", "land_deed.registration_date", "land_deed.lessor_name"],
-    "failure_message": "Registered land ownership or registered lease deed (minimum 30 years) is missing or unverified.",
-    "recommended_action": "Upload officially registered deed of land ownership or continuous 30-year lease deed registered with Sub-Registrar."
+    "evidence_fields": [
+      "land_deed.deed_number",
+      "land_deed.registration_date",
+      "land_deed.grantee_name"
+    ],
+    "failure_message": "Registered land ownership or registered continuous lease deed is missing or unverified [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Upload officially registered deed of land ownership or continuous registered lease deed [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "LAND-AREA-002",
     "version": "2026.3",
     "name": "Minimum Land Area Requirement Compliance",
     "category": "Land",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase", "Site_Change"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change"
+    ],
     "severity": "High",
-    "logic": "extracted_number('Land Deed', 'area_acres') >= 2.5",
-    "evidence_fields": ["land_deed.area_acres", "affidavit.declared_land_acres"],
-    "failure_message": "Declared contiguous land area does not satisfy the statutory minimum requirement (minimum 2.5 acres in semi-urban / 1.5 acres in metro).",
-    "recommended_action": "Submit rectified land revenue demarcation report showing requisite contiguous acreage."
+    "logic": "extracted_number('Land Deed', 'area_acres') >= min_land_area(institution.location_type)",
+    "evidence_fields": [
+      "land_deed.area_acres",
+      "affidavit.declared_land_acres",
+      "institution.location_type"
+    ],
+    "failure_message": "Declared contiguous land area does not satisfy the statutory minimum requirement based on location classification [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Submit certified land revenue demarcation report showing requisite contiguous acreage [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "LAND-SURVEY-003",
     "version": "2026.3",
     "name": "Land Survey Number Cross-Consistency",
     "category": "Consistency",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase", "Site_Change"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change"
+    ],
     "severity": "Critical",
     "logic": "extracted('Land Deed', 'survey_number') == extracted('Affidavit', 'survey_number')",
-    "evidence_fields": ["land_deed.survey_number", "affidavit.survey_number", "building_plan.survey_number"],
+    "evidence_fields": [
+      "land_deed.survey_number",
+      "affidavit.survey_number",
+      "building_plan.survey_number"
+    ],
     "failure_message": "Survey number declared in Affidavit differs from survey number in Land Deed.",
-    "recommended_action": "Ensure uniform survey/khasra numbers across revenue records, affidavit, and municipal approvals."
+    "recommended_action": "Ensure uniform survey / khasra numbers across revenue records, affidavit, and municipal approvals.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "BLDG-OCC-001",
     "version": "2026.3",
     "name": "Competent Authority Occupancy / Completion Certificate",
     "category": "Building",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase"
+    ],
     "severity": "Critical",
     "logic": "has_document('Occupancy Certificate') && extracted('Occupancy Certificate', 'issuing_authority') != null",
-    "evidence_fields": ["occupancy_certificate.certificate_number", "occupancy_certificate.issuing_authority"],
+    "evidence_fields": [
+      "occupancy_certificate.certificate_number",
+      "occupancy_certificate.issuing_authority"
+    ],
     "failure_message": "Permanent Occupancy / Completion Certificate issued by competent municipal authority is missing.",
-    "recommended_action": "Furnish valid Occupancy / Completion Certificate from Town Planning / Municipal Authority."
+    "recommended_action": "Furnish valid Occupancy / Completion Certificate from Town Planning / Municipal Authority.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "BLDG-STRUCT-002",
     "version": "2026.3",
     "name": "Structural Stability Certificate by Certified Structural Engineer",
     "category": "Building",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase"
+    ],
     "severity": "High",
     "logic": "has_document('Structural Stability Certificate') && is_recent('Structural Stability Certificate', 'issue_date', 365)",
-    "evidence_fields": ["structural_stability.engineer_registration_no", "structural_stability.issue_date"],
-    "failure_message": "Structural Stability Certificate is missing or exceeds allowable renewal period.",
-    "recommended_action": "Submit structural safety assessment signed and stamped by an empanelled structural engineer."
+    "evidence_fields": [
+      "structural_stability.engineer_registration_no",
+      "structural_stability.issue_date"
+    ],
+    "failure_message": "Structural Stability Certificate is missing or exceeds allowable renewal period [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Submit structural safety assessment signed and stamped by an empanelled structural engineer.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "BLDG-CARPET-003",
     "version": "2026.3",
     "name": "Built-up Carpet Area Requirement for Academic Infrastructure",
     "category": "Building",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase"
+    ],
     "severity": "High",
     "logic": "extracted_number('Building Plan', 'carpet_area_sqm') >= (proposed_intake * 10.5)",
-    "evidence_fields": ["building_plan.carpet_area_sqm", "application.proposed_intake"],
-    "failure_message": "Total instructional and administrative carpet area is inadequate for declared student intake.",
-    "recommended_action": "Review architectural layout and submit revised built-up area schedule meeting AICTE Norms Table 2.1."
+    "evidence_fields": [
+      "building_plan.carpet_area_sqm",
+      "application.proposed_intake"
+    ],
+    "failure_message": "Total instructional and administrative carpet area is inadequate for declared student intake [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Review architectural layout and submit revised built-up area schedule meeting statutory norms [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "FIRE-NOC-001",
     "version": "2026.3",
     "name": "Fire Safety Certificate / NOC Validity",
     "category": "Fire safety",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase", "Site_Change"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change"
+    ],
     "severity": "Critical",
     "logic": "has_document('Fire Safety Certificate') && !is_expired('Fire Safety Certificate')",
-    "evidence_fields": ["fire_safety.certificate_number", "fire_safety.expiry_date", "fire_safety.issuing_station"],
+    "evidence_fields": [
+      "fire_safety.certificate_number",
+      "fire_safety.expiry_date",
+      "fire_safety.issuing_station"
+    ],
     "failure_message": "Fire Safety Certificate is missing, unverified, or has expired beyond grace period.",
-    "recommended_action": "Obtain and upload renewed Fire NOC issued by Chief Fire Officer / District Fire Authority."
+    "recommended_action": "Obtain and upload renewed Fire NOC issued by Chief Fire Officer / District Fire Authority.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "FACULTY-COUNT-001",
     "version": "2026.3",
     "name": "Cadre Ratio and Minimum Core Faculty Sufficiency",
     "category": "Faculty",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase"
+    ],
     "severity": "Critical",
-    "logic": "faculty_count >= (approved_intake / 20.0)",
-    "evidence_fields": ["faculty_summary.total_faculty", "application.current_intake", "application.proposed_intake"],
-    "failure_message": "Total qualified faculty strength is below statutory AICTE Student-Faculty Ratio (1:20 for Engineering / 1:25 for Polytechnic).",
-    "recommended_action": "Complete recruitment of designated Professors, Associate Professors, and Assistant Professors."
+    "logic": "faculty_count >= required_faculty(application.programmes, approved_intake)",
+    "evidence_fields": [
+      "faculty_summary.total_faculty",
+      "application.programmes",
+      "application.current_intake",
+      "application.proposed_intake"
+    ],
+    "failure_message": "Total qualified core faculty strength is below statutory Student-Faculty Ratio for approved programme level and student basis [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Complete recruitment of designated Professors, Associate Professors, and Assistant Professors.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "FACULTY-APPT-002",
     "version": "2026.3",
     "name": "Faculty Appointment Letters and Board Approval Records",
     "category": "Faculty",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase"
+    ],
     "severity": "High",
     "logic": "has_document('Faculty Appointment Letter') && extracted('Faculty Appointment Letter', 'appointment_date') != null",
-    "evidence_fields": ["faculty_appointment.selection_committee_date", "faculty_appointment.pay_scale"],
+    "evidence_fields": [
+      "faculty_appointment.selection_committee_date",
+      "faculty_appointment.pay_scale"
+    ],
     "failure_message": "Appointment letters or selection committee approval resolutions missing for declared regular faculty.",
-    "recommended_action": "Upload 7th CPC appointment orders and university ratification approvals."
+    "recommended_action": "Upload statutory appointment orders and university ratification approvals [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "FACULTY-QUAL-003",
     "version": "2026.3",
     "name": "Faculty Qualification Verification (M.Tech / Ph.D. Registry)",
     "category": "Faculty",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase"
+    ],
     "severity": "High",
     "logic": "has_document('Faculty Qualification Certificate') && verification_status('Faculty Qualification Certificate') == 'Verified'",
-    "evidence_fields": ["faculty_qualification.degree_certificate_no", "faculty_qualification.university"],
-    "failure_message": "Principal / HoD highest degree certificate could not be authenticated via University / National Academic Depository.",
-    "recommended_action": "Provide verified NAD/DigiLocker document URI for faculty credentials."
+    "evidence_fields": [
+      "faculty_qualification.degree_certificate_no",
+      "faculty_qualification.university"
+    ],
+    "failure_message": "Principal / HoD highest degree certificate could not be authenticated via University / National Academic Depository (simulated).",
+    "recommended_action": "Provide verified NAD/DigiLocker (simulated) document URI for faculty credentials.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "GOV-IQAC-001",
     "version": "2026.3",
     "name": "Internal Quality Assurance Cell (IQAC) Establishment",
     "category": "Governance",
-    "applies_to": ["EoA", "Intake_Increase"],
+    "applies_to": [
+      "EoA",
+      "Intake_Increase"
+    ],
     "severity": "Medium",
     "logic": "extracted_bool('Affidavit', 'iqac_constituted') == true",
-    "evidence_fields": ["affidavit.iqac_order_no", "affidavit.iqac_last_meeting_date"],
+    "evidence_fields": [
+      "affidavit.iqac_order_no",
+      "affidavit.iqac_last_meeting_date"
+    ],
     "failure_message": "Mandatory IQAC establishment declaration and committee composition record absent.",
-    "recommended_action": "Attach official committee notification and minutes of previous IQAC meeting."
+    "recommended_action": "Attach official committee notification and minutes of previous IQAC meeting.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "GOV-RAGGING-002",
     "version": "2026.3",
     "name": "Statutory Anti-Ragging Committee and Squad Constitution",
     "category": "Governance",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase"
+    ],
     "severity": "Critical",
     "logic": "extracted_bool('Affidavit', 'anti_ragging_committee_constituted') == true",
-    "evidence_fields": ["affidavit.anti_ragging_committee_notification", "affidavit.toll_free_helpline"],
+    "evidence_fields": [
+      "affidavit.anti_ragging_committee_notification",
+      "affidavit.toll_free_helpline"
+    ],
     "failure_message": "Mandatory Anti-Ragging Committee, Squad, and 24x7 helpline declarations missing.",
-    "recommended_action": "Furnish institutional anti-ragging squad notification with contact coordinates."
+    "recommended_action": "Furnish institutional anti-ragging squad notification with contact coordinates.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "GOV-GRIEV-003",
     "version": "2026.3",
     "name": "Student and Faculty Grievance Redressal Committee (SGRC) & Ombudsperson",
     "category": "Governance",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase"
+    ],
     "severity": "Medium",
     "logic": "extracted_bool('Affidavit', 'sgrc_ombudsperson_appointed') == true",
-    "evidence_fields": ["affidavit.sgrc_notification_date", "affidavit.ombudsperson_name"],
+    "evidence_fields": [
+      "affidavit.sgrc_notification_date",
+      "affidavit.ombudsperson_name"
+    ],
     "failure_message": "Affidavit lacks declaration of Student Grievance Redressal Committee or university-appointed Ombudsperson.",
-    "recommended_action": "Submit SGRC committee constitution notification and Ombudsperson details."
+    "recommended_action": "Submit SGRC committee constitution notification and Ombudsperson details.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "FIN-AUDIT-001",
     "version": "2026.3",
     "name": "Chartered Accountant Certified Audited Financial Statements",
     "category": "Financial",
-    "applies_to": ["EoA", "Intake_Increase", "Closure"],
+    "applies_to": [
+      "EoA",
+      "Intake_Increase",
+      "Closure"
+    ],
     "severity": "High",
     "logic": "has_document('Audited Financial Statement') && extracted('Audited Financial Statement', 'ca_membership_no') != null",
-    "evidence_fields": ["audited_financials.udin_number", "audited_financials.financial_year"],
+    "evidence_fields": [
+      "audited_financials.udin_number",
+      "audited_financials.financial_year"
+    ],
     "failure_message": "Audited balance sheet with verified UDIN (Unique Document Identification Number) is absent.",
-    "recommended_action": "Upload previous financial year Balance Sheet and Income & Expenditure account with ICAI UDIN."
+    "recommended_action": "Upload previous financial year Balance Sheet and Income & Expenditure account with ICAI UDIN.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "FIN-FDR-002",
     "version": "2026.3",
     "name": "Joint Fixed Deposit Receipt (FDR) / Endowment Corpus Compliance",
     "category": "Financial",
-    "applies_to": ["New_Institution", "Site_Change"],
+    "applies_to": [
+      "New_Institution",
+      "Site_Change"
+    ],
     "severity": "Critical",
     "logic": "extracted_bool('Affidavit', 'joint_fdr_deposited') == true",
-    "evidence_fields": ["affidavit.fdr_number", "affidavit.fdr_amount_inr", "affidavit.fdr_bank_branch"],
-    "failure_message": "Joint FDR with Regional Officer, AICTE for corpus endowment has not been deposited.",
-    "recommended_action": "Submit bank confirmation letter of Joint FDR for the required amount."
+    "evidence_fields": [
+      "affidavit.fdr_number",
+      "affidavit.fdr_amount_inr",
+      "affidavit.fdr_bank_branch"
+    ],
+    "failure_message": "Joint FDR with Regional Officer for corpus endowment has not been deposited [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Submit bank confirmation letter of Joint FDR for the required amount [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "ACAD-INTAKE-001",
     "version": "2026.3",
-    "name": "Programme Intake Consistency and Accreditation Eligibility",
+    "name": "Programme Intake Expansion Accreditation Eligibility",
     "category": "Academic",
-    "applies_to": ["Intake_Increase"],
+    "applies_to": [
+      "Intake_Increase"
+    ],
     "severity": "High",
-    "logic": "proposed_intake <= (current_intake * 1.5) && extracted_bool('Affidavit', 'nba_accreditation_valid') == true",
-    "evidence_fields": ["application.current_intake", "application.proposed_intake", "affidavit.nba_accredited_programmes"],
-    "failure_message": "Intake expansion exceeding 50% requested without valid NBA accreditation in core programmes.",
-    "recommended_action": "Furnish NBA accreditation certificate (minimum 3 years validity) for programmes seeking intake expansion."
+    "logic": "proposed_intake <= (current_intake * 1.5) && extracted_bool('Affidavit', 'accreditation_valid') == true",
+    "evidence_fields": [
+      "application.current_intake",
+      "application.proposed_intake",
+      "affidavit.accredited_programmes"
+    ],
+    "failure_message": "Substantial intake expansion requested without required accreditation in core programmes [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Furnish programme accreditation certificate or statutory exemption for programmes seeking intake expansion [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "ACAD-PRIOR-002",
     "version": "2026.3",
     "name": "Prior Academic Year AICTE Approval Status Verification",
     "category": "Academic",
-    "applies_to": ["EoA", "Intake_Increase", "Site_Change"],
+    "applies_to": [
+      "EoA",
+      "Intake_Increase",
+      "Site_Change"
+    ],
     "severity": "High",
     "logic": "has_document('Prior EoA') && extracted('Prior EoA', 'academic_year') == '2025-2026'",
-    "evidence_fields": ["prior_eoa.approval_letter_number", "prior_eoa.academic_year"],
-    "failure_message": "Preceding academic year AICTE Extension of Approval (EoA) letter is not linked.",
-    "recommended_action": "Attach official AICTE approval order issued for academic session 2025-2026."
+    "evidence_fields": [
+      "prior_eoa.approval_letter_number",
+      "prior_eoa.academic_year"
+    ],
+    "failure_message": "Preceding academic year AICTE Extension of Approval (EoA) letter is not linked [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Attach official approval order issued for preceding academic session [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "DOC-AFFIDAVIT-001",
     "version": "2026.3",
     "name": "Prescribed Format Notarized Affidavit Submission",
     "category": "Documents",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase", "Site_Change", "Closure"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change",
+      "Closure"
+    ],
     "severity": "Critical",
     "logic": "has_document('Affidavit') && extracted('Affidavit', 'notary_registration_no') != null",
-    "evidence_fields": ["affidavit.stamp_paper_value", "affidavit.notary_registration_no", "affidavit.execution_date"],
-    "failure_message": "Mandatory composite affidavit in AICTE prescribed format on Rs. 100/- non-judicial stamp paper is missing or un-notarized.",
-    "recommended_action": "Execute sworn affidavit before First Class Judicial Magistrate / Notary Public."
+    "evidence_fields": [
+      "affidavit.stamp_paper_value",
+      "affidavit.notary_registration_no",
+      "affidavit.execution_date"
+    ],
+    "failure_message": "Mandatory composite affidavit in prescribed format on non-judicial stamp paper is missing or un-notarized [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Execute sworn affidavit in prescribed statutory format before First Class Judicial Magistrate / Notary Public [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "DOC-TRUST-002",
     "version": "2026.3",
     "name": "Registered Society / Trust / Section 8 Company Deed",
     "category": "Documents",
-    "applies_to": ["EoA", "New_Institution", "Site_Change"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Site_Change"
+    ],
     "severity": "High",
     "logic": "has_document('Trust Deed') && extracted('Trust Deed', 'registration_number') != null",
-    "evidence_fields": ["trust_deed.trust_name", "trust_deed.registration_number", "trust_deed.sub_registrar_office"],
+    "evidence_fields": [
+      "trust_deed.trust_name",
+      "trust_deed.registration_number",
+      "trust_deed.sub_registrar_office"
+    ],
     "failure_message": "Registration certificate and constitutional memorandum of sponsoring society/trust not uploaded.",
-    "recommended_action": "Upload certified copy of Trust Deed / Society registration certificate."
+    "recommended_action": "Upload certified copy of Trust Deed / Society registration certificate.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "DOC-NOC-003",
     "version": "2026.3",
     "name": "State Government and Affiliating University NOC",
     "category": "Documents",
-    "applies_to": ["New_Institution", "Site_Change", "Closure"],
+    "applies_to": [
+      "New_Institution",
+      "Site_Change",
+      "Closure"
+    ],
     "severity": "Critical",
     "logic": "has_document('NOC') && extracted('NOC', 'issuing_department') != null",
-    "evidence_fields": ["noc.issuing_department", "noc.noc_number", "noc.issue_date"],
+    "evidence_fields": [
+      "noc.issuing_department",
+      "noc.noc_number",
+      "noc.issue_date"
+    ],
     "failure_message": "No Objection Certificate (NOC) from State Directorate of Technical Education / Affiliating University is absent.",
-    "recommended_action": "Procure and submit formal NOC issued by State Higher & Technical Education department."
+    "recommended_action": "Procure and submit formal NOC issued by State Higher & Technical Education department.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "CONSIST-NAME-001",
     "version": "2026.3",
     "name": "Institution and Sponsoring Body Name Consistency",
     "category": "Consistency",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase", "Site_Change"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change"
+    ],
     "severity": "High",
-    "logic": "extracted('Affidavit', 'institution_name') == extracted('Land Deed', 'institution_name')",
-    "evidence_fields": ["affidavit.institution_name", "land_deed.institution_name", "trust_deed.institution_name"],
-    "failure_message": "Mismatch detected in institution or sponsoring trust name across legal deeds and statutory affidavit.",
-    "recommended_action": "Submit registered gazette notification or official resolution rectifying name discrepancy."
+    "logic": "extracted('Affidavit', 'institution_name') == application.institution_name && (extracted('Land Deed', 'grantee_name') == null || extracted('Land Deed', 'grantee_name') == institution.trust_name)",
+    "evidence_fields": [
+      "affidavit.institution_name",
+      "land_deed.grantee_name",
+      "trust_deed.trust_name",
+      "application.institution_name",
+      "institution.trust_name"
+    ],
+    "failure_message": "Mismatch detected between declared institution name or sponsoring body/grantee name across statutory records.",
+    "recommended_action": "Submit registered gazette notification or official resolution rectifying name discrepancy.",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
   },
   {
     "rule_id": "DATE-VALID-001",
     "version": "2026.3",
     "name": "Chronological Validity and Execution Date Sequences",
     "category": "Dates",
-    "applies_to": ["EoA", "New_Institution", "Intake_Increase", "Site_Change", "Closure"],
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change",
+      "Closure"
+    ],
     "severity": "Medium",
     "logic": "date_diff('Affidavit.execution_date', current_date) <= 90",
-    "evidence_fields": ["affidavit.execution_date", "application.submission_date"],
-    "failure_message": "Affidavit execution date exceeds 90 days prior to application submission.",
-    "recommended_action": "Re-affirm affidavit with fresh notarization within the current approval cycle."
+    "evidence_fields": [
+      "affidavit.execution_date",
+      "application.submission_date"
+    ],
+    "failure_message": "Affidavit execution date exceeds allowable threshold prior to application submission [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Re-affirm affidavit with fresh notarization within the current approval cycle [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial rule baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders."
+      }
+    ]
+  },
+  {
+    "rule_id": "INFRA-LAB-001",
+    "version": "2026.3",
+    "name": "Specialized Laboratory Equipment and Facilities Evidence",
+    "category": "Infrastructure",
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change"
+    ],
+    "severity": "High",
+    "logic": "has_document('Building Plan') && extracted('Building Plan', 'carpet_area_sqm') != null",
+    "evidence_fields": [
+      "building_plan.carpet_area_sqm",
+      "building_plan.laboratories_count",
+      "equipment_register.verification_status"
+    ],
+    "failure_message": "Specialized instructional laboratories or equipment evidence declared vs evidenced is deficient [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Upload verified laboratory equipment schedule, geo-tagged facility inspection photos, and supplier invoices [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial laboratory and instructional facility baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders [SOURCE: TO BE VERIFIED]."
+      }
+    ]
+  },
+  {
+    "rule_id": "FACULTY-CADRE-001",
+    "version": "2026.3",
+    "name": "Faculty Cadre Ratio Mix (Professor : Associate : Assistant)",
+    "category": "Faculty",
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase"
+    ],
+    "severity": "Medium",
+    "logic": "has_document('Faculty Appointment Letter') || has_document('Faculty Qualification Certificate')",
+    "evidence_fields": [
+      "faculty.cadre_distribution",
+      "faculty.professors_count",
+      "faculty.associate_professors_count",
+      "faculty.assistant_professors_count"
+    ],
+    "failure_message": "Faculty cadre ratio does not satisfy statutory distribution (1 Professor : 2 Associate Professors : 6 Assistant Professors) [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Ensure instructional staff cadre conforms to statutory distribution across professorial ranks [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial cadre ratio mix baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders [SOURCE: TO BE VERIFIED]."
+      }
+    ]
+  },
+  {
+    "rule_id": "CROSS-CERT-DUP-001",
+    "version": "2026.3",
+    "name": "Cross-Application Certificate Duplicate Finding",
+    "category": "Cross-Application",
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change",
+      "Closure"
+    ],
+    "severity": "Critical",
+    "logic": "!has_document('Occupancy Certificate') || extracted('Occupancy Certificate', 'certificate_number') != null",
+    "evidence_fields": [
+      "document.sha256_hash",
+      "occupancy_certificate.certificate_number",
+      "cross_institution.application_number"
+    ],
+    "failure_message": "Statutory certificate number or cryptographic signature duplicate detected across multiple institution applications [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Option for officer consideration: Issue Show-Cause notice under statutory regulations [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial cross-application duplicate certificate detection rule."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders [SOURCE: TO BE VERIFIED]."
+      }
+    ]
+  },
+  {
+    "rule_id": "CROSS-FACULTY-DUP-001",
+    "version": "2026.3",
+    "name": "Cross-Application Concurrent Faculty Employment Finding",
+    "category": "Cross-Application",
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change",
+      "Closure"
+    ],
+    "severity": "Critical",
+    "logic": "!has_document('Faculty Qualification Certificate') || extracted('Faculty Qualification Certificate', 'pan_number') != null",
+    "evidence_fields": [
+      "faculty.pan_number",
+      "faculty.identity_hash",
+      "cross_institution.application_number"
+    ],
+    "failure_message": "Core faculty member or Principal concurrently declared across multiple institutions in active academic year [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Refer to AICTE Vigilance Committee and dispatch simultaneous surprise inspection to campuses [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial cross-application concurrent faculty employment rule."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders [SOURCE: TO BE VERIFIED]."
+      }
+    ]
+  },
+  {
+    "rule_id": "REC-INTAKE-001",
+    "version": "2026.3",
+    "name": "Proposed Intake vs AICTE Approved Internal Record Baseline",
+    "category": "Internal_Records",
+    "applies_to": [
+      "EoA",
+      "Intake_Increase",
+      "New_Institution",
+      "Site_Change"
+    ],
+    "severity": "High",
+    "logic": "proposed_intake <= (internal_approved_intake * 1.5)",
+    "evidence_fields": [
+      "application.proposed_intake",
+      "internal_record.approved_total_intake"
+    ],
+    "failure_message": "Proposed intake exceeds baseline approved intake in AICTE internal institutional records beyond permissible expansion ceiling without prior sanction [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Reconcile proposed intake against AICTE institutional master database or submit statutory expansion sanction order [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.3",
+        "date": "2026-02-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Cross-verification rule comparing submission intake against simulated AICTE institutional master database."
+      }
+    ]
+  },
+  {
+    "rule_id": "REC-PROG-002",
+    "version": "2026.3",
+    "name": "Programmes Claimed vs AICTE Internal Approved Records",
+    "category": "Internal_Records",
+    "applies_to": [
+      "EoA",
+      "Intake_Increase"
+    ],
+    "severity": "High",
+    "logic": "programmes_claimed_subset_of(internal_approved_programmes)",
+    "evidence_fields": [
+      "application.programmes",
+      "internal_record.approved_programmes"
+    ],
+    "failure_message": "One or more programmes declared in submission are not recorded in AICTE internal approved master records [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Submit prior AICTE approval orders or formal curriculum sanction approval for unrecorded programmes [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.3",
+        "date": "2026-02-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Cross-verification rule verifying claimed programmes against simulated AICTE approved programme repository."
+      }
+    ]
+  },
+  {
+    "rule_id": "REC-PRIOR-003",
+    "version": "2026.3",
+    "name": "Prior Extension of Approval (EoA) Master Record Presence",
+    "category": "Internal_Records",
+    "applies_to": [
+      "EoA",
+      "Intake_Increase"
+    ],
+    "severity": "Critical",
+    "logic": "internal_record.prior_eoa_status == 'APPROVED'",
+    "evidence_fields": [
+      "internal_record.prior_eoa_status",
+      "internal_record.aicte_permanent_id"
+    ],
+    "failure_message": "Application seeks Extension of Approval (EoA) but no prior valid AICTE approval record exists in internal master database [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Verify institution permanent ID and submit certified copies of historical AICTE approval orders [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.3",
+        "date": "2026-02-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Statutory rule enforcing presence of valid prior approval record in AICTE database for EoA / Intake Increase."
+      }
+    ]
+  },
+  {
+    "rule_id": "FEE-TER-001",
+    "version": "2026.3",
+    "name": "Technical Education Regulatory (TER) Processing Fee Payment Status",
+    "category": "Regulatory_Fee",
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change",
+      "Closure"
+    ],
+    "severity": "Critical",
+    "logic": "internal_record.ter_payment_status == 'PAID'",
+    "evidence_fields": [
+      "internal_record.ter_payment_status",
+      "internal_record.ter_transaction_reference"
+    ],
+    "failure_message": "Mandatory Technical Education Regulatory (TER) processing fee payment is pending or missing in institutional master records [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Complete statutory TER processing fee payment through official AICTE payment gateway and provide transaction reference [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.3",
+        "date": "2026-02-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Statutory rule verifying TER payment status without inventing amounts or fee calculation schedules."
+      }
+    ]
   }
 ]
+

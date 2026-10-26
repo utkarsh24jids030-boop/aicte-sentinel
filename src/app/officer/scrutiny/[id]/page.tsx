@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
 import StatusChip from '@/components/StatusChip';
 import { 
@@ -17,6 +16,7 @@ import {
   Download
 } from 'lucide-react';
 import { Application, DocumentRecord, Finding, ReadinessBreakdown } from '@/types';
+import VerificationStatusLegend from '@/components/VerificationStatusLegend';
 
 export default function ScrutinyReportPage({
   params
@@ -29,16 +29,13 @@ export default function ScrutinyReportPage({
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
   const [findings, setFindings] = useState<Finding[]>([]);
   const [readiness, setReadiness] = useState<ReadinessBreakdown | null>(null);
-  const [officerRecommendation, setOfficerRecommendation] = useState<string>('RECOMMEND_EVC_INSPECTION');
+  const [officerRecommendation, setOfficerRecommendation] = useState<string>('CONSIDER_EVC_INSPECTION');
+  const [sealData, setSealData] = useState<{ seal: string; chainHeadHash: string } | null>(null);
   const [concludingRemarks, setConcludingRemarks] = useState(
-    'Based on automated regulatory compliance parsing and cross-institution collusion detection, case warrants physical on-site verification before regulatory approval decision.'
+    'Based on automated regulatory compliance parsing and cross-institution linkage analysis, case warrants physical on-site verification before regulatory approval decision.'
   );
 
-  useEffect(() => {
-    fetchCase();
-  }, [id]);
-
-  const fetchCase = async () => {
+  const fetchCase = React.useCallback(async () => {
     try {
       const res = await fetch(`/api/applications/${id}`);
       const data = await res.json();
@@ -48,18 +45,42 @@ export default function ScrutinyReportPage({
         setFindings(data.findings || []);
         setReadiness(data.readiness || null);
 
-        if (data.application.riskTier === 'Critical') {
-          setOfficerRecommendation('REFER_TO_VIGILANCE_COMMITTEE');
-          setConcludingRemarks('Severe cross-institutional fraud identified (overlapping land survey parcel & duplicate certificates). Recommended for immediate vigilance inquiry.');
+        const hasLinkages = data.application.linkageRiskScore >= 70 || (data.findings && data.findings.some((f: Finding) => f.category === 'CROSS_INSTITUTION_LINKAGE'));
+
+        if (data.application.riskTier === 'Critical' || hasLinkages) {
+          setOfficerRecommendation('CONSIDER_VIGILANCE_REFERRAL');
+          setConcludingRemarks('Potential cross-institution linkages and document discrepancies detected requiring manual verification of sub-division records and physical site claims. Suggested for officer review / EVC inspection / vigilance referral consideration.');
         } else if (data.application.readinessScore >= 70 && data.findings.length === 0) {
-          setOfficerRecommendation('RECOMMEND_APPROVAL');
-          setConcludingRemarks('All statutory norms, fire safety, and land deeds verified authentic against state registries. Recommended for grant of Extension of Approval (EoA).');
+          setOfficerRecommendation('CONSIDER_APPROVAL');
+          setConcludingRemarks('All submitted declarations and statutory records are verified authentic against simulated state registries with zero unresolved anomalies. Suggested for officer review / approval consideration.');
+        } else {
+          setOfficerRecommendation('CONSIDER_EVC_INSPECTION');
+          setConcludingRemarks('Specific statutory deficiencies identified during automated checks (e.g., document omissions or faculty strength deficit). Suggested for officer review / EVC inspection consideration.');
+        }
+
+        // Fetch cryptographic report seal derived from report content and chain head
+        try {
+          const sealRes = await fetch('/api/reports/verify-seal', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ applicationId: id })
+          });
+          const sealJson = await sealRes.json();
+          if (sealJson.success) {
+            setSealData({ seal: sealJson.seal, chainHeadHash: sealJson.chainHeadHash });
+          }
+        } catch (e) {
+          console.error('Error fetching report seal:', e);
         }
       }
     } catch (e) {
       console.error(e);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchCase();
+  }, [fetchCase]);
 
   const handlePrint = () => {
     window.print();
@@ -77,12 +98,13 @@ export default function ScrutinyReportPage({
   const verifiedCount = documents.filter(d => d.verificationStatus === 'Verified').length;
   const mismatchCount = documents.filter(d => d.verificationStatus === 'Mismatch Detected').length;
   const expiredCount = documents.filter(d => d.verificationStatus === 'Expired').length;
-  const manualCount = documents.filter(d => ['Manual Review Required', 'Source Unavailable', 'Not Verified'].includes(d.verificationStatus)).length;
+  const pendingCount = documents.filter(d => d.verificationStatus === 'Verification Pending').length;
+  const unavailableCount = documents.filter(d => d.verificationStatus === 'Source Unavailable').length;
+  const manualCount = documents.filter(d => d.verificationStatus === 'Manual Review Required').length;
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col font-sans print:bg-white">
       <div className="print:hidden">
-        <DemoBanner />
         <Navbar />
       </div>
 
@@ -108,10 +130,25 @@ export default function ScrutinyReportPage({
         </div>
 
         {/* Printable Official Government Scrutiny Document */}
-        <div className="bg-white rounded-2xl border border-slate-300 p-8 sm:p-12 shadow-md print:shadow-none print:border-none print:p-0">
+        <div className="relative bg-white rounded-2xl border border-slate-300 p-8 sm:p-12 shadow-md print:shadow-none print:border-none print:p-0 overflow-hidden">
           
+          {/* Diagonal Background Watermark */}
+          <div 
+            aria-hidden="true" 
+            className="pointer-events-none select-none absolute inset-0 flex items-center justify-center overflow-hidden z-0 opacity-[0.03] print:opacity-[0.07]"
+          >
+            <span className="text-4xl sm:text-6xl font-black uppercase tracking-widest text-slate-900 -rotate-45 whitespace-nowrap">
+              PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT
+            </span>
+          </div>
+
+          {/* Prototype Watermark Banner (Screen & Print) */}
+          <div className="relative z-10 mb-6 p-2 text-center rounded-lg border-2 border-dashed border-amber-500 bg-amber-50 text-amber-900 font-extrabold text-xs tracking-wider uppercase print:border-black print:bg-slate-100 print:text-black">
+            PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT • SYNTHETIC DATA FOR DEMONSTRATION ONLY
+          </div>
+
           {/* AICTE Header */}
-          <div className="text-center border-b-2 border-slate-900 pb-6 mb-6">
+          <div className="relative z-10 text-center border-b-2 border-slate-900 pb-6 mb-6">
             <div className="text-xs font-bold tracking-widest text-slate-600 uppercase mb-1">
               Government of India • Ministry of Education
             </div>
@@ -119,7 +156,7 @@ export default function ScrutinyReportPage({
               ALL INDIA COUNCIL FOR TECHNICAL EDUCATION
             </h1>
             <div className="text-xs font-semibold text-slate-700 mt-1">
-              Bureau of Approvals • Nelson Mandela Marg, Vasant Kunj, New Delhi - 110070
+              Regulation Bureau • Nelson Mandela Marg, Vasant Kunj, New Delhi - 110070
             </div>
             <div className="inline-block mt-3 px-4 py-1 rounded-full bg-slate-100 border border-slate-300 text-xs font-bold text-slate-900">
               FORMAL REGULATORY SCRUTINY & DEFICIENCY REPORT (2026-2027)
@@ -164,10 +201,12 @@ export default function ScrutinyReportPage({
                 <thead className="bg-slate-50 border-b text-slate-700 font-bold">
                   <tr>
                     <th className="px-3 py-2">Total Uploaded</th>
-                    <th className="px-3 py-2 text-emerald-700">Verified Authentic</th>
-                    <th className="px-3 py-2 text-rose-700">Mismatch Detected</th>
+                    <th className="px-3 py-2 text-emerald-700">Verified</th>
+                    <th className="px-3 py-2 text-rose-700">Mismatch</th>
                     <th className="px-3 py-2 text-amber-700">Expired</th>
-                    <th className="px-3 py-2 text-slate-700">Manual / Unavailable</th>
+                    <th className="px-3 py-2 text-blue-700">Pending</th>
+                    <th className="px-3 py-2 text-zinc-700">Unavailable</th>
+                    <th className="px-3 py-2 text-orange-700">Manual Review</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -176,11 +215,14 @@ export default function ScrutinyReportPage({
                     <td className="px-3 py-2.5 text-emerald-700">{verifiedCount}</td>
                     <td className="px-3 py-2.5 text-rose-700">{mismatchCount}</td>
                     <td className="px-3 py-2.5 text-amber-700">{expiredCount}</td>
-                    <td className="px-3 py-2.5 text-slate-700">{manualCount}</td>
+                    <td className="px-3 py-2.5 text-blue-700">{pendingCount}</td>
+                    <td className="px-3 py-2.5 text-zinc-700">{unavailableCount}</td>
+                    <td className="px-3 py-2.5 text-orange-700">{manualCount}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
+            <VerificationStatusLegend compact className="mt-3" />
           </div>
 
           {/* Itemized Adverse Findings Table */}
@@ -250,21 +292,26 @@ export default function ScrutinyReportPage({
             <div>
               <div className="flex items-center gap-2 text-slate-700 font-bold mb-1">
                 <Hash className="w-4 h-4 text-slate-500" />
-                <span>Cryptographic Audit Trail Stamp</span>
+                <span>Cryptographic Audit Trail Stamp & Seal</span>
               </div>
-              <code className="text-[10px] text-slate-500 font-mono block break-all max-w-sm">
-                SHA-CHAIN: 4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f
+              <code className="text-[10px] text-emerald-800 font-mono block break-all max-w-sm bg-slate-50 p-1.5 rounded border border-slate-200">
+                SEAL: {sealData?.seal || 'COMPUTING-SEAL-SHA256...'}
               </code>
-              <span className="text-[10px] text-slate-400 mt-0.5 block">
-                Tamper-evident record sealed under AICTE Sentinel Ledger.
+              <span className="text-[10px] text-slate-500 mt-1 block font-mono">
+                Chain Head: {sealData?.chainHeadHash ? `${sealData.chainHeadHash.substring(0, 16)}...` : '00000000...'} • Tamper-evident record sealed under AICTE Sentinel Ledger.
               </span>
             </div>
 
             <div className="text-right">
               <div className="font-bold text-slate-900 text-sm">Smt. Priyadarshini Rao</div>
               <div className="text-slate-600">Senior Scrutiny Officer</div>
-              <div className="text-[11px] text-slate-400">Bureau of Approvals, AICTE New Delhi</div>
+              <div className="text-[11px] text-slate-400">Regulation Bureau, AICTE New Delhi</div>
             </div>
+          </div>
+
+          {/* Footer Prototype Notice */}
+          <div className="relative z-10 text-center text-[10px] text-slate-500 font-bold uppercase mt-6 pt-4 border-t border-slate-200 print:block">
+            AICTE SENTINEL PROTOTYPE DEMONSTRATOR • NOT AN OFFICIAL AICTE DOCUMENT • ALL COMPLIANCE OUTPUTS ADVISORY ONLY
           </div>
 
         </div>

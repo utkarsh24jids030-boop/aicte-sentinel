@@ -21,11 +21,14 @@ export default function PreviewLayout({
     { label: 'Preview Index', href: '/preview' },
     { label: 'Complete Single-Page View (/preview/all)', href: '/preview/all' },
     { label: 'Officer Queue', href: '/preview/officer' },
-    { label: 'Collusion Radar', href: '/preview/radar' },
+    { label: 'Linkage Radar', href: '/preview/radar' },
     { label: 'EVC Inspections', href: '/preview/evc' },
     { label: 'Institution View', href: '/preview/institution' },
     { label: 'Rule Packs & Adapters', href: '/preview/admin' },
-    { label: 'Audit Trail', href: '/preview/audit' }
+    { label: 'Audit Trail', href: '/preview/audit' },
+    { label: 'Safeguards', href: '/preview/safeguards' },
+    { label: 'Metrics', href: '/preview/metrics' },
+    { label: 'Conformance Matrix', href: '/preview/conformance' }
   ];
 
   return (
@@ -33,7 +36,7 @@ export default function PreviewLayout({
       {/* 1. Mandatory Public Read-Only Banner */}
       <div className="bg-amber-100 border-b border-amber-300 text-amber-950 px-4 py-2.5 text-xs text-center font-bold tracking-wide flex items-center justify-center gap-2">
         <Eye className="w-4 h-4 text-amber-700 flex-shrink-0" />
-        <span>Public read-only preview. Synthetic data and mock verification adapters.</span>
+        <span>Public read-only preview • Synthetic data - Simulated integrations • PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT</span>
       </div>
 
       {/* 2. Public Preview Navigation Bar */}
@@ -64,12 +67,12 @@ export default function PreviewLayout({
                   {link.label}
                 </a>
               ))}
-              <a
+              <Link
                 href="/"
                 className="ml-2 px-2.5 py-1 rounded-md bg-white/15 text-amber-300 hover:bg-white/20 font-semibold"
               >
                 Back to Portal
-              </a>
+              </Link>
             </nav>
           </div>
         </div>

@@ -22,7 +22,7 @@ CREATE TYPE verification_status AS ENUM (
 );
 CREATE TYPE finding_severity AS ENUM ('Critical', 'High', 'Medium', 'Low');
 CREATE TYPE finding_status AS ENUM ('Open', 'Confirmed by Officer', 'Dismissed with Justification', 'Clarification Requested', 'Escalated for EVC');
-CREATE TYPE finding_category AS ENUM ('FORENSIC_ANOMALY', 'COMPLIANCE_BREACH', 'CROSS_INSTITUTION_COLLUSION', 'VERIFICATION_MISMATCH');
+CREATE TYPE finding_category AS ENUM ('FORENSIC_ANOMALY', 'COMPLIANCE_BREACH', 'CROSS_INSTITUTION_LINKAGE', 'VERIFICATION_MISMATCH');
 
 -- 2. INSTITUTIONS
 CREATE TABLE institutions (
@@ -66,7 +66,7 @@ CREATE TABLE applications (
   academic_year VARCHAR(20) DEFAULT '2026-2027',
   status application_status DEFAULT 'Draft',
   readiness_score INT DEFAULT 0,
-  collusion_risk_score INT DEFAULT 0,
+  linkage_risk_score INT DEFAULT 0,
   risk_tier risk_tier DEFAULT 'Low',
   programmes JSONB DEFAULT '[]'::jsonb,
   current_intake INT DEFAULT 0,
@@ -95,7 +95,7 @@ CREATE TABLE documents (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 6. DOCUMENT VERSIONS (IMMUTABLE)
+-- 6. DOCUMENT VERSIONS (TAMPER-EVIDENT)
 CREATE TABLE document_versions (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
@@ -224,7 +224,7 @@ CREATE TABLE inspection_observations (
   captured_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 15. RISK GRAPH (COLLUSION RADAR)
+-- 15. RISK GRAPH (LINKAGE RADAR)
 CREATE TABLE risk_graph_nodes (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   node_type VARCHAR(50) NOT NULL,
@@ -248,7 +248,7 @@ CREATE TABLE risk_graph_edges (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 16. IMMUTABLE AUDIT TRAIL (CRYPTOGRAPHICALLY HASH-CHAINED)
+-- 16. TAMPER-EVIDENT AUDIT TRAIL (CRYPTOGRAPHICALLY HASH-CHAINED)
 CREATE TABLE audit_events (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   timestamp TIMESTAMPTZ DEFAULT NOW(),

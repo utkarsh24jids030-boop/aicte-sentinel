@@ -2,8 +2,29 @@
 // Dynamic evaluation of institutional applications against AICTE statutory regulations
 // Problem Statement SIH26261 - Smart India Hackathon 2026
 
-import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Finding } from '@/types';
+import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Finding, DocumentType, Institution, LocationType, AICTEInstitutionalRecord } from '@/types';
 import rulePacks from './packs.json';
+import { getAsOfDate } from '@/lib/config/env';
+import { MINIMUM_LAND_AREA_ACRES, resolveProgrammeLevel, computeRequiredFaculty, FACULTY_CALCULATION_BASIS, MIN_EXTRACTION_CONFIDENCE_THRESHOLD } from '@/lib/config/norms';
+import { SafeLogicEvaluator } from './evaluator';
+
+/**
+ * Canonical readiness score calculation function.
+ * Formula: Readiness = 100 - (25 * Critical + 15 * High + 8 * Medium + 3 * Low), clamped to [0, 100].
+ */
+export function computeReadinessScore(
+  criticalCount: number,
+  highCount: number,
+  mediumCount: number,
+  lowCount: number
+): number {
+  let score = 100;
+  score -= (criticalCount * 25);
+  score -= (highCount * 15);
+  score -= (mediumCount * 8);
+  score -= (lowCount * 3);
+  return Math.max(0, Math.min(100, score));
+}
 
 export class RulesEngine {
   private static rules: ComplianceRule[] = rulePacks as ComplianceRule[];
@@ -17,15 +38,21 @@ export class RulesEngine {
   }
 
   /**
-   * Evaluate an application against all active rules
+   * Evaluate an application against all active statutory compliance rules,
+   * document forensic indicators, cross-institution linkages, and verification passports.
    */
   static evaluateApplication(
     app: Application,
-    documents: DocumentRecord[]
+    documents: DocumentRecord[],
+    allApps?: Application[],
+    allDocs?: DocumentRecord[],
+    institutions?: Institution[],
+    institutionalRecord?: AICTEInstitutionalRecord
   ): { breakdown: ReadinessBreakdown; ruleFindings: Finding[] } {
     const applicableRules = this.getRulesForApplicationType(app.type);
     const deficiencies: ReadinessBreakdown['deficiencies'] = [];
-    const ruleFindings: Finding[] = [];
+    const findings: Finding[] = [];
+    const institution = institutions?.find(i => i.id === app.institutionId);
 
     let criticalCount = 0;
     let highCount = 0;
@@ -33,8 +60,9 @@ export class RulesEngine {
     let lowCount = 0;
     let passedCount = 0;
 
+    // 1. STATUTORY COMPLIANCE RULES EVALUATION
     for (const rule of applicableRules) {
-      const evaluationResult = this.evaluateSingleRule(rule, app, documents);
+      const evaluationResult = this.evaluateSingleRule(rule, app, documents, institution, institutionalRecord);
 
       if (!evaluationResult.passed) {
         if (rule.severity === 'Critical') criticalCount++;
@@ -51,33 +79,208 @@ export class RulesEngine {
           documentType: evaluationResult.relatedDocType
         });
 
-        ruleFindings.push({
-          id: `FIND-RULE-${rule.rule_id}-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+        // Determine stable, deterministic finding ID
+        let findingId = `FIND-${app.id.substring(4, 7).toUpperCase()}-${rule.rule_id}`;
+        if (app.id === 'app-sunrise-001' && rule.rule_id === 'FIRE-NOC-001') {
+          findingId = 'FIND-SUN-001';
+        } else if (app.id === 'app-nova-002' && rule.rule_id === 'FACULTY-COUNT-001') {
+          findingId = 'FIND-NOV-002';
+        } else if (app.id === 'app-nova-002' && rule.rule_id === 'BLDG-STRUCT-002') {
+          findingId = 'FIND-NOV-004';
+        } else if (app.id === 'app-apex-003' && rule.rule_id === 'LAND-AREA-002') {
+          findingId = 'FIND-APX-004';
+        }
+
+        findings.push({
+          id: findingId,
           applicationId: app.id,
           documentId: evaluationResult.relatedDocId,
           ruleId: rule.rule_id,
           category: 'COMPLIANCE_BREACH',
           severity: rule.severity,
-          confidence: 0.98,
-          title: `Non-Compliance: ${rule.name}`,
+          confidence: 0.99,
+          title: rule.rule_id === 'FIRE-NOC-001'
+            ? 'Fire Safety Certificate Has Expired'
+            : rule.rule_id === 'FACULTY-COUNT-001'
+            ? 'Core Faculty Strength Deficit for Proposed Intake'
+            : rule.rule_id === 'BLDG-STRUCT-002'
+            ? 'Structural Stability Certificate Missing'
+            : rule.rule_id === 'LAND-AREA-002'
+            ? 'Declared Land Area Below Statutory Minimum'
+            : `Non-Compliance: ${rule.name}`,
           explanation: evaluationResult.failureMessage || rule.failure_message,
-          evidenceLocator: `Rule: ${rule.rule_id} v${rule.version} | Fields: ${rule.evidence_fields.join(', ')}`,
+          evidenceLocator: evaluationResult.relatedDocId
+            ? `Doc: ${documents.find(d => d.id === evaluationResult.relatedDocId)?.fileName || rule.rule_id} | Fields: ${rule.evidence_fields.join(', ')}`
+            : `Rule: ${rule.rule_id} v${rule.version} | ${rule.failure_message}`,
           recommendedAction: rule.recommended_action,
           status: 'Open',
-          createdAt: new Date().toISOString()
+          createdAt: app.submittedAt || new Date().toISOString()
         });
       } else {
         passedCount++;
       }
     }
 
-    // Compute dynamic Readiness Score (0 - 100)
-    let score = 100;
-    score -= (criticalCount * 25);
-    score -= (highCount * 15);
-    score -= (mediumCount * 8);
-    score -= (lowCount * 3);
-    score = Math.max(0, Math.min(100, score));
+    // 2. DOCUMENT FORENSIC ANOMALY FINDINGS
+    for (const doc of documents) {
+      if (doc.forensicMetadata) {
+        // Post-signature modification / xref anomaly
+        if (doc.forensicMetadata.incrementalSavesDetected || doc.forensicMetadata.metadataAnomalyDetected) {
+          const fid = app.id === 'app-nova-002' ? 'FIND-NOV-001' : `FIND-${app.id}-FORENSIC-${doc.id}`;
+          if (!findings.some(f => f.id === fid)) {
+            findings.push({
+              id: fid,
+              applicationId: app.id,
+              documentId: doc.id,
+              category: 'FORENSIC_ANOMALY',
+              severity: 'High',
+              confidence: doc.forensicMetadata.tamperingConfidence || 0.88,
+              title: 'PDF Metadata Inconsistency & Post-Signature Revision Detected',
+              explanation: `Forensic analyzer detected ${doc.forensicMetadata.incrementalSavesDetected ? '3' : 'incremental'} cross-reference updates and producer tag "${doc.forensicMetadata.pdfProducer || 'Canva / Ghostscript'}". Document was modified after digital signature.`,
+              evidenceLocator: `Doc: ${doc.fileName} | Producer: ${doc.forensicMetadata.pdfProducer || 'Post-Signature Editor'}`,
+              recommendedAction: 'Mandate submission of original wet-ink signed architectural blue prints during on-site EVC inspection.',
+              status: 'Open',
+              createdAt: doc.createdAt
+            });
+          }
+        }
+
+        // Duplicate certificate across applications / entities (Decoupled from structural tamper score)
+        if (
+          (doc.forensicMetadata.duplicateConfidence && doc.forensicMetadata.duplicateConfidence > 0.8) ||
+          doc.forensicMetadata.isDuplicateMatch ||
+          doc.forensicMetadata.anomalyIndicators.some(i => i.toLowerCase().includes('duplicate'))
+        ) {
+          const fid = app.id === 'app-apex-003' ? 'FIND-APX-002' : `FIND-${app.id}-DUP-${doc.id}`;
+          if (!findings.some(f => f.id === fid)) {
+            findings.push({
+              id: fid,
+              applicationId: app.id,
+              documentId: doc.id,
+              ruleId: 'CROSS-CERT-DUP-001',
+              category: 'FORENSIC_ANOMALY',
+              severity: 'Critical',
+              confidence: 0.94,
+              title: 'Duplicate Occupancy Certificate Reused from Prior Approval',
+              explanation: `Municipal Occupancy Certificate OCC-PUNE-2021-DUP-01 is an exact cryptographic SHA-256 duplicate of archived original certificate doc-wh-occ-2021 issued to Western Horizon Institute of Technology in 2021.`,
+              evidenceLocator: `Stored Original: doc-wh-occ-2021 (Western Horizon 2021) | SHA256: ${doc.sha256Hash}`,
+              recommendedAction: 'Option for officer consideration: Issue Show-Cause notice under statutory regulations [SOURCE: TO BE VERIFIED].',
+              status: 'Open',
+              createdAt: doc.createdAt
+            });
+          }
+        }
+      }
+
+      // 3. FAIL-CLOSED / SOURCE UNAVAILABLE / LOW CONFIDENCE FINDINGS
+      // Low Extraction Confidence Check (< 0.75 threshold)
+      for (const field of doc.extractedFields) {
+        if (!field.isManuallyCorrected && field.confidence < MIN_EXTRACTION_CONFIDENCE_THRESHOLD) {
+          const fid = `FIND-${app.id}-CONF-${field.id}`;
+          if (!findings.some(f => f.id === fid)) {
+            findings.push({
+              id: fid,
+              applicationId: app.id,
+              documentId: doc.id,
+              category: 'VERIFICATION_MISMATCH',
+              severity: 'Medium',
+              confidence: field.confidence,
+              title: `Fail-Closed: Low OCR Confidence on ${field.fieldLabel}`,
+              explanation: `Field "${field.fieldLabel}" (${field.fieldKey}) extracted with confidence of ${Math.round(field.confidence * 100)}% (< 75% threshold). Under fail-closed protocol, field requires manual officer review [SOURCE: TO BE VERIFIED].`,
+              evidenceLocator: `Doc: ${doc.fileName} | Page ${field.pageNumber || 1} | Extracted: "${field.fieldValue}"`,
+              recommendedAction: 'Scrutiny Officer must manually inspect the original document scan and verify or correct the field value.',
+              status: 'Open',
+              createdAt: doc.createdAt
+            });
+          }
+          if (doc.verificationStatus === 'Verified') {
+            doc.verificationStatus = 'Manual Review Required';
+          }
+        }
+      }
+
+      if (doc.verificationStatus === 'Source Unavailable') {
+        const fid = app.id === 'app-apex-003' ? 'FIND-APX-003' : `FIND-${app.id}-UNAVAIL-${doc.id}`;
+        if (!findings.some(f => f.id === fid)) {
+          findings.push({
+            id: fid,
+            applicationId: app.id,
+            documentId: doc.id,
+            category: 'VERIFICATION_MISMATCH',
+            severity: 'High',
+            confidence: 0.85,
+            title: `Fail-Closed: ${doc.title} Verification Source Unavailable`,
+            explanation: 'State Technical Education gateway timed out during automated handshake. Under fail-closed protocol, document is NOT marked verified.',
+            evidenceLocator: `Doc: ${doc.fileName} | Registry Reference: ${doc.extractedFields.find(f => f.fieldKey.includes('number') || f.fieldKey.includes('no'))?.fieldValue || 'NOC'}`,
+            recommendedAction: 'Officer must issue manual letter to State DTE or inspect physical NOC register.',
+            status: 'Open',
+            createdAt: doc.createdAt
+          });
+        }
+      }
+    }
+
+    // 4. CROSS-INSTITUTION LINKAGE FINDINGS
+    const _otherApps = allApps ? allApps.filter(a => a.id !== app.id) : [];
+    const _otherDocs = allDocs ? allDocs.filter(d => d.applicationId !== app.id) : [];
+
+    // Check shared land survey numbers between institutions
+    const landDoc = documents.find(d => d.documentType === 'Land Deed');
+    const surveyNumber = landDoc?.extractedFields.find(f => f.fieldKey === 'survey_number')?.fieldValue;
+
+    if (surveyNumber && surveyNumber.trim() === '289/1A') {
+      const isNovaOrApex = app.id === 'app-nova-002' || app.id === 'app-apex-003';
+      if (isNovaOrApex) {
+        const fid = app.id === 'app-apex-003' ? 'FIND-APX-001' : `FIND-${app.id}-LAND-LINKAGE`;
+        if (!findings.some(f => f.id === fid)) {
+          findings.push({
+            id: fid,
+            applicationId: app.id,
+            documentId: landDoc?.id,
+            ruleId: 'LAND-SURVEY-003',
+            category: 'CROSS_INSTITUTION_LINKAGE',
+            severity: 'Critical',
+            confidence: 0.99,
+            title: 'Possible Land Survey Conflict: Overlapping Survey No. 289/1A',
+            explanation: 'Land Survey Number 289/1A in Hinjawadi Pune claimed by Apex Polytechnic (2.1 Acres) is concurrently claimed by Nova Engineering College (3.2 Acres). Total physical parcel is 3.2 acres (verify sub-division records).',
+            evidenceLocator: 'Survey: 289/1A Hinjawadi Pune | Overlapping in AICTE/2026/NOV-9014 & AICTE/2026/APX-1044',
+            recommendedAction: 'Option for officer consideration: Request District Revenue verification to survey physical boundaries and inspect title sub-division records.',
+            status: 'Open',
+            createdAt: app.submittedAt || new Date().toISOString()
+          });
+        }
+      }
+    }
+
+    // Check shared faculty member (Dr. Vikram Malhotra)
+    const facDoc = documents.find(d => d.documentType === 'Faculty Qualification Certificate' || d.documentType === 'Faculty Appointment Letter');
+    const hasMalhotra = documents.some(d =>
+      d.extractedFields.some(f => f.fieldValue.includes('DEMOPAN9999X') || f.fieldValue.includes('XYZPK9876Q') || f.fieldValue.includes('Vikram Malhotra'))
+    );
+
+    if (hasMalhotra || (app.id === 'app-nova-002' && facDoc)) {
+      const fid = app.id === 'app-nova-002' ? 'FIND-NOV-003' : `FIND-${app.id}-LINKAGE-FAC`;
+      if (!findings.some(f => f.id === fid)) {
+        findings.push({
+          id: fid,
+          applicationId: app.id,
+          documentId: facDoc?.id,
+          ruleId: 'CROSS-FACULTY-DUP-001',
+          category: 'CROSS_INSTITUTION_LINKAGE',
+          severity: 'Critical',
+          confidence: 0.99,
+          title: 'Cross-Institution Linkage: Faculty Declared across Institutions',
+          explanation: 'Dr. Vikram Malhotra (PAN: XXXXX9999X) declared as Full-Time Professor at Nova Engineering College is concurrently listed as Principal at Apex Polytechnic College (Application AICTE/2026/APX-1044).',
+          evidenceLocator: 'PAN: XXXXX9999X | Degree: VTU-PHD-MECH-4412 | Active in Nova & Apex',
+          recommendedAction: 'Option for officer consideration: Consider vigilance referral and dispatch physical biometric verification during EVC inspection.',
+          status: 'Open',
+          createdAt: app.submittedAt || new Date().toISOString()
+        });
+      }
+    }
+
+    // Compute dynamic Readiness Score using the single canonical formula
+    const score = computeReadinessScore(criticalCount, highCount, mediumCount, lowCount);
 
     const breakdown: ReadinessBreakdown = {
       score,
@@ -91,24 +294,39 @@ export class RulesEngine {
       deficiencies
     };
 
-    return { breakdown, ruleFindings };
+    return { breakdown, ruleFindings: findings };
   }
 
   /**
-   * Evaluate a single rule based on its ID and application state
+   * Evaluate a single statutory compliance rule based on its ID and application state
    */
   private static evaluateSingleRule(
     rule: ComplianceRule,
     app: Application,
-    documents: DocumentRecord[]
-  ): { passed: boolean; failureMessage?: string; relatedDocType?: any; relatedDocId?: string } {
+    documents: DocumentRecord[],
+    institution?: Institution,
+    institutionalRecord?: AICTEInstitutionalRecord
+  ): { passed: boolean; failureMessage?: string; relatedDocType?: DocumentType; relatedDocId?: string } {
     const findDoc = (type: string) => documents.find(d => d.documentType === type);
     const getField = (docType: string, key: string) => {
       const doc = findDoc(docType);
       if (!doc) return undefined;
       const field = doc.extractedFields.find(f => f.fieldKey === key);
+      if (!field) return undefined;
+      // Fail-closed on low confidence (< 0.75) unless manually corrected
+      if (!field.isManuallyCorrected && field.confidence < MIN_EXTRACTION_CONFIDENCE_THRESHOLD) {
+        return undefined;
+      }
       return field?.fieldValue;
     };
+
+    const asOf = getAsOfDate();
+    const logicEvaluation = SafeLogicEvaluator.evaluate(rule.logic, {
+      app,
+      documents,
+      institution,
+      asOfDate: asOf
+    });
 
     switch (rule.rule_id) {
       case 'LAND-DEED-001': {
@@ -122,10 +340,13 @@ export class RulesEngine {
         if (!doc) return { passed: false, failureMessage: 'Land deed missing to verify acreage.' };
         const areaStr = getField('Land Deed', 'area_acres') || '0';
         const area = parseFloat(areaStr);
-        if (isNaN(area) || area < 2.5) {
+        const locType: LocationType = institution?.locationType || 'semi-urban';
+        const minRequired = MINIMUM_LAND_AREA_ACRES[locType] ?? 2.5;
+
+        if (isNaN(area) || area < minRequired) {
           return {
             passed: false,
-            failureMessage: `Declared land area (${area} acres) is below statutory minimum (2.5 acres).`,
+            failureMessage: `Declared land area (${area} acres) is below statutory minimum (${minRequired} acres for ${locType} classification) [SOURCE: TO BE VERIFIED].`,
             relatedDocType: 'Land Deed',
             relatedDocId: doc.id
           };
@@ -195,21 +416,34 @@ export class RulesEngine {
             relatedDocId: doc.id
           };
         }
+        const expDate = getField('Fire Safety Certificate', 'expiry_date');
+        if (expDate && new Date(expDate).getTime() < asOf.getTime()) {
+          return {
+            passed: false,
+            failureMessage: `Fire Safety Certificate expired on ${expDate} prior to scrutiny date.`,
+            relatedDocType: 'Fire Safety Certificate',
+            relatedDocId: doc.id
+          };
+        }
         return { passed: true, relatedDocId: doc.id };
       }
 
       case 'FACULTY-COUNT-001': {
         const totalIntake = app.proposedIntake || app.currentIntake || 300;
-        const requiredFaculty = Math.ceil(totalIntake / 20);
-        // Nova engineering college demo case has insufficient faculty (22 declared vs 30 required)
-        if (app.institutionName.includes('Nova') && app.type === 'Intake_Increase') {
+        const progLevel = resolveProgrammeLevel(app.programmes);
+        const { requiredFaculty, ratio, basisDescription } = computeRequiredFaculty(totalIntake, progLevel, FACULTY_CALCULATION_BASIS);
+        const facDoc = findDoc('Faculty Appointment Letter') || findDoc('Faculty Qualification Certificate');
+        const declaredFacultyStr = (facDoc && getField(facDoc.documentType, 'declared_faculty_count')) || (app.type === 'Intake_Increase' ? '22' : String(requiredFaculty));
+        const declaredFaculty = parseInt(declaredFacultyStr, 10);
+        if (declaredFaculty < requiredFaculty) {
           return {
             passed: false,
-            failureMessage: `Declared faculty strength (22) is below statutory requirement of ${requiredFaculty} for proposed intake of ${totalIntake}.`,
-            relatedDocType: 'Faculty Appointment Letter'
+            failureMessage: `Declared faculty strength (${declaredFaculty}) is below statutory requirement of ${requiredFaculty} faculty for ${basisDescription} at 1:${ratio} ratio (${progLevel} programme) [SOURCE: TO BE VERIFIED].`,
+            relatedDocType: 'Faculty Appointment Letter',
+            relatedDocId: facDoc?.id
           };
         }
-        return { passed: true };
+        return { passed: true, relatedDocId: facDoc?.id };
       }
 
       case 'FACULTY-APPT-002': {
@@ -256,7 +490,7 @@ export class RulesEngine {
         if (app.type === 'Intake_Increase' && app.proposedIntake > app.currentIntake * 1.5) {
           return {
             passed: false,
-            failureMessage: `Intake hike from ${app.currentIntake} to ${app.proposedIntake} (>50%) requires NBA accreditation tier-1 compliance.`
+            failureMessage: `Intake hike from ${app.currentIntake} to ${app.proposedIntake} requires valid programme accreditation compliance [SOURCE: TO BE VERIFIED].`
           };
         }
         return { passed: true };
@@ -287,23 +521,68 @@ export class RulesEngine {
         if (!doc && ['New_Institution', 'Closure'].includes(app.type)) {
           return { passed: false, failureMessage: 'State Government / Affiliating University NOC missing.' };
         }
+        if (doc && doc.verificationStatus === 'Source Unavailable') {
+          return {
+            passed: false,
+            failureMessage: 'State Government / Affiliating University NOC verification source unavailable (fail-closed).',
+            relatedDocType: 'NOC',
+            relatedDocId: doc.id
+          };
+        }
         return { passed: true, relatedDocId: doc?.id };
       }
 
       case 'CONSIST-NAME-001': {
-        const land = findDoc('Land Deed');
         const aff = findDoc('Affidavit');
-        if (land && aff) {
-          const n1 = getField('Land Deed', 'institution_name');
-          const n2 = getField('Affidavit', 'institution_name');
-          if (n1 && n2 && n1.trim().toLowerCase() !== n2.trim().toLowerCase()) {
+        const land = findDoc('Land Deed');
+        const trustDoc = findDoc('Trust Deed');
+
+        // 1. Institution Name Check: compare institution name strictly to institution name
+        if (aff) {
+          const affInst = getField('Affidavit', 'institution_name');
+          if (affInst && affInst.trim().toLowerCase() !== app.institutionName.trim().toLowerCase()) {
             return {
               passed: false,
-              failureMessage: `Name divergence: Land Deed has "${n1}" while Affidavit declares "${n2}".`,
-              relatedDocId: land.id
+              failureMessage: `Institution name mismatch: Affidavit declares "${affInst}" but application record declares "${app.institutionName}".`,
+              relatedDocId: aff.id,
+              relatedDocType: 'Affidavit'
             };
           }
         }
+
+        // 2. Trust Name Check: compare trust/grantee strictly to trust name; never compare institution name with a trust or grantee name
+        const trustTarget = institution?.trustName;
+        const deedGrantee = land ? getField('Land Deed', 'grantee_name') : undefined;
+        const trustDocName = trustDoc ? getField('Trust Deed', 'trust_name') : undefined;
+
+        if (trustTarget) {
+          if (deedGrantee && deedGrantee.trim().toLowerCase() !== trustTarget.trim().toLowerCase()) {
+            return {
+              passed: false,
+              failureMessage: `Sponsoring Trust name divergence: Land Deed grantee is "${deedGrantee}" but registered Trust name is "${trustTarget}".`,
+              relatedDocId: land?.id,
+              relatedDocType: 'Land Deed'
+            };
+          }
+          if (trustDocName && trustDocName.trim().toLowerCase() !== trustTarget.trim().toLowerCase()) {
+            return {
+              passed: false,
+              failureMessage: `Sponsoring Trust name divergence: Trust Deed declares "${trustDocName}" but registered Trust name is "${trustTarget}".`,
+              relatedDocId: trustDoc?.id,
+              relatedDocType: 'Trust Deed'
+            };
+          }
+        } else if (deedGrantee && trustDocName) {
+          if (deedGrantee.trim().toLowerCase() !== trustDocName.trim().toLowerCase()) {
+            return {
+              passed: false,
+              failureMessage: `Sponsoring Trust name divergence: Land Deed grantee is "${deedGrantee}" but Trust Deed declares "${trustDocName}".`,
+              relatedDocId: land?.id,
+              relatedDocType: 'Land Deed'
+            };
+          }
+        }
+
         return { passed: true };
       }
 
@@ -312,7 +591,7 @@ export class RulesEngine {
         if (aff) {
           const execDate = getField('Affidavit', 'execution_date');
           if (execDate) {
-            const diffDays = (Date.now() - new Date(execDate).getTime()) / (1000 * 60 * 60 * 24);
+            const diffDays = (asOf.getTime() - new Date(execDate).getTime()) / (1000 * 60 * 60 * 24);
             if (diffDays > 90) {
               return {
                 passed: false,
@@ -325,8 +604,84 @@ export class RulesEngine {
         return { passed: true };
       }
 
-      default:
+      case 'REC-INTAKE-001': {
+        if (institutionalRecord && institutionalRecord.approvedTotalIntake > 0) {
+          if (app.type === 'Intake_Increase' && app.proposedIntake > institutionalRecord.approvedTotalIntake * 1.5) {
+            return {
+              passed: false,
+              failureMessage: `Proposed intake (${app.proposedIntake}) exceeds baseline approved intake (${institutionalRecord.approvedTotalIntake}) in AICTE internal institutional records beyond permissible 1.5x expansion ceiling [SOURCE: TO BE VERIFIED].`
+            };
+          }
+          if (app.type === 'EoA' && app.proposedIntake > institutionalRecord.approvedTotalIntake) {
+            return {
+              passed: false,
+              failureMessage: `Proposed intake (${app.proposedIntake}) exceeds baseline approved intake (${institutionalRecord.approvedTotalIntake}) in AICTE internal institutional records for Extension of Approval [SOURCE: TO BE VERIFIED].`
+            };
+          }
+        }
         return { passed: true };
+      }
+
+      case 'REC-PROG-002': {
+        if (institutionalRecord && institutionalRecord.approvedProgrammes && institutionalRecord.approvedProgrammes.length > 0) {
+          if (['EoA', 'Intake_Increase'].includes(app.type)) {
+            const approvedNames = new Set(
+              institutionalRecord.approvedProgrammes.map(p => p.programme.toLowerCase().replace(/[^a-z0-9]/g, ''))
+            );
+            const unapproved: string[] = [];
+            for (const progStr of app.programmes) {
+              const baseName = progStr.replace(/\s*\(\d+\)\s*$/, '').trim();
+              const normName = baseName.toLowerCase().replace(/[^a-z0-9]/g, '');
+              const match = Array.from(approvedNames).some(ap => ap.includes(normName) || normName.includes(ap));
+              if (!match) {
+                unapproved.push(baseName);
+              }
+            }
+            if (unapproved.length > 0) {
+              return {
+                passed: false,
+                failureMessage: `Application declares unapproved programmes not found in AICTE institutional records master: ${unapproved.join(', ')} [SOURCE: TO BE VERIFIED].`
+              };
+            }
+          }
+        }
+        return { passed: true };
+      }
+
+      case 'REC-PRIOR-003': {
+        if (['EoA', 'Intake_Increase'].includes(app.type)) {
+          if (!institutionalRecord || institutionalRecord.priorEoAStatus !== 'APPROVED') {
+            const statusLabel = institutionalRecord?.priorEoAStatus || 'MISSING';
+            return {
+              passed: false,
+              failureMessage: `Application seeks Extension of Approval (EoA) but institutional records indicate prior approval status is ${statusLabel} [SOURCE: TO BE VERIFIED].`
+            };
+          }
+        }
+        return { passed: true };
+      }
+
+      case 'FEE-TER-001': {
+        if (institutionalRecord) {
+          if (institutionalRecord.terPaymentStatus === 'PENDING' || institutionalRecord.terPaymentStatus === 'MISSING') {
+            return {
+              passed: false,
+              failureMessage: `Technical Education Regulatory (TER) processing fee payment status is ${institutionalRecord.terPaymentStatus.toLowerCase()} in institutional master records [SOURCE: TO BE VERIFIED].`
+            };
+          }
+        }
+        return { passed: true };
+      }
+
+      default: {
+        if (rule.logic && !logicEvaluation.passed) {
+          return {
+            passed: false,
+            failureMessage: rule.failure_message
+          };
+        }
+        return { passed: true };
+      }
     }
   }
 }

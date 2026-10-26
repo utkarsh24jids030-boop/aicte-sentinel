@@ -6,7 +6,8 @@ export type UserRole =
   | 'OFFICER'
   | 'EVC_INSPECTOR'
   | 'ADMIN'
-  | 'AUDITOR';
+  | 'AUDITOR'
+  | 'SYSTEM';
 
 export interface User {
   id: string;
@@ -19,11 +20,14 @@ export interface User {
   createdAt: string;
 }
 
+export type LocationType = 'metro' | 'urban' | 'semi-urban' | 'rural';
+
 export interface Institution {
   id: string;
   aicteId: string;
   name: string;
   trustName: string;
+  locationType?: LocationType;
   state: string;
   district: string;
   address: string;
@@ -64,7 +68,7 @@ export interface Application {
   academicYear: string;
   status: ApplicationStatus;
   readinessScore: number;
-  collusionRiskScore: number;
+  linkageRiskScore: number;
   riskTier: RiskTier;
   programmes: string[];
   currentIntake: number;
@@ -94,8 +98,7 @@ export type VerificationStatus =
   | 'Expired'
   | 'Verification Pending'
   | 'Source Unavailable'
-  | 'Manual Review Required'
-  | 'Not Verified';
+  | 'Manual Review Required';
 
 export interface ExtractedField {
   id: string;
@@ -135,7 +138,18 @@ export interface ForensicMetadata {
   incrementalSavesDetected: boolean;
   metadataAnomalyDetected: boolean;
   nearDuplicateHash?: string;
-  tamperingConfidence: number; // 0 - 1.0
+  tamperingConfidence: number; // 0 - 1.0 (Structural/tamper indicators only)
+  duplicateConfidence?: number; // 0 - 1.0 (Exact or near hash match across records)
+  isDuplicateMatch?: boolean;
+  duplicateMatchedDocId?: string;
+  duplicateMatchedFileName?: string;
+  tamperScoreFormula?: string;
+  tamperScoreInputs?: {
+    incrementalSaves: number;
+    producerAnomaly: number;
+    fontDiscrepancies: number;
+    modDateDiscrepancy: number;
+  };
   anomalyIndicators: string[];
 }
 
@@ -152,9 +166,13 @@ export interface DocumentRecord {
   sha256Hash: string;
   verificationStatus: VerificationStatus;
   verificationSource?: string;
+  extractionEngine?: string;
+  extractionEngineStatus?: string;
+  extractedTextPreview?: string;
   forensicMetadata: ForensicMetadata;
   extractedFields: ExtractedField[];
   versions: DocumentVersion[];
+  verificationAttempts?: VerificationAttempt[];
   createdAt: string;
   updatedAt: string;
 }
@@ -171,7 +189,7 @@ export type FindingStatus =
 export type FindingCategory = 
   | 'FORENSIC_ANOMALY'
   | 'COMPLIANCE_BREACH'
-  | 'CROSS_INSTITUTION_COLLUSION'
+  | 'CROSS_INSTITUTION_LINKAGE'
   | 'VERIFICATION_MISMATCH';
 
 export interface Finding {
@@ -211,11 +229,21 @@ export interface VerificationPassport {
 export interface VerificationAttempt {
   id: string;
   documentId: string;
-  adapterName: 'DigiLocker Mock Adapter' | 'Certificate Registry Mock' | 'Land Records Mock Adapter' | 'Faculty Registry Mock Adapter';
+  adapterName: 
+    | 'DigiLocker Mock Adapter' 
+    | 'Certificate Registry Mock' 
+    | 'Land Records Mock Adapter' 
+    | 'Faculty Registry Mock Adapter'
+    | 'State Directorate of Technical Education Mock Adapter (simulated)'
+    | string;
   attemptTimestamp: string;
   requestPayload: Record<string, unknown>;
-  responseStatus: 'Verified' | 'Mismatch' | 'Expired' | 'Pending' | 'Source Unavailable';
+  responseStatus: 'Verified' | 'Mismatch' | 'Expired' | 'Pending' | 'Source Unavailable' | 'Timeout / Degraded';
   rawResponse: Record<string, unknown>;
+  latencyMs?: number;
+  requestSummary?: string;
+  responseSummary?: string;
+  officerReviewStatus?: string;
 }
 
 export interface SourceResponse {
@@ -225,17 +253,26 @@ export interface SourceResponse {
   timestamp: string;
 }
 
+export interface RuleChangelogEntry {
+  version: string;
+  date: string;
+  author: string;
+  description: string;
+}
+
 export interface ComplianceRule {
   rule_id: string;
   version: string;
   name: string;
-  category: 'Land' | 'Building' | 'Fire safety' | 'Faculty' | 'Governance' | 'Financial' | 'Academic' | 'Documents' | 'Consistency' | 'Dates';
+  category: 'Land' | 'Building' | 'Fire safety' | 'Faculty' | 'Governance' | 'Financial' | 'Academic' | 'Documents' | 'Consistency' | 'Dates' | 'Infrastructure' | 'Cross-Application' | 'CrossApplication';
   applies_to: ApplicationType[];
   severity: FindingSeverity;
   logic: string;
   evidence_fields: string[];
   failure_message: string;
   recommended_action: string;
+  source_reference: string;
+  changelog?: RuleChangelogEntry[];
 }
 
 export interface ReadinessBreakdown {
@@ -269,7 +306,8 @@ export interface OfficerActionRecord {
     | 'ESCALATE_TO_EVC'
     | 'REQUEST_CLARIFICATION'
     | 'GENERATE_SCRUTINY_REPORT'
-    | 'GENERATE_INSPECTION_BRIEF';
+    | 'GENERATE_INSPECTION_BRIEF'
+    | 'DISMISS_LINKAGE_EDGE';
   notes: string;
   findingId?: string;
   timestamp: string;
@@ -297,7 +335,7 @@ export interface InspectionObservation {
   taskId: string;
   category: 'Land & Boundary' | 'Building & Labs' | 'Fire Safety & NOC' | 'Faculty Physical Verification' | 'General Infrastructure';
   claimText: string;
-  physicalVerificationStatus: 'Verified' | 'Deficient' | 'Fraudulent' | 'Inconclusive';
+  physicalVerificationStatus: 'Verified' | 'Deficient' | 'Discrepant' | 'Inconclusive';
   observationNotes: string;
   photoUrls: string[];
   latitude?: number;
@@ -320,17 +358,33 @@ export interface RiskGraphEdge {
   id: string;
   source: string;
   target: string;
-  relationType: 'SHARED_LAND' | 'REUSED_FACULTY' | 'DUPLICATE_CERTIFICATE' | 'SAME_TRUST' | 'SHARED_ADDRESS' | 'IDENTICAL_HASH';
+  relationType: 
+    | 'SHARED_LAND' 
+    | 'REUSED_FACULTY' 
+    | 'DUPLICATE_CERTIFICATE' 
+    | 'SAME_TRUST' 
+    | 'SHARED_ADDRESS' 
+    | 'IDENTICAL_HASH'
+    | 'ORIGINAL_ISSUANCE'
+    | 'EXPIRED_CLEARANCE'
+    | 'METADATA_DISCREPANCY'
+    | 'SOLE_OWNERSHIP';
   label: string;
   riskLevel: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
   evidenceDetails: string;
   institutionsInvolved: string[];
+  confidence?: number;
+  reason?: string;
+  dismissed?: boolean;
+  dismissedReason?: string;
+  dismissedBy?: string;
+  dismissedAt?: string;
 }
 
-export interface CollusionRadarData {
+export interface LinkageRadarData {
   nodes: RiskGraphNode[];
   edges: RiskGraphEdge[];
-  overallCollusionRiskScore: number;
+  overallLinkageRiskScore: number;
   riskSummary: {
     criticalClusters: number;
     crossInstitutionalReuses: number;
@@ -346,14 +400,33 @@ export interface AuditEvent {
   actorName: string;
   actorRole: UserRole;
   action: string;
-  entityType: 'APPLICATION' | 'DOCUMENT' | 'FINDING' | 'RULE_ENGINE' | 'ADAPTER' | 'INSPECTION' | 'AUTH';
+  entityType: 'APPLICATION' | 'DOCUMENT' | 'FINDING' | 'RULE_ENGINE' | 'ADAPTER' | 'INSPECTION' | 'AUTH' | 'RADAR_EDGE' | 'RECORD_ACCESS';
   entityId: string;
   beforeSummary?: string;
   afterSummary?: string;
+  ruleId?: string;
+  ruleVersion?: string;
+  sourceChecked?: string;
+  sourceResponseStatus?: string;
+  alertRaisedId?: string;
   ipAddress?: string;
   userAgent?: string;
   prevHash: string;
   hash: string;
+}
+
+export interface RecordViewAccessEvent {
+  id: string;
+  timestamp: string;
+  actorId: string;
+  actorName: string;
+  actorRole: UserRole;
+  viewedType: 'APPLICATION' | 'DOCUMENT';
+  viewedId: string;
+  viewedTitle: string;
+  applicationId?: string;
+  institutionName?: string;
+  ipAddress?: string;
 }
 
 export interface ScrutinyReportData {
@@ -364,7 +437,7 @@ export interface ScrutinyReportData {
   applicationType: ApplicationType;
   academicYear: string;
   readinessScore: number;
-  collusionRiskScore: number;
+  linkageRiskScore: number;
   scrutinyDate: string;
   officerName: string;
   officerDesignation: string;
@@ -377,7 +450,149 @@ export interface ScrutinyReportData {
     sourceUnavailable: number;
   };
   keyFindings: Finding[];
-  officerRecommendation: 'RECOMMEND_APPROVAL' | 'RECOMMEND_EVC_INSPECTION' | 'ISSUE_SHOW_CAUSE_DEFICIENCY' | 'REFER_TO_SCRUTINY_COMMITTEE';
+  officerRecommendation: 'CONSIDER_APPROVAL' | 'CONSIDER_EVC_INSPECTION' | 'ISSUE_SHOW_CAUSE_DEFICIENCY' | 'CONSIDER_VIGILANCE_REFERRAL' | 'REFER_TO_SCRUTINY_COMMITTEE';
   officerConcludingRemarks: string;
   hashChainStamp: string;
 }
+
+// AICTE Institutional Records Source (Simulated Internal Registry)
+export type TERPaymentStatus = 'PAID' | 'PENDING' | 'MISSING';
+
+export interface ApprovedProgrammeRecord {
+  programme: string;
+  level: 'UG' | 'PG' | 'Diploma';
+  approvedIntake: number;
+}
+
+export interface DeficiencyHistoryRecord {
+  academicYear: string;
+  deficiencyType: string;
+  description: string;
+  rectificationStatus: 'RESOLVED' | 'UNRESOLVED' | 'PENDING_INSPECTION';
+}
+
+export interface ApplicationHistoryRecord {
+  applicationNumber: string;
+  academicYear: string;
+  type: string;
+  outcome: 'APPROVED' | 'REJECTED' | 'CONDITIONAL' | 'UNDER_SCRUTINY';
+  orderDate?: string;
+}
+
+export interface FacultyMasterRecord {
+  facultyId: string;
+  name: string;
+  designation: string;
+  department: string;
+  panLast4: string;
+  status: 'ACTIVE' | 'ON_LEAVE' | 'RELIEVED';
+}
+
+export interface AICTEInstitutionalRecord {
+  institutionId: string;
+  institutionName: string;
+  aictePermanentId: string;
+  priorEoAStatus: 'APPROVED' | 'WITHDRAWN' | 'NOT_APPLICABLE' | 'DEFICIENT';
+  priorEoAYear?: string;
+  approvedProgrammes: ApprovedProgrammeRecord[];
+  approvedTotalIntake: number;
+  facultyRecords: FacultyMasterRecord[];
+  deficiencyHistory: DeficiencyHistoryRecord[];
+  terPaymentStatus: TERPaymentStatus;
+  terTransactionReference?: string;
+  applicationHistory: ApplicationHistoryRecord[];
+  isSimulated: true;
+}
+
+// Infrastructure Photographic & Plan Evidence (Computer-Vision-Lite)
+export type InfrastructureCategory = 
+  | 'Computer Center / Lab'
+  | 'Central Library'
+  | 'Chemistry / Physics Lab'
+  | 'Seminar Hall / Auditorium'
+  | 'Workshop / Mechanical Lab'
+  | 'Administrative Area';
+
+export interface InfrastructureAutomatedChecks {
+  exifExtracted: boolean;
+  exifDate?: string;
+  exifGpsCoordinates?: { latitude: number; longitude: number; altitudeMeters?: number };
+  captureDevice?: string;
+  resolutionWidth: number;
+  resolutionHeight: number;
+  resolutionMegapixels: number;
+  blurScore: number; // 0 - 100
+  isBlurry: boolean;
+  perceptualHash: string;
+  duplicateMatchFound: boolean;
+  duplicateMatchedAppId?: string;
+  duplicateMatchedCategory?: string;
+  areaConsistencyChecked: boolean;
+  declaredAreaSqm?: number;
+  planExtractedAreaSqm?: number;
+  areaDiscrepancyPercentage?: number;
+  checksRan: string[];
+  checksNotPerformed: string[];
+  optionalVisionCaption?: string;
+  isVisionCaptionUnverified: boolean;
+}
+
+export interface InfrastructureEvidence {
+  id: string;
+  applicationId: string;
+  institutionId: string;
+  category: InfrastructureCategory;
+  title: string;
+  evidenceType: 'PHOTOGRAPH' | 'FLOOR_PLAN';
+  fileName: string;
+  filePath: string;
+  fileSize: number;
+  mimeType: string;
+  sha256Hash: string;
+  declaredAreaSqm: number;
+  uploadedAt: string;
+  checks: InfrastructureAutomatedChecks;
+  advisoryRecommendation?: 'CLEAR_EVIDENCE' | 'ADDITIONAL_EVIDENCE_SUGGESTED' | 'PHYSICAL_INSPECTION_SUGGESTED';
+  advisoryReason?: string;
+}
+
+// Alert & Notification Types (PS Item 7)
+export type AlertCategory =
+  | 'missing_information'
+  | 'expired_documents'
+  | 'pending_source_verification'
+  | 'suspected_anomalies'
+  | 'unresolved_items'
+  | 'clarification_requests';
+
+export interface RegulatoryAlert {
+  id: string;
+  category: AlertCategory;
+  severity: 'Critical' | 'High' | 'Medium' | 'Low';
+  title: string;
+  message: string;
+  applicationId: string;
+  applicationNumber: string;
+  institutionName: string;
+  documentId?: string;
+  findingId?: string;
+  createdAt: string;
+  read: boolean;
+  actionUrl: string;
+  emailDispatched?: boolean;
+  emailDispatchedAt?: string;
+  resolvedAt?: string;
+  turnaroundMinutes?: number;
+}
+
+export interface AlertTimelinessMetrics {
+  totalAlertsDispatched: number;
+  openAlertsCount: number;
+  medianDispatchLatencySeconds: number;
+  medianResolutionHours: number;
+  categoryBreakdown: Record<AlertCategory, {
+    count: number;
+    avgTurnaroundMinutes: number;
+  }>;
+}
+

@@ -2,7 +2,9 @@ import React from 'react';
 import { DataStore } from '@/lib/store';
 import { RulesEngine } from '@/lib/rules/engine';
 import { Application, DocumentRecord, Finding } from '@/types';
-import { formatSeverity, formatStatus, maskIdentifier } from './helpers';
+import { formatSeverity, formatStatus, maskIdentifier, maskPII } from './helpers';
+import VerificationStatusLegend from '@/components/VerificationStatusLegend';
+import InfrastructureEvidencePanel from '@/components/InfrastructureEvidencePanel';
 
 interface CaseFileSectionProps {
   appId?: string;
@@ -64,14 +66,34 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                 </div>
                 <div className="w-px h-8 bg-slate-200" />
                 <div>
-                  <div className="text-[10px] uppercase font-bold text-slate-500">Collusion Risk</div>
-                  <div className="text-2xl font-black font-mono text-rose-600">{app.collusionRiskScore}%</div>
+                  <div className="text-[10px] uppercase font-bold text-slate-500">Linkage Risk</div>
+                  <div className="text-2xl font-black font-mono text-rose-600">{app.linkageRiskScore}%</div>
                 </div>
                 <div className="w-px h-8 bg-slate-200" />
                 <div>
                   <div className="text-[10px] uppercase font-bold text-slate-500">Total Findings</div>
                   <div className="text-2xl font-black font-mono text-amber-700">{findings.length}</div>
                 </div>
+              </div>
+            </div>
+
+            {/* Documented Statutory Readiness Formula Banner (Item 3) */}
+            <div className="p-3.5 bg-blue-50/70 border border-blue-200 rounded-xl text-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div>
+                <div className="font-bold text-blue-950 flex flex-wrap items-center gap-1.5">
+                  <span>Statutory Readiness Formula:</span>
+                  <span className="font-mono bg-white px-2 py-0.5 rounded border border-blue-300 text-blue-900 font-bold text-[11px]">
+                    Score = max(0, 100 - (25×Crit + 15×High + 8×Med + 3×Low))
+                  </span>
+                </div>
+                <p className="text-[11px] text-blue-800 mt-1">
+                  Active Deductions: {breakdown.criticalDeficiencies} Critical (-{breakdown.criticalDeficiencies * 25}), {breakdown.highDeficiencies} High (-{breakdown.highDeficiencies * 15}), {breakdown.mediumDeficiencies} Medium (-{breakdown.mediumDeficiencies * 8}), {breakdown.lowDeficiencies} Low (-{breakdown.lowDeficiencies * 3})
+                </p>
+              </div>
+              <div className="flex items-center gap-2 font-mono text-[11px] whitespace-nowrap self-start md:self-auto">
+                <span className="px-2 py-0.5 bg-white rounded border border-slate-200 text-slate-700">
+                  {breakdown.passedChecks}/{breakdown.totalChecks} Checks Passed
+                </span>
               </div>
             </div>
 
@@ -95,6 +117,80 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
               </div>
             </div>
 
+            {/* AICTE Institutional Records Source (Simulated Internal Registry) */}
+            {(() => {
+              const instRecord = DataStore.getInstitutionalRecord(app.institutionId);
+              if (!instRecord) return null;
+              return (
+                <div className="p-4 rounded-xl border border-indigo-200 bg-indigo-50/40 space-y-3 text-xs">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-indigo-100 pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-indigo-950 uppercase tracking-wide">
+                        AICTE Institutional Records Source
+                      </span>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-100 text-indigo-800 border border-indigo-300">
+                        SIMULATED INTERNAL SOURCE
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-slate-500 font-mono">
+                      Permanent ID: {instRecord.aictePermanentId}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="p-2.5 rounded-lg bg-white border border-indigo-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block">Prior EoA Status</span>
+                      <span className={`font-bold text-xs ${instRecord.priorEoAStatus === 'APPROVED' ? 'text-emerald-700' : 'text-amber-700'}`}>
+                        {instRecord.priorEoAStatus} {instRecord.priorEoAYear ? `(AY ${instRecord.priorEoAYear})` : ''}
+                      </span>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-white border border-indigo-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block">Approved Intake Baseline</span>
+                      <span className="font-mono font-bold text-slate-900 text-xs">
+                        {instRecord.approvedTotalIntake} Seats
+                      </span>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-white border border-indigo-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block">TER Payment Status</span>
+                      <span className={`font-bold text-xs ${instRecord.terPaymentStatus === 'PAID' ? 'text-emerald-700' : 'text-rose-700'}`}>
+                        {instRecord.terPaymentStatus} {instRecord.terTransactionReference ? `(${instRecord.terTransactionReference})` : ''}
+                      </span>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-white border border-indigo-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block">Internal Faculty Records</span>
+                      <span className="font-mono font-bold text-slate-900 text-xs">
+                        {instRecord.facultyRecords.length} Active Faculty
+                      </span>
+                    </div>
+                  </div>
+
+                  {instRecord.approvedProgrammes.length > 0 && (
+                    <div className="pt-1">
+                      <span className="text-[11px] font-bold text-slate-700 block mb-1">
+                        Sanctioned Programmes in Master Record:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {instRecord.approvedProgrammes.map((p, idx) => (
+                          <span key={idx} className="px-2 py-0.5 rounded bg-white border border-slate-200 text-[11px] text-slate-800 font-mono">
+                            {p.programme} ({p.level} - {p.approvedIntake} seats)
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {instRecord.deficiencyHistory.length > 0 && (
+                    <div className="pt-1 text-[11px] text-slate-600">
+                      <span className="font-bold text-slate-700">Historical Regulatory Record: </span>
+                      {instRecord.deficiencyHistory.map((d, idx) => (
+                        <span key={idx}>AY {d.academicYear}: {d.description} ({d.rectificationStatus})</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
             {/* Advisory Findings Stream */}
             <div className="space-y-4">
               <h3 className="text-lg font-bold text-slate-900 flex items-center justify-between border-b pb-2">
@@ -104,7 +200,7 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
 
               {findings.length === 0 ? (
                 <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-semibold">
-                  No automated non-compliance deficiencies or fraud anomalies flagged for this application.
+                  No automated non-compliance deficiencies or compliance anomalies flagged for this application.
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -129,17 +225,17 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                         </div>
                       </div>
 
-                      <h4 className="font-bold text-sm text-slate-900">{f.title}</h4>
-                      <p className="text-slate-700 leading-relaxed">{f.explanation}</p>
+                      <h4 className="font-bold text-sm text-slate-900">{maskPII(f.title)}</h4>
+                      <p className="text-slate-700 leading-relaxed">{maskPII(f.explanation)}</p>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-2 border-t border-slate-200 text-[11px]">
                         <div>
                           <strong className="text-slate-600 block">Evidence Locator:</strong>
-                          <span className="font-mono text-indigo-700">{f.evidenceLocator}</span>
+                          <span className="font-mono text-indigo-700">{maskPII(f.evidenceLocator)}</span>
                         </div>
                         <div>
                           <strong className="text-slate-600 block">Recommended Action:</strong>
-                          <span className="text-slate-800">{f.recommendedAction}</span>
+                          <span className="text-slate-800">{maskPII(f.recommendedAction)}</span>
                         </div>
                       </div>
 
@@ -159,6 +255,8 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
               <h3 className="text-lg font-bold text-slate-900 border-b pb-2">
                 Statutory Documents & Verification Passports ({documents.length})
               </h3>
+
+              <VerificationStatusLegend compact />
 
               <div className="space-y-6">
                 {documents.map((doc: DocumentRecord) => {
@@ -202,6 +300,12 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                             <span className="font-semibold text-slate-800">{doc.verificationSource || 'Internal Validation'}</span>
                           </div>
                           <div>
+                            <span className="text-slate-500">Extraction Engine:</span>{' '}
+                            <span className="font-mono text-[11px] font-semibold text-blue-800">
+                              {doc.extractionEngine || 'Baseline PDF Text Stream Extractor'}
+                            </span>
+                          </div>
+                          <div>
                             <span className="text-slate-500">Uploaded By:</span>{' '}
                             <span className="font-medium text-slate-800">{doc.versions[0]?.uploadedBy || 'Applicant'} on {new Date(doc.createdAt).toLocaleDateString()}</span>
                           </div>
@@ -223,12 +327,21 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                               </span>
                             </div>
                             <div>
+                              <span className="text-slate-500">Duplicate Score:</span>{' '}
+                              <span className={`font-mono font-bold ${(doc.forensicMetadata.duplicateConfidence || 0) > 0.5 ? 'text-purple-600' : 'text-slate-700'}`}>
+                                {((doc.forensicMetadata.duplicateConfidence || 0) * 100).toFixed(0)}%
+                              </span>
+                            </div>
+                            <div>
                               <span className="text-slate-500">Incremental Saves:</span>{' '}
                               <span className="font-semibold text-slate-800">{doc.forensicMetadata.incrementalSavesDetected ? 'DETECTED' : 'None'}</span>
                             </div>
                             <div>
                               <span className="text-slate-500">Metadata Anomaly:</span>{' '}
                               <span className="font-semibold text-slate-800">{doc.forensicMetadata.metadataAnomalyDetected ? 'DETECTED' : 'Clean'}</span>
+                            </div>
+                            <div className="col-span-2 text-[10px] text-slate-500 font-mono bg-slate-100 p-1.5 rounded">
+                              <strong>Formula:</strong> {doc.forensicMetadata.tamperScoreFormula || 'TamperScore = 0.40*saves + 0.30*producer + 0.16*font + 0.10*date + 0.02'}
                             </div>
                           </div>
                           {doc.forensicMetadata.pdfProducer && (
@@ -244,6 +357,78 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                           )}
                         </div>
                       </div>
+
+                      {/* Verification Passport Attempts */}
+                      {(() => {
+                        const attempts = DataStore.getVerificationAttempts(doc.id);
+                        return (
+                          <div className="border border-slate-200 rounded-xl p-4 bg-slate-50/50 space-y-3">
+                            <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                              <div>
+                                <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                                  Verification Passport History ({attempts.length} {attempts.length === 1 ? 'Attempt' : 'Attempts'})
+                                </h4>
+                                <p className="text-[11px] text-slate-500">
+                                  Cryptographic verification log with external state registries (simulated).
+                                </p>
+                              </div>
+                              <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-white border border-slate-300 text-slate-700">
+                                Protocol: Fail-Closed
+                              </span>
+                            </div>
+
+                            <div className="overflow-x-auto">
+                              <table className="w-full text-left text-xs border-collapse bg-white rounded-lg border border-slate-200 overflow-hidden">
+                                <thead>
+                                  <tr className="bg-slate-100 text-slate-700 border-b font-semibold text-[11px]">
+                                    <th className="p-2">Timestamp (UTC)</th>
+                                    <th className="p-2">Adapter Used</th>
+                                    <th className="p-2">Request / Response Summary</th>
+                                    <th className="p-2">Latency</th>
+                                    <th className="p-2">Resulting Status</th>
+                                    <th className="p-2">Officer Review Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-100 text-[11px]">
+                                  {attempts.map((att, idx) => (
+                                    <tr key={idx} className="hover:bg-slate-50/80">
+                                      <td className="p-2 font-mono text-slate-600 whitespace-nowrap">
+                                        {new Date(att.attemptTimestamp).toISOString().replace('T', ' ').substring(0, 19)}
+                                      </td>
+                                      <td className="p-2 font-medium text-slate-900">
+                                        {att.adapterName}
+                                      </td>
+                                      <td className="p-2 max-w-xs">
+                                        <div className="font-mono text-[10px] text-slate-500 truncate" title={att.requestSummary}>
+                                          {att.requestSummary || 'Payload submitted to registry'}
+                                        </div>
+                                        <div className={`font-semibold ${att.responseStatus === 'Source Unavailable' || att.responseStatus === 'Timeout / Degraded' ? 'text-amber-700' : att.responseStatus === 'Mismatch' ? 'text-rose-700' : 'text-slate-700'}`}>
+                                          {att.responseSummary || JSON.stringify(att.rawResponse)}
+                                        </div>
+                                      </td>
+                                      <td className="p-2 font-mono">
+                                        <span className={`px-1.5 py-0.5 rounded font-bold ${att.latencyMs && att.latencyMs > 2000 ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-slate-100 text-slate-700'}`}>
+                                          {att.latencyMs ? `${att.latencyMs}ms` : '280ms'}
+                                        </span>
+                                      </td>
+                                      <td className="p-2">
+                                        <span className={`px-2 py-0.5 rounded-full border text-[10px] font-bold ${formatStatus(att.responseStatus === 'Mismatch' ? 'Mismatch Detected' : att.responseStatus)}`}>
+                                          {att.responseStatus}
+                                        </span>
+                                      </td>
+                                      <td className="p-2">
+                                        <span className="font-medium text-[10px] text-slate-700 bg-slate-100 px-2 py-0.5 rounded">
+                                          {att.officerReviewStatus || 'Pending Review'}
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        );
+                      })()}
 
                       {/* Extracted Fields Table */}
                       {doc.extractedFields && doc.extractedFields.length > 0 && (
@@ -283,6 +468,15 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                   );
                 })}
               </div>
+            </div>
+
+            {/* Infrastructure Evidence & Vision-Lite Automated Checks (PS Item 6) */}
+            <div className="pt-4 border-t border-slate-200">
+              <InfrastructureEvidencePanel
+                applicationId={app.id}
+                evidence={DataStore.getInfrastructureEvidence(app.id)}
+                canUpload={false}
+              />
             </div>
           </article>
         );

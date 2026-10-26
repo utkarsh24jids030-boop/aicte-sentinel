@@ -33,7 +33,7 @@ function LoginFormContent() {
   const { login, register, resetPassword, user } = useAuth();
 
   const [mode, setMode] = useState<AuthMode>('LOGIN');
-  const [email, setEmail] = useState('officer@aicte-india.org');
+  const [email, setEmail] = useState('officer@sentinel-demo.example');
   const [password, setPassword] = useState('Password@123');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [fullName, setFullName] = useState('');
@@ -99,7 +99,7 @@ function LoginFormContent() {
         return;
       }
 
-      setSuccessMessage('Registration successful! Redirecting to Institutional Portal...');
+      setSuccessMessage('Registration successful. Redirecting to Institutional Portal...');
       setTimeout(() => {
         router.push(redirectParam || '/institution');
       }, 1000);
@@ -168,7 +168,7 @@ function LoginFormContent() {
               </div>
               
               <p className="text-xs text-slate-500 mb-5">
-                {mode === 'LOGIN' && 'Firebase authenticated single sign-on for institutional approvals & regulatory intelligence.'}
+                {mode === 'LOGIN' && 'Role-based evaluation portal with Firebase authentication for institutional approvals & regulatory intelligence.'}
                 {mode === 'REGISTER' && 'Create your institutional credentials to submit and track approval applications.'}
                 {mode === 'FORGOT_PASSWORD' && 'Enter your verified email to receive a secure Firebase recovery link.'}
               </p>
@@ -230,7 +230,7 @@ function LoginFormContent() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        placeholder="name@aicte-india.org"
+                        placeholder="name@sentinel-demo.example"
                         className="w-full text-xs pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:outline-hidden focus:ring-2 focus:ring-blue-600 focus:border-transparent text-slate-900"
                       />
                     </div>
@@ -454,8 +454,17 @@ function LoginFormContent() {
               </div>
             </div>
 
-            <div className="mt-6 text-[11px] text-slate-400 bg-amber-50 p-3 rounded-xl border border-amber-200 text-amber-900">
-              <strong>Tip:</strong> All accounts authenticate directly via Google Firebase with audit logging.
+            <div className="mt-6 text-[11px] bg-amber-50 p-3.5 rounded-xl border border-amber-200 text-amber-900 leading-relaxed space-y-1.5">
+              <div className="font-bold flex items-center gap-1.5 text-amber-950">
+                <AlertCircle className="w-3.5 h-3.5 text-amber-700 flex-shrink-0" />
+                <span>Prototype Deployment &amp; Security Disclosures</span>
+              </div>
+              <p>
+                <strong>Authentication Reality:</strong> Instant 1-click role switching and simulated session switching operate client-side for rapid SIH evaluation. Role switching on the demo is <em>not production authentication</em>. Production deployments require AICTE Single Sign-On (SSO) via Jan Parichay / DigiLocker / SAML 2.0 with hardware token MFA.
+              </p>
+              <p>
+                <strong>Data Storage &amp; Ephemerality:</strong> Active prototype data is held in an in-memory datastore. Demo state is <em>ephemeral on serverless hosting</em> (e.g. Vercel / serverless containers) and resets to baseline seed data on process recycling or cold starts. Production deployment requires a durable database (PostgreSQL via Prisma ORM) and object storage for files.
+              </p>
             </div>
           </div>
         </div>

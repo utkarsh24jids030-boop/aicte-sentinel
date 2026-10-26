@@ -6,7 +6,7 @@ const BASE = 'http://localhost:3000';
 const routesToTest = [
   { 
     path: '/preview', 
-    expected: ['AICTE Sentinel', 'Public Read-Only Preview Index', 'Risk-Ranked Officer Queue', 'Fraud Intelligence', 'Seeded Application Deep Dives'] 
+    expected: ['AICTE Sentinel', 'Public Read-Only Preview Index', 'Risk-Ranked Officer Queue', 'Compliance Intelligence', 'Seeded Application Deep Dives'] 
   },
   { 
     path: '/preview/all', 
@@ -15,7 +15,7 @@ const routesToTest = [
       'Nova Engineering College', 
       'Apex Polytechnic College', 
       'Sunrise Institute of Technology', 
-      'Collusion Radar', 
+      'Linkage Radar', 
       'Statutory Scrutiny Evaluation Report', 
       'EVC Inspection Briefs', 
       'Statutory Readiness Index', 
@@ -29,7 +29,7 @@ const routesToTest = [
   },
   { 
     path: '/preview/case/app-nova-002', 
-    expected: ['Nova Engineering College', 'AICTE/2026/NOV-9014', 'Malhotra_VTU_PhD_Degree.pdf', 'XXXXX9876Q', 'Tampering Score'] 
+    expected: ['Nova Engineering College', 'AICTE/2026/NOV-9014', 'Nova_Faculty_Qualification_Malhotra.pdf', 'XXXXX9999X', 'Tampering Score'] 
   },
   { 
     path: '/preview/case/app-apex-003', 
@@ -37,11 +37,11 @@ const routesToTest = [
   },
   { 
     path: '/preview/case/app-sunrise-001', 
-    expected: ['Sunrise Institute of Technology', 'AICTE/2026/SUN-8812', 'Sunrise_Registered_Land_Deed_2015.pdf', 'a1f893e3d489b0128cf7e9124401bbcd87234918237461829374012938471a2b'] 
+    expected: ['Sunrise Institute of Technology', 'AICTE/2026/SUN-8812', 'Sunrise_Land_Sale_Deed.pdf', '19cbc54d24ebf1b001d986484fd02ab70131fdc661fc8f040f9d646597422b01'] 
   },
   { 
     path: '/preview/radar', 
-    expected: ['Collusion Radar', 'SHARED_LAND', 'REUSED_FACULTY', 'Nova Engineering College', 'Apex Polytechnic College'] 
+    expected: ['Linkage Radar', 'SHARED_LAND', 'REUSED_FACULTY', 'Nova Engineering College', 'Apex Polytechnic College'] 
   },
   { 
     path: '/preview/scrutiny/app-nova-002', 
@@ -62,6 +62,22 @@ const routesToTest = [
   { 
     path: '/preview/audit', 
     expected: ['Cryptographically Hash-Chained Audit Trail', 'HASH-CHAIN 100% INTACT', '0000000000000000000000000000000000000000000000000000000000000000'] 
+  },
+  {
+    path: '/preview/metrics',
+    expected: ['Automated Scrutiny Engine Benchmark Metrics', 'Discrepancy-Identification Reliability', 'Estimated Reduction in Manual Processing Effort', 'ESTIMATE ONLY — NOT A MEASURED RESULT', 'Statutory Document Verification Per-Status Breakdown']
+  },
+  {
+    path: '/preview/safeguards',
+    expected: ['Role-Based Access Control (RBAC) Matrix', 'Non-Bypass Database & Registry Access Disclosures', 'Record-View Access Logging', 'Personally Identifiable Information (PII) Masking']
+  },
+  {
+    path: '/preview/conformance',
+    expected: ['Problem Statement SIH26261 Conformance Matrix', 'Honest Conformance Standard', 'Statutory Objectives & Governance', 'Document Forensics & Verification']
+  },
+  {
+    path: '/preview/validation-report/app-sunrise-001',
+    expected: ['INSTITUTIONAL VALIDATION REPORT', 'Sunrise Institute of Technology', 'AICTE/2026/SUN-8812', 'Missing Required Documents', 'Expired Documents']
   }
 ];
 
@@ -89,7 +105,7 @@ async function verifyAll() {
       }
 
       // Check mandatory public read-only banner
-      const hasBanner = html.includes('Public read-only preview. Synthetic data and mock verification adapters.');
+      const hasBanner = html.includes('Public read-only preview') && html.includes('PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT');
       if (!hasBanner) {
         console.error(`❌ [FAIL] ${item.path} is missing mandatory preview banner`);
         allPassed = false;

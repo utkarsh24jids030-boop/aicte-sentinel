@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Finding, FindingStatus } from '@/types';
 import StatusChip from './StatusChip';
+import { maskPII } from '@/lib/security/privacy';
 import { 
   AlertTriangle, 
   CheckCircle, 
@@ -79,11 +80,11 @@ export default function FindingCard({
       <div className="p-5">
         <h4 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
           <ShieldAlert className="w-4 h-4 text-amber-600 flex-shrink-0" />
-          <span>{finding.title}</span>
+          <span>{maskPII(finding.title)}</span>
         </h4>
 
         <p className="text-xs text-slate-700 leading-relaxed mb-4">
-          {finding.explanation}
+          {maskPII(finding.explanation)}
         </p>
 
         {/* Evidence Locator Box */}
@@ -101,14 +102,14 @@ export default function FindingCard({
             )}
           </div>
           <code className="text-xs text-slate-800 font-mono break-all">
-            {finding.evidenceLocator}
+            {maskPII(finding.evidenceLocator)}
           </code>
         </div>
 
         {/* Recommended Action */}
         <div className="bg-blue-50/60 rounded-lg border border-blue-200/60 p-3 text-xs text-blue-900">
           <strong className="font-semibold block mb-0.5">Recommended Rectification Action:</strong>
-          <span>{finding.recommendedAction}</span>
+          <span>{maskPII(finding.recommendedAction)}</span>
         </div>
 
         {/* Officer Review History if present */}

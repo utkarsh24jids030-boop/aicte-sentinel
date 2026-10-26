@@ -1,36 +1,72 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CollusionRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
+import { LinkageRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
 import StatusChip from './StatusChip';
+import { maskPII } from '@/lib/security/privacy';
 import { 
   Building2, 
-  Users, 
-  MapPin, 
-  FileCheck, 
-  FileText, 
-  AlertTriangle, 
   ShieldAlert, 
   Share2, 
   Info,
-  Filter,
+  ExternalLink,
   CheckCircle2,
-  ExternalLink
+  XCircle
 } from 'lucide-react';
 
-interface CollusionRadarGraphProps {
-  data: CollusionRadarData;
+interface LinkageRadarGraphProps {
+  data: LinkageRadarData;
   onSelectInstitution?: (institutionName: string) => void;
 }
 
-export default function CollusionRadarGraph({ data, onSelectInstitution }: CollusionRadarGraphProps) {
+export default function LinkageRadarGraph({ data, onSelectInstitution }: LinkageRadarGraphProps) {
+  const [edgesState, setEdgesState] = useState<RiskGraphEdge[]>(data.edges);
   const [selectedNode, setSelectedNode] = useState<RiskGraphNode | null>(data.nodes[1]); // Default to Nova
-  const [selectedEdge, setSelectedEdge] = useState<RiskGraphEdge | null>(data.edges[4]); // Default to Land conflict edge
+  const [selectedEdge, setSelectedEdge] = useState<RiskGraphEdge | null>(data.edges[4] || null); // Default to Land conflict edge
   const [filterType, setFilterType] = useState<string>('ALL');
 
+  // Dismissal form state
+  const [isDismissing, setIsDismissing] = useState(false);
+  const [dismissReason, setDismissReason] = useState('');
+  const [isSubmittingDismiss, setIsSubmittingDismiss] = useState(false);
+  const [dismissMessage, setDismissMessage] = useState<string | null>(null);
+
+  const handleDismissEdge = async () => {
+    if (!selectedEdge || !dismissReason.trim()) return;
+    setIsSubmittingDismiss(true);
+    setDismissMessage(null);
+    try {
+      const res = await fetch('/api/radar/dismiss', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          edgeId: selectedEdge.id,
+          reason: dismissReason.trim(),
+          officerId: 'officer-01',
+          officerName: 'Rajesh Sharma (Scrutiny Officer)'
+        })
+      });
+
+      const resData = await res.json();
+      if (res.ok && resData.edge) {
+        setEdgesState(prev => prev.map(e => e.id === selectedEdge.id ? resData.edge : e));
+        setSelectedEdge(resData.edge);
+        setIsDismissing(false);
+        setDismissReason('');
+        setDismissMessage('Linkage dismissed and logged to cryptographic audit trail.');
+      } else {
+        alert(resData.error || 'Failed to dismiss linkage.');
+      }
+    } catch (_err) {
+      alert('Error contacting server to record dismissal.');
+    } finally {
+      setIsSubmittingDismiss(false);
+    }
+  };
+
   // Filter nodes & edges
-  const filteredEdges = data.edges.filter(edge => {
-    if (filterType === 'CRITICAL') return edge.riskLevel === 'CRITICAL';
+  const filteredEdges = edgesState.filter(edge => {
+    if (filterType === 'CRITICAL') return edge.riskLevel === 'CRITICAL' && !edge.dismissed;
     if (filterType === 'LAND') return edge.relationType === 'SHARED_LAND';
     if (filterType === 'FACULTY') return edge.relationType === 'REUSED_FACULTY';
     if (filterType === 'CERTS') return edge.relationType === 'DUPLICATE_CERTIFICATE';
@@ -54,20 +90,20 @@ export default function CollusionRadarGraph({ data, onSelectInstitution }: Collu
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden flex flex-col">
-      {/* Top Bar with Collusion Risk Metrics & Filters */}
+      {/* Top Bar with Linkage Risk Metrics & Filters */}
       <div className="p-4 sm:p-5 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
               <Share2 className="w-5 h-5 text-rose-600" />
-              <span>Cross-Institution Collusion & Fraud Radar</span>
+              <span>Cross-Institution Linkage Radar</span>
             </h3>
             <span className="bg-rose-100 text-rose-800 text-xs font-bold px-2 py-0.5 rounded-full border border-rose-300">
-              Risk Score: {data.overallCollusionRiskScore}/100
+              Peak Network Linkage Risk: {data.overallLinkageRiskScore}%
             </span>
           </div>
           <p className="text-xs text-slate-500">
-            Automated entity-resolution graph detecting cross-institutional land double-pledging, duplicate faculty, and shared assets.
+            Automated entity-resolution graph identifying possible cross-institutional land parcel overlaps, concurrent faculty claims, and shared documents.
           </p>
         </div>
 
@@ -244,7 +280,7 @@ export default function CollusionRadarGraph({ data, onSelectInstitution }: Collu
           <div className="absolute bottom-3 left-4 bg-slate-900/80 backdrop-blur-xs border border-slate-800 rounded-lg p-2 text-[10px] text-slate-300 flex items-center gap-4 z-20">
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
-              <span>Critical Collusion Link</span>
+              <span>Critical Linkage Edge</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
@@ -264,18 +300,36 @@ export default function CollusionRadarGraph({ data, onSelectInstitution }: Collu
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-bold text-rose-600 uppercase tracking-wider flex items-center gap-1">
                   <ShieldAlert className="w-3.5 h-3.5" />
-                  <span>Collusion Edge Inspector</span>
+                  <span>Linkage Edge Inspector</span>
                 </span>
-                <StatusChip status={selectedEdge.riskLevel} size="sm" />
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200">
+                    Confidence: {Math.round((selectedEdge.confidence || 0.95) * 100)}%
+                  </span>
+                  <StatusChip status={selectedEdge.dismissed ? 'LOW' : selectedEdge.riskLevel} size="sm" />
+                </div>
               </div>
 
-              <h4 className="text-base font-bold text-slate-900 leading-snug">
-                {selectedEdge.label}
-              </h4>
+              <div>
+                <h4 className="text-base font-bold text-slate-900 leading-snug">
+                  {selectedEdge.label}
+                </h4>
+                <span className="text-[11px] font-mono font-semibold text-slate-500">
+                  Type: {selectedEdge.relationType}
+                </span>
+              </div>
+
+              {/* Plain-Language Reason */}
+              {selectedEdge.reason && (
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs space-y-1">
+                  <div className="font-semibold text-slate-700">Assessment Reason:</div>
+                  <p className="text-slate-600 leading-relaxed">{selectedEdge.reason}</p>
+                </div>
+              )}
 
               <div className="bg-rose-50 border border-rose-200 rounded-xl p-3.5 text-xs text-rose-950 space-y-1.5">
                 <div className="font-semibold text-rose-900">Evidence Details:</div>
-                <p className="leading-relaxed">{selectedEdge.evidenceDetails}</p>
+                <p className="leading-relaxed">{maskPII(selectedEdge.evidenceDetails)}</p>
               </div>
 
               <div className="text-xs space-y-2 border-t pt-3">
@@ -289,6 +343,70 @@ export default function CollusionRadarGraph({ data, onSelectInstitution }: Collu
                   ))}
                 </div>
               </div>
+
+              {/* Dismissal Status or Action */}
+              {selectedEdge.dismissed ? (
+                <div className="bg-emerald-50 border border-emerald-300 rounded-xl p-3 text-xs text-emerald-950 space-y-1.5">
+                  <div className="flex items-center gap-1.5 font-bold text-emerald-900">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <span>Linkage Dismissed by Officer</span>
+                  </div>
+                  <p className="text-emerald-800 leading-relaxed">
+                    <strong>Justification:</strong> {selectedEdge.dismissedReason}
+                  </p>
+                  <p className="text-[10px] text-emerald-700">
+                    Dismissed by {selectedEdge.dismissedBy} &bull; Recorded in Hash-Chained Audit Ledger
+                  </p>
+                </div>
+              ) : (
+                <div className="pt-2 border-t border-slate-200 space-y-2">
+                  {dismissMessage && (
+                    <div className="p-2 text-xs rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>{dismissMessage}</span>
+                    </div>
+                  )}
+
+                  {!isDismissing ? (
+                    <button
+                      onClick={() => setIsDismissing(true)}
+                      className="w-full py-2 px-3 border border-slate-300 hover:border-slate-400 bg-white hover:bg-slate-50 rounded-lg text-xs font-semibold text-slate-700 transition flex items-center justify-center gap-1.5 shadow-2xs"
+                    >
+                      <XCircle className="w-4 h-4 text-slate-500" />
+                      <span>Dismiss Link with Reason</span>
+                    </button>
+                  ) : (
+                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2">
+                      <label className="block text-xs font-semibold text-slate-800">
+                        Officer Justification for Link Dismissal:
+                      </label>
+                      <textarea
+                        value={dismissReason}
+                        onChange={(e) => setDismissReason(e.target.value)}
+                        rows={3}
+                        placeholder="Enter official justification (e.g. valid partition deed registered with local revenue authority)..."
+                        className="w-full text-xs p-2 rounded-md border border-slate-300 focus:outline-hidden focus:ring-1 focus:ring-blue-500 bg-white"
+                      />
+                      <div className="flex items-center gap-2 justify-end">
+                        <button
+                          onClick={() => { setIsDismissing(false); setDismissReason(''); }}
+                          className="px-2.5 py-1 text-xs text-slate-600 hover:text-slate-800"
+                          disabled={isSubmittingDismiss}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={handleDismissEdge}
+                          disabled={isSubmittingDismiss || !dismissReason.trim()}
+                          className="px-3 py-1 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white rounded-md text-xs font-semibold shadow-2xs transition"
+                        >
+                          {isSubmittingDismiss ? 'Recording...' : 'Confirm Dismissal'}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="bg-amber-50 rounded-xl p-3 border border-amber-200 text-xs text-amber-900">
                 <strong className="block mb-1 font-semibold">Regulatory Recommendation:</strong>
@@ -307,7 +425,7 @@ export default function CollusionRadarGraph({ data, onSelectInstitution }: Collu
 
               <div>
                 <h4 className="text-base font-bold text-slate-900">{selectedNode.label}</h4>
-                <p className="text-xs text-slate-500 mt-0.5">{selectedNode.subLabel}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{maskPII(selectedNode.subLabel)}</p>
               </div>
 
               <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 text-xs space-y-2">
@@ -316,7 +434,7 @@ export default function CollusionRadarGraph({ data, onSelectInstitution }: Collu
                   <div key={key} className="flex justify-between py-1 border-b border-slate-200/60 last:border-0">
                     <span className="text-slate-500 capitalize">{key.replace(/([A-Z])/g, ' $1')}:</span>
                     <span className="font-medium text-slate-800 text-right max-w-[180px] truncate">
-                      {Array.isArray(val) ? val.join(', ') : String(val)}
+                      {Array.isArray(val) ? val.map(v => maskPII(String(v))).join(', ') : maskPII(String(val))}
                     </span>
                   </div>
                 ))}
@@ -327,7 +445,7 @@ export default function CollusionRadarGraph({ data, onSelectInstitution }: Collu
                   onClick={() => onSelectInstitution(selectedNode.label)}
                   className="w-full py-2 bg-[#002b66] hover:bg-[#001f4d] text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 shadow-2xs transition-all"
                 >
-                  <span>Filter Collusion to this Campus</span>
+                  <span>Filter Linkages to this Campus</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </button>
               )}
@@ -335,12 +453,12 @@ export default function CollusionRadarGraph({ data, onSelectInstitution }: Collu
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-center text-slate-400 py-12">
               <Share2 className="w-10 h-10 mb-2 stroke-1" />
-              <p className="text-xs">Click any node or link in the radar to inspect fraudulent relationships.</p>
+              <p className="text-xs">Click any node or link in the radar to inspect entity relationships.</p>
             </div>
           )}
 
           <div className="mt-6 pt-3 border-t border-slate-100 text-[11px] text-slate-400 text-center">
-            AICTE Cross-Institutional Forensic Intelligence Engine v2026.3
+            AICTE Cross-Institutional Compliance Intelligence Engine v2026.3
           </div>
         </div>
       </div>

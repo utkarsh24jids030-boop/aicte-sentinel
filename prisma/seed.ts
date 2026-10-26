@@ -23,7 +23,8 @@ async function main() {
       address: 'Survey No. 144/2, Sarjapur Outer Ring Road, Bengaluru - 560035',
       landSurveyNumber: '144/2',
       landAreaAcres: 4.85,
-      contactEmail: 'admissions@sunrise.edu',
+      locationType: 'urban',
+      contactEmail: 'admissions@sunrise-demo.example',
       contactPhone: '+91 80 2844 9100',
       establishedYear: 2012,
       status: 'SCRUTINY_PENDING'
@@ -43,6 +44,7 @@ async function main() {
       address: 'Survey No. 289/1A, Phase-3 Hinjawadi Infotech Park, Pune - 411057',
       landSurveyNumber: '289/1A',
       landAreaAcres: 3.2,
+      locationType: 'semi-urban',
       contactEmail: 'contact@novaengg.ac.in',
       contactPhone: '+91 20 6711 4400',
       establishedYear: 2016,
@@ -63,6 +65,7 @@ async function main() {
       address: 'Survey No. 289/1A (Plot-B), Hinjawadi Phase-3, Pune - 411057',
       landSurveyNumber: '289/1A',
       landAreaAcres: 2.1,
+      locationType: 'semi-urban',
       contactEmail: 'office@apexpolytechnic.edu.in',
       contactPhone: '+91 20 8920 1199',
       establishedYear: 2025,
@@ -72,11 +75,11 @@ async function main() {
 
   // 2. Seed Demo Users
   await prisma.user.upsert({
-    where: { email: 'institution@sunrise.edu' },
+    where: { email: 'institution@sunrise-demo.example' },
     update: {},
     create: {
       id: 'user-inst-sunrise',
-      email: 'institution@sunrise.edu',
+      email: 'institution@sunrise-demo.example',
       name: 'Dr. Anand Kumar',
       role: 'INSTITUTION',
       designation: 'Principal & Authorized Representative',
@@ -85,23 +88,23 @@ async function main() {
   });
 
   await prisma.user.upsert({
-    where: { email: 'officer@aicte-india.org' },
+    where: { email: 'officer@sentinel-demo.example' },
     update: {},
     create: {
       id: 'user-officer-rao',
-      email: 'officer@aicte-india.org',
+      email: 'officer@sentinel-demo.example',
       name: 'Smt. Priyadarshini Rao',
       role: 'OFFICER',
-      designation: 'Senior Scrutiny Officer (Bureau of Approvals)'
+      designation: 'Senior Scrutiny Officer (Regulation Bureau)'
     }
   });
 
   await prisma.user.upsert({
-    where: { email: 'inspector@aicte-evc.gov.in' },
+    where: { email: 'inspector@sentinel-demo.example' },
     update: {},
     create: {
       id: 'user-evc-chandran',
-      email: 'inspector@aicte-evc.gov.in',
+      email: 'inspector@sentinel-demo.example',
       name: 'Prof. Harish Chandran',
       role: 'EVC_INSPECTOR',
       designation: 'EVC Expert Committee Lead & Senior Assessor'
@@ -109,11 +112,11 @@ async function main() {
   });
 
   await prisma.user.upsert({
-    where: { email: 'admin@aicte-india.org' },
+    where: { email: 'admin@sentinel-demo.example' },
     update: {},
     create: {
       id: 'user-admin-singh',
-      email: 'admin@aicte-india.org',
+      email: 'admin@sentinel-demo.example',
       name: 'Vikramaditya Singh',
       role: 'ADMIN',
       designation: 'AICTE Sentinel Lead System Administrator'
@@ -121,11 +124,11 @@ async function main() {
   });
 
   await prisma.user.upsert({
-    where: { email: 'auditor@cag.gov.in' },
+    where: { email: 'auditor@sentinel-demo.example' },
     update: {},
     create: {
       id: 'user-auditor-sundaram',
-      email: 'auditor@cag.gov.in',
+      email: 'auditor@sentinel-demo.example',
       name: 'Meenakshi Sundaram',
       role: 'AUDITOR',
       designation: 'Independent Regulatory & Vigilance Auditor'
@@ -144,7 +147,7 @@ async function main() {
       academicYear: '2026-2027',
       status: 'Under_Scrutiny',
       readinessScore: 75,
-      collusionRiskScore: 15,
+      linkageRiskScore: 15,
       riskTier: 'Medium',
       programmes: JSON.stringify(['Computer Science & Engg (180)', 'Electronics & Comm (120)', 'Mechanical Engg (60)']),
       currentIntake: 360,
@@ -164,7 +167,7 @@ async function main() {
       academicYear: '2026-2027',
       status: 'Deficiency_Communicated',
       readinessScore: 45,
-      collusionRiskScore: 68,
+      linkageRiskScore: 68,
       riskTier: 'High',
       programmes: JSON.stringify(['Computer Science & Engg (240)', 'AI & Data Science (120)', 'Civil Engg (60)']),
       currentIntake: 360,
@@ -184,7 +187,7 @@ async function main() {
       academicYear: '2026-2027',
       status: 'EVC_Inspection_Recommended',
       readinessScore: 25,
-      collusionRiskScore: 92,
+      linkageRiskScore: 92,
       riskTier: 'Critical',
       programmes: JSON.stringify(['Diploma in Computer Tech (120)', 'Diploma in Mechanical (60)']),
       currentIntake: 0,
@@ -193,7 +196,7 @@ async function main() {
     }
   });
 
-  console.log('✓ Database seeded successfully with 3 institutions and 3 demo fraud/compliance cases!');
+  console.log('✓ Database seeded successfully with 3 institutions and 3 demo scrutiny cases.');
 }
 
 main()

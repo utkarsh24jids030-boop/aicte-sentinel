@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { DataStore } from '@/lib/store';
 import { formatSeverity, formatStatus } from './helpers';
 
@@ -11,7 +10,7 @@ export default function OfficerQueueSection() {
       <div className="border-b border-slate-200 pb-4">
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">
-            Bureau of Approvals
+            Regulation Bureau
           </span>
           <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
             Officer Scrutiny Queue
@@ -21,7 +20,7 @@ export default function OfficerQueueSection() {
           Risk-Ranked Institutional Approval Applications
         </h2>
         <p className="text-sm text-slate-600 mt-1">
-          Automated multi-factor risk triage ordering applications by statutory deficiency severity and cross-institutional fraud probability.
+          Automated multi-factor risk triage ordering applications by statutory deficiency severity and cross-institutional linkage risk.
         </p>
       </div>
 
@@ -34,7 +33,7 @@ export default function OfficerQueueSection() {
               <th className="p-3">Type</th>
               <th className="p-3">Intake (Cur / Prop)</th>
               <th className="p-3">Readiness Score</th>
-              <th className="p-3">Collusion Risk</th>
+              <th className="p-3">Linkage Risk</th>
               <th className="p-3">Risk Tier</th>
               <th className="p-3">Status</th>
               <th className="p-3">Findings</th>
@@ -74,7 +73,7 @@ export default function OfficerQueueSection() {
                     </div>
                   </td>
                   <td className="p-3 font-mono font-bold text-slate-800">
-                    {app.collusionRiskScore}%
+                    {app.linkageRiskScore}%
                   </td>
                   <td className="p-3">
                     <span className={`px-2 py-0.5 rounded-full border text-[11px] font-bold ${formatSeverity(app.riskTier)}`}>
@@ -87,7 +86,9 @@ export default function OfficerQueueSection() {
                     </span>
                   </td>
                   <td className="p-3">
-                    <div className="font-semibold text-slate-800">{findings.length} findings</div>
+                    <div className="font-semibold text-slate-800">
+                      {findings.length} {findings.length === 1 ? 'finding' : 'findings'}
+                    </div>
                     {criticalCount > 0 && (
                       <div className="text-[11px] font-bold text-rose-600">
                         {criticalCount} Critical

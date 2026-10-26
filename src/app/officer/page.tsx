@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
@@ -28,11 +28,7 @@ export default function OfficerDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchApplications();
-  }, []);
-
-  const fetchApplications = async () => {
+  const fetchApplications = useCallback(async () => {
     setIsLoading(true);
     try {
       const res = await fetch('/api/applications');
@@ -41,7 +37,11 @@ export default function OfficerDashboard() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchApplications();
+  }, [fetchApplications]);
 
   // Filtered applications
   const filteredApps = applications.filter(app => {
@@ -70,17 +70,20 @@ export default function OfficerDashboard() {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
-                Bureau of Approvals • Central Scrutiny Desk
+                Regulation Bureau • Central Scrutiny Desk
               </span>
               <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
                 AICTE HQ New Delhi
+              </span>
+              <span className="bg-slate-100 text-slate-700 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border border-slate-300">
+                Evaluation As-Of: 01 Feb 2026
               </span>
             </div>
             <h1 className="text-2xl font-bold text-slate-900 mt-1">
               Risk-Ranked Approval Scrutiny Queue
             </h1>
             <p className="text-xs text-slate-500">
-              Applications ranked by forensic anomaly likelihood, collusion proximity, and regulatory deficiency score.
+              Applications ranked by forensic anomaly likelihood, cross-institution linkage proximity, and regulatory deficiency score.
             </p>
           </div>
 
@@ -90,7 +93,7 @@ export default function OfficerDashboard() {
               className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-2xs flex items-center gap-1.5 transition-colors"
             >
               <Radar className="w-4 h-4" />
-              <span>Open Collusion Radar</span>
+              <span>Open Linkage Radar</span>
             </Link>
           </div>
         </div>
@@ -212,9 +215,9 @@ export default function OfficerDashboard() {
                   </div>
 
                   <div className="text-center min-w-[90px]">
-                    <div className="text-xs text-slate-400 font-medium mb-0.5">Collusion Risk</div>
-                    <div className={`text-xl font-extrabold ${app.collusionRiskScore > 70 ? 'text-rose-600' : app.collusionRiskScore > 40 ? 'text-amber-600' : 'text-slate-600'}`}>
-                      {app.collusionRiskScore}<span className="text-xs font-normal text-slate-400">/100</span>
+                    <div className="text-xs text-slate-400 font-medium mb-0.5">Linkage Risk</div>
+                    <div className={`text-xl font-extrabold ${app.linkageRiskScore > 70 ? 'text-rose-600' : app.linkageRiskScore > 40 ? 'text-amber-600' : 'text-slate-600'}`}>
+                      {app.linkageRiskScore}<span className="text-xs font-normal text-slate-400">/100</span>
                     </div>
                   </div>
 

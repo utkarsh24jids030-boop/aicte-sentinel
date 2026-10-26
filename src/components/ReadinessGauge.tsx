@@ -4,10 +4,9 @@ import { ShieldCheck, AlertOctagon, AlertCircle, AlertTriangle, CheckCircle } fr
 
 interface ReadinessGaugeProps {
   readiness: ReadinessBreakdown;
-  size?: 'sm' | 'md' | 'lg';
 }
 
-export default function ReadinessGauge({ readiness, size = 'md' }: ReadinessGaugeProps) {
+export default function ReadinessGauge({ readiness }: ReadinessGaugeProps) {
   const { score, criticalDeficiencies, highDeficiencies, mediumDeficiencies, lowDeficiencies, passedChecks, totalChecks } = readiness;
 
   let scoreColor = 'text-emerald-600';
@@ -119,6 +118,19 @@ export default function ReadinessGauge({ readiness, size = 'md' }: ReadinessGaug
             <div className="text-[10px] text-emerald-600 mt-0.5">Compliant</div>
           </div>
         </div>
+      </div>
+
+      {/* Explicit Documented Statutory Readiness Formula (Item 3) */}
+      <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between text-[11px] text-slate-500 gap-2">
+        <span className="font-semibold text-slate-700">
+          Statutory Scoring Formula:
+          <code className="ml-1.5 px-2 py-0.5 rounded bg-blue-50 border border-blue-200 text-blue-900 font-mono text-[11px] font-bold">
+            Score = max(0, 100 - (25×Crit + 15×High + 8×Med + 3×Low))
+          </code>
+        </span>
+        <span className="text-slate-500 font-mono text-[11px]">
+          Deductions: {criticalDeficiencies} Crit (-{criticalDeficiencies * 25}), {highDeficiencies} High (-{highDeficiencies * 15}), {mediumDeficiencies} Med (-{mediumDeficiencies * 8}), {lowDeficiencies} Low (-{lowDeficiencies * 3})
+        </span>
       </div>
     </div>
   );

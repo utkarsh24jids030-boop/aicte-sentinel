@@ -1,18 +1,20 @@
 'use client';
 
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect, useCallback, use } from 'react';
 import Link from 'next/link';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
 import ReadinessGauge from '@/components/ReadinessGauge';
 import StatusChip from '@/components/StatusChip';
 import DocumentViewerModal from '@/components/DocumentViewerModal';
+import InfrastructureEvidencePanel from '@/components/InfrastructureEvidencePanel';
 import { 
   Application, 
   DocumentRecord, 
   DocumentType, 
   ReadinessBreakdown, 
-  Finding 
+  Finding,
+  InfrastructureEvidence
 } from '@/types';
 import { 
   Building2, 
@@ -41,6 +43,7 @@ export default function InstitutionApplicationDetailPage({
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
   const [readiness, setReadiness] = useState<ReadinessBreakdown | null>(null);
   const [findings, setFindings] = useState<Finding[]>([]);
+  const [infrastructureEvidence, setInfrastructureEvidence] = useState<InfrastructureEvidence[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<DocumentRecord | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -51,11 +54,58 @@ export default function InstitutionApplicationDetailPage({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
-  useEffect(() => {
-    loadData();
-  }, [id]);
+  // Rectification Flow State (Item 5)
+  const [showRectifyModal, setShowRectifyModal] = useState(false);
+  const [rectifyRuleId, setRectifyRuleId] = useState('');
+  const [rectifyRuleName, setRectifyRuleName] = useState('');
+  const [rectifyDocType, setRectifyDocType] = useState<DocumentType>('Fire Safety Certificate');
+  const [rectifyExplanation, setRectifyExplanation] = useState('');
+  const [rectifyFileName, setRectifyFileName] = useState('');
+  const [isRectifying, setIsRectifying] = useState(false);
+  const [rectificationFeedback, setRectificationFeedback] = useState<{
+    beforeStatus: string;
+    afterStatus: string;
+    beforeReadiness: number;
+    afterReadiness: number;
+  } | null>(null);
 
-  const loadData = async () => {
+  const handleRectifySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!rectifyExplanation.trim()) {
+      alert('Formal explanation is required to rectify deficiency.');
+      return;
+    }
+    setIsRectifying(true);
+    try {
+      const res = await fetch(`/api/applications/${id}/rectify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ruleId: rectifyRuleId,
+          documentType: rectifyDocType,
+          explanation: rectifyExplanation,
+          replacementFileName: rectifyFileName || `${rectifyDocType.replace(/\s+/g, '_')}_Renewal_2026.pdf`
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setShowRectifyModal(false);
+        setRectifyExplanation('');
+        setRectifyFileName('');
+        setRectificationFeedback(data.beforeAfter);
+        await loadData();
+      } else {
+        alert(data.error || 'Failed to submit rectification.');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error submitting rectification.');
+    } finally {
+      setIsRectifying(false);
+    }
+  };
+
+  const loadData = useCallback(async () => {
     setIsLoading(true);
     try {
       const res = await fetch(`/api/applications/${id}`);
@@ -65,11 +115,16 @@ export default function InstitutionApplicationDetailPage({
         setDocuments(data.documents || []);
         setReadiness(data.readiness || null);
         setFindings(data.findings || []);
+        setInfrastructureEvidence(data.infrastructureEvidence || []);
       }
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   const handleUploadDocument = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,14 +145,17 @@ export default function InstitutionApplicationDetailPage({
       });
 
       const data = await res.json();
-      if (data.success) {
+      if (res.ok && data.success) {
         setShowUploadModal(false);
         setSelectedFile(null);
         setUploadTitle('');
         await loadData();
+      } else {
+        alert(data.error || 'Document upload failed. Please verify format and size.');
       }
     } catch (e) {
       console.error(e);
+      alert('Network or server error during upload.');
     } finally {
       setIsUploading(false);
     }
@@ -178,7 +236,15 @@ export default function InstitutionApplicationDetailPage({
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href={`/institution/applications/${application.id}/validation-report`}
+              className="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold border border-slate-300 shadow-2xs flex items-center gap-1.5 transition-colors"
+            >
+              <FileText className="w-4 h-4 text-blue-700" />
+              <span>Validation Report (Printable)</span>
+            </Link>
+
             <button
               onClick={() => setShowUploadModal(true)}
               className="px-4 py-2.5 bg-[#002b66] hover:bg-[#001f4d] text-white rounded-xl text-xs font-bold shadow-2xs hover:shadow-md transition-all flex items-center gap-1.5"
@@ -198,6 +264,29 @@ export default function InstitutionApplicationDetailPage({
             )}
           </div>
         </div>
+
+        {/* Rectification Feedback Banner (Item 5) */}
+        {rectificationFeedback && (
+          <div className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-xs text-emerald-950 flex items-start justify-between gap-3 shadow-xs">
+            <div>
+              <div className="font-bold flex items-center gap-1.5 text-emerald-900 mb-1">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>Deficiency Rectification Submitted & Validation Re-evaluated</span>
+              </div>
+              <p className="text-emerald-800">
+                Document status: <span className="font-bold line-through">{rectificationFeedback.beforeStatus}</span> &rarr; <span className="font-bold text-emerald-900">{rectificationFeedback.afterStatus}</span>.
+                Readiness score: <span className="font-mono font-bold">{rectificationFeedback.beforeReadiness}/100</span> &rarr; <span className="font-mono font-bold text-emerald-900">{rectificationFeedback.afterReadiness}/100</span>.
+                Logged in audit trail.
+              </p>
+            </div>
+            <button 
+              onClick={() => setRectificationFeedback(null)}
+              className="text-emerald-700 hover:text-emerald-900 font-bold text-base leading-none"
+            >
+              &times;
+            </button>
+          </div>
+        )}
 
         {/* Readiness Score Component */}
         {readiness && (
@@ -236,14 +325,16 @@ export default function InstitutionApplicationDetailPage({
 
                   <button
                     onClick={() => {
-                      if (def.documentType) setUploadDocType(def.documentType);
-                      setUploadTitle(`Rectified ${def.ruleName}`);
-                      setShowUploadModal(true);
+                      setRectifyRuleId(def.ruleId);
+                      setRectifyRuleName(def.ruleName);
+                      if (def.documentType) setRectifyDocType(def.documentType);
+                      setRectifyFileName(`${(def.documentType || 'Document').replace(/\s+/g, '_')}_Rectified_Renewal.pdf`);
+                      setShowRectifyModal(true);
                     }}
-                    className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 flex-shrink-0"
+                    className="px-3.5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 flex-shrink-0 shadow-2xs hover:shadow-sm transition-all"
                   >
                     <Upload className="w-3.5 h-3.5" />
-                    <span>Upload Rectification</span>
+                    <span>Provide Explanation & Rectify</span>
                   </button>
                 </div>
               ))}
@@ -287,6 +378,11 @@ export default function InstitutionApplicationDetailPage({
                       <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
                         {doc.documentType}
                       </span>
+                      {doc.versions && doc.versions.length > 0 && (
+                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-bold border border-blue-200">
+                          v{doc.versions.length + 1} (Rectified)
+                        </span>
+                      )}
                     </div>
                     <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-500 mt-1">
                       <span>{doc.fileName}</span>
@@ -324,6 +420,16 @@ export default function InstitutionApplicationDetailPage({
           </div>
         </div>
 
+        {/* Infrastructure Evidence & Vision-Lite Automated Checks (PS Item 6) */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
+          <InfrastructureEvidencePanel
+            applicationId={id}
+            evidence={infrastructureEvidence}
+            canUpload={true}
+            onEvidenceUploaded={loadData}
+          />
+        </div>
+
       </main>
 
       {/* Document Upload Modal */}
@@ -332,7 +438,7 @@ export default function InstitutionApplicationDetailPage({
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
             <h3 className="text-base font-bold text-slate-900 mb-1">Upload Regulatory Document</h3>
             <p className="text-xs text-slate-500 mb-4">
-              File will be assigned an immutable SHA-256 hash, extracted with OCR, and checked for forensic integrity.
+              File will be assigned a tamper-evident SHA-256 hash, extracted with OCR, and checked for forensic integrity.
             </p>
 
             <form onSubmit={handleUploadDocument} className="space-y-4">
@@ -383,7 +489,7 @@ export default function InstitutionApplicationDetailPage({
                   onChange={(e) => setSelectedFile(e.target.files ? e.target.files[0] : null)}
                   className="w-full text-xs p-2 rounded-xl border border-dashed border-slate-300 text-slate-700 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
-                <span className="text-[11px] text-slate-400 mt-1 block">Supported formats: PDF, JPG, PNG (Max 15 MB)</span>
+                <span className="text-[11px] text-slate-400 mt-1 block">Supported formats: PDF, JPG, PNG (Max 10 MB)</span>
               </div>
 
               <div className="flex items-center justify-end gap-2 pt-3 border-t">
@@ -400,6 +506,81 @@ export default function InstitutionApplicationDetailPage({
                   className="px-5 py-2 rounded-lg text-xs font-bold bg-[#002b66] hover:bg-[#001f4d] text-white shadow-2xs flex items-center gap-1.5 disabled:opacity-50"
                 >
                   {isUploading ? 'Ingesting & Hashing...' : 'Upload & Compute Hash'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Rectification Modal (Item 5) */}
+      {showRectifyModal && (
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-800">
+                {rectifyRuleId}
+              </span>
+              <h3 className="text-base font-bold text-slate-900">Deficiency Rectification Submission</h3>
+            </div>
+            <p className="text-xs text-slate-500 mb-4">
+              Submit your formal institutional explanation and upload a replacement document. All versions, re-evaluated readiness, and before/after statuses will be recorded in the audit trail.
+            </p>
+
+            <form onSubmit={handleRectifySubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Target Statutory Requirement
+                </label>
+                <div className="text-xs font-semibold text-slate-800 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                  {rectifyRuleName} ({rectifyDocType})
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Institutional Explanation & Justification <span className="text-rose-500">*</span>
+                </label>
+                <textarea
+                  required
+                  rows={3}
+                  value={rectifyExplanation}
+                  onChange={(e) => setRectifyExplanation(e.target.value)}
+                  placeholder="Provide detailed statutory explanation (e.g. Chief Fire Officer renewed certificate on 2026-01-28; inspection compliance fulfilled)..."
+                  className="w-full text-xs p-2.5 rounded-xl border border-slate-300 text-slate-900 leading-relaxed focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                  Replacement Document Artifact Name / Scan
+                </label>
+                <input
+                  type="text"
+                  value={rectifyFileName}
+                  onChange={(e) => setRectifyFileName(e.target.value)}
+                  placeholder="e.g. Sunrise_Fire_Safety_NOC_Renewal_2026.pdf"
+                  className="w-full text-xs p-2.5 rounded-xl border border-slate-300 text-slate-900"
+                />
+                <span className="text-[11px] text-slate-400 mt-1 block">
+                  A replacement cryptographic SHA-256 hash will be generated and archived as a new version.
+                </span>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-3 border-t">
+                <button
+                  type="button"
+                  onClick={() => setShowRectifyModal(false)}
+                  className="px-4 py-2 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isRectifying}
+                  className="px-5 py-2 rounded-lg text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-2xs flex items-center gap-1.5 disabled:opacity-50"
+                >
+                  {isRectifying ? 'Submitting & Re-validating...' : 'Submit Rectification & Re-validate'}
                 </button>
               </div>
             </form>

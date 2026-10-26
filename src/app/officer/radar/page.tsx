@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
-import CollusionRadarGraph from '@/components/CollusionRadarGraph';
-import { CollusionRadarData } from '@/types';
-import { Radar, RefreshCw, AlertTriangle, ShieldAlert, ArrowLeft } from 'lucide-react';
+import LinkageRadarGraph from '@/components/LinkageRadarGraph';
+import { LinkageRadarData } from '@/types';
+import { Radar, RefreshCw, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 
@@ -14,15 +13,11 @@ function RadarContent() {
   const searchParams = useSearchParams();
   const instQuery = searchParams.get('institution') || '';
 
-  const [radarData, setRadarData] = useState<CollusionRadarData | null>(null);
+  const [radarData, setRadarData] = useState<LinkageRadarData | null>(null);
   const [selectedInst, setSelectedInst] = useState<string>(instQuery);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchRadarData(selectedInst);
-  }, [selectedInst]);
-
-  const fetchRadarData = async (inst: string) => {
+  const fetchRadarData = useCallback(async (inst: string) => {
     setIsLoading(true);
     try {
       const url = inst ? `/api/radar?institution=${encodeURIComponent(inst)}` : '/api/radar';
@@ -32,7 +27,11 @@ function RadarContent() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchRadarData(selectedInst);
+  }, [selectedInst, fetchRadarData]);
 
   return (
     <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
@@ -49,7 +48,7 @@ function RadarContent() {
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
               <Radar className="w-6 h-6 text-rose-600" />
-              <span>Cross-Institution Collusion & Fraud Radar</span>
+              <span>Cross-Institution Linkage Radar</span>
             </h1>
           </div>
           <p className="text-xs text-slate-500 mt-1">
@@ -78,7 +77,7 @@ function RadarContent() {
           </div>
         </div>
       ) : (
-        <CollusionRadarGraph
+        <LinkageRadarGraph
           data={radarData}
           onSelectInstitution={(instName) => setSelectedInst(instName)}
         />
@@ -87,11 +86,10 @@ function RadarContent() {
   );
 }
 
-export default function CollusionRadarPage() {
+export default function LinkageRadarPage() {
   return (
     <ProtectedRoute allowedRoles={['OFFICER', 'ADMIN', 'AUDITOR']}>
       <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
-        <DemoBanner />
         <Navbar />
         <Suspense fallback={
           <div className="flex-1 flex items-center justify-center">

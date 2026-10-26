@@ -76,9 +76,9 @@ export class EvcCopilotEngine {
     if (app.institutionName.includes('Nova') || app.institutionName.includes('Apex')) {
       flaggedFacultyToInterview.push({
         name: 'Dr. Vikram Malhotra',
-        pan: 'XYZPK9876Q',
+        pan: 'XXXXX9999X',
         declaredDesignation: app.institutionName.includes('Nova') ? 'Professor (Mechanical)' : 'Principal / Director',
-        redFlagReason: 'Concurrent active employment claim at another AICTE campus! Verify biometric attendance log, form 16, and physical presence.'
+        redFlagReason: 'Concurrent active employment claim at another AICTE campus. Verify biometric attendance log, form 16, and physical presence.'
       });
     }
 

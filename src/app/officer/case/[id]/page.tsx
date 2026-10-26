@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect, useCallback, use } from 'react';
 import Link from 'next/link';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
@@ -8,12 +8,14 @@ import ReadinessGauge from '@/components/ReadinessGauge';
 import StatusChip from '@/components/StatusChip';
 import FindingCard from '@/components/FindingCard';
 import DocumentViewerModal from '@/components/DocumentViewerModal';
+import InfrastructureEvidencePanel from '@/components/InfrastructureEvidencePanel';
 import { 
   Application, 
   DocumentRecord, 
   Finding, 
   ReadinessBreakdown, 
-  FindingStatus 
+  FindingStatus,
+  InfrastructureEvidence
 } from '@/types';
 import { 
   FileSearch, 
@@ -25,11 +27,12 @@ import {
   ArrowLeft, 
   Download, 
   RefreshCw, 
-  Send,
-  Eye,
-  CheckCircle2,
-  Clock,
-  Printer
+  Send, 
+  Eye, 
+  CheckCircle2, 
+  Clock, 
+  Printer,
+  Camera
 } from 'lucide-react';
 
 export default function OfficerCaseFilePage({
@@ -42,16 +45,13 @@ export default function OfficerCaseFilePage({
   const [application, setApplication] = useState<Application | null>(null);
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
   const [findings, setFindings] = useState<Finding[]>([]);
+  const [infrastructureEvidence, setInfrastructureEvidence] = useState<InfrastructureEvidence[]>([]);
   const [readiness, setReadiness] = useState<ReadinessBreakdown | null>(null);
   const [selectedDoc, setSelectedDoc] = useState<DocumentRecord | null>(null);
-  const [activeTab, setActiveTab] = useState<'findings' | 'documents' | 'summary'>('findings');
+  const [activeTab, setActiveTab] = useState<'findings' | 'documents' | 'infrastructure' | 'summary'>('findings');
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadCaseData();
-  }, [id]);
-
-  const loadCaseData = async () => {
+  const loadCaseData = useCallback(async () => {
     setIsLoading(true);
     try {
       const res = await fetch(`/api/applications/${id}`);
@@ -60,12 +60,17 @@ export default function OfficerCaseFilePage({
         setApplication(data.application);
         setDocuments(data.documents || []);
         setFindings(data.findings || []);
+        setInfrastructureEvidence(data.infrastructureEvidence || []);
         setReadiness(data.readiness || null);
       }
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    loadCaseData();
+  }, [loadCaseData]);
 
   const handleFindingAction = async (findingId: string, action: FindingStatus, notes?: string) => {
     try {
@@ -135,6 +140,9 @@ export default function OfficerCaseFilePage({
               <h1 className="text-2xl font-bold text-slate-900">{application.applicationNumber}</h1>
               <StatusChip status={application.status} size="md" />
               <StatusChip status={application.riskTier} size="md" />
+              <span className="bg-slate-100 text-slate-700 text-[10px] font-mono font-bold px-2.5 py-1 rounded-full border border-slate-300">
+                Evaluation As-Of: 01 Feb 2026
+              </span>
             </div>
             <p className="text-xs text-slate-500 mt-1">
               Case Docket: <strong>{application.institutionName}</strong> • {application.type.replace('_', ' ')} • Session {application.academicYear}
@@ -148,7 +156,7 @@ export default function OfficerCaseFilePage({
               className="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-2xs flex items-center gap-1.5 transition-colors"
             >
               <Radar className="w-4 h-4" />
-              <span>View in Collusion Radar</span>
+              <span>View in Linkage Radar</span>
             </Link>
 
             <Link
@@ -180,11 +188,11 @@ export default function OfficerCaseFilePage({
           </div>
 
           <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
-            <span className="text-[11px] font-semibold text-slate-400 block mb-0.5">Collusion Risk Score</span>
-            <div className={`text-2xl font-extrabold ${application.collusionRiskScore > 70 ? 'text-rose-600' : application.collusionRiskScore > 40 ? 'text-amber-600' : 'text-slate-600'}`}>
-              {application.collusionRiskScore}<span className="text-xs font-normal text-slate-400">/100</span>
+            <span className="text-[11px] font-semibold text-slate-400 block mb-0.5">Linkage Risk Score</span>
+            <div className={`text-2xl font-extrabold ${application.linkageRiskScore > 70 ? 'text-rose-600' : application.linkageRiskScore > 40 ? 'text-amber-600' : 'text-slate-600'}`}>
+              {application.linkageRiskScore}<span className="text-xs font-normal text-slate-400">/100</span>
             </div>
-            <span className="text-[11px] text-slate-500">Cross-institution fraud proximity</span>
+            <span className="text-[11px] text-slate-500">Cross-institution linkage proximity</span>
           </div>
 
           <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
@@ -228,6 +236,18 @@ export default function OfficerCaseFilePage({
           >
             <FileText className="w-4 h-4" />
             <span>Evidence Locker & Passports ({documents.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('infrastructure')}
+            className={`py-3 px-4 border-b-2 transition-all flex items-center gap-2 ${
+              activeTab === 'infrastructure'
+                ? 'border-[#002b66] text-[#002b66] font-bold'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <Camera className="w-4 h-4" />
+            <span>Infrastructure Evidence ({infrastructureEvidence.length})</span>
           </button>
 
           <button
@@ -326,7 +346,18 @@ export default function OfficerCaseFilePage({
           </div>
         )}
 
-        {/* 3. READINESS BREAKDOWN TAB */}
+        {/* 3. INFRASTRUCTURE EVIDENCE TAB */}
+        {activeTab === 'infrastructure' && (
+          <div className="space-y-6">
+            <InfrastructureEvidencePanel
+              applicationId={application.id}
+              evidence={infrastructureEvidence}
+              canUpload={false}
+            />
+          </div>
+        )}
+
+        {/* 4. READINESS BREAKDOWN TAB */}
         {activeTab === 'summary' && readiness && (
           <div className="space-y-6">
             <ReadinessGauge readiness={readiness} />

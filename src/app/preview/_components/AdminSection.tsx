@@ -8,40 +8,49 @@ export default function AdminSection() {
 
   const adapters = [
     {
-      name: 'DigiLocker Mock Adapter',
-      target: 'National DigiLocker Repository (MeitY)',
-      protocol: 'REST / OAuth2 PKCE',
+      name: 'DigiLocker Mock Adapter (simulated)',
+      target: 'National DigiLocker Repository (MeitY) (simulated)',
+      protocol: 'REST / OAuth2 PKCE (simulated)',
       latency: '240ms',
       failClosed: 'Fail-Closed (Source Unavailable on Timeout/Offline)',
       status: 'ONLINE',
-      records: '15,000+ Mock Digital Certificates'
+      records: '15,000+ Mock Digital Certificates (simulated)'
     },
     {
-      name: 'Certificate Registry Mock Adapter',
-      target: 'State Fire & Safety Clearinghouses',
-      protocol: 'SOAP / XML & JSON Gateway',
+      name: 'Certificate Registry Mock Adapter (simulated)',
+      target: 'State Fire & Safety Clearinghouses (simulated)',
+      protocol: 'REST / HTTPS Gateway (simulated)',
       latency: '410ms',
       failClosed: 'Fail-Closed (Unverified / Expired never pass)',
       status: 'ONLINE',
-      records: 'Karnataka, Maharashtra, Delhi Fire Depots'
+      records: 'Karnataka, Maharashtra, Delhi Fire Depots (simulated)'
     },
     {
-      name: 'Land Records Cadastre Mock Adapter',
-      target: 'State Digital Land Cadastres (Bhoomi / Mahabhulekh)',
-      protocol: 'GIS Web Feature Service (WFS)',
+      name: 'Land Records Cadastre Mock Adapter (simulated)',
+      target: 'State Digital Land Cadastres (Bhoomi / Mahabhulekh) (simulated)',
+      protocol: 'REST / HTTPS GeoJSON (simulated)',
       latency: '310ms',
       failClosed: 'Fail-Closed (Manual review required if unindexed)',
       status: 'ONLINE',
-      records: 'Cadastral parcel polygons & encumbrance registers'
+      records: 'Cadastral parcel polygons & encumbrance registers (simulated)'
     },
     {
-      name: 'AICTE Faculty Directory (NFD) Mock',
-      target: 'AICTE Central Faculty Portal & Aadhaar e-Sign',
-      protocol: 'gRPC / Mutual TLS',
+      name: 'AICTE Faculty Directory (NFD) Mock (simulated)',
+      target: 'AICTE Central Faculty Portal (simulated)',
+      protocol: 'REST / HTTPS (simulated)',
       latency: '180ms',
       failClosed: 'Fail-Closed (Dual affiliation strictly triggers Mismatch)',
       status: 'ONLINE',
-      records: 'Faculty PAN / Aadhaar concurrent cross-matching'
+      records: 'Faculty PAN concurrent cross-matching (simulated)'
+    },
+    {
+      name: 'State Directorate of Technical Education Mock Adapter (simulated)',
+      target: 'State Higher & Technical Education Portals (simulated)',
+      protocol: 'REST / HTTPS Gateway (simulated)',
+      latency: '5,240ms',
+      failClosed: 'Fail-Closed (Gateway timeout triggers Source Unavailable)',
+      status: 'DEGRADED (TIMEOUT)',
+      records: 'Apex Polytechnic NOC request (DTE-APEX-NOC-990) timed out; fail-closed routed to officer review'
     }
   ];
 
@@ -90,7 +99,11 @@ export default function AdminSection() {
                   <td className="p-2.5 font-semibold text-rose-700">{a.failClosed}</td>
                   <td className="p-2.5 font-mono text-slate-600">{a.latency}</td>
                   <td className="p-2.5">
-                    <span className="px-2 py-0.5 rounded-sm bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-[10px]">
+                    <span className={`px-2 py-0.5 rounded-sm border font-bold text-[10px] ${
+                      a.status.includes('DEGRADED')
+                        ? 'bg-amber-100 text-amber-900 border-amber-300'
+                        : 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                    }`}>
                       {a.status}
                     </span>
                   </td>
@@ -112,6 +125,8 @@ export default function AdminSection() {
               <tr className="bg-slate-100 text-slate-700 font-bold border-b">
                 <th className="p-2.5">Rule ID</th>
                 <th className="p-2.5">Version</th>
+                <th className="p-2.5">Source Reference</th>
+                <th className="p-2.5">Changelog</th>
                 <th className="p-2.5">Category</th>
                 <th className="p-2.5">Rule Name</th>
                 <th className="p-2.5">Severity</th>
@@ -127,6 +142,8 @@ export default function AdminSection() {
                 <tr key={rule.rule_id} className="hover:bg-slate-50">
                   <td className="p-2.5 font-mono font-bold text-blue-900">{rule.rule_id}</td>
                   <td className="p-2.5 font-mono text-slate-500">v{rule.version}</td>
+                  <td className="p-2.5 font-mono text-[10px] text-amber-800 bg-amber-50/50">{rule.source_reference || 'SOURCE: TO BE VERIFIED'}</td>
+                  <td className="p-2.5 font-mono text-[10px] text-slate-600">{rule.changelog?.length ? `${rule.changelog.length} revisions` : '1 revision'}</td>
                   <td className="p-2.5 font-semibold text-slate-800">{rule.category}</td>
                   <td className="p-2.5 font-bold text-slate-900">{rule.name}</td>
                   <td className="p-2.5">

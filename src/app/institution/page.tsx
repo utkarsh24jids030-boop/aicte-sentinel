@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
@@ -31,11 +31,19 @@ export default function InstitutionDashboard() {
 
   const institution = DEMO_INSTITUTIONS[0]; // Sunrise Institute of Technology
 
-  useEffect(() => {
-    fetchApplications();
+  const fetchAppDetail = useCallback(async (appId: string) => {
+    try {
+      const res = await fetch(`/api/applications/${appId}`);
+      const data = await res.json();
+      if (data.readiness) {
+        setReadiness(data.readiness);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
 
-  const fetchApplications = async () => {
+  const fetchApplications = useCallback(async () => {
     setIsLoading(true);
     try {
       const res = await fetch(`/api/applications?institutionId=${institution.id}`);
@@ -50,19 +58,11 @@ export default function InstitutionDashboard() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [institution.id, fetchAppDetail]);
 
-  const fetchAppDetail = async (appId: string) => {
-    try {
-      const res = await fetch(`/api/applications/${appId}`);
-      const data = await res.json();
-      if (data.readiness) {
-        setReadiness(data.readiness);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  useEffect(() => {
+    fetchApplications();
+  }, [fetchApplications]);
 
   return (
     <ProtectedRoute allowedRoles={['INSTITUTION', 'ADMIN']}>
@@ -218,7 +218,7 @@ export default function InstitutionDashboard() {
               ) : (
                 <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span>No critical regulatory deficiencies outstanding!</span>
+                  <span>No critical regulatory deficiencies outstanding.</span>
                 </div>
               )}
             </div>
@@ -239,7 +239,7 @@ export default function InstitutionDashboard() {
 
                 <div className="relative">
                   <span className="absolute -left-[31px] top-0.5 w-3.5 h-3.5 rounded-full bg-blue-500 ring-4 ring-white" />
-                  <div className="font-bold text-slate-900">2. Bureau of Approvals Scrutiny</div>
+                  <div className="font-bold text-slate-900">2. Regulation Bureau Scrutiny</div>
                   <p className="text-[11px] text-slate-500">Officer reviews evidence-linked findings and verification passports.</p>
                 </div>
 

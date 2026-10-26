@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { DataStore, DEMO_INSTITUTIONS } from '@/lib/store';
 import { RulesEngine } from '@/lib/rules/engine';
 import { formatSeverity, formatStatus } from './helpers';
@@ -12,36 +13,45 @@ export default function InstitutionSection() {
   const wizardSteps = [
     { step: 1, title: 'Institutional Profile', status: 'COMPLETED', desc: 'Trust deed, cadastral survey, campus acreage verification' },
     { step: 2, title: 'Academic Programmes & Intake', status: 'COMPLETED', desc: 'Sanctioned programmes (CSE, ECE, ME) and faculty quota balance' },
-    { step: 3, title: 'Statutory Document Vault', status: 'COMPLETED', desc: 'SHA-256 hashed PDFs linked to DigiLocker & land registries' },
+    { step: 3, title: 'Statutory Document Vault', status: 'COMPLETED', desc: 'SHA-256 hashed PDFs linked to DigiLocker (simulated) & land registries (simulated)' },
     { step: 4, title: 'Compliance Self-Assessment', status: 'ACTIVE', desc: 'Real-time rule engine scoring and deficiency rectification preview' },
     { step: 5, title: 'Final AICTE Submission', status: 'PENDING', desc: 'Digital signature seal and hash-chained audit logging' }
   ];
 
   const checklistItems = [
-    { doc: 'Registered Land Deed', mandatory: true, status: 'Verified', note: 'Survey 144/2 (4.85 Acres) verified on Bhoomi Registry' },
+    { doc: 'Registered Land Deed', mandatory: true, status: 'Verified', note: 'Survey 144/2 (4.85 Acres) verified on Bhoomi Registry (simulated)' },
     { doc: 'Fire Safety NOC', mandatory: true, status: 'Expired', note: 'Certificate expired on 2024-01-14. Renewal NOC required immediately' },
-    { doc: 'Approved Building Plan', mandatory: true, status: 'Verified', note: 'BBMP sanctioned plan (14,200 sq.m built-up area)' },
-    { doc: 'Faculty Ph.D. Certificates', mandatory: true, status: 'Verified', note: 'Anna University repository verified for HoDs' },
-    { doc: 'Audited Financial Statements', mandatory: true, status: 'Verified', note: 'FY 2024-25 balance sheet verified with ICAI UDIN' }
+    { doc: 'Approved Building Plan', mandatory: true, status: 'Verified', note: 'BBMP (simulated) sanctioned plan (14,200 sq.m built-up area)' },
+    { doc: 'Faculty Ph.D. Certificates', mandatory: true, status: 'Verified', note: 'Anna University repository (simulated) verified for HoDs' },
+    { doc: 'Audited Financial Statements', mandatory: true, status: 'Verified', note: 'FY 2024-25 balance sheet verified with ICAI UDIN (simulated)' }
   ];
 
   return (
     <section id="institution-portal" className="space-y-8 bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
-      <div className="border-b border-slate-200 pb-4">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">
-            Applicant Portal
-          </span>
-          <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
-            Institution Self-Assessment & Scrutiny Readiness
-          </span>
+      <div className="border-b border-slate-200 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">
+              Applicant Portal
+            </span>
+            <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
+              Institution Self-Assessment & Scrutiny Readiness
+            </span>
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 mt-1">
+            {institution.name} — Approval Application Dashboard
+          </h2>
+          <p className="text-sm text-slate-600 mt-1">
+            Self-service approval workbench with predictive readiness scoring, preventing surprise deficiencies before formal committee submission.
+          </p>
         </div>
-        <h2 className="text-2xl font-bold text-slate-900 mt-1">
-          {institution.name} — Approval Application Dashboard
-        </h2>
-        <p className="text-sm text-slate-600 mt-1">
-          Self-service approval workbench with predictive readiness scoring, preventing surprise deficiencies before formal committee submission.
-        </p>
+
+        <Link
+          href={`/preview/validation-report/${app.id}`}
+          className="self-start md:self-auto px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 rounded-xl text-xs font-bold shadow-2xs flex items-center gap-1.5 transition-colors"
+        >
+          <span>View Official Validation Report (Prototype)</span>
+        </Link>
       </div>
 
       {/* Institution Details Bar */}
@@ -73,7 +83,7 @@ export default function InstitutionSection() {
               {breakdown.score} / {breakdown.maxScore} Points
             </h3>
             <p className="text-xs text-blue-200 mt-1">
-              Passed {breakdown.passedChecks} of {breakdown.totalChecks} statutory checks adhering to the 2026 Approval Process Handbook.
+              Passed {breakdown.passedChecks} of {breakdown.totalChecks} statutory checks adhering to statutory approval norms [SOURCE: TO BE VERIFIED].
             </p>
           </div>
 
@@ -95,6 +105,19 @@ export default function InstitutionSection() {
               <div className="text-xl font-bold font-mono text-white mt-0.5">{breakdown.lowDeficiencies}</div>
             </div>
           </div>
+        </div>
+
+        {/* Formula Display */}
+        <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-blue-200">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-white">Statutory Formula:</span>
+            <span className="font-mono bg-white/20 px-2 py-0.5 rounded text-amber-300 font-bold text-[11px]">
+              Score = max(0, 100 - (25×Crit + 15×High + 8×Med + 3×Low))
+            </span>
+          </div>
+          <span className="text-[11px] text-blue-300">
+            Deductions: {breakdown.criticalDeficiencies * 25 + breakdown.highDeficiencies * 15 + breakdown.mediumDeficiencies * 8 + breakdown.lowDeficiencies * 3} pts total penalty
+          </span>
         </div>
       </div>
 

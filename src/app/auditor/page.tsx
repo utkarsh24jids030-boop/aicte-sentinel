@@ -11,14 +11,18 @@ import {
   RotateCcw,
   ShieldAlert,
   FileCheck,
-  ExternalLink
+  ExternalLink,
+  Eye,
+  UserCheck,
+  History
 } from 'lucide-react';
-import { AuditEvent } from '@/types';
+import { AuditEvent, RecordViewAccessEvent } from '@/types';
 import { DataStore } from '@/lib/store';
 import Link from 'next/link';
 
 export default function AuditorPage() {
   const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
+  const [accessEvents, setAccessEvents] = useState<RecordViewAccessEvent[]>([]);
   const [chainIntegrity, setChainIntegrity] = useState<{ isValid: boolean; totalEventsChecked: number } | null>(null);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
@@ -31,6 +35,7 @@ export default function AuditorPage() {
       const res = await fetch('/api/audit');
       const data = await res.json();
       setAuditEvents(data.events || []);
+      setAccessEvents(data.accessEvents || []);
       setChainIntegrity(data.integrity || null);
     } catch (e) {
       console.error(e);
@@ -243,30 +248,131 @@ export default function AuditorPage() {
           </div>
         </div>
 
+        {/* Record-View Access Log (Item 8 - Shown to Auditor Role) */}
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden space-y-3">
+          <div className="p-4 bg-slate-900 text-white flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Eye className="w-4 h-4 text-emerald-400" />
+              <h3 className="font-bold text-xs tracking-wide uppercase">
+                Record-View Access Log (Auditor Security Oversight)
+              </h3>
+            </div>
+            <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">
+              {accessEvents.length} View Events Logged
+            </span>
+          </div>
+
+          <div className="p-4 pt-0">
+            <p className="text-xs text-slate-500 mb-3">
+              Surveillance ledger recording every instance of an officer, inspector, or auditor viewing an institution application or document.
+            </p>
+
+            <div className="overflow-x-auto border border-slate-200 rounded-xl">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="bg-slate-100 text-slate-700 font-bold border-b">
+                    <th className="p-2.5">Timestamp (UTC)</th>
+                    <th className="p-2.5">Actor (Viewer)</th>
+                    <th className="p-2.5">Role</th>
+                    <th className="p-2.5">Viewed Type</th>
+                    <th className="p-2.5">Viewed Resource</th>
+                    <th className="p-2.5">Institution</th>
+                    <th className="p-2.5">Client IP Address</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {accessEvents.map((acc) => (
+                    <tr key={acc.id} className="hover:bg-slate-50 font-mono text-[11px]">
+                      <td className="p-2.5 text-slate-600 whitespace-nowrap">
+                        {new Date(acc.timestamp).toLocaleString()}
+                      </td>
+                      <td className="p-2.5 font-sans font-bold text-slate-900">
+                        {acc.actorName}
+                      </td>
+                      <td className="p-2.5 font-sans">
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border">
+                          {acc.actorRole}
+                        </span>
+                      </td>
+                      <td className="p-2.5">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                          acc.viewedType === 'APPLICATION' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
+                        }`}>
+                          {acc.viewedType}
+                        </span>
+                      </td>
+                      <td className="p-2.5 font-sans font-medium text-slate-900">
+                        {acc.viewedTitle}
+                        <div className="text-[10px] font-mono text-slate-400">{acc.viewedId}</div>
+                      </td>
+                      <td className="p-2.5 font-sans text-slate-700">
+                        {acc.institutionName || 'N/A'}
+                      </td>
+                      <td className="p-2.5 text-slate-500 whitespace-nowrap">
+                        {acc.ipAddress || 'Internal'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
         {/* Full Tamper-Evident Audit Trail Table */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
           <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-xs text-slate-800 flex justify-between">
-            <span>Audit Trail Ledger Records</span>
-            <span>Tamper-Evident Storage</span>
+            <span>Audit Trail Ledger Records ({auditEvents.length})</span>
+            <span>Cryptographic SHA-256 Chaining</span>
           </div>
 
           <div className="divide-y divide-slate-100 text-xs">
             {auditEvents.map((evt) => (
-              <div key={evt.id} className="p-4 hover:bg-slate-50/50 transition-colors space-y-1.5">
-                <div className="flex items-center justify-between">
+              <div key={evt.id} className="p-4 hover:bg-slate-50/50 transition-colors space-y-2">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <span className="font-mono font-bold text-slate-800">{evt.id}</span>
                     <span className="font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
                       {evt.action}
                     </span>
                     <StatusChip status={evt.actorRole} size="sm" />
+                    <span className="font-sans font-semibold text-slate-700">{evt.actorName}</span>
                   </div>
-                  <span className="text-[11px] text-slate-400">{new Date(evt.timestamp).toLocaleString()}</span>
+                  <span className="text-[11px] text-slate-400 font-mono">{new Date(evt.timestamp).toLocaleString()}</span>
                 </div>
-                <p className="text-slate-600">{evt.afterSummary}</p>
-                <div className="text-[10px] font-mono text-slate-400 flex items-center gap-4">
+
+                <p className="text-slate-700 leading-relaxed">{evt.afterSummary}</p>
+
+                {/* Extended Ledger Metadata Chips (Item 8) */}
+                {(evt.ruleId || evt.sourceChecked || evt.sourceResponseStatus || evt.alertRaisedId) && (
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[10px]">
+                    {evt.ruleId && (
+                      <span className="bg-indigo-50 text-indigo-800 border border-indigo-200 px-2 py-0.5 rounded font-mono font-bold">
+                        Rule: {evt.ruleId} {evt.ruleVersion ? `v${evt.ruleVersion}` : ''}
+                      </span>
+                    )}
+                    {evt.sourceChecked && (
+                      <span className="bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded font-mono">
+                        Source Checked: {evt.sourceChecked}
+                      </span>
+                    )}
+                    {evt.sourceResponseStatus && (
+                      <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded font-mono font-bold">
+                        Response: {evt.sourceResponseStatus}
+                      </span>
+                    )}
+                    {evt.alertRaisedId && (
+                      <span className="bg-rose-50 text-rose-800 border border-rose-200 px-2 py-0.5 rounded font-mono font-bold">
+                        Alert Raised: {evt.alertRaisedId}
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                <div className="text-[10px] font-mono text-slate-400 flex flex-wrap items-center gap-4 pt-1 border-t border-slate-100">
                   <span>prev: {evt.prevHash.substring(0, 16)}...</span>
                   <span>hash: {evt.hash.substring(0, 16)}...</span>
+                  <span>ip: {evt.ipAddress}</span>
                 </div>
               </div>
             ))}

@@ -927,6 +927,232 @@ test('Official PS Item 5: Applicant Deficiency Rectification Flow and Structured
   assert.ok(instPage.includes('validation-report'), 'Institution page must link to validation-report');
 });
 
+test('Official PS Item 6: Infrastructure Evidence Screening, Honest Vision-Lite Checks & Advisory Outputs', () => {
+  const analysisFile = fs.readFileSync('./src/lib/forensics/imageAnalysis.ts', 'utf8');
+  assert.ok(analysisFile.includes('analyzeInfrastructureEvidence'), 'imageAnalysis must export analyzeInfrastructureEvidence');
+  assert.ok(analysisFile.includes('checksRan'), 'imageAnalysis must track checksRan');
+  assert.ok(analysisFile.includes('checksNotPerformed'), 'imageAnalysis must explicitly list checksNotPerformed');
+  assert.ok(analysisFile.includes('Deep Learning Object Recognition'), 'Must explicitly disclose deep object recognition was not performed');
+  assert.ok(analysisFile.includes('ADDITIONAL_EVIDENCE_SUGGESTED'), 'Must support advisory ADDITIONAL_EVIDENCE_SUGGESTED');
+  assert.ok(analysisFile.includes('PHYSICAL_INSPECTION_SUGGESTED'), 'Must support advisory PHYSICAL_INSPECTION_SUGGESTED');
+  assert.ok(analysisFile.includes('CLEAR_EVIDENCE'), 'Must support advisory CLEAR_EVIDENCE');
+  assert.ok(analysisFile.includes('[AI-generated and unverified description]'), 'Optional vision caption must be strictly labeled as AI-generated and unverified');
+
+  const panelFile = fs.readFileSync('./src/components/InfrastructureEvidencePanel.tsx', 'utf8');
+  assert.ok(panelFile.includes('Infrastructure Photographic & Floor Plan Evidence'), 'Panel must have infrastructure title');
+  assert.ok(panelFile.includes('Vision-Lite Screening'), 'Panel must indicate Vision-Lite screening');
+  assert.ok(panelFile.includes('does NOT perform deep object recognition'), 'Panel must include honest disclaimer on object recognition');
+  assert.ok(panelFile.includes('checksRan'), 'Panel must render checksRan');
+  assert.ok(panelFile.includes('checksNotPerformed'), 'Panel must render checksNotPerformed');
+  assert.ok(panelFile.includes('perceptualHash'), 'Panel must display perceptualHash');
+  assert.ok(panelFile.includes('blurScore'), 'Panel must display blurScore');
+
+  const uploadRoute = fs.readFileSync('./src/app/api/infrastructure/upload/route.ts', 'utf8');
+  assert.ok(uploadRoute.includes('analyzeInfrastructureEvidence'), 'Upload route must invoke analyzeInfrastructureEvidence');
+  assert.ok(uploadRoute.includes('DataStore.addInfrastructureEvidence'), 'Upload route must add evidence to DataStore');
+
+  const storeFile = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(storeFile.includes('getInfrastructureEvidence'), 'DataStore must provide getInfrastructureEvidence');
+  assert.ok(storeFile.includes('DEMO_INFRASTRUCTURE_EVIDENCE'), 'DataStore must seed DEMO_INFRASTRUCTURE_EVIDENCE');
+  assert.ok(storeFile.includes('dhash:7f3a8c1e2b4d9a0f'), 'Must seed shared perceptual hash between Apex and Nova for duplicate detection');
+});
+
+test('Official PS Item 7: Notification Center, Email Transport & Alert Timeliness Metrics', () => {
+  const alertServiceFile = fs.readFileSync('./src/lib/alerts/alertService.ts', 'utf8');
+  const requiredCategories = [
+    'missing_information',
+    'expired_documents',
+    'pending_source_verification',
+    'suspected_anomalies',
+    'unresolved_items',
+    'clarification_requests'
+  ];
+
+  for (const cat of requiredCategories) {
+    assert.ok(alertServiceFile.includes(cat), `AlertService must support category "${cat}"`);
+  }
+  assert.ok(alertServiceFile.includes('getTimelinessMetrics'), 'AlertService must calculate timeliness metrics');
+
+  const emailTransportFile = fs.readFileSync('./src/lib/alerts/emailTransport.ts', 'utf8');
+  assert.ok(emailTransportFile.includes('AICTE SENTINEL EMAIL TRANSPORT (DEMO MODE)'), 'Email transport must log formatted emails in demo mode');
+
+  const notificationComponent = fs.readFileSync('./src/components/NotificationCenter.tsx', 'utf8');
+  assert.ok(notificationComponent.includes('Regulation Bureau Notification Center'), 'NotificationCenter must have bureau header');
+  assert.ok(notificationComponent.includes('handleMarkAllAsRead'), 'NotificationCenter must support marking all alerts read');
+
+  const navbarFile = fs.readFileSync('./src/components/Navbar.tsx', 'utf8');
+  assert.ok(navbarFile.includes('NotificationCenter'), 'Navbar must include NotificationCenter component');
+
+  const metricsSectionFile = fs.readFileSync('./src/app/preview/_components/MetricsSection.tsx', 'utf8');
+  assert.ok(metricsSectionFile.includes('Alert Timeliness'), 'MetricsSection must display Alert Timeliness section');
+  assert.ok(metricsSectionFile.includes('Median Dispatch Latency'), 'MetricsSection must display median dispatch latency');
+  assert.ok(metricsSectionFile.includes('Recent Regulatory Alerts'), 'MetricsSection must display alert timestamps log');
+});
+
+test('Official PS Item 8: Comprehensive Audit Trail Content and Record-View Access Logging', () => {
+  const trailFile = fs.readFileSync('./src/lib/audit/trail.ts', 'utf8');
+  assert.ok(trailFile.includes('recordAccessEvent'), 'AuditTrailEngine must implement recordAccessEvent');
+  assert.ok(trailFile.includes('getAccessEvents'), 'AuditTrailEngine must implement getAccessEvents');
+
+  const storeFile = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(storeFile.includes('RULE_APPLIED'), 'Audit ledger must record rules applied');
+  assert.ok(storeFile.includes('ruleId'), 'Audit ledger must record rule IDs');
+  assert.ok(storeFile.includes('ruleVersion'), 'Audit ledger must record rule versions');
+  assert.ok(storeFile.includes('sourceChecked'), 'Audit ledger must record internal and external records checked');
+  assert.ok(storeFile.includes('sourceResponseStatus'), 'Audit ledger must record source responses');
+  assert.ok(storeFile.includes('ALERT_RAISED'), 'Audit ledger must record alerts raised');
+  assert.ok(storeFile.includes('INSPECTION_OBSERVATION_RECORDED'), 'Audit ledger must record observations');
+  assert.ok(storeFile.includes('OFFICER_ACTION_CONFIRM'), 'Audit ledger must record officer actions');
+
+  const auditorPage = fs.readFileSync('./src/app/auditor/page.tsx', 'utf8');
+  assert.ok(auditorPage.includes('Record-View Access Log'), 'Auditor page must display Record-View Access Log');
+  assert.ok(auditorPage.includes('accessEvents'), 'Auditor page must handle accessEvents');
+
+  const auditPreview = fs.readFileSync('./src/app/preview/_components/AuditSection.tsx', 'utf8');
+  assert.ok(auditPreview.includes('Record-View Access Log'), 'Audit preview must display Record-View Access Log');
+
+  const auditRoute = fs.readFileSync('./src/app/api/audit/route.ts', 'utf8');
+  assert.ok(auditRoute.includes('accessEvents'), 'GET /api/audit must return accessEvents');
+
+  const appRoute = fs.readFileSync('./src/app/api/applications/[id]/route.ts', 'utf8');
+  assert.ok(appRoute.includes('recordAccessEvent'), 'GET /api/applications/[id] must log record-view access');
+});
+
+test('Official PS Item 9: Safeguards & Data Handling Policy and Human Review Adverse Action Enforcement', () => {
+  const safeguardsSection = fs.readFileSync('./src/app/preview/_components/SafeguardsSection.tsx', 'utf8');
+  assert.ok(safeguardsSection.includes('Role-Based Access Control (RBAC) Matrix'), 'Safeguards must document RBAC matrix');
+  assert.ok(safeguardsSection.includes('does not bypass access controls or assume access to restricted'), 'Safeguards must contain non-bypass disclosure');
+  assert.ok(safeguardsSection.includes('Record-View Access Logging'), 'Safeguards must document access logging');
+  assert.ok(safeguardsSection.includes('Placeholder for Official AICTE Policy'), 'Data retention policy must be labeled as placeholder for official policy');
+  assert.ok(safeguardsSection.includes('Personally Identifiable Information (PII) Masking'), 'Safeguards must document PII masking');
+  assert.ok(safeguardsSection.includes('No Adverse Regulatory Action Taken by Machine'), 'Safeguards must state human review guarantee');
+
+  const safeguardsPage = fs.readFileSync('./src/app/safeguards/page.tsx', 'utf8');
+  assert.ok(safeguardsPage.includes('SafeguardsSection'), 'Safeguards page must render SafeguardsSection');
+
+  const previewSafeguards = fs.readFileSync('./src/app/preview/safeguards/page.tsx', 'utf8');
+  assert.ok(previewSafeguards.includes('SafeguardsSection'), 'Preview safeguards page must render SafeguardsSection');
+
+  const findingRoute = fs.readFileSync('./src/app/api/findings/[id]/action/route.ts', 'utf8');
+  assert.ok(findingRoute.includes('isAdverse'), 'Finding action route must check for adverse actions');
+  assert.ok(findingRoute.includes('officerNotes.trim()'), 'Finding action route must require written justification for adverse actions');
+  assert.ok(findingRoute.includes('officerName.trim()'), 'Finding action route must require named officer for adverse actions');
+
+  const storeFile = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(storeFile.includes('Statutory Safeguard Violation'), 'DataStore.updateFindingStatus must enforce named officer and justification in code');
+});
+
+test('Official PS Item 10: Extended Metrics Page (Discrepancy Reliability, Manual Effort Reduction Model & 6-State Counts)', () => {
+  assert.ok(fs.existsSync('./public/metrics.json'), 'public/metrics.json must exist');
+  const metrics = JSON.parse(fs.readFileSync('./public/metrics.json', 'utf8'));
+
+  // 1. Discrepancy Reliability
+  assert.ok(metrics.discrepancyReliability, 'metrics must contain discrepancyReliability');
+  assert.ok(typeof metrics.discrepancyReliability.overall.precision === 'number', 'discrepancy precision must be number');
+  assert.ok(typeof metrics.discrepancyReliability.overall.recall === 'number', 'discrepancy recall must be number');
+  assert.ok(metrics.discrepancyReliability.byDefectType.length >= 5, 'must evaluate at least 5 defect types');
+
+  // 2. Manual Effort Reduction Model (Estimate Only)
+  assert.ok(metrics.manualEffortReduction, 'metrics must contain manualEffortReduction');
+  assert.equal(metrics.manualEffortReduction.isEstimateOnly, true, 'manualEffortReduction must be explicitly flagged isEstimateOnly: true');
+  assert.ok(metrics.manualEffortReduction.label.includes('ESTIMATE ONLY'), 'label must declare ESTIMATE ONLY');
+  assert.ok(metrics.manualEffortReduction.assumptions.length >= 5, 'must list assumptions for multiple document types');
+  assert.ok(metrics.manualEffortReduction.estimatedEffortReductionPercent > 50, 'must compute estimated effort reduction');
+
+  // 3. Exact 6-State Verification Status Taxonomy
+  assert.ok(metrics.perStatusCounts, 'metrics must contain perStatusCounts');
+  assert.equal(metrics.perStatusCounts.taxonomyEnforced, true, 'taxonomyEnforced must be true');
+  const requiredStatuses = [
+    'Verified',
+    'Mismatch Detected',
+    'Expired',
+    'Verification Pending',
+    'Source Unavailable',
+    'Manual Review Required'
+  ];
+  for (const status of requiredStatuses) {
+    assert.ok(metrics.perStatusCounts.breakdown[status], `metrics.perStatusCounts.breakdown must include ${status}`);
+    assert.ok(typeof metrics.perStatusCounts.breakdown[status].count === 'number', `${status} count must be number`);
+  }
+
+  // 4. UI Rendering in MetricsSection
+  const metricsSection = fs.readFileSync('./src/app/preview/_components/MetricsSection.tsx', 'utf8');
+  assert.ok(metricsSection.includes('Discrepancy-Identification Reliability'), 'MetricsSection must render Discrepancy-Identification Reliability');
+  assert.ok(metricsSection.includes('Estimated Reduction in Manual Processing Effort'), 'MetricsSection must render Estimated Reduction in Manual Processing Effort');
+  assert.ok(metricsSection.includes('ESTIMATE ONLY — NOT A MEASURED RESULT'), 'MetricsSection must prominently show ESTIMATE ONLY warning');
+  assert.ok(metricsSection.includes('Statutory Document Verification Per-Status Breakdown'), 'MetricsSection must render 6-State Document Verification Breakdown');
+  for (const status of requiredStatuses) {
+    assert.ok(metricsSection.includes(status), `MetricsSection must mention ${status}`);
+  }
+});
+
+test('Official PS Item 11: PS 26261 Conformance Matrix & Verification Documentation', () => {
+  // 1. Verify docs/PS_CONFORMANCE.md
+  assert.ok(fs.existsSync('./docs/PS_CONFORMANCE.md'), 'docs/PS_CONFORMANCE.md must exist');
+  const conformanceDoc = fs.readFileSync('./docs/PS_CONFORMANCE.md', 'utf8');
+  assert.ok(conformanceDoc.includes('Problem Statement SIH26261 Conformance Matrix'), 'Doc must have title');
+  assert.ok(conformanceDoc.includes('| **Implemented** |'), 'Doc must include Implemented status');
+  assert.ok(conformanceDoc.includes('| **Simulated** |'), 'Doc must honestly include Simulated status');
+  assert.ok(conformanceDoc.includes('| **Partial** |'), 'Doc must honestly include Partial status');
+  assert.ok(conformanceDoc.includes('| **Planned** |'), 'Doc must honestly include Planned status');
+  assert.ok(conformanceDoc.includes('Regulation Bureau'), 'Doc must reference Regulation Bureau');
+  assert.ok(conformanceDoc.includes('Audit Conformance Rate'), 'Doc must contain summary conformance rate');
+
+  // 2. Verify ConformanceSection component
+  assert.ok(fs.existsSync('./src/app/preview/_components/ConformanceSection.tsx'), 'ConformanceSection.tsx must exist');
+  const conformanceSection = fs.readFileSync('./src/app/preview/_components/ConformanceSection.tsx', 'utf8');
+  assert.ok(conformanceSection.includes('Problem Statement SIH26261 Conformance Matrix'), 'Component must render title');
+  assert.ok(conformanceSection.includes('CONFORMANCE_DATA'), 'Component must define CONFORMANCE_DATA');
+  assert.ok(conformanceSection.includes('Honest Conformance Standard'), 'Component must render honest conformance standard');
+  assert.ok(conformanceSection.includes('Implemented'), 'Component must display Implemented badge');
+  assert.ok(conformanceSection.includes('Simulated'), 'Component must display Simulated badge');
+
+  // 3. Verify Server-Rendered Routes
+  assert.ok(fs.existsSync('./src/app/conformance/page.tsx'), 'src/app/conformance/page.tsx must exist');
+  const conformancePage = fs.readFileSync('./src/app/conformance/page.tsx', 'utf8');
+  assert.ok(conformancePage.includes('ConformanceSection'), 'ConformancePage must render ConformanceSection');
+
+  assert.ok(fs.existsSync('./src/app/preview/conformance/page.tsx'), 'src/app/preview/conformance/page.tsx must exist');
+  const previewConformancePage = fs.readFileSync('./src/app/preview/conformance/page.tsx', 'utf8');
+  assert.ok(previewConformancePage.includes('ConformanceSection'), 'PreviewConformancePage must render ConformanceSection');
+
+  // 4. Verify Preview Directory and Navbar Integration
+  const previewAll = fs.readFileSync('./src/app/preview/all/page.tsx', 'utf8');
+  assert.ok(previewAll.includes('ConformanceSection'), 'preview/all must mount ConformanceSection');
+
+  const previewLayout = fs.readFileSync('./src/app/preview/layout.tsx', 'utf8');
+  assert.ok(previewLayout.includes('/preview/conformance'), 'preview layout must link to /preview/conformance');
+
+  const navbar = fs.readFileSync('./src/components/Navbar.tsx', 'utf8');
+  assert.ok(navbar.includes('/conformance'), 'Navbar must link to /conformance');
+});
+
+test('Navigation & Notification Bell Enhancement (Signed-out isolation, one-line header, 22px white bell)', () => {
+  const navbarFile = fs.readFileSync('./src/components/Navbar.tsx', 'utf8');
+
+  // 1. Signed-out nav isolation
+  assert.ok(navbarFile.includes("primaryLinks = [{ label: 'Portal Home', href: '/' }]"), 'Signed-out nav must isolate to Portal Home');
+  assert.ok(navbarFile.includes('{authUser && ('), 'NotificationCenter must only be rendered when authUser is present');
+  assert.ok(navbarFile.includes('<NotificationCenter />'), 'Navbar must conditionally render NotificationCenter');
+
+  // 2. One-line header & More dropdown
+  assert.ok(navbarFile.includes('whitespace-nowrap'), 'Nav labels must enforce whitespace-nowrap to prevent wrapping');
+  assert.ok(navbarFile.includes('More'), 'Navbar must provide a More dropdown for secondary items');
+  assert.ok(navbarFile.includes('secondaryLinks'), 'Navbar must define secondaryLinks for More dropdown');
+  assert.ok(navbarFile.includes('md:hidden'), 'Navbar must provide mobile navigation toggle for 390px viewports');
+
+  // 3. Notification Bell visibility & accessibility
+  const notificationCenterFile = fs.readFileSync('./src/components/NotificationCenter.tsx', 'utf8');
+  assert.ok(notificationCenterFile.includes('aria-label="Notifications"'), 'Bell button must have aria-label Notifications');
+  assert.ok(notificationCenterFile.includes('w-[22px] h-[22px] text-white'), 'Bell icon must be 22px and white');
+  assert.ok(notificationCenterFile.includes('rounded-full'), 'Bell button must have circular shape');
+  assert.ok(notificationCenterFile.includes('hover:bg-white/15') || notificationCenterFile.includes('focus:bg-white/20'), 'Bell button must have visible hover/focus background');
+  assert.ok(notificationCenterFile.includes('bg-rose-600 text-white'), 'Bell button must have red unread count badge');
+});
+
+
+
+
 
 
 

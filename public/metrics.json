@@ -13,7 +13,7 @@
     "precision": 1,
     "recall": 1,
     "f1Score": 1,
-    "averageProcessingTimeMs": 7.6
+    "averageProcessingTimeMs": 6.6
   },
   "extraction": {
     "samplePdfsTested": 6,
@@ -42,6 +42,226 @@
     "f1Score": 1,
     "accuracy": 1
   },
+  "discrepancyReliability": {
+    "overall": {
+      "precision": 1,
+      "recall": 1,
+      "f1Score": 1,
+      "accuracy": 1,
+      "truePositives": 77,
+      "falsePositives": 0,
+      "trueNegatives": 43,
+      "falseNegatives": 0
+    },
+    "byDefectType": [
+      {
+        "defectName": "Land Area Deficit",
+        "ruleId": "LAND-MIN-001",
+        "category": "Infrastructure Land",
+        "seededCount": 19,
+        "detectedCount": 19,
+        "falseAlarms": 0,
+        "missedCount": 0,
+        "precision": 1,
+        "recall": 1,
+        "f1Score": 1
+      },
+      {
+        "defectName": "Fire NOC Expiry",
+        "ruleId": "FIRE-NOC-001",
+        "category": "Safety Compliance",
+        "seededCount": 14,
+        "detectedCount": 14,
+        "falseAlarms": 0,
+        "missedCount": 0,
+        "precision": 1,
+        "recall": 1,
+        "f1Score": 1
+      },
+      {
+        "defectName": "Student-Faculty Ratio Exceeded",
+        "ruleId": "FACULTY-CADRE-001",
+        "category": "Academic Faculty",
+        "seededCount": 11,
+        "detectedCount": 11,
+        "falseAlarms": 0,
+        "missedCount": 0,
+        "precision": 1,
+        "recall": 1,
+        "f1Score": 1
+      },
+      {
+        "defectName": "Instructional Carpet Area Deficit",
+        "ruleId": "INFRA-CARPET-001",
+        "category": "Built Infrastructure",
+        "seededCount": 8,
+        "detectedCount": 8,
+        "falseAlarms": 0,
+        "missedCount": 0,
+        "precision": 1,
+        "recall": 1,
+        "f1Score": 1
+      },
+      {
+        "defectName": "Certificate SHA-256 Collision",
+        "ruleId": "CROSS-CERT-DUP-001",
+        "category": "Document Integrity",
+        "seededCount": 8,
+        "detectedCount": 8,
+        "falseAlarms": 0,
+        "missedCount": 0,
+        "precision": 1,
+        "recall": 1,
+        "f1Score": 1
+      },
+      {
+        "defectName": "Cadastral Survey Number Overlap",
+        "ruleId": "CROSS-LAND-SHARED-001",
+        "category": "Cross-Institution",
+        "seededCount": 11,
+        "detectedCount": 11,
+        "falseAlarms": 0,
+        "missedCount": 0,
+        "precision": 1,
+        "recall": 1,
+        "f1Score": 1
+      },
+      {
+        "defectName": "Simultaneous Faculty Appointment",
+        "ruleId": "CROSS-FACULTY-DUP-001",
+        "category": "Cross-Institution",
+        "seededCount": 6,
+        "detectedCount": 6,
+        "falseAlarms": 0,
+        "missedCount": 0,
+        "precision": 1,
+        "recall": 1,
+        "f1Score": 1
+      }
+    ]
+  },
+  "manualEffortReduction": {
+    "isEstimateOnly": true,
+    "label": "ESTIMATED REDUCTION IN MANUAL PROCESSING EFFORT (ESTIMATE ONLY — NOT A MEASURED RESULT)",
+    "disclaimer": "Advisory Disclosure: Manual processing durations are administrative model assumptions based on standard AICTE institutional scrutiny workflows. They have not been measured through empirical field trials or production pilot studies. Automated processing time represents CPU execution duration on synthetic benchmarks. All regulatory decisions remain strictly under human officer authority.",
+    "assumptions": [
+      {
+        "documentType": "Land Title & Registered Lease Deed",
+        "assumedManualMinutes": 45,
+        "regulatoryScrutinyBasis": "Survey number cross-indexing, encumbrance verification, ownership continuity check"
+      },
+      {
+        "documentType": "Building Plan Approval & Occupancy Certificate",
+        "assumedManualMinutes": 40,
+        "regulatoryScrutinyBasis": "Carpet area aggregation, municipal approval seal, local authority validity"
+      },
+      {
+        "documentType": "Fire Safety NOC & Annual Renewal",
+        "assumedManualMinutes": 25,
+        "regulatoryScrutinyBasis": "Issuing authority validation, expiry date calculation relative to academic session"
+      },
+      {
+        "documentType": "Faculty Cadre & Credentials Dossier",
+        "assumedManualMinutes": 30,
+        "regulatoryScrutinyBasis": "Cadre ratio verification (1:20), qualification scrutiny, duplication cross-check"
+      },
+      {
+        "documentType": "Financial Statements & Fixed Deposit Receipts",
+        "assumedManualMinutes": 35,
+        "regulatoryScrutinyBasis": "Audit report review, trust fund balance verification, TER payment audit"
+      },
+      {
+        "documentType": "Statutory Affidavit & EoA Undertakings",
+        "assumedManualMinutes": 20,
+        "regulatoryScrutinyBasis": "Notarization stamp, 90-day window check, anti-ragging declaration review"
+      }
+    ],
+    "totalAssumedManualMinutes": 195,
+    "measuredAutomatedProcessingMs": 6.6,
+    "assumedTargetedOfficerReviewMinutes": 30,
+    "estimatedEffortReductionPercent": 84.6,
+    "estimatedOfficerHoursSavedPer100Apps": 275
+  },
+  "perStatusCounts": {
+    "taxonomyEnforced": true,
+    "totalDocuments": 480,
+    "breakdown": {
+      "Verified": {
+        "status": "Verified",
+        "count": 348,
+        "percentage": 72.5,
+        "description": "Document confirmed authentic by authoritative issuing registry or cryptographic hash match."
+      },
+      "Mismatch Detected": {
+        "status": "Mismatch Detected",
+        "count": 48,
+        "percentage": 10,
+        "description": "Discrepancy detected between declared application data and external registry record."
+      },
+      "Expired": {
+        "status": "Expired",
+        "count": 36,
+        "percentage": 7.5,
+        "description": "Certificate validity lapsed prior to statutory academic scrutiny anchor date (2026-02-01)."
+      },
+      "Verification Pending": {
+        "status": "Verification Pending",
+        "count": 18,
+        "percentage": 3.8,
+        "description": "Verification call queued or awaiting asynchronous issuing-authority registry reply."
+      },
+      "Source Unavailable": {
+        "status": "Source Unavailable",
+        "count": 18,
+        "percentage": 3.8,
+        "description": "Issuing registry endpoint offline, timed out, or returning 5xx; fail-closed protection active."
+      },
+      "Manual Review Required": {
+        "status": "Manual Review Required",
+        "count": 12,
+        "percentage": 2.5,
+        "description": "Extraction confidence below statutory threshold (<0.75) or non-standard seal requiring officer review."
+      }
+    },
+    "demoDossierBreakdown": {
+      "Verified": {
+        "status": "Verified",
+        "count": 21,
+        "percentage": 72.4,
+        "description": "Document confirmed authentic by authoritative issuing registry or cryptographic hash match."
+      },
+      "Mismatch Detected": {
+        "status": "Mismatch Detected",
+        "count": 3,
+        "percentage": 10.3,
+        "description": "Discrepancy detected between declared application data and external registry record."
+      },
+      "Expired": {
+        "status": "Expired",
+        "count": 1,
+        "percentage": 3.4,
+        "description": "Certificate validity lapsed prior to statutory academic scrutiny anchor date (2026-02-01)."
+      },
+      "Verification Pending": {
+        "status": "Verification Pending",
+        "count": 1,
+        "percentage": 3.4,
+        "description": "Verification call queued or awaiting asynchronous issuing-authority registry reply."
+      },
+      "Source Unavailable": {
+        "status": "Source Unavailable",
+        "count": 1,
+        "percentage": 3.4,
+        "description": "Issuing registry endpoint offline, timed out, or returning 5xx; fail-closed protection active."
+      },
+      "Manual Review Required": {
+        "status": "Manual Review Required",
+        "count": 2,
+        "percentage": 6.9,
+        "description": "Extraction confidence below statutory threshold (<0.75) or non-standard seal requiring officer review."
+      }
+    }
+  },
   "duplicateDetection": {
     "totalDuplicatesSeeded": 8,
     "duplicatesDetected": 8,
@@ -58,10 +278,10 @@
     "successRate": 0.9361
   },
   "processingPerformance": {
-    "totalDurationMs": 911,
-    "averageProcessingTimeMs": 7.6,
-    "p95LatencyMs": 11,
-    "p99LatencyMs": 14.8,
-    "throughputPerSecond": 131.7
+    "totalDurationMs": 795,
+    "averageProcessingTimeMs": 6.6,
+    "p95LatencyMs": 9.6,
+    "p99LatencyMs": 12.9,
+    "throughputPerSecond": 150.9
   }
 }

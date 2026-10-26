@@ -26,7 +26,9 @@ export default function PreviewLayout({
     { label: 'Institution View', href: '/preview/institution' },
     { label: 'Rule Packs & Adapters', href: '/preview/admin' },
     { label: 'Audit Trail', href: '/preview/audit' },
-    { label: 'Metrics', href: '/preview/metrics' }
+    { label: 'Safeguards', href: '/preview/safeguards' },
+    { label: 'Metrics', href: '/preview/metrics' },
+    { label: 'Conformance Matrix', href: '/preview/conformance' }
   ];
 
   return (

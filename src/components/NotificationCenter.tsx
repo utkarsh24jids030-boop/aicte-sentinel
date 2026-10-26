@@ -105,13 +105,13 @@ export default function NotificationCenter() {
       {/* Bell Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        aria-label="Open Regulatory Notification Center"
-        className="relative p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors focus:outline-hidden"
+        aria-label="Notifications"
+        className="relative flex items-center justify-center w-10 h-10 rounded-full text-white hover:bg-white/15 focus:bg-white/20 focus:outline-hidden transition-colors"
       >
-        <Bell className="w-5 h-5" />
+        <Bell className="w-[22px] h-[22px] text-white shrink-0" />
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 px-1.5 py-0.5 min-w-[18px] text-[10px] font-black rounded-full bg-rose-600 text-white flex items-center justify-center animate-pulse shadow-xs">
-            {unreadCount}
+          <span className="absolute top-1 right-1 px-1.5 min-w-[18px] h-[18px] text-[10px] font-black rounded-full bg-rose-600 text-white flex items-center justify-center shadow-xs">
+            {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
       </button>

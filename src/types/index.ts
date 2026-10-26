@@ -400,14 +400,33 @@ export interface AuditEvent {
   actorName: string;
   actorRole: UserRole;
   action: string;
-  entityType: 'APPLICATION' | 'DOCUMENT' | 'FINDING' | 'RULE_ENGINE' | 'ADAPTER' | 'INSPECTION' | 'AUTH' | 'RADAR_EDGE';
+  entityType: 'APPLICATION' | 'DOCUMENT' | 'FINDING' | 'RULE_ENGINE' | 'ADAPTER' | 'INSPECTION' | 'AUTH' | 'RADAR_EDGE' | 'RECORD_ACCESS';
   entityId: string;
   beforeSummary?: string;
   afterSummary?: string;
+  ruleId?: string;
+  ruleVersion?: string;
+  sourceChecked?: string;
+  sourceResponseStatus?: string;
+  alertRaisedId?: string;
   ipAddress?: string;
   userAgent?: string;
   prevHash: string;
   hash: string;
+}
+
+export interface RecordViewAccessEvent {
+  id: string;
+  timestamp: string;
+  actorId: string;
+  actorName: string;
+  actorRole: UserRole;
+  viewedType: 'APPLICATION' | 'DOCUMENT';
+  viewedId: string;
+  viewedTitle: string;
+  applicationId?: string;
+  institutionName?: string;
+  ipAddress?: string;
 }
 
 export interface ScrutinyReportData {
@@ -484,3 +503,96 @@ export interface AICTEInstitutionalRecord {
   applicationHistory: ApplicationHistoryRecord[];
   isSimulated: true;
 }
+
+// Infrastructure Photographic & Plan Evidence (Computer-Vision-Lite)
+export type InfrastructureCategory = 
+  | 'Computer Center / Lab'
+  | 'Central Library'
+  | 'Chemistry / Physics Lab'
+  | 'Seminar Hall / Auditorium'
+  | 'Workshop / Mechanical Lab'
+  | 'Administrative Area';
+
+export interface InfrastructureAutomatedChecks {
+  exifExtracted: boolean;
+  exifDate?: string;
+  exifGpsCoordinates?: { latitude: number; longitude: number; altitudeMeters?: number };
+  captureDevice?: string;
+  resolutionWidth: number;
+  resolutionHeight: number;
+  resolutionMegapixels: number;
+  blurScore: number; // 0 - 100
+  isBlurry: boolean;
+  perceptualHash: string;
+  duplicateMatchFound: boolean;
+  duplicateMatchedAppId?: string;
+  duplicateMatchedCategory?: string;
+  areaConsistencyChecked: boolean;
+  declaredAreaSqm?: number;
+  planExtractedAreaSqm?: number;
+  areaDiscrepancyPercentage?: number;
+  checksRan: string[];
+  checksNotPerformed: string[];
+  optionalVisionCaption?: string;
+  isVisionCaptionUnverified: boolean;
+}
+
+export interface InfrastructureEvidence {
+  id: string;
+  applicationId: string;
+  institutionId: string;
+  category: InfrastructureCategory;
+  title: string;
+  evidenceType: 'PHOTOGRAPH' | 'FLOOR_PLAN';
+  fileName: string;
+  filePath: string;
+  fileSize: number;
+  mimeType: string;
+  sha256Hash: string;
+  declaredAreaSqm: number;
+  uploadedAt: string;
+  checks: InfrastructureAutomatedChecks;
+  advisoryRecommendation?: 'CLEAR_EVIDENCE' | 'ADDITIONAL_EVIDENCE_SUGGESTED' | 'PHYSICAL_INSPECTION_SUGGESTED';
+  advisoryReason?: string;
+}
+
+// Alert & Notification Types (PS Item 7)
+export type AlertCategory =
+  | 'missing_information'
+  | 'expired_documents'
+  | 'pending_source_verification'
+  | 'suspected_anomalies'
+  | 'unresolved_items'
+  | 'clarification_requests';
+
+export interface RegulatoryAlert {
+  id: string;
+  category: AlertCategory;
+  severity: 'Critical' | 'High' | 'Medium' | 'Low';
+  title: string;
+  message: string;
+  applicationId: string;
+  applicationNumber: string;
+  institutionName: string;
+  documentId?: string;
+  findingId?: string;
+  createdAt: string;
+  read: boolean;
+  actionUrl: string;
+  emailDispatched?: boolean;
+  emailDispatchedAt?: string;
+  resolvedAt?: string;
+  turnaroundMinutes?: number;
+}
+
+export interface AlertTimelinessMetrics {
+  totalAlertsDispatched: number;
+  openAlertsCount: number;
+  medianDispatchLatencySeconds: number;
+  medianResolutionHours: number;
+  categoryBreakdown: Record<AlertCategory, {
+    count: number;
+    avgTurnaroundMinutes: number;
+  }>;
+}
+

@@ -8,6 +8,8 @@ import InstitutionSection from '../_components/InstitutionSection';
 import AdminSection from '../_components/AdminSection';
 import AuditSection from '../_components/AuditSection';
 import MetricsSection from '../_components/MetricsSection';
+import SafeguardsSection from '../_components/SafeguardsSection';
+import ConformanceSection from '../_components/ConformanceSection';
 
 export default function PreviewAllPage() {
   return (
@@ -28,14 +30,16 @@ export default function PreviewAllPage() {
         <div className="pt-4 border-t border-slate-200 flex flex-wrap gap-2 text-xs">
           <span className="font-bold text-slate-500 py-1">Quick Jump:</span>
           <a href="#officer-queue" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">1. Officer Queue</a>
-          <a href="#case-files" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">2. Case Files & Passports</a>
+          <a href="#case-files" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">2. Case Files &amp; Passports</a>
           <a href="#linkage-radar" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">3. Linkage Radar</a>
           <a href="#scrutiny-reports" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">4. Scrutiny Reports</a>
           <a href="#evc-inspections" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">5. EVC Inspections</a>
           <a href="#institution-portal" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">6. Institution Portal</a>
-          <a href="#admin-configuration" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">7. Rule Packs & Adapters</a>
+          <a href="#admin-configuration" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">7. Rule Packs &amp; Adapters</a>
           <a href="#audit-trail" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">8. Audit Trail Ledger</a>
-          <a href="#metrics-evaluation" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">9. Benchmark Metrics</a>
+          <a href="#safeguards-handling" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">9. Safeguards &amp; Data Handling</a>
+          <a href="#metrics-evaluation" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">10. Benchmark Metrics</a>
+          <a href="#conformance-matrix" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">11. Conformance Matrix</a>
         </div>
       </div>
 
@@ -63,8 +67,14 @@ export default function PreviewAllPage() {
       {/* 8. Cryptographic Audit Trail */}
       <AuditSection />
 
-      {/* 9. Synthetic Engine Benchmark Metrics */}
+      {/* 9. Safeguards & Data Handling Policy (PS Item 9) */}
+      <SafeguardsSection />
+
+      {/* 10. Synthetic Engine Benchmark Metrics */}
       <MetricsSection />
+
+      {/* 11. Problem Statement 26261 Conformance Matrix (PS Item 11) */}
+      <ConformanceSection />
     </div>
   );
 }

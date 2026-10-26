@@ -3,11 +3,80 @@
 // Problem Statement SIH26261 - Smart India Hackathon 2026
 
 import crypto from 'crypto';
-import { AuditEvent, UserRole } from '@/types';
+import { AuditEvent, UserRole, RecordViewAccessEvent } from '@/types';
 
 export class AuditTrailEngine {
   private static readonly GENESIS_HASH = '0000000000000000000000000000000000000000000000000000000000000000';
   private static events: AuditEvent[] = [];
+
+  // Seeded record-view access events (Item 8)
+  private static accessEvents: RecordViewAccessEvent[] = [
+    {
+      id: 'acc-001',
+      timestamp: '2026-01-20T10:14:20Z',
+      actorId: 'user-officer-rao',
+      actorName: 'Smt. Priyadarshini Rao',
+      actorRole: 'OFFICER',
+      viewedType: 'APPLICATION',
+      viewedId: 'app-sunrise-001',
+      viewedTitle: 'AICTE/2026/SUN-1001 (Sunrise Institute)',
+      applicationId: 'app-sunrise-001',
+      institutionName: 'Sunrise Institute of Technology',
+      ipAddress: '10.0.14.22 (Officer VPN)'
+    },
+    {
+      id: 'acc-002',
+      timestamp: '2026-01-20T10:15:30Z',
+      actorId: 'user-officer-rao',
+      actorName: 'Smt. Priyadarshini Rao',
+      actorRole: 'OFFICER',
+      viewedType: 'DOCUMENT',
+      viewedId: 'doc-sun-fire',
+      viewedTitle: 'Fire Safety Certificate (NOC)',
+      applicationId: 'app-sunrise-001',
+      institutionName: 'Sunrise Institute of Technology',
+      ipAddress: '10.0.14.22 (Officer VPN)'
+    },
+    {
+      id: 'acc-003',
+      timestamp: '2026-01-22T14:22:10Z',
+      actorId: 'user-officer-rao',
+      actorName: 'Smt. Priyadarshini Rao',
+      actorRole: 'OFFICER',
+      viewedType: 'APPLICATION',
+      viewedId: 'app-nova-002',
+      viewedTitle: 'AICTE/2026/NOV-9014 (Nova Engineering)',
+      applicationId: 'app-nova-002',
+      institutionName: 'Nova Engineering College',
+      ipAddress: '10.0.14.22 (Officer VPN)'
+    },
+    {
+      id: 'acc-004',
+      timestamp: '2026-01-23T09:11:45Z',
+      actorId: 'user-evc-1',
+      actorName: 'Prof. Harish Chandra',
+      actorRole: 'EVC_INSPECTOR',
+      viewedType: 'DOCUMENT',
+      viewedId: 'doc-nov-land',
+      viewedTitle: 'Sub-Divisional Registered Land Lease Deed',
+      applicationId: 'app-nova-002',
+      institutionName: 'Nova Engineering College',
+      ipAddress: '10.0.18.5 (EVC Tablet)'
+    },
+    {
+      id: 'acc-005',
+      timestamp: '2026-01-25T10:05:00Z',
+      actorId: 'user-auditor-1',
+      actorName: 'Dr. K. S. Subramanian',
+      actorRole: 'AUDITOR',
+      viewedType: 'APPLICATION',
+      viewedId: 'app-apex-003',
+      viewedTitle: 'AICTE/2026/APX-4421 (Apex Polytechnic)',
+      applicationId: 'app-apex-003',
+      institutionName: 'Apex Polytechnic Institute',
+      ipAddress: '10.0.4.10 (Auditor Gateway)'
+    }
+  ];
 
   /**
    * Compute event SHA-256 hash from event payload and previous event hash
@@ -37,6 +106,11 @@ export class AuditTrailEngine {
     entityId: string;
     beforeSummary?: string;
     afterSummary?: string;
+    ruleId?: string;
+    ruleVersion?: string;
+    sourceChecked?: string;
+    sourceResponseStatus?: string;
+    alertRaisedId?: string;
     ipAddress?: string;
     userAgent?: string;
   }): AuditEvent {
@@ -66,6 +140,11 @@ export class AuditTrailEngine {
       entityId: params.entityId,
       beforeSummary: params.beforeSummary,
       afterSummary: params.afterSummary,
+      ruleId: params.ruleId,
+      ruleVersion: params.ruleVersion,
+      sourceChecked: params.sourceChecked,
+      sourceResponseStatus: params.sourceResponseStatus,
+      alertRaisedId: params.alertRaisedId,
       ipAddress: params.ipAddress || '127.0.0.1 (Internal Demo Loopback)',
       userAgent: params.userAgent || 'AICTE-Sentinel-SecureClient/2026.3',
       prevHash,
@@ -74,6 +153,40 @@ export class AuditTrailEngine {
 
     this.events.push(event);
     return event;
+  }
+
+  /**
+   * Record a user accessing/viewing an application or document (Item 8)
+   */
+  static recordAccessEvent(event: Omit<RecordViewAccessEvent, 'id' | 'timestamp'>): RecordViewAccessEvent {
+    const timestamp = new Date().toISOString();
+    const newEvent: RecordViewAccessEvent = {
+      ...event,
+      id: `acc-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`,
+      timestamp
+    };
+    this.accessEvents.unshift(newEvent);
+
+    // Also link access into tamper-evident audit ledger
+    this.recordEvent({
+      actorId: event.actorId,
+      actorName: event.actorName,
+      actorRole: event.actorRole,
+      action: 'RECORD_VIEW_ACCESS',
+      entityType: 'RECORD_ACCESS',
+      entityId: event.viewedId,
+      afterSummary: `${event.actorRole} ${event.actorName} viewed ${event.viewedType} "${event.viewedTitle}" (${event.viewedId})`,
+      ipAddress: event.ipAddress
+    });
+
+    return newEvent;
+  }
+
+  /**
+   * Get record-view access events for Auditor oversight
+   */
+  static getAccessEvents(limit = 100): RecordViewAccessEvent[] {
+    return this.accessEvents.slice(0, limit);
   }
 
   /**

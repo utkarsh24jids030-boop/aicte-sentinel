@@ -65,7 +65,19 @@ const routesToTest = [
   },
   {
     path: '/preview/metrics',
-    expected: ['Automated Scrutiny Engine Benchmark Metrics', 'SYNTHETIC BENCHMARK', 'PRNG Seed: 20260201', 'Regulatory Anomaly Confusion Matrix', 'True Positive (TP)']
+    expected: ['Automated Scrutiny Engine Benchmark Metrics', 'Discrepancy-Identification Reliability', 'Estimated Reduction in Manual Processing Effort', 'ESTIMATE ONLY — NOT A MEASURED RESULT', 'Statutory Document Verification Per-Status Breakdown']
+  },
+  {
+    path: '/preview/safeguards',
+    expected: ['Role-Based Access Control (RBAC) Matrix', 'Non-Bypass Database & Registry Access Disclosures', 'Record-View Access Logging', 'Personally Identifiable Information (PII) Masking']
+  },
+  {
+    path: '/preview/conformance',
+    expected: ['Problem Statement SIH26261 Conformance Matrix', 'Honest Conformance Standard', 'Statutory Objectives & Governance', 'Document Forensics & Verification']
+  },
+  {
+    path: '/preview/validation-report/app-sunrise-001',
+    expected: ['INSTITUTIONAL VALIDATION REPORT', 'Sunrise Institute of Technology', 'AICTE/2026/SUN-8812', 'Missing Required Documents', 'Expired Documents']
   }
 ];
 

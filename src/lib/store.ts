@@ -12,7 +12,8 @@ import {
   OfficerActionRecord,
   AuditEvent,
   VerificationAttempt,
-  AICTEInstitutionalRecord
+  AICTEInstitutionalRecord,
+  InfrastructureEvidence
 } from '@/types';
 import { AuditTrailEngine } from './audit/trail';
 import { RulesEngine } from './rules/engine';
@@ -1414,6 +1415,199 @@ export const DEMO_INSPECTION_TASKS: InspectionTask[] = [
   }
 ];
 
+// SEEDED INFRASTRUCTURE PHOTOGRAPHIC & FLOOR PLAN EVIDENCE
+// Evaluated using computer-vision-lite automated screening
+export const DEMO_INFRASTRUCTURE_EVIDENCE: InfrastructureEvidence[] = [
+  {
+    id: 'infra-sun-001',
+    applicationId: 'app-sunrise-001',
+    institutionId: 'inst-sunrise',
+    category: 'Computer Center / Lab',
+    title: 'Central Computing Facility - Main Terminal Hall',
+    evidenceType: 'PHOTOGRAPH',
+    fileName: 'Sunrise_Computer_Center_Geotagged.jpg',
+    filePath: '/uploads/app-sunrise-001/Sunrise_Computer_Center_Geotagged.jpg',
+    fileSize: 1024 * 1024 * 3.2,
+    mimeType: 'image/jpeg',
+    sha256Hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+    declaredAreaSqm: 180,
+    uploadedAt: '2026-01-20T11:46:00Z',
+    checks: {
+      exifExtracted: true,
+      exifDate: '2026-01-15T11:22:10Z',
+      exifGpsCoordinates: { latitude: 12.9716, longitude: 77.5946, altitudeMeters: 920 },
+      captureDevice: 'Apple iPhone 14 Pro (f/1.78, 24mm equivalent)',
+      resolutionWidth: 3840,
+      resolutionHeight: 2160,
+      resolutionMegapixels: 8.29,
+      blurScore: 88,
+      isBlurry: false,
+      perceptualHash: 'dhash:9a8b7c6d5e4f3a2b',
+      duplicateMatchFound: false,
+      areaConsistencyChecked: true,
+      declaredAreaSqm: 180,
+      planExtractedAreaSqm: 180,
+      areaDiscrepancyPercentage: 0,
+      checksRan: [
+        'EXIF Metadata & Geotag Verification',
+        'Perceptual Hash Duplicate Screening',
+        'Image Resolution & Edge Sharpness Estimation',
+        'Declared vs Plan Area Metric Comparison'
+      ],
+      checksNotPerformed: [
+        'Deep Learning Object Recognition (Local GPU Model Not Wired)',
+        'Automated Computer Workstation / Terminal Tally',
+        'Automated Fire Safety Equipment Visual Recognition',
+        'Crowd Density / Real-time Biometric Analysis'
+      ],
+      optionalVisionCaption: '[AI-generated and unverified description]: High-density academic computing laboratory with row workstation configuration and central networking switchboard.',
+      isVisionCaptionUnverified: true
+    },
+    advisoryRecommendation: 'CLEAR_EVIDENCE',
+    advisoryReason: 'High-resolution geotagged photographic evidence with verified EXIF capture metadata matching declared campus location and architectural plan.'
+  },
+  {
+    id: 'infra-sun-002',
+    applicationId: 'app-sunrise-001',
+    institutionId: 'inst-sunrise',
+    category: 'Central Library',
+    title: 'Central Reference Library & Reading Hall',
+    evidenceType: 'PHOTOGRAPH',
+    fileName: 'Sunrise_Central_Library_Geotagged.jpg',
+    filePath: '/uploads/app-sunrise-001/Sunrise_Central_Library_Geotagged.jpg',
+    fileSize: 1024 * 1024 * 4.1,
+    mimeType: 'image/jpeg',
+    sha256Hash: 'a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0',
+    declaredAreaSqm: 420,
+    uploadedAt: '2026-01-20T11:47:00Z',
+    checks: {
+      exifExtracted: true,
+      exifDate: '2026-01-15T11:35:00Z',
+      exifGpsCoordinates: { latitude: 12.9718, longitude: 77.5949, altitudeMeters: 922 },
+      captureDevice: 'Sony Alpha A7 IV (FE 24-70mm F2.8 GM)',
+      resolutionWidth: 4000,
+      resolutionHeight: 3000,
+      resolutionMegapixels: 12.0,
+      blurScore: 92,
+      isBlurry: false,
+      perceptualHash: 'dhash:1a2b3c4d5e6f7a8b',
+      duplicateMatchFound: false,
+      areaConsistencyChecked: true,
+      declaredAreaSqm: 420,
+      planExtractedAreaSqm: 420,
+      areaDiscrepancyPercentage: 0,
+      checksRan: [
+        'EXIF Metadata & Geotag Verification',
+        'Perceptual Hash Duplicate Screening',
+        'Image Resolution & Edge Sharpness Estimation',
+        'Declared vs Plan Area Metric Comparison'
+      ],
+      checksNotPerformed: [
+        'Deep Learning Object Recognition (Local GPU Model Not Wired)',
+        'Automated Computer Workstation / Terminal Tally',
+        'Automated Fire Safety Equipment Visual Recognition',
+        'Crowd Density / Real-time Biometric Analysis'
+      ],
+      optionalVisionCaption: '[AI-generated and unverified description]: Multi-tier institutional reading facility with book stack shelving and study cubicles.',
+      isVisionCaptionUnverified: true
+    },
+    advisoryRecommendation: 'CLEAR_EVIDENCE',
+    advisoryReason: 'High-resolution geotagged photographic evidence with verified EXIF capture metadata matching declared campus location and architectural plan.'
+  },
+  {
+    id: 'infra-nov-001',
+    applicationId: 'app-nova-002',
+    institutionId: 'inst-nova',
+    category: 'Computer Center / Lab',
+    title: 'Advanced CAD/CAM Computing Center',
+    evidenceType: 'PHOTOGRAPH',
+    fileName: 'Nova_CAD_Lab_Interior.jpg',
+    filePath: '/uploads/app-nova-002/Nova_CAD_Lab_Interior.jpg',
+    fileSize: 1024 * 340,
+    mimeType: 'image/jpeg',
+    sha256Hash: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    declaredAreaSqm: 220,
+    uploadedAt: '2026-01-22T16:21:00Z',
+    checks: {
+      exifExtracted: false,
+      resolutionWidth: 800,
+      resolutionHeight: 600,
+      resolutionMegapixels: 0.48,
+      blurScore: 22,
+      isBlurry: true,
+      perceptualHash: 'dhash:7f3a8c1e2b4d9a0f',
+      duplicateMatchFound: false,
+      areaConsistencyChecked: true,
+      declaredAreaSqm: 220,
+      planExtractedAreaSqm: 220,
+      areaDiscrepancyPercentage: 0,
+      checksRan: [
+        'EXIF Metadata & Geotag Verification',
+        'Perceptual Hash Duplicate Screening',
+        'Image Resolution & Edge Sharpness Estimation',
+        'Declared vs Plan Area Metric Comparison'
+      ],
+      checksNotPerformed: [
+        'Deep Learning Object Recognition (Local GPU Model Not Wired)',
+        'Automated Computer Workstation / Terminal Tally',
+        'Automated Fire Safety Equipment Visual Recognition',
+        'Crowd Density / Real-time Biometric Analysis'
+      ],
+      optionalVisionCaption: '[AI-generated and unverified description]: Indoor lab room with monitors. Image resolution is low; details unverified.',
+      isVisionCaptionUnverified: true
+    },
+    advisoryRecommendation: 'ADDITIONAL_EVIDENCE_SUGGESTED',
+    advisoryReason: 'Additional evidence suggested: Image blur score (22/100) and low resolution (800x600) do not allow clear verification of CAD workstation tally. Original geotagged image requested.'
+  },
+  {
+    id: 'infra-apx-001',
+    applicationId: 'app-apex-003',
+    institutionId: 'inst-apex',
+    category: 'Computer Center / Lab',
+    title: 'Polytechnic Central Computer Laboratory',
+    evidenceType: 'PHOTOGRAPH',
+    fileName: 'Apex_Computer_Lab_Room102.jpg',
+    filePath: '/uploads/app-apex-003/Apex_Computer_Lab_Room102.jpg',
+    fileSize: 1024 * 340,
+    mimeType: 'image/jpeg',
+    sha256Hash: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+    declaredAreaSqm: 150,
+    uploadedAt: '2026-01-25T10:16:00Z',
+    checks: {
+      exifExtracted: false,
+      resolutionWidth: 800,
+      resolutionHeight: 600,
+      resolutionMegapixels: 0.48,
+      blurScore: 22,
+      isBlurry: true,
+      perceptualHash: 'dhash:7f3a8c1e2b4d9a0f',
+      duplicateMatchFound: true,
+      duplicateMatchedAppId: 'AICTE/2026/NOV-9014',
+      duplicateMatchedCategory: 'Computer Center / Lab',
+      areaConsistencyChecked: true,
+      declaredAreaSqm: 150,
+      planExtractedAreaSqm: 110,
+      areaDiscrepancyPercentage: 27,
+      checksRan: [
+        'EXIF Metadata & Geotag Verification',
+        'Perceptual Hash Duplicate Screening',
+        'Image Resolution & Edge Sharpness Estimation',
+        'Declared vs Plan Area Metric Comparison'
+      ],
+      checksNotPerformed: [
+        'Deep Learning Object Recognition (Local GPU Model Not Wired)',
+        'Automated Computer Workstation / Terminal Tally',
+        'Automated Fire Safety Equipment Visual Recognition',
+        'Crowd Density / Real-time Biometric Analysis'
+      ],
+      optionalVisionCaption: '[AI-generated and unverified description]: Photographic perspective identical to CAD lab record in application NOV-9014.',
+      isVisionCaptionUnverified: true
+    },
+    advisoryRecommendation: 'PHYSICAL_INSPECTION_SUGGESTED',
+    advisoryReason: 'Physical inspection suggested: Perceptual hash (dhash:7f3a8c1e2b4d9a0f) matches photograph submitted by Nova Engineering (AICTE/2026/NOV-9014). Declared area also diverges by 27% from floor plan. Cross-verification required during on-site EVC inspection.'
+  }
+];
+
 // INITIAL AUDIT TRAIL LOGS
 export const INITIAL_AUDIT_EVENTS: AuditEvent[] = [
   {
@@ -1543,6 +1737,90 @@ export const INITIAL_AUDIT_EVENTS: AuditEvent[] = [
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0',
     prevHash: '',
     hash: ''
+  },
+  {
+    id: 'EVT-009',
+    timestamp: '2026-01-26T10:05:00Z',
+    actorId: 'system-rules-engine',
+    actorName: 'Rules Execution Engine',
+    actorRole: 'SYSTEM',
+    action: 'RULE_APPLIED',
+    entityType: 'RULE_ENGINE',
+    entityId: 'REC-INTAKE-001',
+    ruleId: 'REC-INTAKE-001',
+    ruleVersion: '2026.1',
+    sourceChecked: 'AICTE Institutional Records Source (simulated)',
+    sourceResponseStatus: 'RECORD_AUTHENTIC',
+    afterSummary: 'Rule REC-INTAKE-001 v2026.1 applied: Evaluated declared total intake (420 seats) against master approved intake baseline (420 seats). Status: Compliant.',
+    ipAddress: '127.0.0.1 (Internal Loopback)',
+    userAgent: 'AICTE-RulesEngine/2026.1',
+    prevHash: '',
+    hash: ''
+  },
+  {
+    id: 'EVT-010',
+    timestamp: '2026-01-26T10:06:00Z',
+    actorId: 'system-rules-engine',
+    actorName: 'Rules Execution Engine',
+    actorRole: 'SYSTEM',
+    action: 'RULE_APPLIED',
+    entityType: 'RULE_ENGINE',
+    entityId: 'FEE-TER-001',
+    ruleId: 'FEE-TER-001',
+    ruleVersion: '2026.1',
+    sourceChecked: 'AICTE Institutional Records Source (simulated)',
+    sourceResponseStatus: 'PAYMENT_PENDING',
+    afterSummary: 'Rule FEE-TER-001 v2026.1 applied: Apex Polytechnic Institute TER payment status is PENDING. Critical statutory deficiency flagged.',
+    ipAddress: '127.0.0.1 (Internal Loopback)',
+    userAgent: 'AICTE-RulesEngine/2026.1',
+    prevHash: '',
+    hash: ''
+  },
+  {
+    id: 'EVT-011',
+    timestamp: '2026-01-26T10:08:00Z',
+    actorId: 'system-alert-engine',
+    actorName: 'Regulatory Alert Service',
+    actorRole: 'SYSTEM',
+    action: 'ALERT_RAISED',
+    entityType: 'FINDING',
+    entityId: 'alt-006',
+    alertRaisedId: 'alt-006',
+    afterSummary: 'Regulatory alert alt-006 raised for unresolved_items: Technical Education Regulatory (TER) fee payment status is PENDING for Apex Polytechnic Institute.',
+    ipAddress: '127.0.0.1 (Notification Daemon)',
+    userAgent: 'AICTE-AlertService/2026.1',
+    prevHash: '',
+    hash: ''
+  },
+  {
+    id: 'EVT-012',
+    timestamp: '2026-01-26T10:15:00Z',
+    actorId: 'user-inspector-1',
+    actorName: 'Prof. Harish Chandra',
+    actorRole: 'EVC_INSPECTOR',
+    action: 'INSPECTION_OBSERVATION_RECORDED',
+    entityType: 'INSPECTION',
+    entityId: 'insp-001',
+    afterSummary: 'Physical inspection observation recorded for Land & Boundary: Verified. Concrete boundary demarcated with barbed fence; GPS survey coordinates consistent with revenue plan.',
+    ipAddress: '10.0.18.5 (EVC Field Client)',
+    userAgent: 'AICTE-EVC-Mobile/2026.2',
+    prevHash: '',
+    hash: ''
+  },
+  {
+    id: 'EVT-013',
+    timestamp: '2026-01-26T10:20:00Z',
+    actorId: 'user-auditor-1',
+    actorName: 'Dr. K. S. Subramanian',
+    actorRole: 'AUDITOR',
+    action: 'RECORD_VIEW_ACCESS',
+    entityType: 'RECORD_ACCESS',
+    entityId: 'app-apex-003',
+    afterSummary: 'AUDITOR Dr. K. S. Subramanian viewed APPLICATION "AICTE/2026/APX-4421 (Apex Polytechnic)"',
+    ipAddress: '10.0.4.10 (Auditor Workstation)',
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/121.0',
+    prevHash: '',
+    hash: ''
   }
 ];
 
@@ -1558,6 +1836,7 @@ export class DataStore {
   private static inspectionTasks = [...DEMO_INSPECTION_TASKS];
   private static officerActions: OfficerActionRecord[] = [];
   private static institutionalRecords: Record<string, AICTEInstitutionalRecord> = { ...DEMO_INSTITUTIONAL_RECORDS };
+  private static infrastructureEvidence: InfrastructureEvidence[] = [...DEMO_INFRASTRUCTURE_EVIDENCE];
 
   // Seeded officer action overrides layered onto computed findings
   private static findingOverrides = new Map<string, {
@@ -1998,6 +2277,19 @@ export class DataStore {
   static updateFindingStatus(id: string, status: Finding['status'], officerNotes?: string, officerName?: string): Finding | undefined {
     const finding = this.getFindingById(id);
     if (!finding) return undefined;
+
+    // Statutory Safeguard Enforcement (Item 9):
+    // Officer actions that record an adverse outcome strictly require a justification and a named officer.
+    const isAdverse = status === 'Confirmed by Officer' || status === 'Escalated for EVC';
+    if (isAdverse) {
+      if (!officerNotes || !officerNotes.trim()) {
+        throw new Error('Statutory Safeguard Violation: Adverse regulatory actions (Confirmed by Officer / Escalated for EVC) strictly require a written justification.');
+      }
+      if (!officerName || !officerName.trim()) {
+        throw new Error('Statutory Safeguard Violation: Adverse regulatory actions strictly require an identifiable named officer.');
+      }
+    }
+
     const prevStatus = finding.status;
 
     this.findingOverrides.set(id, {
@@ -2057,6 +2349,32 @@ export class DataStore {
     return true;
   }
 
+  // INFRASTRUCTURE EVIDENCE (COMPUTER-VISION-LITE)
+  static getInfrastructureEvidence(applicationId?: string): InfrastructureEvidence[] {
+    if (applicationId) {
+      return this.infrastructureEvidence.filter(e => e.applicationId === applicationId);
+    }
+    return this.infrastructureEvidence;
+  }
+
+  static getInfrastructureEvidenceById(id: string): InfrastructureEvidence | undefined {
+    return this.infrastructureEvidence.find(e => e.id === id);
+  }
+
+  static addInfrastructureEvidence(evidence: InfrastructureEvidence): InfrastructureEvidence {
+    this.infrastructureEvidence.push(evidence);
+    AuditTrailEngine.recordEvent({
+      actorId: 'institution-rep',
+      actorName: 'Institution Representative',
+      actorRole: 'INSTITUTION',
+      action: 'INFRASTRUCTURE_EVIDENCE_UPLOADED',
+      entityType: 'DOCUMENT',
+      entityId: evidence.id,
+      afterSummary: `Uploaded ${evidence.evidenceType} for "${evidence.category}": ${evidence.fileName} (${evidence.checks.resolutionMegapixels}MP, Blur: ${evidence.checks.blurScore}/100). Advisory: ${evidence.advisoryRecommendation}`
+    });
+    return evidence;
+  }
+
   // OFFICER ACTIONS
   static addOfficerAction(action: OfficerActionRecord): void {
     this.officerActions.push(action);
@@ -2074,6 +2392,7 @@ export class DataStore {
     this.inspectionTasks = [...DEMO_INSPECTION_TASKS];
     this.officerActions = [];
     this.institutionalRecords = { ...DEMO_INSTITUTIONAL_RECORDS };
+    this.infrastructureEvidence = [...DEMO_INFRASTRUCTURE_EVIDENCE];
     this.findingOverrides = new Map<string, {
       status: FindingStatus;
       officerNotes?: string;

@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { DataStore, DEMO_INSTITUTIONS } from '@/lib/store';
 import { RulesEngine } from '@/lib/rules/engine';
 import { formatSeverity, formatStatus } from './helpers';
@@ -27,21 +28,30 @@ export default function InstitutionSection() {
 
   return (
     <section id="institution-portal" className="space-y-8 bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
-      <div className="border-b border-slate-200 pb-4">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">
-            Applicant Portal
-          </span>
-          <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
-            Institution Self-Assessment & Scrutiny Readiness
-          </span>
+      <div className="border-b border-slate-200 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">
+              Applicant Portal
+            </span>
+            <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
+              Institution Self-Assessment & Scrutiny Readiness
+            </span>
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 mt-1">
+            {institution.name} — Approval Application Dashboard
+          </h2>
+          <p className="text-sm text-slate-600 mt-1">
+            Self-service approval workbench with predictive readiness scoring, preventing surprise deficiencies before formal committee submission.
+          </p>
         </div>
-        <h2 className="text-2xl font-bold text-slate-900 mt-1">
-          {institution.name} — Approval Application Dashboard
-        </h2>
-        <p className="text-sm text-slate-600 mt-1">
-          Self-service approval workbench with predictive readiness scoring, preventing surprise deficiencies before formal committee submission.
-        </p>
+
+        <Link
+          href={`/preview/validation-report/${app.id}`}
+          className="self-start md:self-auto px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 rounded-xl text-xs font-bold shadow-2xs flex items-center gap-1.5 transition-colors"
+        >
+          <span>View Official Validation Report (Prototype)</span>
+        </Link>
       </div>
 
       {/* Institution Details Bar */}

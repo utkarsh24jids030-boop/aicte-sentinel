@@ -903,6 +903,30 @@ test('Official PS Item 4: TER Payment Status Tracking and Non-Invented Fee Rule 
   assert.ok(storeFile.includes("terPaymentStatus: 'PAID'"), 'Sunrise must seed PAID payment status');
 });
 
+test('Official PS Item 5: Applicant Deficiency Rectification Flow and Structured Validation Report', () => {
+  const rectifyRoute = fs.readFileSync('./src/app/api/applications/[id]/rectify/route.ts', 'utf8');
+  assert.ok(rectifyRoute.includes('DEFICIENCY_RECTIFICATION_SUBMITTED'), 'Rectify route must log DEFICIENCY_RECTIFICATION_SUBMITTED in audit trail');
+  assert.ok(rectifyRoute.includes('beforeAfter'), 'Rectify route must return beforeAfter status and readiness score');
+  assert.ok(rectifyRoute.includes('doc.versions.push'), 'Rectify route must archive previous document versions');
+
+  const reportComponent = fs.readFileSync('./src/components/ValidationReportView.tsx', 'utf8');
+  assert.ok(reportComponent.includes('PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT'), 'Validation report must carry prototype watermark banner');
+  assert.ok(reportComponent.includes('missingItems'), 'Validation report must categorize missing items');
+  assert.ok(reportComponent.includes('expiredItems'), 'Validation report must categorize expired items');
+  assert.ok(reportComponent.includes('inconsistentItems'), 'Validation report must categorize inconsistent items');
+  assert.ok(reportComponent.includes('computeReportSeal'), 'Validation report must compute cryptographic report seal');
+
+  const instReportPage = fs.readFileSync('./src/app/institution/applications/[id]/validation-report/page.tsx', 'utf8');
+  assert.ok(instReportPage.includes('ValidationReportView'), 'Institution validation report page must render ValidationReportView');
+
+  const previewReportPage = fs.readFileSync('./src/app/preview/validation-report/[id]/page.tsx', 'utf8');
+  assert.ok(previewReportPage.includes('ValidationReportView'), 'Preview validation report page must render ValidationReportView');
+
+  const instPage = fs.readFileSync('./src/app/institution/applications/[id]/page.tsx', 'utf8');
+  assert.ok(instPage.includes('handleRectifySubmit'), 'Institution page must implement handleRectifySubmit');
+  assert.ok(instPage.includes('validation-report'), 'Institution page must link to validation-report');
+});
+
 
 
 

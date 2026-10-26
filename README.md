@@ -26,13 +26,13 @@ AICTE Sentinel includes a **1-Click Quick Role Switcher** in the top navigation 
 | **Auditor** | Meenakshi Sundaram | `auditor@sentinel-demo.example` | Read-only vigilance view, SHA-256 hash-chain integrity verification |
 
 > [!NOTE]
-> **Demo Authentication Notice:**
-> Evaluator role-switching and Firebase email/password auth are for prototype demonstration only. Production deployments require AICTE Single Sign-On (SSO) via Jan Parichay / DigiLocker / SAML 2.0 with hardware token MFA.
->
-> **Authentication Architecture Truth & Security Scope:**
-> - **Active Prototype Implementation:** The demo runtime utilizes instant client-side demo role switching (`AuthContext.tsx`) with Google Firebase Auth SDK fallback, client-side route guards (`ProtectedRoute.tsx`), and server-side profile resolution with role-escalation clamping (`AuthService.resolveUserProfile`).
-> - **NextAuth / Auth.js:** NextAuth is **NOT** used in this application.
-> - **Enforcement Boundary:** Prototype role routing is enforced at the UI navigation layer with server-side unprivileged clamped registration and server-side PII masking. Production deployments require enterprise session cookies, cryptographic JWT signature verification, and database-level RBAC alongside Jan Parichay SSO.
+> **Authentication & Deployment Reality Disclosures:**
+> - **What is used for authentication:** The active demonstration build uses client-side state in `AuthContext.tsx` with an optional Google Firebase Auth SDK fallback for email/password handling.
+> - **Role switching is NOT production authentication:** The 1-click role switcher is provided strictly for Hackathon evaluators to inspect different user perspectives. In a real-world production system, role switching without credentials cannot exist; authentications must flow through official AICTE Single Sign-On (SSO) via Jan Parichay, DigiLocker, or SAML 2.0 with hardware security token MFA.
+> - **What is used for data storage:** The active demo build uses an in-memory JavaScript data store (`src/lib/store.ts`).
+> - **State ephemerality on serverless hosting:** Because data is held in-memory, demo state is ephemeral on serverless hosting (e.g., Vercel, Netlify, or serverless containers) and resets to default seed data on container cold starts, server restarts, or redeployments.
+> - **Production database requirements:** Production deployment requires a durable database (PostgreSQL / CockroachDB managed via Prisma ORM; schema available in `prisma/schema.sql`) and cloud object storage (S3 / GCS) for uploaded regulatory documents.
+> - **NextAuth / Auth.js:** NextAuth is **NOT** used in this project. All session handling is done via `AuthContext.tsx` and `AuthService.ts`.
 
 ---
 
@@ -241,12 +241,13 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## 9. Demo State & Ephemerality Notice
 
 > [!IMPORTANT]
-> **Ephemeral In-Memory Prototype Storage Notice**
+> **Ephemeral In-Memory Prototype Storage & Production Requirements Notice**
 > The current demonstration build uses an in-memory datastore (`src/lib/store.ts`) with best-effort in-memory rate limiting (`src/lib/security/rateLimit.ts`).
-> - **State Ephemerality:** Application data, uploaded documents, manual corrections, and audit events reside in process memory. The state is ephemeral and resets to default seed data on server cold start, process restart, or redeployment. In multi-instance or serverless environments, state is not synchronized across worker instances.
-> - **Rate Limiting:** Best-effort sliding-window limits (10 uploads/min, 20 logins/min per IP) are tracked in process memory.
+> - **Active Storage Mechanism:** What is used for data storage in this prototype is an in-memory JavaScript data store (`src/lib/store.ts`).
+> - **State Ephemerality on Serverless Hosting:** Demo state is ephemeral on serverless hosting (e.g. Vercel, Netlify, or serverless function containers). Application data, uploaded documents, manual corrections, and audit events reside purely in process memory and reset to baseline seed data upon container recycling, cold starts, or redeployments.
+> - **Role Switching is NOT Production Authentication:** The 1-click role switcher in the UI is provided strictly for review and evaluation convenience. It is not production authentication. Production systems require official AICTE Single Sign-On (SSO) via Jan Parichay, DigiLocker, or SAML 2.0 with hardware MFA.
+> - **Production Needs a Durable Database:** Production readiness requires a durable relational database (PostgreSQL / CockroachDB managed via Prisma ORM; schema prepared in `prisma/schema.sql`), cloud object storage (S3 / GCS) for uploaded regulatory files, and distributed Redis-based rate limiting.
 > - **Reset Demo Action:** Evaluators can restore baseline test data at any time via the "Reset Demo Data" action on `/admin` and `/auditor` or by calling `POST /api/admin/reset`.
-> - **Production Roadmap:** A production-grade deployment requires durable PostgreSQL storage managed via Prisma ORM (schema prepared in `prisma/schema.sql`), durable S3/GCS object storage for uploaded files, distributed Redis-based rate limiting, and enterprise OpenID Connect / SAML authentication.
 
 ---
 

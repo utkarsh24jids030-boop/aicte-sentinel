@@ -454,8 +454,17 @@ function LoginFormContent() {
               </div>
             </div>
 
-            <div className="mt-6 text-[11px] bg-amber-50 p-3.5 rounded-xl border border-amber-200 text-amber-900 leading-relaxed">
-              <strong>Demo Authentication Notice:</strong> Evaluator role-switching and Firebase email/password auth are for prototype demonstration only. Production deployments require AICTE Single Sign-On (SSO) via Jan Parichay / DigiLocker / SAML 2.0 with hardware token MFA.
+            <div className="mt-6 text-[11px] bg-amber-50 p-3.5 rounded-xl border border-amber-200 text-amber-900 leading-relaxed space-y-1.5">
+              <div className="font-bold flex items-center gap-1.5 text-amber-950">
+                <AlertCircle className="w-3.5 h-3.5 text-amber-700 flex-shrink-0" />
+                <span>Prototype Deployment &amp; Security Disclosures</span>
+              </div>
+              <p>
+                <strong>Authentication Reality:</strong> Instant 1-click role switching and simulated session switching operate client-side for rapid SIH evaluation. Role switching on the demo is <em>not production authentication</em>. Production deployments require AICTE Single Sign-On (SSO) via Jan Parichay / DigiLocker / SAML 2.0 with hardware token MFA.
+              </p>
+              <p>
+                <strong>Data Storage &amp; Ephemerality:</strong> Active prototype data is held in an in-memory datastore. Demo state is <em>ephemeral on serverless hosting</em> (e.g. Vercel / serverless containers) and resets to baseline seed data on process recycling or cold starts. Production deployment requires a durable database (PostgreSQL via Prisma ORM) and object storage for files.
+              </p>
             </div>
           </div>
         </div>

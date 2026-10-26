@@ -405,18 +405,19 @@ test('Unprivileged Registration Safeguard: Rejects privileged role escalation', 
   assert.equal(normalResult.role, 'INSTITUTION');
 });
 
-test('Authentication Reality & Disclosure: Demo auth notice present, NextAuth not used', () => {
+test('Item 9: Authentication & Deployment Reality Disclosures in README and Login Page', () => {
   const loginPage = fs.readFileSync('./src/app/login/page.tsx', 'utf8');
-  assert.ok(
-    loginPage.includes('Demo Authentication Notice') && loginPage.includes('Jan Parichay'),
-    'Login page must prominently display Demo Authentication Notice mentioning Jan Parichay SSO requirement'
-  );
+  assert.ok(loginPage.includes('Jan Parichay'), 'Login page must mention Jan Parichay SSO requirement');
+  assert.ok(loginPage.includes('ephemeral on serverless hosting'), 'Login page must disclose that demo state is ephemeral on serverless hosting');
+  assert.ok(loginPage.includes('not production authentication'), 'Login page must state role switching is not production authentication');
+  assert.ok(loginPage.includes('durable database'), 'Login page must disclose production needs a durable database');
 
   const readme = fs.readFileSync('./README.md', 'utf8');
-  assert.ok(
-    readme.includes('Demo Authentication Notice') && readme.includes('NextAuth is **NOT** used'),
-    'README must honestly disclose that NextAuth is not used and that demo auth is for prototype only'
-  );
+  assert.ok(readme.includes('Jan Parichay'), 'README must mention Jan Parichay SSO requirement');
+  assert.ok(readme.includes('ephemeral on serverless hosting'), 'README must disclose demo state is ephemeral on serverless hosting');
+  assert.ok(readme.includes('NOT production authentication') || readme.includes('not production authentication'), 'README must state role switching is not production authentication');
+  assert.ok(readme.includes('durable database') || readme.includes('Durable Database'), 'README must state production needs a durable database');
+  assert.ok(readme.includes('NextAuth is **NOT** used'), 'README must state NextAuth is not used');
 
   const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
   assert.equal(packageJson.dependencies['next-auth'], undefined, 'next-auth must not be a project dependency');

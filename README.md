@@ -248,3 +248,31 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 > - **Reset Demo Action:** Evaluators can restore baseline test data at any time via the "Reset Demo Data" action on `/admin` and `/auditor` or by calling `POST /api/admin/reset`.
 > - **Production Roadmap:** A production-grade deployment requires durable PostgreSQL storage managed via Prisma ORM (schema prepared in `prisma/schema.sql`), durable S3/GCS object storage for uploaded files, distributed Redis-based rate limiting, and enterprise OpenID Connect / SAML authentication.
 
+---
+
+## 10. Synthetic Benchmark & Evaluation Methodology
+
+AICTE Sentinel includes an automated benchmark evaluation suite that assesses the system's text extraction fidelity, compliance rule precision/recall, duplicate detection accuracy, adapter fail-closed robustness, and end-to-end processing throughput.
+
+- **Synthetic Benchmark Dataset (`public/synthetic-eval-dataset.json`):**
+  - **Scale:** 120 complete synthetic institutional approval applications containing 480 regulatory documents.
+  - **Deterministic Generation:** Generated via `scripts/generate-synthetic-dataset.ts` using a linear congruential pseudorandom number generator (PRNG) initialized with fixed seed `20260201` (evaluation date: `2026-02-01`).
+  - **Seeded Defect Scenarios:** Carefully labelled adverse compliance conditions including land acreage deficits, expired fire safety NOCs, faculty-to-student ratio deficits, instructional carpet area shortages, duplicate municipal certificates, shared undivided land parcels, and concurrently declared faculty credentials.
+- **Evaluation Pipeline (`scripts/evaluate.ts`):**
+  - **Document Extraction:** Parses real synthetic PDF sample files in `public/samples/` using vector text streams (`pdf-parse`) and regex rule extractors.
+  - **Anomaly Detection:** Evaluates all 120 applications against statutory compliance rules, computing a complete confusion matrix (TP, FP, TN, FN), precision, recall, and F1-score.
+  - **Source Adapters:** Evaluates simulated external verification adapters across 360 calls, verifying fail-closed timeout protection (`DEGRADED (TIMEOUT)`).
+- **Execution Commands:**
+  ```bash
+  # 1. Regenerate 120 synthetic applications with deterministic seed
+  npm run generate:dataset
+
+  # 2. Run extraction and anomaly detection benchmarks; write public/metrics.json
+  npm run evaluate
+  ```
+- **Live Metrics Dashboard:**
+  - Authenticated/Portal route: `/metrics`
+  - Public Server-Rendered HTML Preview: `/preview/metrics`
+  - All figures are dynamically loaded from `public/metrics.json` without hardcoded constants.
+
+

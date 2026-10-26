@@ -62,6 +62,10 @@ const routesToTest = [
   { 
     path: '/preview/audit', 
     expected: ['Cryptographically Hash-Chained Audit Trail', 'HASH-CHAIN 100% INTACT', '0000000000000000000000000000000000000000000000000000000000000000'] 
+  },
+  {
+    path: '/preview/metrics',
+    expected: ['Automated Scrutiny Engine Benchmark Metrics', 'SYNTHETIC BENCHMARK', 'PRNG Seed: 20260201', 'Regulatory Anomaly Confusion Matrix', 'True Positive (TP)']
   }
 ];
 

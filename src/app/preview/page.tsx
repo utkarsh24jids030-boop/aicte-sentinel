@@ -46,6 +46,12 @@ export default function PreviewIndexPage() {
       href: '/preview/audit',
       description: 'Tamper-evident SHA-256 hash-chained event ledger and live integrity verification result for vigilance reviewers.',
       badge: 'Auditor'
+    },
+    {
+      title: 'Engine Benchmark Metrics',
+      href: '/preview/metrics',
+      description: 'Deterministic synthetic evaluation dataset (120 applications, 480 docs) measuring extraction accuracy, precision, recall, and latency.',
+      badge: 'Evaluation'
     }
   ];
 

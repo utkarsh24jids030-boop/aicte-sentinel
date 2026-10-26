@@ -7,6 +7,7 @@ import EvcInspectionSection from '../_components/EvcInspectionSection';
 import InstitutionSection from '../_components/InstitutionSection';
 import AdminSection from '../_components/AdminSection';
 import AuditSection from '../_components/AuditSection';
+import MetricsSection from '../_components/MetricsSection';
 
 export default function PreviewAllPage() {
   return (
@@ -34,6 +35,7 @@ export default function PreviewAllPage() {
           <a href="#institution-portal" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">6. Institution Portal</a>
           <a href="#admin-configuration" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">7. Rule Packs & Adapters</a>
           <a href="#audit-trail" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">8. Audit Trail Ledger</a>
+          <a href="#metrics-evaluation" className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium">9. Benchmark Metrics</a>
         </div>
       </div>
 
@@ -60,6 +62,9 @@ export default function PreviewAllPage() {
 
       {/* 8. Cryptographic Audit Trail */}
       <AuditSection />
+
+      {/* 9. Synthetic Engine Benchmark Metrics */}
+      <MetricsSection />
     </div>
   );
 }

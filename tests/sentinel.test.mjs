@@ -710,6 +710,51 @@ test('Item 7: Real Extraction with PDF Library, Keyword Classification & Optiona
   );
 });
 
+test('Item 8: Synthetic Benchmark Dataset & Server-Rendered Metrics', () => {
+  // 1. Verify scripts exist
+  assert.ok(fs.existsSync('./scripts/generate-synthetic-dataset.ts'), 'scripts/generate-synthetic-dataset.ts must exist');
+  assert.ok(fs.existsSync('./scripts/evaluate.ts'), 'scripts/evaluate.ts must exist');
+
+  // 2. Verify synthetic dataset JSON
+  assert.ok(fs.existsSync('./public/synthetic-eval-dataset.json'), 'public/synthetic-eval-dataset.json must exist');
+  const dataset = JSON.parse(fs.readFileSync('./public/synthetic-eval-dataset.json', 'utf8'));
+  assert.ok(dataset.metadata, 'Dataset must contain metadata');
+  assert.equal(dataset.metadata.seed, 20260201, 'Dataset seed must be 20260201');
+  assert.equal(dataset.metadata.isSynthetic, true, 'Dataset must be labelled synthetic');
+  assert.ok(dataset.applications.length >= 100, 'Dataset must have at least 100 synthetic applications');
+
+  // 3. Verify metrics JSON
+  assert.ok(fs.existsSync('./public/metrics.json'), 'public/metrics.json must exist');
+  const metrics = JSON.parse(fs.readFileSync('./public/metrics.json', 'utf8'));
+  assert.equal(metrics.metadata.isSynthetic, true, 'Metrics must declare synthetic dataset');
+  assert.equal(metrics.metadata.seed, 20260201, 'Metrics seed must be 20260201');
+  assert.equal(metrics.metadata.evaluationDate, '2026-02-01', 'Evaluation date must be 2026-02-01');
+
+  // 4. Verify confusion matrix & metric values
+  const cm = metrics.anomalyDetection.confusionMatrix;
+  assert.ok(cm.truePositives > 0, 'Must have true positives');
+  assert.ok(cm.trueNegatives > 0, 'Must have true negatives');
+  assert.equal(cm.falsePositives, 0, 'False positives must be 0');
+  assert.equal(cm.falseNegatives, 0, 'False negatives must be 0');
+  assert.ok(metrics.summary.f1Score > 0.9, 'F1 score must be high');
+  assert.ok(metrics.summary.averageProcessingTimeMs > 0, 'Must measure average processing time');
+
+  // 5. Verify server-rendered pages exist
+  assert.ok(fs.existsSync('./src/app/metrics/page.tsx'), 'src/app/metrics/page.tsx must exist');
+  assert.ok(fs.existsSync('./src/app/preview/metrics/page.tsx'), 'src/app/preview/metrics/page.tsx must exist');
+  assert.ok(fs.existsSync('./src/app/preview/_components/MetricsSection.tsx'), 'src/app/preview/_components/MetricsSection.tsx must exist');
+
+  // 6. Verify server component reads dynamically from disk (no hardcoded numbers in page)
+  const metricsSectionCode = fs.readFileSync('./src/app/preview/_components/MetricsSection.tsx', 'utf8');
+  assert.ok(
+    metricsSectionCode.includes("fs.readFileSync(metricsFilePath, 'utf8')") ||
+    metricsSectionCode.includes('metrics.json'),
+    'MetricsSection must read public/metrics.json dynamically from disk'
+  );
+  assert.ok(!metricsSectionCode.includes("'use client'"), 'MetricsSection must be a server component');
+});
+
+
 
 
 

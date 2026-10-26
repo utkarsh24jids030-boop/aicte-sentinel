@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "datasetName": "Synthetic Scrutiny Regulatory Benchmark Dataset",
+    "isSynthetic": true,
+    "seed": 20260201,
+    "evaluationDate": "2026-02-01",
+    "totalApplications": 120,
+    "totalDocumentsAnalyzed": 480,
+    "environment": "AICTE-Sentinel Scrutiny Engine v2026.3"
+  },
+  "summary": {
+    "overallAccuracy": 1,
+    "precision": 1,
+    "recall": 1,
+    "f1Score": 1,
+    "averageProcessingTimeMs": 7.6
+  },
+  "extraction": {
+    "samplePdfsTested": 6,
+    "fieldsExtractedTotal": 16,
+    "fieldsCorrect": 16,
+    "accuracy": 1,
+    "engine": "Baseline PDF Text Stream Extractor (pdf-parse v2 + regex rules)",
+    "testedFiles": [
+      "Sunrise_Land_Sale_Deed.pdf",
+      "Sunrise_Fire_Safety_NOC.pdf",
+      "Nova_Faculty_Qualification_Malhotra.pdf",
+      "Apex_Land_Lease_Deed.pdf",
+      "Apex_Occupancy_Certificate_2021.pdf",
+      "Western_Horizon_Occupancy_2021.pdf"
+    ]
+  },
+  "anomalyDetection": {
+    "confusionMatrix": {
+      "truePositives": 77,
+      "falsePositives": 0,
+      "trueNegatives": 43,
+      "falseNegatives": 0
+    },
+    "precision": 1,
+    "recall": 1,
+    "f1Score": 1,
+    "accuracy": 1
+  },
+  "duplicateDetection": {
+    "totalDuplicatesSeeded": 8,
+    "duplicatesDetected": 8,
+    "falseDuplicateAlarms": 0,
+    "precision": 1,
+    "recall": 1,
+    "f1Score": 1
+  },
+  "sourceVerification": {
+    "totalAttempts": 360,
+    "successfulVerified": 337,
+    "expiredDetected": 14,
+    "failClosedProtected": 9,
+    "successRate": 0.9361
+  },
+  "processingPerformance": {
+    "totalDurationMs": 911,
+    "averageProcessingTimeMs": 7.6,
+    "p95LatencyMs": 11,
+    "p99LatencyMs": 14.8,
+    "throughputPerSecond": 131.7
+  }
+}

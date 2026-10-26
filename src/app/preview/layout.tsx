@@ -25,7 +25,8 @@ export default function PreviewLayout({
     { label: 'EVC Inspections', href: '/preview/evc' },
     { label: 'Institution View', href: '/preview/institution' },
     { label: 'Rule Packs & Adapters', href: '/preview/admin' },
-    { label: 'Audit Trail', href: '/preview/audit' }
+    { label: 'Audit Trail', href: '/preview/audit' },
+    { label: 'Metrics', href: '/preview/metrics' }
   ];
 
   return (

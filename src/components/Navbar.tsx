@@ -49,7 +49,8 @@ export default function Navbar() {
     { label: 'Officer Queue', href: '/officer', roles: ['OFFICER', 'ADMIN'] },
     { label: 'Linkage Radar', href: '/officer/radar', roles: ['OFFICER', 'ADMIN', 'AUDITOR'] },
     { label: 'EVC Inspection', href: '/evc', roles: ['EVC_INSPECTOR', 'OFFICER', 'ADMIN'] },
-    { label: 'Audit Trail', href: '/admin', roles: ['ADMIN', 'AUDITOR', 'OFFICER'] }
+    { label: 'Audit Trail', href: '/admin', roles: ['ADMIN', 'AUDITOR', 'OFFICER'] },
+    { label: 'Metrics', href: '/metrics', roles: ['INSTITUTION', 'OFFICER', 'EVC_INSPECTOR', 'ADMIN', 'AUDITOR'] }
   ];
 
   return (

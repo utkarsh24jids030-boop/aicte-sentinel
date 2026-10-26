@@ -1,5 +1,5 @@
 // AICTE Sentinel Cryptographically Hash-Chained Audit Trail
-// Immutable ledger with tamper-evident SHA-256 previous-hash verification
+// Tamper-evident ledger with SHA-256 previous-hash verification
 // Problem Statement SIH26261 - Smart India Hackathon 2026
 
 import crypto from 'crypto';
@@ -26,7 +26,7 @@ export class AuditTrailEngine {
   }
 
   /**
-   * Record a new audit event and append to the immutable hash chain
+   * Record a new audit event and append to the tamper-evident hash chain
    */
   static recordEvent(params: {
     actorId: string;

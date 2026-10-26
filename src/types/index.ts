@@ -389,7 +389,7 @@ export interface ScrutinyReportData {
     sourceUnavailable: number;
   };
   keyFindings: Finding[];
-  officerRecommendation: 'RECOMMEND_APPROVAL' | 'RECOMMEND_EVC_INSPECTION' | 'ISSUE_SHOW_CAUSE_DEFICIENCY' | 'REFER_TO_SCRUTINY_COMMITTEE';
+  officerRecommendation: 'CONSIDER_APPROVAL' | 'CONSIDER_EVC_INSPECTION' | 'ISSUE_SHOW_CAUSE_DEFICIENCY' | 'CONSIDER_VIGILANCE_REFERRAL' | 'REFER_TO_SCRUTINY_COMMITTEE';
   officerConcludingRemarks: string;
   hashChainStamp: string;
 }

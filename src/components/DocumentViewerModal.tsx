@@ -397,7 +397,7 @@ export default function DocumentViewerModal({
 
         {/* Footer */}
         <div className="px-6 py-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
-          <span>AICTE Sentinel Evidence Locker • Immutable Document Version {document.versions.length}</span>
+          <span>AICTE Sentinel Evidence Locker • Tamper-Evident Document Version {document.versions.length}</span>
           <button
             onClick={onClose}
             className="px-4 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold transition-colors"

@@ -14,14 +14,14 @@ export default function AuditSection() {
             Vigilance & Oversight
           </span>
           <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
-            CAG & Vigilance Audit Node
+            Independent Vigilance Audit Trail
           </span>
         </div>
         <h2 className="text-2xl font-bold text-slate-900 mt-1">
           Cryptographically Hash-Chained Audit Trail & Ledger
         </h2>
         <p className="text-sm text-slate-600 mt-1">
-          Immutable SHA-256 hash-linked ledger recording all document uploads, forensic scans, registry verifications, and regulatory approvals.
+          Tamper-evident SHA-256 hash-linked ledger recording all document uploads, forensic scans, registry verifications, and regulatory approvals.
         </p>
       </div>
 
@@ -62,7 +62,7 @@ export default function AuditSection() {
       {/* Audit Event Ledger Table */}
       <div className="space-y-3">
         <h3 className="text-base font-bold text-slate-900">
-          Immutable Audit Log Events ({events.length})
+          Tamper-Evident Audit Log Events ({events.length})
         </h3>
 
         <div className="overflow-x-auto border border-slate-200 rounded-xl">

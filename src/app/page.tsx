@@ -255,7 +255,7 @@ export default function LandingPage() {
               <Lock className="w-8 h-8 text-slate-700 mb-3" />
               <h3 className="font-bold text-sm text-slate-900 mb-1">Hash-Chained Audit Trail</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Immutable SHA-256 hash-chained log for all uploads, views, rule evaluations, source responses, and officer decisions, verifiable by CAG/Auditors.
+                Tamper-evident SHA-256 hash-chained log for all uploads, views, rule evaluations, source responses, and officer decisions.
               </p>
             </div>
           </div>

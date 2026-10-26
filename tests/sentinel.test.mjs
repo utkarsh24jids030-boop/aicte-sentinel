@@ -6,6 +6,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'crypto';
 import fs from 'fs';
+import path from 'path';
 
 // 1. Load rule packs
 const rulePacks = JSON.parse(fs.readFileSync('./src/lib/rules/packs.json', 'utf8'));
@@ -282,3 +283,33 @@ test('Prototype Watermark & Disclaimer Banner: Scrutiny reports and navigation c
   const scrutinyPreview = fs.readFileSync('./src/app/preview/_components/ScrutinyReportSection.tsx', 'utf8');
   assert.ok(scrutinyPreview.includes('PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT'), 'Scrutiny preview report must contain prototype watermark');
 });
+
+test('Tamper-Evident Ledger Integrity & Advisory Recommendations: Zero immutable claims or CAG node claims', () => {
+  const scanForProhibited = (dir, disallowed) => {
+    const found = [];
+    const walk = (d) => {
+      const entries = fs.readdirSync(d, { withFileTypes: true });
+      for (const entry of entries) {
+        const full = path.join(d, entry.name);
+        const norm = full.replace(/\\/g, '/');
+        if (norm.includes('node_modules') || norm.includes('.git') || norm.includes('.next')) continue;
+        if (entry.isDirectory()) {
+          walk(full);
+        } else if (entry.isFile() && (full.endsWith('.ts') || full.endsWith('.tsx') || full.endsWith('.js') || full.endsWith('.mjs'))) {
+          const content = fs.readFileSync(full, 'utf8');
+          for (const word of disallowed) {
+            if (content.toLowerCase().includes(word.toLowerCase())) {
+              found.push({ file: full, word });
+            }
+          }
+        }
+      }
+    };
+    walk(dir);
+    return found;
+  };
+
+  const violations = scanForProhibited('./src', ['immutable', 'cag audit node']);
+  assert.equal(violations.length, 0, `Prohibited claims found:\n${violations.map(v => `${v.file}: "${v.word}"`).join('\n')}`);
+});
+

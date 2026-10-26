@@ -93,7 +93,7 @@ export default function AdminPortalPage() {
             }`}
           >
             <Hash className="w-4 h-4" />
-            <span>Immutable Hash-Chained Audit Trail</span>
+            <span>Tamper-Evident Hash-Chained Audit Trail</span>
           </button>
 
           <button
@@ -168,7 +168,7 @@ export default function AdminPortalPage() {
             {/* Audit Log Stream */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
               <div className="p-4 bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-700 flex justify-between">
-                <span>Immutable Event Stream ({auditEvents.length} Events)</span>
+                <span>Tamper-Evident Event Stream ({auditEvents.length} Events)</span>
                 <span>Algorithm: SHA-256 (Merkle / Chain Structure)</span>
               </div>
 

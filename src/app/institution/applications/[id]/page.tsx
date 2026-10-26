@@ -332,7 +332,7 @@ export default function InstitutionApplicationDetailPage({
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
             <h3 className="text-base font-bold text-slate-900 mb-1">Upload Regulatory Document</h3>
             <p className="text-xs text-slate-500 mb-4">
-              File will be assigned an immutable SHA-256 hash, extracted with OCR, and checked for forensic integrity.
+              File will be assigned a tamper-evident SHA-256 hash, extracted with OCR, and checked for forensic integrity.
             </p>
 
             <form onSubmit={handleUploadDocument} className="space-y-4">

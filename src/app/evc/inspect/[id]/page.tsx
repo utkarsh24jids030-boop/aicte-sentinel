@@ -97,7 +97,7 @@ export default function MobileInspectionFormPage({
       if (data.success && data.observation) {
         setObservations([data.observation, ...observations]);
         setNotes('');
-        alert('Observation recorded and hash-sealed into AICTE immutable audit trail.');
+        alert('Observation recorded and hash-sealed into AICTE tamper-evident audit trail.');
       }
     } catch (e) {
       console.error(e);

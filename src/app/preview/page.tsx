@@ -44,7 +44,7 @@ export default function PreviewIndexPage() {
     {
       title: 'Cryptographic Audit Trail',
       href: '/preview/audit',
-      description: 'Immutable SHA-256 hash-chained event ledger and live integrity verification result for CAG/Vigilance reviewers.',
+      description: 'Tamper-evident SHA-256 hash-chained event ledger and live integrity verification result for vigilance reviewers.',
       badge: 'Auditor'
     }
   ];

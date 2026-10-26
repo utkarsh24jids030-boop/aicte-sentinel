@@ -250,7 +250,7 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
                 <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
                 <span>AICTE Cryptographic Hash-Chain Seal: {hashStamp}</span>
               </div>
-              <span className="text-slate-400">Untampered • Verifiable on CAG Audit Node</span>
+              <span className="text-slate-400">Untampered • Verifiable via Tamper-Evident SHA-256 Ledger</span>
             </div>
 
             {/* Footer Prototype Notice */}

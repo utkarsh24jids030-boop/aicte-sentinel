@@ -20,7 +20,7 @@ export default function PreviewAllPage() {
           AICTE Sentinel — Comprehensive Master System Preview
         </h1>
         <p className="text-sm text-slate-600 max-w-4xl leading-relaxed">
-          This continuous single-page view consolidates the entire statutory scrutiny workflow: officer queues, full multi-institutional case files, verification passports, entity resolution linkage graphs, field inspection checklists, applicant readiness breakdowns, compliance rule packs, and immutable audit trails. All rendered directly on the server without client-side authentication gates or lazy scripts.
+          This continuous single-page view consolidates the entire statutory scrutiny workflow: officer queues, full multi-institutional case files, verification passports, entity resolution linkage graphs, field inspection checklists, applicant readiness breakdowns, compliance rule packs, and tamper-evident audit trails. All rendered directly on the server without client-side authentication gates or lazy scripts.
         </p>
 
         {/* In-page quick jump navigation */}

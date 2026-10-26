@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { LinkageRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
 import StatusChip from './StatusChip';
+import { maskPII } from '@/lib/security/privacy';
 import { 
   Building2, 
   ShieldAlert, 
@@ -268,7 +269,7 @@ export default function LinkageRadarGraph({ data, onSelectInstitution }: Linkage
 
               <div className="bg-rose-50 border border-rose-200 rounded-xl p-3.5 text-xs text-rose-950 space-y-1.5">
                 <div className="font-semibold text-rose-900">Evidence Details:</div>
-                <p className="leading-relaxed">{selectedEdge.evidenceDetails}</p>
+                <p className="leading-relaxed">{maskPII(selectedEdge.evidenceDetails)}</p>
               </div>
 
               <div className="text-xs space-y-2 border-t pt-3">
@@ -300,7 +301,7 @@ export default function LinkageRadarGraph({ data, onSelectInstitution }: Linkage
 
               <div>
                 <h4 className="text-base font-bold text-slate-900">{selectedNode.label}</h4>
-                <p className="text-xs text-slate-500 mt-0.5">{selectedNode.subLabel}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{maskPII(selectedNode.subLabel)}</p>
               </div>
 
               <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 text-xs space-y-2">
@@ -309,7 +310,7 @@ export default function LinkageRadarGraph({ data, onSelectInstitution }: Linkage
                   <div key={key} className="flex justify-between py-1 border-b border-slate-200/60 last:border-0">
                     <span className="text-slate-500 capitalize">{key.replace(/([A-Z])/g, ' $1')}:</span>
                     <span className="font-medium text-slate-800 text-right max-w-[180px] truncate">
-                      {Array.isArray(val) ? val.join(', ') : String(val)}
+                      {Array.isArray(val) ? val.map(v => maskPII(String(v))).join(', ') : maskPII(String(val))}
                     </span>
                   </div>
                 ))}

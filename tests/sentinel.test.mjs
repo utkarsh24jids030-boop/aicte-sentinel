@@ -249,5 +249,28 @@ test('Regression Safeguard: Zero occurrences of prohibited inflammatory terms in
   );
 });
 
+test('PII Privacy & Synthetic Identifiers: maskPII sanitizes identifiers and prevents real citizen data exposure', () => {
+  const maskPII = (text) => {
+    if (!text) return '';
+    let masked = text.replace(/\bDEMOPAN([0-9]{4}[A-Z])\b/gi, 'XXXXX$1');
+    masked = masked.replace(/\b[A-Z]{5}([0-9]{4}[A-Z])\b/g, 'XXXXX$1');
+    return masked;
+  };
+
+  assert.equal(maskPII('DEMOPAN9999X'), 'XXXXX9999X', 'Synthetic demo PAN must mask first 5 characters');
+  assert.equal(maskPII('ABCDE1234F'), 'XXXXX1234F', 'Standard PAN must mask first 5 characters');
+  assert.equal(
+    maskPII('Dr. Vikram Malhotra (PAN: DEMOPAN9999X) declared as Professor'),
+    'Dr. Vikram Malhotra (PAN: XXXXX9999X) declared as Professor',
+    'Embedded PAN within finding text must be masked'
+  );
+
+  // Assert NO Aadhaar numbers or DEMOAADHAAR strings exist in demo data
+  const storeText = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.equal(storeText.includes('DEMOAADHAAR'), false, 'DEMOAADHAAR must not exist in demo store');
+  assert.equal(/\b\d{12}\b/.test(storeText), false, 'Zero 12-digit Aadhaar numbers permitted in store.ts');
+});
+
+
 
 

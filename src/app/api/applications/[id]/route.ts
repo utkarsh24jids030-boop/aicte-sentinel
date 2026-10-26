@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { DataStore } from '@/lib/store';
 import { RulesEngine } from '@/lib/rules/engine';
+import { maskPIIObject } from '@/lib/security/privacy';
 
 export async function GET(
   request: Request,
@@ -18,8 +19,8 @@ export async function GET(
 
   return NextResponse.json({
     application: app,
-    documents,
-    findings,
+    documents: maskPIIObject(documents),
+    findings: maskPIIObject(findings),
     readiness: breakdown
   });
 }

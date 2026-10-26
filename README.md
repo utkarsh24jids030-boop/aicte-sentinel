@@ -43,7 +43,7 @@ The platform comes pre-seeded with three realistic institutional cases illustrat
   1. Missing Structural Stability Certificate signed by certified structural engineer.
   2. Faculty deficit: 22 declared faculty vs. statutory requirement of 24 for 480 intake.
   3. **Forensic Anomaly:** PDF metadata indicates post-signature editing via Canva / Nitro Pro with 3 incremental xref saves.
-  4. **Cross-Institution Reused Faculty:** Dr. Vikram Malhotra (`XYZPK9876Q`, `VTU-PHD-MECH-4412`) declared as Professor at Nova while simultaneously listed as Principal at Apex Polytechnic College.
+  4. **Cross-Institution Reused Faculty:** Dr. Vikram Malhotra (`XXXXX9999X`, `VTU-PHD-MECH-4412`) declared as Professor at Nova while simultaneously listed as Principal at Apex Polytechnic College.
 
 ### Case 3: Apex Polytechnic College (`APP-2026-APX-003`) — Readiness: 25/100 (Risk: Critical, Linkage: 92)
 - **Type:** New Institution Campus

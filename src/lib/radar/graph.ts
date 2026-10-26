@@ -80,7 +80,7 @@ export class LinkageRadarEngine {
         label: 'Nova Horizon Charitable Trust',
         subLabel: 'Reg: PUNE-CH-8821/2016',
         riskLevel: 'HIGH',
-        metadata: { trustees: ['Rajesh V. Deshmukh', 'Vikram Malhotra'], pan: 'AAATN4491M' },
+        metadata: { trustees: ['Rajesh V. Deshmukh', 'Vikram Malhotra'], pan: 'XXXXX4491M' },
         x: 450,
         y: 60
       },
@@ -90,7 +90,7 @@ export class LinkageRadarEngine {
         label: 'Apex Technical Society',
         subLabel: 'Reg: PUNE-SOC-1029/2024',
         riskLevel: 'CRITICAL',
-        metadata: { trustees: ['Sanjay V. Deshmukh', 'Vikram Malhotra (Common Sponsoring Member)'], pan: 'AAATA7731P' },
+        metadata: { trustees: ['Sanjay V. Deshmukh', 'Vikram Malhotra (Common Sponsoring Member)'], pan: 'XXXXX7731P' },
         x: 820,
         y: 120
       },
@@ -125,10 +125,11 @@ export class LinkageRadarEngine {
         id: 'fac-malhotra',
         type: 'FACULTY',
         label: 'LINKAGE: Dr. Vikram Malhotra',
-        subLabel: 'PAN: XYZPK9876Q | Ph.D. Mech',
+        subLabel: 'PAN: XXXXX9999X | Ph.D. Mech',
         riskLevel: 'CRITICAL',
         metadata: {
           degree: 'VTU-PHD-MECH-4412',
+          pan: 'XXXXX9999X',
           novaRole: 'Declared as Full-Time Professor at Nova Engineering College',
           apexRole: 'Declared as Full-Time Principal at Apex Polytechnic College',
           alert: 'Simultaneous appointment declarations recorded across two distinct AICTE institutions.'

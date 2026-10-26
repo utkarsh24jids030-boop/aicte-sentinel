@@ -29,7 +29,7 @@ const routesToTest = [
   },
   { 
     path: '/preview/case/app-nova-002', 
-    expected: ['Nova Engineering College', 'AICTE/2026/NOV-9014', 'Nova_Faculty_Qualification_Malhotra.pdf', 'XXXXX9876Q', 'Tampering Score'] 
+    expected: ['Nova Engineering College', 'AICTE/2026/NOV-9014', 'Nova_Faculty_Qualification_Malhotra.pdf', 'XXXXX9999X', 'Tampering Score'] 
   },
   { 
     path: '/preview/case/app-apex-003', 

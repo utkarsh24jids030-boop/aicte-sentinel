@@ -3,6 +3,7 @@
 // Problem Statement SIH26261 - Smart India Hackathon 2026
 
 import { VerificationAttempt, SourceResponse, VerificationStatus } from '@/types';
+import { maskPII } from '@/lib/security/privacy';
 
 export interface AdapterVerificationResult {
   status: VerificationStatus;
@@ -167,16 +168,24 @@ const MOCK_FACULTY_REGISTRY_DB: Record<string, {
   registeredInstitutions: string[];
 }> = {
   'ABCDE1234F': {
-    pan: 'ABCDE1234F',
+    pan: 'DEMOP1234F',
     name: 'Dr. Ramesh Sundaram',
     highestDegree: 'Ph.D. Computer Science',
     currentAffiliation: 'Sunrise Institute of Technology',
     status: 'AUTHENTIC',
     registeredInstitutions: ['Sunrise Institute of Technology']
   },
-  // Reused faculty member between Nova and Apex!
+  // Reused faculty member between Nova and Apex
+  'DEMOPAN9999X': {
+    pan: 'DEMOPAN9999X',
+    name: 'Dr. Vikram Malhotra',
+    highestDegree: 'Ph.D. Mechanical Engineering',
+    currentAffiliation: 'MULTIPLE ACTIVE CLAIMS',
+    status: 'MISMATCH',
+    registeredInstitutions: ['Nova Engineering College (Prof)', 'Apex Polytechnic College (Principal)']
+  },
   'XYZPK9876Q': {
-    pan: 'XYZPK9876Q',
+    pan: 'DEMOPAN9999X',
     name: 'Dr. Vikram Malhotra',
     highestDegree: 'Ph.D. Mechanical Engineering',
     currentAffiliation: 'MULTIPLE ACTIVE CLAIMS',
@@ -366,7 +375,7 @@ export class MockVerificationService {
       sourceStatus = 'MISMATCH';
       details = { 
         facultyName,
-        pan: panOrId,
+        pan: maskPII(panOrId),
         alert: 'ADVISORY: Dual concurrent active employment claims detected.',
         institutions: record.registeredInstitutions
       };

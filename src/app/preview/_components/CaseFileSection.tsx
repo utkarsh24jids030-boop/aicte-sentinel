@@ -2,7 +2,7 @@ import React from 'react';
 import { DataStore } from '@/lib/store';
 import { RulesEngine } from '@/lib/rules/engine';
 import { Application, DocumentRecord, Finding } from '@/types';
-import { formatSeverity, formatStatus, maskIdentifier } from './helpers';
+import { formatSeverity, formatStatus, maskIdentifier, maskPII } from './helpers';
 
 interface CaseFileSectionProps {
   appId?: string;
@@ -149,17 +149,17 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                         </div>
                       </div>
 
-                      <h4 className="font-bold text-sm text-slate-900">{f.title}</h4>
-                      <p className="text-slate-700 leading-relaxed">{f.explanation}</p>
+                      <h4 className="font-bold text-sm text-slate-900">{maskPII(f.title)}</h4>
+                      <p className="text-slate-700 leading-relaxed">{maskPII(f.explanation)}</p>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-2 border-t border-slate-200 text-[11px]">
                         <div>
                           <strong className="text-slate-600 block">Evidence Locator:</strong>
-                          <span className="font-mono text-indigo-700">{f.evidenceLocator}</span>
+                          <span className="font-mono text-indigo-700">{maskPII(f.evidenceLocator)}</span>
                         </div>
                         <div>
                           <strong className="text-slate-600 block">Recommended Action:</strong>
-                          <span className="text-slate-800">{f.recommendedAction}</span>
+                          <span className="text-slate-800">{maskPII(f.recommendedAction)}</span>
                         </div>
                       </div>
 

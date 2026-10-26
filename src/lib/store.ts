@@ -648,7 +648,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       anomalyIndicators: []
     },
     extractedFields: [
-      { id: 'f-nov-3', documentId: 'doc-nova-fac-reused', fieldKey: 'pan', fieldLabel: 'Faculty PAN', fieldValue: 'XYZPK9876Q', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
+      { id: 'f-nov-3', documentId: 'doc-nova-fac-reused', fieldKey: 'pan', fieldLabel: 'Faculty PAN', fieldValue: 'DEMOPAN9999X', confidence: 0.99, isManuallyCorrected: false, pageNumber: 1 },
       { id: 'f-nov-4', documentId: 'doc-nova-fac-reused', fieldKey: 'faculty_name', fieldLabel: 'Faculty Name', fieldValue: 'Dr. Vikram Malhotra', confidence: 0.98, isManuallyCorrected: false, pageNumber: 1 },
       { id: 'f-nov-5', documentId: 'doc-nova-fac-reused', fieldKey: 'certificate_number', fieldLabel: 'Degree Registration No', fieldValue: 'VTU-PHD-MECH-4412', confidence: 0.97, isManuallyCorrected: false, pageNumber: 1 }
     ],

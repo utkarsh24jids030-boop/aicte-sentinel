@@ -1,19 +1,13 @@
 import React from 'react';
+import { maskPII } from '@/lib/security/privacy';
+
+export { maskPII };
 
 /**
  * Mask sensitive ID/PAN patterns for public read-only preview
  */
 export function maskIdentifier(value: string | undefined | null): string {
-  if (!value) return '';
-  // Mask Indian PAN format (5 letters, 4 digits, 1 letter)
-  if (/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i.test(value)) {
-    return `XXXXX${value.substring(5)}`;
-  }
-  // Mask Aadhaar format (12 digits)
-  if (/^[0-9]{12}$/.test(value)) {
-    return `XXXXXXXX${value.substring(8)}`;
-  }
-  return value;
+  return maskPII(value);
 }
 
 export function formatSeverity(severity: string) {

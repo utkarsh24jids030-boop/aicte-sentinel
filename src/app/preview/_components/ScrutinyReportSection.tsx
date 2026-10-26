@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataStore } from '@/lib/store';
 import { Application } from '@/types';
-import { formatSeverity } from './helpers';
+import { formatSeverity, maskPII } from './helpers';
 
 interface ScrutinyReportSectionProps {
   appId?: string;
@@ -194,11 +194,11 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
                           </td>
                           <td className="p-2.5 font-semibold text-slate-700">{f.category}</td>
                           <td className="p-2.5">
-                            <div className="font-bold text-slate-900">{f.title}</div>
-                            <div className="text-slate-600 mt-0.5">{f.explanation}</div>
+                            <div className="font-bold text-slate-900">{maskPII(f.title)}</div>
+                            <div className="text-slate-600 mt-0.5">{maskPII(f.explanation)}</div>
                           </td>
-                          <td className="p-2.5 font-mono text-indigo-700">{f.evidenceLocator}</td>
-                          <td className="p-2.5 text-slate-800">{f.recommendedAction}</td>
+                          <td className="p-2.5 font-mono text-indigo-700">{maskPII(f.evidenceLocator)}</td>
+                          <td className="p-2.5 text-slate-800">{maskPII(f.recommendedAction)}</td>
                         </tr>
                       ))}
                     </tbody>

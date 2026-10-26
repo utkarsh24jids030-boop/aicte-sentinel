@@ -250,7 +250,7 @@ export class RulesEngine {
     // Check shared faculty member (Dr. Vikram Malhotra)
     const facDoc = documents.find(d => d.documentType === 'Faculty Qualification Certificate' || d.documentType === 'Faculty Appointment Letter');
     const hasMalhotra = documents.some(d =>
-      d.extractedFields.some(f => f.fieldValue.includes('XYZPK9876Q') || f.fieldValue.includes('Vikram Malhotra'))
+      d.extractedFields.some(f => f.fieldValue.includes('DEMOPAN9999X') || f.fieldValue.includes('XYZPK9876Q') || f.fieldValue.includes('Vikram Malhotra'))
     );
 
     if (hasMalhotra || (app.id === 'app-nova-002' && facDoc)) {
@@ -265,8 +265,8 @@ export class RulesEngine {
           severity: 'Critical',
           confidence: 0.99,
           title: 'Cross-Institution Linkage: Faculty Declared across Institutions',
-          explanation: 'Dr. Vikram Malhotra (PAN: XYZPK9876Q) declared as Full-Time Professor at Nova Engineering College is concurrently listed as Principal at Apex Polytechnic College (Application AICTE/2026/APX-1044).',
-          evidenceLocator: 'PAN: XYZPK9876Q | Degree: VTU-PHD-MECH-4412 | Active in Nova & Apex',
+          explanation: 'Dr. Vikram Malhotra (PAN: XXXXX9999X) declared as Full-Time Professor at Nova Engineering College is concurrently listed as Principal at Apex Polytechnic College (Application AICTE/2026/APX-1044).',
+          evidenceLocator: 'PAN: XXXXX9999X | Degree: VTU-PHD-MECH-4412 | Active in Nova & Apex',
           recommendedAction: 'Option for officer consideration: Consider vigilance referral and dispatch physical biometric verification during EVC inspection.',
           status: 'Open',
           createdAt: app.submittedAt || new Date().toISOString()

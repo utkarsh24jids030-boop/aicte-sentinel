@@ -1,6 +1,7 @@
 import React from 'react';
 import { LinkageRadarEngine } from '@/lib/radar/graph';
-import { formatSeverity } from './helpers';
+import { formatSeverity, maskPII } from './helpers';
+import { maskPIIObject } from '@/lib/security/privacy';
 
 export default function LinkageRadarSection() {
   const radarData = LinkageRadarEngine.getGraphData();
@@ -162,14 +163,14 @@ export default function LinkageRadarSection() {
                   <td className="p-2.5 font-mono text-slate-500">{node.id}</td>
                   <td className="p-2.5 font-semibold text-slate-800">{node.type}</td>
                   <td className="p-2.5 font-bold text-slate-900">{node.label}</td>
-                  <td className="p-2.5 font-mono text-slate-600">{node.subLabel || '-'}</td>
+                  <td className="p-2.5 font-mono text-slate-600">{maskPII(node.subLabel) || '-'}</td>
                   <td className="p-2.5">
                     <span className={`px-2 py-0.5 rounded-sm border text-[10px] font-bold ${formatSeverity(node.riskLevel)}`}>
                       {node.riskLevel}
                     </span>
                   </td>
                   <td className="p-2.5 text-[11px] font-mono text-slate-600">
-                    {JSON.stringify(node.metadata)}
+                    {JSON.stringify(maskPIIObject(node.metadata))}
                   </td>
                 </tr>
               ))}
@@ -208,7 +209,7 @@ export default function LinkageRadarSection() {
                       {edge.riskLevel}
                     </span>
                   </td>
-                  <td className="p-2.5 text-slate-700">{edge.evidenceDetails}</td>
+                  <td className="p-2.5 text-slate-700">{maskPII(edge.evidenceDetails)}</td>
                   <td className="p-2.5 text-[11px] font-semibold text-slate-800">
                     {edge.institutionsInvolved.join(', ')}
                   </td>

@@ -367,7 +367,7 @@ export class MockVerificationService {
       details = { 
         facultyName,
         pan: panOrId,
-        alert: 'CRITICAL: Dual concurrent active employment claims detected!',
+        alert: 'ADVISORY: Dual concurrent active employment claims detected.',
         institutions: record.registeredInstitutions
       };
     } else {

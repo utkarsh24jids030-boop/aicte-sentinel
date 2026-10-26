@@ -99,7 +99,7 @@ function LoginFormContent() {
         return;
       }
 
-      setSuccessMessage('Registration successful! Redirecting to Institutional Portal...');
+      setSuccessMessage('Registration successful. Redirecting to Institutional Portal...');
       setTimeout(() => {
         router.push(redirectParam || '/institution');
       }, 1000);

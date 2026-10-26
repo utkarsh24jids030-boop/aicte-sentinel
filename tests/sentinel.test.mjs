@@ -161,30 +161,31 @@ test('Document Filename Neutrality: No telegraphed verdict filenames allowed in 
   assert.ok(storeContent.includes('Sunrise_Fire_Safety_NOC.pdf'), 'Sunrise must use neutral filename');
 });
 
-test('Cross-Institution Collusion Formula: Transparent weights and calibrated outputs', () => {
-  const COLLUSION_WEIGHTS = {
+test('Cross-Institution Linkage Formula: Transparent weights and calibrated outputs', () => {
+  const LINKAGE_WEIGHTS = {
     SHARED_LAND: 40,
     REUSED_FACULTY: 35,
     DUPLICATE_CERT: 25,
     COMMON_TRUSTEE: 10
   };
+  const COLLUSION_WEIGHTS = LINKAGE_WEIGHTS;
 
-  const computeCollusionRisk = (factors) => {
-    const land = factors.sharedLand ? COLLUSION_WEIGHTS.SHARED_LAND : 0;
-    const fac = factors.reusedFaculty ? COLLUSION_WEIGHTS.REUSED_FACULTY : 0;
+  const computeLinkageRisk = (factors) => {
+    const land = factors.sharedLand ? LINKAGE_WEIGHTS.SHARED_LAND : 0;
+    const fac = factors.reusedFaculty ? LINKAGE_WEIGHTS.REUSED_FACULTY : 0;
     const cert = factors.duplicateCert ? 17 : 0; // Scaled to calibrate peak 92
-    const trust = factors.commonTrustee ? COLLUSION_WEIGHTS.COMMON_TRUSTEE : 0;
+    const trust = factors.commonTrustee ? LINKAGE_WEIGHTS.COMMON_TRUSTEE : 0;
     const residual = factors.baseResidual !== undefined ? factors.baseResidual : ((factors.sharedLand || factors.reusedFaculty || factors.duplicateCert) ? 0 : 15);
     return Math.min(100, Math.max(0, land + fac + cert + trust + residual));
   };
 
-  const sunriseRisk = computeCollusionRisk({ sharedLand: false, reusedFaculty: false, duplicateCert: false, commonTrustee: false });
+  const sunriseRisk = computeLinkageRisk({ sharedLand: false, reusedFaculty: false, duplicateCert: false, commonTrustee: false });
   assert.equal(sunriseRisk, 15, 'Sunrise must evaluate to baseline 15%');
 
-  const novaRisk = computeCollusionRisk({ sharedLand: false, reusedFaculty: true, duplicateCert: false, commonTrustee: true, baseResidual: 23 });
+  const novaRisk = computeLinkageRisk({ sharedLand: false, reusedFaculty: true, duplicateCert: false, commonTrustee: true, baseResidual: 23 });
   assert.equal(novaRisk, 68, 'Nova must evaluate to calibrated 68%');
 
-  const apexRisk = computeCollusionRisk({ sharedLand: true, reusedFaculty: true, duplicateCert: true, commonTrustee: false });
+  const apexRisk = computeLinkageRisk({ sharedLand: true, reusedFaculty: true, duplicateCert: true, commonTrustee: false });
   assert.equal(apexRisk, 92, 'Apex must evaluate to peak 92%');
 });
 

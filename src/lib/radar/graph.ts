@@ -1,14 +1,14 @@
-// AICTE Sentinel Collusion Radar Engine
+// AICTE Sentinel Linkage Radar Engine
 // Cross-institution graph analysis: Shared Land, Reused Faculty, Duplicate Certs, Common Sponsoring Trusts
 // Problem Statement SIH26261 - Smart India Hackathon 2026
 
-import { CollusionRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
+import { LinkageRadarData, CollusionRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
 
-export class CollusionRadarEngine {
+export class LinkageRadarEngine {
   /**
-   * Build complete graph for cross-institution collusion detection
+   * Build complete graph for cross-institution linkage analysis
    */
-  static getGraphData(): CollusionRadarData {
+  static getGraphData(): LinkageRadarData {
     const nodes: RiskGraphNode[] = [
       // 1. INSTITUTION NODES
       {
@@ -303,7 +303,8 @@ export class CollusionRadarEngine {
     return {
       nodes,
       edges,
-      overallCollusionRiskScore: 92, // Peak network collusion risk (Apex Polytechnic College cluster)
+      overallLinkageRiskScore: 92,
+      overallCollusionRiskScore: 92, // Deprecated alias
       riskSummary: {
         criticalClusters: 2,
         crossInstitutionalReuses: 4,
@@ -316,7 +317,7 @@ export class CollusionRadarEngine {
   /**
    * Filter radar for a specific institution
    */
-  static getRadarForInstitution(institutionName: string): CollusionRadarData {
+  static getRadarForInstitution(institutionName: string): LinkageRadarData {
     const full = this.getGraphData();
     const instNode = full.nodes.find(n => n.label.toLowerCase().includes(institutionName.toLowerCase()));
     if (!instNode) return full;
@@ -341,21 +342,28 @@ export class CollusionRadarEngine {
     return {
       nodes: filteredNodes,
       edges: filteredEdges,
-      overallCollusionRiskScore: instRisk,
+      overallLinkageRiskScore: instRisk,
+      overallCollusionRiskScore: instRisk, // Deprecated alias
       riskSummary: full.riskSummary
     };
   }
 }
 
+// Backward-compatible alias
+export const CollusionRadarEngine = LinkageRadarEngine;
+
 /**
- * Transparent factor weights for cross-institution collusion scoring
+ * Transparent factor weights for cross-institution linkage scoring
  */
-export const COLLUSION_FACTOR_WEIGHTS = {
-  SHARED_LAND: 40,      // Land parcel survey overlap / double-pledging (40%)
+export const LINKAGE_FACTOR_WEIGHTS = {
+  SHARED_LAND: 40,      // Land parcel survey overlap (40%)
   REUSED_FACULTY: 35,   // Faculty member claimed concurrently (35%)
-  DUPLICATE_CERT: 25,   // Recycled certificate SHA-256 match (25%)
+  DUPLICATE_CERT: 25,   // Recycled certificate match (25%)
   COMMON_TRUSTEE: 10,   // Interlocking trust management / society network (10%)
 };
+
+// Backward-compatible alias
+export const COLLUSION_FACTOR_WEIGHTS = LINKAGE_FACTOR_WEIGHTS;
 
 /**
  * Documented Cross-Institution Risk Score Calculation
@@ -371,10 +379,10 @@ export function computeCrossInstitutionRiskScore(factors: {
   score: number;
   contributions: Record<string, { weight: number; active: boolean; points: number }>;
 } {
-  const landPts = factors.hasSharedLand ? COLLUSION_FACTOR_WEIGHTS.SHARED_LAND : 0;
-  const facPts = factors.hasReusedFaculty ? COLLUSION_FACTOR_WEIGHTS.REUSED_FACULTY : 0;
+  const landPts = factors.hasSharedLand ? LINKAGE_FACTOR_WEIGHTS.SHARED_LAND : 0;
+  const facPts = factors.hasReusedFaculty ? LINKAGE_FACTOR_WEIGHTS.REUSED_FACULTY : 0;
   const certPts = factors.hasDuplicateCert ? 17 : 0; // Scaled to calibrate 92 peak
-  const trustPts = factors.hasCommonTrustee ? COLLUSION_FACTOR_WEIGHTS.COMMON_TRUSTEE : 0;
+  const trustPts = factors.hasCommonTrustee ? LINKAGE_FACTOR_WEIGHTS.COMMON_TRUSTEE : 0;
   const residual = factors.baseResidual !== undefined ? factors.baseResidual : ((factors.hasSharedLand || factors.hasReusedFaculty || factors.hasDuplicateCert) ? 0 : 15);
 
   const raw = landPts + facPts + certPts + trustPts + residual;
@@ -383,10 +391,10 @@ export function computeCrossInstitutionRiskScore(factors: {
   return {
     score,
     contributions: {
-      'Shared Land Survey': { weight: COLLUSION_FACTOR_WEIGHTS.SHARED_LAND, active: factors.hasSharedLand, points: landPts },
-      'Reused Faculty / Principal': { weight: COLLUSION_FACTOR_WEIGHTS.REUSED_FACULTY, active: factors.hasReusedFaculty, points: facPts },
-      'Duplicate Certificate': { weight: COLLUSION_FACTOR_WEIGHTS.DUPLICATE_CERT, active: factors.hasDuplicateCert, points: certPts },
-      'Interlocking Sponsoring Trust': { weight: COLLUSION_FACTOR_WEIGHTS.COMMON_TRUSTEE, active: factors.hasCommonTrustee, points: trustPts }
+      'Shared Land Survey': { weight: LINKAGE_FACTOR_WEIGHTS.SHARED_LAND, active: factors.hasSharedLand, points: landPts },
+      'Reused Faculty / Principal': { weight: LINKAGE_FACTOR_WEIGHTS.REUSED_FACULTY, active: factors.hasReusedFaculty, points: facPts },
+      'Duplicate Certificate': { weight: LINKAGE_FACTOR_WEIGHTS.DUPLICATE_CERT, active: factors.hasDuplicateCert, points: certPts },
+      'Interlocking Sponsoring Trust': { weight: LINKAGE_FACTOR_WEIGHTS.COMMON_TRUSTEE, active: factors.hasCommonTrustee, points: trustPts }
     }
   };
 }

@@ -14,7 +14,7 @@ import {
 } from '@/types';
 import { AuditTrailEngine } from './audit/trail';
 import { RulesEngine } from './rules/engine';
-import { CollusionRadarEngine } from './radar/graph';
+import { LinkageRadarEngine } from './radar/graph';
 
 // MASTER DEMO USERS
 export const DEMO_USERS: User[] = [
@@ -132,6 +132,7 @@ export const DEMO_APPLICATIONS: Application[] = [
     academicYear: '2026-2027',
     status: 'Under Scrutiny',
     readinessScore: 75,
+    linkageRiskScore: 15,
     collusionRiskScore: 15,
     riskTier: 'Medium',
     programmes: ['Computer Science & Engg (180)', 'Electronics & Comm (120)', 'Mechanical Engg (60)'],
@@ -150,6 +151,7 @@ export const DEMO_APPLICATIONS: Application[] = [
     academicYear: '2026-2027',
     status: 'Deficiency Communicated',
     readinessScore: 45,
+    linkageRiskScore: 68,
     collusionRiskScore: 68,
     riskTier: 'High',
     programmes: ['Computer Science & Engg (240)', 'AI & Data Science (120)', 'Robotics & Automation (60)', 'Civil Engg (60)'],
@@ -168,6 +170,7 @@ export const DEMO_APPLICATIONS: Application[] = [
     academicYear: '2026-2027',
     status: 'EVC Inspection Recommended',
     readinessScore: 10,
+    linkageRiskScore: 92,
     collusionRiskScore: 92,
     riskTier: 'Critical',
     programmes: ['Diploma in Computer Technology (120)', 'Diploma in Mechanical (60)', 'Diploma in Electrical (60)'],
@@ -1415,13 +1418,13 @@ export class DataStore {
     return this.applications.map(app => {
       const docs = this.getDocuments(app.id);
       const { breakdown } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions);
-      const riskData = CollusionRadarEngine.getRadarForInstitution(app.institutionName);
-      const collusionRiskScore = riskData.overallCollusionRiskScore;
+      const riskData = LinkageRadarEngine.getRadarForInstitution(app.institutionName);
+      const linkageRiskScore = riskData.overallLinkageRiskScore;
 
       let riskTier: Application['riskTier'] = 'Low';
-      if (collusionRiskScore >= 80 || breakdown.criticalDeficiencies >= 2) {
+      if (linkageRiskScore >= 80 || breakdown.criticalDeficiencies >= 2) {
         riskTier = 'Critical';
-      } else if (collusionRiskScore >= 50 || breakdown.criticalDeficiencies >= 1 || breakdown.highDeficiencies >= 2) {
+      } else if (linkageRiskScore >= 50 || breakdown.criticalDeficiencies >= 1 || breakdown.highDeficiencies >= 2) {
         riskTier = 'High';
       } else if (breakdown.score < 70 || breakdown.highDeficiencies >= 1) {
         riskTier = 'Medium';
@@ -1430,7 +1433,8 @@ export class DataStore {
       return {
         ...app,
         readinessScore: breakdown.score,
-        collusionRiskScore,
+        linkageRiskScore,
+        collusionRiskScore: linkageRiskScore,
         riskTier
       };
     });
@@ -1441,13 +1445,13 @@ export class DataStore {
     if (!app) return undefined;
     const docs = this.getDocuments(app.id);
     const { breakdown } = RulesEngine.evaluateApplication(app, docs, this.applications, this.documents, this.institutions);
-    const riskData = CollusionRadarEngine.getRadarForInstitution(app.institutionName);
-    const collusionRiskScore = riskData.overallCollusionRiskScore;
+    const riskData = LinkageRadarEngine.getRadarForInstitution(app.institutionName);
+    const linkageRiskScore = riskData.overallLinkageRiskScore;
 
     let riskTier: Application['riskTier'] = 'Low';
-    if (collusionRiskScore >= 80 || breakdown.criticalDeficiencies >= 2) {
+    if (linkageRiskScore >= 80 || breakdown.criticalDeficiencies >= 2) {
       riskTier = 'Critical';
-    } else if (collusionRiskScore >= 50 || breakdown.criticalDeficiencies >= 1 || breakdown.highDeficiencies >= 2) {
+    } else if (linkageRiskScore >= 50 || breakdown.criticalDeficiencies >= 1 || breakdown.highDeficiencies >= 2) {
       riskTier = 'High';
     } else if (breakdown.score < 70 || breakdown.highDeficiencies >= 1) {
       riskTier = 'Medium';
@@ -1456,7 +1460,8 @@ export class DataStore {
     return {
       ...app,
       readinessScore: breakdown.score,
-      collusionRiskScore,
+      linkageRiskScore,
+      collusionRiskScore: linkageRiskScore,
       riskTier
     };
   }

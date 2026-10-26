@@ -1,7 +1,7 @@
 import React from 'react';
 import OfficerQueueSection from '../_components/OfficerQueueSection';
 import CaseFileSection from '../_components/CaseFileSection';
-import CollusionRadarSection from '../_components/CollusionRadarSection';
+import LinkageRadarSection from '../_components/LinkageRadarSection';
 import ScrutinyReportSection from '../_components/ScrutinyReportSection';
 import EvcInspectionSection from '../_components/EvcInspectionSection';
 import InstitutionSection from '../_components/InstitutionSection';
@@ -43,8 +43,8 @@ export default function PreviewAllPage() {
       {/* 2. Full Case Files for All Applications */}
       <CaseFileSection />
 
-      {/* 3. Collusion Radar */}
-      <CollusionRadarSection />
+      {/* 3. Linkage Radar */}
+      <LinkageRadarSection />
 
       {/* 4. Scrutiny Reports */}
       <ScrutinyReportSection />

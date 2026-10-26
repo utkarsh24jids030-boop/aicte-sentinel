@@ -147,7 +147,7 @@ async function main() {
       academicYear: '2026-2027',
       status: 'Under_Scrutiny',
       readinessScore: 75,
-      collusionRiskScore: 15,
+      linkageRiskScore: 15,
       riskTier: 'Medium',
       programmes: JSON.stringify(['Computer Science & Engg (180)', 'Electronics & Comm (120)', 'Mechanical Engg (60)']),
       currentIntake: 360,
@@ -167,7 +167,7 @@ async function main() {
       academicYear: '2026-2027',
       status: 'Deficiency_Communicated',
       readinessScore: 45,
-      collusionRiskScore: 68,
+      linkageRiskScore: 68,
       riskTier: 'High',
       programmes: JSON.stringify(['Computer Science & Engg (240)', 'AI & Data Science (120)', 'Civil Engg (60)']),
       currentIntake: 360,
@@ -187,7 +187,7 @@ async function main() {
       academicYear: '2026-2027',
       status: 'EVC_Inspection_Recommended',
       readinessScore: 25,
-      collusionRiskScore: 92,
+      linkageRiskScore: 92,
       riskTier: 'Critical',
       programmes: JSON.stringify(['Diploma in Computer Tech (120)', 'Diploma in Mechanical (60)']),
       currentIntake: 0,
@@ -196,7 +196,7 @@ async function main() {
     }
   });
 
-  console.log('✓ Database seeded successfully with 3 institutions and 3 demo fraud/compliance cases!');
+  console.log('✓ Database seeded successfully with 3 institutions and 3 demo scrutiny cases.');
 }
 
 main()

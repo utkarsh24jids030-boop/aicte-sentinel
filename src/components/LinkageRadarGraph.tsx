@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CollusionRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
+import { LinkageRadarData, CollusionRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
 import StatusChip from './StatusChip';
 import { 
   Building2, 
@@ -11,12 +11,13 @@ import {
   ExternalLink
 } from 'lucide-react';
 
-interface CollusionRadarGraphProps {
-  data: CollusionRadarData;
+interface LinkageRadarGraphProps {
+  data: LinkageRadarData;
   onSelectInstitution?: (institutionName: string) => void;
 }
+export type CollusionRadarGraphProps = LinkageRadarGraphProps;
 
-export default function CollusionRadarGraph({ data, onSelectInstitution }: CollusionRadarGraphProps) {
+export default function LinkageRadarGraph({ data, onSelectInstitution }: LinkageRadarGraphProps) {
   const [selectedNode, setSelectedNode] = useState<RiskGraphNode | null>(data.nodes[1]); // Default to Nova
   const [selectedEdge, setSelectedEdge] = useState<RiskGraphEdge | null>(data.edges[4]); // Default to Land conflict edge
   const [filterType, setFilterType] = useState<string>('ALL');
@@ -340,3 +341,5 @@ export default function CollusionRadarGraph({ data, onSelectInstitution }: Collu
     </div>
   );
 }
+
+export const CollusionRadarGraph = LinkageRadarGraph;

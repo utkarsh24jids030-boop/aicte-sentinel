@@ -4,8 +4,8 @@ import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
-import CollusionRadarGraph from '@/components/CollusionRadarGraph';
-import { CollusionRadarData } from '@/types';
+import LinkageRadarGraph from '@/components/LinkageRadarGraph';
+import { LinkageRadarData } from '@/types';
 import { Radar, RefreshCw, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -14,7 +14,7 @@ function RadarContent() {
   const searchParams = useSearchParams();
   const instQuery = searchParams.get('institution') || '';
 
-  const [radarData, setRadarData] = useState<CollusionRadarData | null>(null);
+  const [radarData, setRadarData] = useState<LinkageRadarData | null>(null);
   const [selectedInst, setSelectedInst] = useState<string>(instQuery);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -78,7 +78,7 @@ function RadarContent() {
           </div>
         </div>
       ) : (
-        <CollusionRadarGraph
+        <LinkageRadarGraph
           data={radarData}
           onSelectInstitution={(instName) => setSelectedInst(instName)}
         />
@@ -87,7 +87,7 @@ function RadarContent() {
   );
 }
 
-export default function CollusionRadarPage() {
+export default function LinkageRadarPage() {
   return (
     <ProtectedRoute allowedRoles={['OFFICER', 'ADMIN', 'AUDITOR']}>
       <div className="min-h-screen bg-slate-50 flex flex-col font-sans">

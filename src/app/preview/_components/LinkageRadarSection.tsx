@@ -1,10 +1,10 @@
 import React from 'react';
-import { CollusionRadarEngine } from '@/lib/radar/graph';
+import { LinkageRadarEngine } from '@/lib/radar/graph';
 import { formatSeverity } from './helpers';
 
-export default function CollusionRadarSection() {
-  const radarData = CollusionRadarEngine.getGraphData();
-  const { nodes, edges, overallCollusionRiskScore, riskSummary } = radarData;
+export default function LinkageRadarSection() {
+  const radarData = LinkageRadarEngine.getGraphData();
+  const { nodes, edges, overallLinkageRiskScore, riskSummary } = radarData;
 
   return (
     <section id="collusion-radar" className="space-y-8 bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
@@ -29,7 +29,7 @@ export default function CollusionRadarSection() {
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
           <div className="text-[10px] font-bold text-slate-500 uppercase">Collusion Risk Score</div>
-          <div className="text-3xl font-black font-mono text-rose-600 mt-1">{overallCollusionRiskScore}%</div>
+          <div className="text-3xl font-black font-mono text-rose-600 mt-1">{overallLinkageRiskScore}%</div>
           <span className="text-[10px] text-slate-400">High Fraud Affinity</span>
         </div>
         <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
@@ -221,3 +221,5 @@ export default function CollusionRadarSection() {
     </section>
   );
 }
+
+export const CollusionRadarSection = LinkageRadarSection;

@@ -165,7 +165,7 @@ export class ForensicsEngine {
               id: `FIND-REUSE-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
               applicationId: currentAppId,
               documentId: doc.id,
-              category: 'CROSS_INSTITUTION_COLLUSION',
+              category: 'CROSS_INSTITUTION_LINKAGE',
               severity: 'Critical',
               confidence: 0.95,
               title: `Cross-Institution Collusion: Reused ${field.fieldLabel}`,

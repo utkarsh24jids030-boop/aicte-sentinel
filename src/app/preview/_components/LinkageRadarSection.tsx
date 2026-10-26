@@ -190,11 +190,12 @@ export default function LinkageRadarSection() {
               <tr className="bg-slate-100 text-slate-700 font-bold border-b">
                 <th className="p-2.5">Edge ID</th>
                 <th className="p-2.5">Relation Type</th>
-                <th className="p-2.5">Source Entity</th>
-                <th className="p-2.5">Target Entity</th>
+                <th className="p-2.5">Confidence</th>
+                <th className="p-2.5">Assessment Reason</th>
                 <th className="p-2.5">Risk Level</th>
                 <th className="p-2.5">Evidence Details</th>
                 <th className="p-2.5">Institutions Involved</th>
+                <th className="p-2.5">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
@@ -202,8 +203,8 @@ export default function LinkageRadarSection() {
                 <tr key={edge.id} className="hover:bg-slate-50">
                   <td className="p-2.5 font-mono text-slate-500">{edge.id}</td>
                   <td className="p-2.5 font-semibold text-slate-800">{edge.relationType}</td>
-                  <td className="p-2.5 font-mono text-blue-700">{edge.source}</td>
-                  <td className="p-2.5 font-mono text-indigo-700">{edge.target}</td>
+                  <td className="p-2.5 font-mono font-bold text-blue-700">{Math.round((edge.confidence || 0.95) * 100)}%</td>
+                  <td className="p-2.5 text-slate-600 max-w-xs">{edge.reason || '-'}</td>
                   <td className="p-2.5">
                     <span className={`px-2 py-0.5 rounded-sm border text-[10px] font-bold ${formatSeverity(edge.riskLevel)}`}>
                       {edge.riskLevel}
@@ -212,6 +213,17 @@ export default function LinkageRadarSection() {
                   <td className="p-2.5 text-slate-700">{maskPII(edge.evidenceDetails)}</td>
                   <td className="p-2.5 text-[11px] font-semibold text-slate-800">
                     {edge.institutionsInvolved.join(', ')}
+                  </td>
+                  <td className="p-2.5">
+                    {edge.dismissed ? (
+                      <span className="px-2 py-0.5 rounded-sm text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                        Dismissed
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 rounded-sm text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-300">
+                        Active
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}

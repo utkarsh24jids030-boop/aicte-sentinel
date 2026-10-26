@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import DemoBanner from '@/components/DemoBanner';
 import Navbar from '@/components/Navbar';
 import LinkageRadarGraph from '@/components/LinkageRadarGraph';
 import { LinkageRadarData } from '@/types';
@@ -91,7 +90,6 @@ export default function LinkageRadarPage() {
   return (
     <ProtectedRoute allowedRoles={['OFFICER', 'ADMIN', 'AUDITOR']}>
       <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
-        <DemoBanner />
         <Navbar />
         <Suspense fallback={
           <div className="flex-1 flex items-center justify-center">

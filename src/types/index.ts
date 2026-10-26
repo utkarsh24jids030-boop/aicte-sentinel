@@ -293,7 +293,8 @@ export interface OfficerActionRecord {
     | 'ESCALATE_TO_EVC'
     | 'REQUEST_CLARIFICATION'
     | 'GENERATE_SCRUTINY_REPORT'
-    | 'GENERATE_INSPECTION_BRIEF';
+    | 'GENERATE_INSPECTION_BRIEF'
+    | 'DISMISS_LINKAGE_EDGE';
   notes: string;
   findingId?: string;
   timestamp: string;
@@ -386,7 +387,7 @@ export interface AuditEvent {
   actorName: string;
   actorRole: UserRole;
   action: string;
-  entityType: 'APPLICATION' | 'DOCUMENT' | 'FINDING' | 'RULE_ENGINE' | 'ADAPTER' | 'INSPECTION' | 'AUTH';
+  entityType: 'APPLICATION' | 'DOCUMENT' | 'FINDING' | 'RULE_ENGINE' | 'ADAPTER' | 'INSPECTION' | 'AUTH' | 'RADAR_EDGE';
   entityId: string;
   beforeSummary?: string;
   afterSummary?: string;

@@ -536,6 +536,67 @@ test('Item 4: Verification Passport History & State DTE Mock Adapter', () => {
   );
 });
 
+test('Item 5: Radar Edge Types & Officer Link Dismissal Action', () => {
+  // 1. Verify algorithmic relation detection and correct edge types in radar/graph.ts
+  const radarGraphCode = fs.readFileSync('./src/lib/radar/graph.ts', 'utf8');
+  assert.ok(
+    radarGraphCode.includes('detectRelation(') &&
+    radarGraphCode.includes('dismissEdge(') &&
+    radarGraphCode.includes('DISMISS_LINKAGE_EDGE'),
+    'radar/graph.ts must implement detectRelation and dismissEdge with audit logging'
+  );
+
+  // Regulatory rule checks:
+  // An expired certificate is NEVER DUPLICATE_CERTIFICATE
+  assert.ok(
+    radarGraphCode.includes("relationType = 'EXPIRED_CLEARANCE'") &&
+    radarGraphCode.includes("id: 'edge-sun-fire'"),
+    'Expired fire clearance must be classified as EXPIRED_CLEARANCE, not DUPLICATE_CERTIFICATE'
+  );
+
+  // A single clean land parcel is NEVER SHARED_LAND
+  assert.ok(
+    radarGraphCode.includes("relationType = 'SOLE_OWNERSHIP'") &&
+    radarGraphCode.includes("id: 'edge-sun-land'"),
+    'Single clean land parcel must be classified as SOLE_OWNERSHIP, not SHARED_LAND'
+  );
+
+  // A tampered PDF is NEVER IDENTICAL_HASH
+  assert.ok(
+    radarGraphCode.includes("relationType = 'METADATA_DISCREPANCY'") &&
+    radarGraphCode.includes("id: 'edge-nova-tamper'"),
+    'Tampered PDF must be classified as METADATA_DISCREPANCY, not IDENTICAL_HASH'
+  );
+
+  // 2. Verify dismissal API endpoint exists and handles validation
+  assert.ok(fs.existsSync('./src/app/api/radar/dismiss/route.ts'), 'api/radar/dismiss/route.ts must exist');
+  const dismissRouteCode = fs.readFileSync('./src/app/api/radar/dismiss/route.ts', 'utf8');
+  assert.ok(
+    dismissRouteCode.includes('LinkageRadarEngine.dismissEdge') &&
+    dismissRouteCode.includes('reason'),
+    'api/radar/dismiss/route.ts must validate reason and call dismissEdge'
+  );
+
+  // 3. Verify LinkageRadarGraph UI includes confidence, reason, and dismissal controls
+  const radarComponentCode = fs.readFileSync('./src/components/LinkageRadarGraph.tsx', 'utf8');
+  assert.ok(
+    radarComponentCode.includes('Confidence:') &&
+    radarComponentCode.includes('Assessment Reason:') &&
+    radarComponentCode.includes('Dismiss Link with Reason'),
+    'LinkageRadarGraph must display Confidence, Assessment Reason, and Dismiss Link with Reason'
+  );
+
+  // 4. Verify preview LinkageRadarSection table includes confidence, reason, and status
+  const previewRadarCode = fs.readFileSync('./src/app/preview/_components/LinkageRadarSection.tsx', 'utf8');
+  assert.ok(
+    previewRadarCode.includes('Confidence') &&
+    previewRadarCode.includes('Assessment Reason') &&
+    previewRadarCode.includes('Status'),
+    'preview LinkageRadarSection must include Confidence, Assessment Reason, and Status'
+  );
+});
+
+
 
 
 

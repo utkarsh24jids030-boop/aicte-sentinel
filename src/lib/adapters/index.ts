@@ -7,7 +7,12 @@ import { maskPII } from '@/lib/security/privacy';
 
 export interface AdapterVerificationResult {
   status: VerificationStatus;
-  adapterName: 'DigiLocker Mock Adapter' | 'Certificate Registry Mock' | 'Land Records Mock Adapter' | 'Faculty Registry Mock Adapter';
+  adapterName: 
+    | 'DigiLocker Mock Adapter' 
+    | 'Certificate Registry Mock' 
+    | 'Land Records Mock Adapter' 
+    | 'Faculty Registry Mock Adapter'
+    | 'State Directorate of Technical Education Mock Adapter (simulated)';
   attempt: VerificationAttempt;
   sourceResponse: SourceResponse;
 }
@@ -194,6 +199,27 @@ const MOCK_FACULTY_REGISTRY_DB: Record<string, {
   }
 };
 
+// 5. MOCK STATE DIRECTORATE OF TECHNICAL EDUCATION (DTE) REGISTRY
+const MOCK_STATE_DTE_DB: Record<string, {
+  issuingState: string;
+  nocNumber: string;
+  institutionName: string;
+  status: 'AUTHENTIC' | 'MISMATCH' | 'RECORD_EXPIRED' | 'SERVICE_OFFLINE' | 'RECORD_NOT_FOUND';
+  issuedDate: string;
+  latencyMs: number;
+  details: Record<string, unknown>;
+}> = {
+  'DTE-APEX-NOC-990': {
+    issuingState: 'Maharashtra',
+    nocNumber: 'DTE-APEX-NOC-990',
+    institutionName: 'Apex Polytechnic College',
+    status: 'SERVICE_OFFLINE',
+    issuedDate: '2025-11-01',
+    latencyMs: 5240,
+    details: { reason: 'State Directorate of Technical Education (simulated) upstream gateway connection timed out after 5000ms.' }
+  }
+};
+
 export class MockVerificationService {
   /**
    * DigiLocker Mock Verification Adapter
@@ -231,6 +257,7 @@ export class MockVerificationService {
       }
     }
 
+    const latencyMs = 240;
     const attempt: VerificationAttempt = {
       id: attemptId,
       documentId,
@@ -238,7 +265,11 @@ export class MockVerificationService {
       attemptTimestamp: new Date().toISOString(),
       requestPayload: { docIdentifier, claimedHolder },
       responseStatus: status === 'Verified' ? 'Verified' : status === 'Expired' ? 'Expired' : status === 'Mismatch Detected' ? 'Mismatch' : 'Source Unavailable',
-      rawResponse: { sourceStatus, details }
+      rawResponse: { sourceStatus, details },
+      latencyMs,
+      requestSummary: `GET /api/v2/digilocker/records/${docIdentifier}`,
+      responseSummary: `HTTP ${status === 'Verified' ? '200' : '404'} (${latencyMs}ms) - Source Status: ${sourceStatus}`,
+      officerReviewStatus: status === 'Verified' ? 'Accepted (Automated Pass)' : 'Pending Officer Review'
     };
 
     const sourceResponse: SourceResponse = {
@@ -281,6 +312,7 @@ export class MockVerificationService {
       details = { ...record.details, authority: record.issuingAuthority };
     }
 
+    const latencyMs = 410;
     const attempt: VerificationAttempt = {
       id: attemptId,
       documentId,
@@ -288,7 +320,11 @@ export class MockVerificationService {
       attemptTimestamp: new Date().toISOString(),
       requestPayload: { certNumber, claimedInstitution },
       responseStatus: status === 'Verified' ? 'Verified' : status === 'Expired' ? 'Expired' : status === 'Mismatch Detected' ? 'Mismatch' : 'Source Unavailable',
-      rawResponse: { sourceStatus, details }
+      rawResponse: { sourceStatus, details },
+      latencyMs,
+      requestSummary: `GET /api/v1/municipal/certs/${certNumber}?inst=${encodeURIComponent(claimedInstitution)}`,
+      responseSummary: `HTTP ${status === 'Verified' ? '200' : '400'} (${latencyMs}ms) - Record: ${sourceStatus}`,
+      officerReviewStatus: status === 'Verified' ? 'Accepted (Automated Pass)' : status === 'Expired' ? 'Clarification Requested' : 'Confirmed by Officer'
     };
 
     const sourceResponse: SourceResponse = {
@@ -335,6 +371,7 @@ export class MockVerificationService {
       }
     }
 
+    const latencyMs = 310;
     const attempt: VerificationAttempt = {
       id: attemptId,
       documentId,
@@ -342,7 +379,11 @@ export class MockVerificationService {
       attemptTimestamp: new Date().toISOString(),
       requestPayload: { surveyNumber, declaredAcres, state },
       responseStatus: status === 'Verified' ? 'Verified' : status === 'Mismatch Detected' ? 'Mismatch' : 'Source Unavailable',
-      rawResponse: { sourceStatus, details }
+      rawResponse: { sourceStatus, details },
+      latencyMs,
+      requestSummary: `POST /cadastre/${state.toLowerCase()}/parcels { survey: "${surveyNumber}", acres: ${declaredAcres} }`,
+      responseSummary: `HTTP ${status === 'Verified' ? '200' : '409'} (${latencyMs}ms) - Cadastre: ${sourceStatus}`,
+      officerReviewStatus: status === 'Verified' ? 'Accepted (Automated Pass)' : 'Escalated for EVC'
     };
 
     const sourceResponse: SourceResponse = {
@@ -385,6 +426,7 @@ export class MockVerificationService {
       details = { degree: record.highestDegree, affiliation: record.currentAffiliation };
     }
 
+    const latencyMs = 180;
     const attempt: VerificationAttempt = {
       id: attemptId,
       documentId,
@@ -392,7 +434,11 @@ export class MockVerificationService {
       attemptTimestamp: new Date().toISOString(),
       requestPayload: { panOrId, facultyName },
       responseStatus: status === 'Verified' ? 'Verified' : status === 'Mismatch Detected' ? 'Mismatch' : 'Source Unavailable',
-      rawResponse: { sourceStatus, details }
+      rawResponse: { sourceStatus, details },
+      latencyMs,
+      requestSummary: `GET /nfd/faculty/check?pan=${panOrId}&name=${encodeURIComponent(facultyName)}`,
+      responseSummary: `HTTP ${status === 'Verified' ? '200' : '409'} (${latencyMs}ms) - Registry: ${sourceStatus}`,
+      officerReviewStatus: status === 'Verified' ? 'Accepted (Automated Pass)' : 'Escalated for EVC'
     };
 
     const sourceResponse: SourceResponse = {
@@ -403,5 +449,54 @@ export class MockVerificationService {
     };
 
     return { status, adapterName: 'Faculty Registry Mock Adapter', attempt, sourceResponse };
+  }
+
+  /**
+   * State Directorate of Technical Education (simulated) Mock Adapter
+   */
+  static verifyStateDTE(documentId: string, nocNumber: string, state: string, institutionName: string): AdapterVerificationResult {
+    const attemptId = `ATT-DTE-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const record = MOCK_STATE_DTE_DB[nocNumber];
+
+    let status: VerificationStatus = 'Not Verified';
+    let sourceStatus: SourceResponse['sourceStatus'] = 'RECORD_NOT_FOUND';
+    let details: Record<string, unknown> = {};
+    const latencyMs = record?.latencyMs || 5240;
+
+    if (!record || record.status === 'SERVICE_OFFLINE') {
+      status = 'Source Unavailable';
+      sourceStatus = 'SERVICE_OFFLINE';
+      details = {
+        message: 'State Directorate of Technical Education upstream gateway connection timed out after 5000ms. Fail-closed: routed to officer review.',
+        timeoutMs: latencyMs
+      };
+    } else if (record.status === 'AUTHENTIC') {
+      status = 'Verified';
+      sourceStatus = 'AUTHENTIC';
+      details = { ...record.details, issuedDate: record.issuedDate };
+    }
+
+    const attempt: VerificationAttempt = {
+      id: attemptId,
+      documentId,
+      adapterName: 'State Directorate of Technical Education Mock Adapter (simulated)',
+      attemptTimestamp: new Date().toISOString(),
+      requestPayload: { nocNumber, state, institutionName },
+      responseStatus: 'Source Unavailable',
+      rawResponse: { sourceStatus, details },
+      latencyMs,
+      requestSummary: `GET /api/v1/dte/noc/validate?ref=${nocNumber}&state=${state}`,
+      responseSummary: `HTTP 504 Gateway Timeout (${latencyMs}ms) - State DTE Endpoint Degraded / Offline`,
+      officerReviewStatus: 'Pending Officer Review (Fail-Closed)'
+    };
+
+    const sourceResponse: SourceResponse = {
+      sourceName: 'State Directorate of Technical Education (simulated)',
+      sourceStatus,
+      details,
+      timestamp: new Date().toISOString()
+    };
+
+    return { status, adapterName: 'State Directorate of Technical Education Mock Adapter (simulated)', attempt, sourceResponse };
   }
 }

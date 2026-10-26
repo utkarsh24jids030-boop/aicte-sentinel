@@ -42,6 +42,15 @@ export default function AdminSection() {
       failClosed: 'Fail-Closed (Dual affiliation strictly triggers Mismatch)',
       status: 'ONLINE',
       records: 'Faculty PAN concurrent cross-matching (simulated)'
+    },
+    {
+      name: 'State Directorate of Technical Education Mock Adapter (simulated)',
+      target: 'State Higher & Technical Education Portals (simulated)',
+      protocol: 'REST / HTTPS Gateway (simulated)',
+      latency: '5,240ms',
+      failClosed: 'Fail-Closed (Gateway timeout triggers Source Unavailable)',
+      status: 'DEGRADED (TIMEOUT)',
+      records: 'Apex Polytechnic NOC request (DTE-APEX-NOC-990) timed out; fail-closed routed to officer review'
     }
   ];
 
@@ -90,7 +99,11 @@ export default function AdminSection() {
                   <td className="p-2.5 font-semibold text-rose-700">{a.failClosed}</td>
                   <td className="p-2.5 font-mono text-slate-600">{a.latency}</td>
                   <td className="p-2.5">
-                    <span className="px-2 py-0.5 rounded-sm bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-[10px]">
+                    <span className={`px-2 py-0.5 rounded-sm border font-bold text-[10px] ${
+                      a.status.includes('DEGRADED')
+                        ? 'bg-amber-100 text-amber-900 border-amber-300'
+                        : 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                    }`}>
                       {a.status}
                     </span>
                   </td>

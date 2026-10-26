@@ -486,6 +486,57 @@ test('Item 3: Report Seals & Real Sample Document Cryptographic Hashes', () => {
   assert.ok(graphContent.includes('edge-wh-cert-orig'), 'Radar graph must include original issuance edge');
 });
 
+test('Item 4: Verification Passport History & State DTE Mock Adapter', () => {
+  // 1. Verify DTE adapter implementation in adapters/index.ts
+  const adaptersCode = fs.readFileSync('./src/lib/adapters/index.ts', 'utf8');
+  assert.ok(
+    adaptersCode.includes('verifyStateDTE') &&
+    adaptersCode.includes('State Directorate of Technical Education Mock Adapter (simulated)'),
+    'adapters/index.ts must implement verifyStateDTE and State Directorate of Technical Education Mock Adapter'
+  );
+
+  // 2. Verify Apex NOC uses State DTE adapter in store.ts
+  const storeContent = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(
+    storeContent.includes("id: 'doc-apex-noc-unavailable'") &&
+    storeContent.includes("verificationSource: 'State Directorate of Technical Education (simulated)'"),
+    'Apex NOC must use State Directorate of Technical Education as verificationSource'
+  );
+
+  // 3. Verify admin page shows degraded adapter status for timed-out adapter
+  const adminPage = fs.readFileSync('./src/app/admin/page.tsx', 'utf8');
+  assert.ok(
+    adminPage.includes('State Directorate of Technical Education Mock Adapter') &&
+    adminPage.includes('DEGRADED (TIMEOUT)'),
+    'Admin page must show State Directorate of Technical Education as DEGRADED (TIMEOUT)'
+  );
+
+  const previewAdmin = fs.readFileSync('./src/app/preview/_components/AdminSection.tsx', 'utf8');
+  assert.ok(
+    previewAdmin.includes('State Directorate of Technical Education Mock Adapter') &&
+    previewAdmin.includes('DEGRADED (TIMEOUT)'),
+    'Preview admin section must show State Directorate of Technical Education as DEGRADED (TIMEOUT)'
+  );
+
+  // 4. Verify DocumentViewerModal and CaseFileSection render verification attempts ledger
+  const modalCode = fs.readFileSync('./src/components/DocumentViewerModal.tsx', 'utf8');
+  assert.ok(
+    modalCode.includes('Verification Attempts & Protocol History') &&
+    modalCode.includes('Request / Response Summary') &&
+    modalCode.includes('Latency'),
+    'DocumentViewerModal must render Verification Attempts ledger with latency and summaries'
+  );
+
+  const casePreviewCode = fs.readFileSync('./src/app/preview/_components/CaseFileSection.tsx', 'utf8');
+  assert.ok(
+    casePreviewCode.includes('Verification Passport History') &&
+    casePreviewCode.includes('Latency') &&
+    casePreviewCode.includes('Resulting Status'),
+    'CaseFileSection preview must render Verification Passport History'
+  );
+});
+
+
 
 
 

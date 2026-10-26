@@ -10,7 +10,8 @@ import {
   FindingStatus,
   InspectionTask,
   OfficerActionRecord,
-  AuditEvent
+  AuditEvent,
+  VerificationAttempt
 } from '@/types';
 import { AuditTrailEngine } from './audit/trail';
 import { RulesEngine } from './rules/engine';
@@ -1051,7 +1052,7 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     mimeType: 'application/pdf',
     sha256Hash: '9840192830491820394810293840192830491820394810293840192830491820',
     verificationStatus: 'Source Unavailable',
-    verificationSource: 'DigiLocker Mock Adapter (simulated)',
+    verificationSource: 'State Directorate of Technical Education (simulated)',
     forensicMetadata: {
       fileSize: 760000,
       mimeType: 'application/pdf',
@@ -1644,13 +1645,160 @@ export class DataStore {
     return doc;
   }
 
-  static updateDocumentStatus(id: string, status: DocumentRecord['verificationStatus'], source?: string): DocumentRecord | undefined {
+  static updateDocumentStatus(
+    id: string, 
+    status: DocumentRecord['verificationStatus'], 
+    source?: string,
+    attempt?: VerificationAttempt
+  ): DocumentRecord | undefined {
     const doc = this.getDocumentById(id);
     if (!doc) return undefined;
     doc.verificationStatus = status;
     if (source) doc.verificationSource = source;
+    if (attempt) {
+      if (!doc.verificationAttempts) doc.verificationAttempts = [];
+      doc.verificationAttempts.unshift(attempt);
+    }
     doc.updatedAt = new Date().toISOString();
     return doc;
+  }
+
+  static getVerificationAttempts(documentId: string): VerificationAttempt[] {
+    const doc = this.getDocumentById(documentId);
+    if (doc?.verificationAttempts && doc.verificationAttempts.length > 0) {
+      return doc.verificationAttempts;
+    }
+    return this.getInitialVerificationAttempts(doc);
+  }
+
+  static getInitialVerificationAttempts(doc?: DocumentRecord): VerificationAttempt[] {
+    if (!doc) return [];
+    
+    // Custom tailored historical attempt records matching seeded outcomes
+    if (doc.id === 'doc-apex-noc-unavailable') {
+      return [
+        {
+          id: 'ATT-DTE-APEX-001',
+          documentId: doc.id,
+          adapterName: 'State Directorate of Technical Education Mock Adapter (simulated)',
+          attemptTimestamp: '2026-01-22T09:30:15Z',
+          requestPayload: { nocNumber: 'DTE-APEX-NOC-990', state: 'Maharashtra', institutionName: 'Apex Polytechnic College' },
+          requestSummary: 'GET /api/v1/dte/noc/validate?ref=DTE-APEX-NOC-990&state=Maharashtra',
+          responseSummary: 'HTTP 504 Gateway Timeout (5240ms) - Upstream connection timed out',
+          latencyMs: 5240,
+          responseStatus: 'Source Unavailable',
+          rawResponse: { sourceStatus: 'SERVICE_OFFLINE', timeoutMs: 5240 },
+          officerReviewStatus: 'Pending Officer Review (Fail-Closed)'
+        }
+      ];
+    }
+
+    if (doc.id === 'doc-sun-land') {
+      return [
+        {
+          id: 'ATT-LR-SUN-001',
+          documentId: doc.id,
+          adapterName: 'Land Records Mock Adapter',
+          attemptTimestamp: '2026-01-18T10:02:10Z',
+          requestPayload: { surveyNumber: '144/2', state: 'Karnataka', declaredAcres: 4.85 },
+          requestSummary: 'POST /cadastre/karnataka/parcels { survey: "144/2", acres: 4.85 }',
+          responseSummary: 'HTTP 200 OK (310ms) - Cadastre Status: AUTHENTIC (Unencumbered 4.85 Acres)',
+          latencyMs: 310,
+          responseStatus: 'Verified',
+          rawResponse: { sourceStatus: 'AUTHENTIC', acreage: 4.85, owner: 'Sunrise Education Trust' },
+          officerReviewStatus: 'Accepted (Automated Pass)'
+        }
+      ];
+    }
+
+    if (doc.id === 'doc-sun-fire') {
+      return [
+        {
+          id: 'ATT-CR-SUN-001',
+          documentId: doc.id,
+          adapterName: 'Certificate Registry Mock',
+          attemptTimestamp: '2026-01-18T10:12:00Z',
+          requestPayload: { certNumber: 'FS-BLR-2023-9941', claimedInstitution: 'Sunrise Institute of Technology' },
+          requestSummary: 'GET /api/v1/municipal/certs/FS-BLR-2023-9941',
+          responseSummary: 'HTTP 200 OK (410ms) - Record: RECORD_EXPIRED (Expired on 2024-01-14)',
+          latencyMs: 410,
+          responseStatus: 'Expired',
+          rawResponse: { sourceStatus: 'RECORD_EXPIRED', expiryDate: '2024-01-14' },
+          officerReviewStatus: 'Clarification Requested'
+        }
+      ];
+    }
+
+    if (doc.id === 'doc-nova-fac-reused') {
+      return [
+        {
+          id: 'ATT-FAC-NOV-001',
+          documentId: doc.id,
+          adapterName: 'Faculty Registry Mock Adapter',
+          attemptTimestamp: '2026-01-20T14:32:00Z',
+          requestPayload: { panOrId: 'DEMOPAN9999X', facultyName: 'Dr. Vikram Malhotra' },
+          requestSummary: 'GET /nfd/faculty/check?pan=DEMOPAN9999X',
+          responseSummary: 'HTTP 200 OK (180ms) - Registry Status: MISMATCH (Dual Active Claims)',
+          latencyMs: 180,
+          responseStatus: 'Mismatch',
+          rawResponse: { sourceStatus: 'MISMATCH', institutions: ['Nova', 'Apex'] },
+          officerReviewStatus: 'Escalated for EVC'
+        }
+      ];
+    }
+
+    if (doc.id === 'doc-apex-dup-cert') {
+      return [
+        {
+          id: 'ATT-CR-APX-001',
+          documentId: doc.id,
+          adapterName: 'Certificate Registry Mock',
+          attemptTimestamp: '2026-01-22T09:17:00Z',
+          requestPayload: { certNumber: 'OCC-PUNE-2021-DUP-01', claimedInstitution: 'Apex Polytechnic College' },
+          requestSummary: 'GET /api/v1/municipal/certs/OCC-PUNE-2021-DUP-01',
+          responseSummary: 'HTTP 200 OK (410ms) - Cryptographic duplicate of Western Horizon archived docket',
+          latencyMs: 410,
+          responseStatus: 'Mismatch',
+          rawResponse: { sourceStatus: 'MISMATCH', duplicateOf: 'doc-wh-occ-2021' },
+          officerReviewStatus: 'Confirmed by Officer'
+        }
+      ];
+    }
+
+    if (doc.id === 'doc-apex-land-conflict') {
+      return [
+        {
+          id: 'ATT-LR-APX-001',
+          documentId: doc.id,
+          adapterName: 'Land Records Mock Adapter',
+          attemptTimestamp: '2026-01-22T09:05:00Z',
+          requestPayload: { surveyNumber: '289/1A', declaredAcres: 2.1, state: 'Maharashtra' },
+          requestSummary: 'POST /cadastre/maharashtra/parcels { survey: "289/1A", acres: 2.1 }',
+          responseSummary: 'HTTP 409 Conflict (310ms) - Cadastre Status: MISMATCH (Overlapping Claim)',
+          latencyMs: 310,
+          responseStatus: 'Mismatch',
+          rawResponse: { sourceStatus: 'MISMATCH', conflictWith: 'Nova Engineering College' },
+          officerReviewStatus: 'Escalated for EVC'
+        }
+      ];
+    }
+
+    // Default attempt for other verified / unverified documents
+    return [
+      {
+        id: `ATT-GEN-${doc.id}`,
+        documentId: doc.id,
+        adapterName: doc.verificationSource || 'DigiLocker Mock Adapter',
+        attemptTimestamp: doc.createdAt,
+        requestPayload: { documentId: doc.id, fileName: doc.fileName },
+        requestSummary: `QUERY ${doc.verificationSource || 'DigiLocker'} [${doc.documentType}]`,
+        responseSummary: `HTTP 200 OK (220ms) - Verification Status: ${doc.verificationStatus}`,
+        latencyMs: 220,
+        responseStatus: doc.verificationStatus === 'Verified' ? 'Verified' : 'Pending',
+        rawResponse: { status: doc.verificationStatus },
+        officerReviewStatus: doc.verificationStatus === 'Verified' ? 'Accepted (Automated Pass)' : 'Pending Review'
+      }
+    ];
   }
 
   static updateExtractedField(documentId: string, fieldId: string, newValue: string): boolean {

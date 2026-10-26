@@ -159,6 +159,7 @@ export interface DocumentRecord {
   forensicMetadata: ForensicMetadata;
   extractedFields: ExtractedField[];
   versions: DocumentVersion[];
+  verificationAttempts?: VerificationAttempt[];
   createdAt: string;
   updatedAt: string;
 }
@@ -215,11 +216,21 @@ export interface VerificationPassport {
 export interface VerificationAttempt {
   id: string;
   documentId: string;
-  adapterName: 'DigiLocker Mock Adapter' | 'Certificate Registry Mock' | 'Land Records Mock Adapter' | 'Faculty Registry Mock Adapter';
+  adapterName: 
+    | 'DigiLocker Mock Adapter' 
+    | 'Certificate Registry Mock' 
+    | 'Land Records Mock Adapter' 
+    | 'Faculty Registry Mock Adapter'
+    | 'State Directorate of Technical Education Mock Adapter (simulated)'
+    | string;
   attemptTimestamp: string;
   requestPayload: Record<string, unknown>;
-  responseStatus: 'Verified' | 'Mismatch' | 'Expired' | 'Pending' | 'Source Unavailable';
+  responseStatus: 'Verified' | 'Mismatch' | 'Expired' | 'Pending' | 'Source Unavailable' | 'Timeout / Degraded';
   rawResponse: Record<string, unknown>;
+  latencyMs?: number;
+  requestSummary?: string;
+  responseSummary?: string;
+  officerReviewStatus?: string;
 }
 
 export interface SourceResponse {

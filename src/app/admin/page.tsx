@@ -92,7 +92,6 @@ export default function AdminPortalPage() {
   return (
     <ProtectedRoute allowedRoles={['ADMIN', 'AUDITOR']}>
       <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
-        <DemoBanner />
         <Navbar />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
@@ -355,12 +354,17 @@ export default function AdminPortalPage() {
               { name: 'DigiLocker Mock Adapter (simulated)', desc: 'Simulates National Academic Depository (NAD) (simulated) and state document registry verification', status: 'ONLINE', latency: '42ms' },
               { name: 'Certificate Registry Mock (simulated)', desc: 'Simulates Municipal Town Planning & State Fire NOC verification gateways (simulated)', status: 'ONLINE', latency: '88ms' },
               { name: 'Land Records Mock Adapter (simulated)', desc: 'Simulates State Revenue & Cadastre land survey number registry (Bhoomi / Bhulekh) (simulated)', status: 'ONLINE', latency: '65ms' },
-              { name: 'Faculty Registry Mock Adapter (simulated)', desc: 'Simulates AICTE Central Faculty Directory cross-institution employment registry (simulated)', status: 'ONLINE', latency: '35ms' }
+              { name: 'Faculty Registry Mock Adapter (simulated)', desc: 'Simulates AICTE Central Faculty Directory cross-institution employment registry (simulated)', status: 'ONLINE', latency: '35ms' },
+              { name: 'State Directorate of Technical Education Mock Adapter (simulated)', desc: 'Simulates State Technical Education NOC registry. Apex Polytechnic NOC request (DTE-APEX-NOC-990) timed out after 5,000ms; routed fail-closed to officer review.', status: 'DEGRADED (TIMEOUT)', latency: '5,240ms' }
             ].map((ad, idx) => (
               <div key={idx} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs text-xs space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className="font-bold text-slate-900 text-sm">{ad.name}</h4>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                    ad.status.includes('DEGRADED')
+                      ? 'bg-amber-100 text-amber-900 border-amber-300'
+                      : 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                  }`}>
                     {ad.status}
                   </span>
                 </div>

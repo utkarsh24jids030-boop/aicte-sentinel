@@ -24,6 +24,14 @@ test('AICTE Sentinel Compliance Rules Engine: Contains at least 20 statutory rul
   assert.ok(categories.has('Documents'), 'Must have Document rules');
   assert.ok(categories.has('Consistency'), 'Must have Consistency rules');
   assert.ok(categories.has('Dates'), 'Must have Date rules');
+  assert.ok(categories.has('Infrastructure'), 'Must have Infrastructure rules');
+  assert.ok(categories.has('Cross-Application'), 'Must have Cross-Application rules');
+
+  const ruleIds = new Set(rulePacks.map(r => r.rule_id));
+  assert.ok(ruleIds.has('INFRA-LAB-001'), 'Must have INFRA-LAB-001 rule');
+  assert.ok(ruleIds.has('FACULTY-CADRE-001'), 'Must have FACULTY-CADRE-001 rule');
+  assert.ok(ruleIds.has('CROSS-CERT-DUP-001'), 'Must have CROSS-CERT-DUP-001 rule');
+  assert.ok(ruleIds.has('CROSS-FACULTY-DUP-001'), 'Must have CROSS-FACULTY-DUP-001 rule');
 });
 
 test('Readiness Score Computation: Deductions adhere to statutory severity penalties', (t) => {

@@ -83,3 +83,23 @@ export function computeRequiredFaculty(
   return { requiredFaculty, studentBase, ratio, basisDescription };
 }
 
+/**
+ * Faculty Cadre Ratio Mix (Professor : Associate Professor : Assistant Professor)
+ * [SOURCE: TO BE VERIFIED]
+ * Refer to AICTE Approval Process Handbook (Cadre Ratio norms: typically 1:2:6 for UG).
+ */
+export const FACULTY_CADRE_RATIO = {
+  professor: 1,
+  associate: 2,
+  assistant: 6
+}; // [SOURCE: TO BE VERIFIED]
+
+export const FACULTY_CADRE_SOURCE = 'SOURCE: TO BE VERIFIED';
+
+/**
+ * Extraction / OCR Confidence Threshold
+ * [SOURCE: TO BE VERIFIED]
+ * Under fail-closed protocol, any extracted field used by a rule with confidence below this threshold
+ * triggers manual review.
+ */
+export const MIN_EXTRACTION_CONFIDENCE_THRESHOLD = 0.75; // [SOURCE: TO BE VERIFIED]

@@ -765,5 +765,151 @@
         "description": "Rule harmonized with statutory verification placeholders."
       }
     ]
+  },
+  {
+    "rule_id": "INFRA-LAB-001",
+    "version": "2026.3",
+    "name": "Specialized Laboratory Equipment and Facilities Evidence",
+    "category": "Infrastructure",
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change"
+    ],
+    "severity": "High",
+    "logic": "has_document('Building Plan') && extracted('Building Plan', 'carpet_area_sqm') != null",
+    "evidence_fields": [
+      "building_plan.carpet_area_sqm",
+      "building_plan.laboratories_count",
+      "equipment_register.verification_status"
+    ],
+    "failure_message": "Specialized instructional laboratories or equipment evidence declared vs evidenced is deficient [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Upload verified laboratory equipment schedule, geo-tagged facility inspection photos, and supplier invoices [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial laboratory and instructional facility baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders [SOURCE: TO BE VERIFIED]."
+      }
+    ]
+  },
+  {
+    "rule_id": "FACULTY-CADRE-001",
+    "version": "2026.3",
+    "name": "Faculty Cadre Ratio Mix (Professor : Associate : Assistant)",
+    "category": "Faculty",
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase"
+    ],
+    "severity": "Medium",
+    "logic": "has_document('Faculty Appointment Letter') || has_document('Faculty Qualification Certificate')",
+    "evidence_fields": [
+      "faculty.cadre_distribution",
+      "faculty.professors_count",
+      "faculty.associate_professors_count",
+      "faculty.assistant_professors_count"
+    ],
+    "failure_message": "Faculty cadre ratio does not satisfy statutory distribution (1 Professor : 2 Associate Professors : 6 Assistant Professors) [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Ensure instructional staff cadre conforms to statutory distribution across professorial ranks [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial cadre ratio mix baseline specification."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders [SOURCE: TO BE VERIFIED]."
+      }
+    ]
+  },
+  {
+    "rule_id": "CROSS-CERT-DUP-001",
+    "version": "2026.3",
+    "name": "Cross-Application Certificate Duplicate Finding",
+    "category": "Cross-Application",
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change",
+      "Closure"
+    ],
+    "severity": "Critical",
+    "logic": "!has_document('Occupancy Certificate') || extracted('Occupancy Certificate', 'certificate_number') != null",
+    "evidence_fields": [
+      "document.sha256_hash",
+      "occupancy_certificate.certificate_number",
+      "cross_institution.application_number"
+    ],
+    "failure_message": "Statutory certificate number or cryptographic signature duplicate detected across multiple institution applications [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Issue immediate Show-Cause notice under statutory regulations [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial cross-application duplicate certificate detection rule."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders [SOURCE: TO BE VERIFIED]."
+      }
+    ]
+  },
+  {
+    "rule_id": "CROSS-FACULTY-DUP-001",
+    "version": "2026.3",
+    "name": "Cross-Application Concurrent Faculty Employment Finding",
+    "category": "Cross-Application",
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change",
+      "Closure"
+    ],
+    "severity": "Critical",
+    "logic": "!has_document('Faculty Qualification Certificate') || extracted('Faculty Qualification Certificate', 'pan_number') != null",
+    "evidence_fields": [
+      "faculty.pan_number",
+      "faculty.aadhaar_hash",
+      "cross_institution.application_number"
+    ],
+    "failure_message": "Core faculty member or Principal concurrently declared across multiple institutions in active academic year [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Refer to AICTE Vigilance Committee and dispatch simultaneous surprise inspection to campuses [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.1",
+        "date": "2025-01-01",
+        "author": "AICTE Approval Bureau",
+        "description": "Initial cross-application concurrent faculty employment rule."
+      },
+      {
+        "version": "2026.3",
+        "date": "2026-01-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Rule harmonized with statutory verification placeholders [SOURCE: TO BE VERIFIED]."
+      }
+    ]
   }
 ]

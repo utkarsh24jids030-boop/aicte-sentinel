@@ -239,7 +239,7 @@ export interface ComplianceRule {
   rule_id: string;
   version: string;
   name: string;
-  category: 'Land' | 'Building' | 'Fire safety' | 'Faculty' | 'Governance' | 'Financial' | 'Academic' | 'Documents' | 'Consistency' | 'Dates' | 'Infrastructure' | 'CrossApplication';
+  category: 'Land' | 'Building' | 'Fire safety' | 'Faculty' | 'Governance' | 'Financial' | 'Academic' | 'Documents' | 'Consistency' | 'Dates' | 'Infrastructure' | 'Cross-Application' | 'CrossApplication';
   applies_to: ApplicationType[];
   severity: FindingSeverity;
   logic: string;

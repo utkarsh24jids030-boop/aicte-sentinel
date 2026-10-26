@@ -168,7 +168,6 @@ test('Cross-Institution Linkage Formula: Transparent weights and calibrated outp
     DUPLICATE_CERT: 25,
     COMMON_TRUSTEE: 10
   };
-  const COLLUSION_WEIGHTS = LINKAGE_WEIGHTS;
 
   const computeLinkageRisk = (factors) => {
     const land = factors.sharedLand ? LINKAGE_WEIGHTS.SHARED_LAND : 0;
@@ -193,5 +192,62 @@ test('As-Of Date Anchor: Configured reference anchor is 2026-02-01', () => {
   const envContent = fs.readFileSync('./src/lib/config/env.ts', 'utf8');
   assert.ok(envContent.includes('2026-02-01T00:00:00.000Z'), 'Default as-of date must be anchored to 2026-02-01');
 });
+
+test('Regression Safeguard: Zero occurrences of prohibited inflammatory terms in user-facing code', () => {
+  const PROHIBITED_TERMS = ['fraud', 'collusion', 'syndicate', 'blatant', 'clandestine', 'double-pledg'];
+  const targets = ['./src', './README.md'];
+  const violations = [];
+
+  const scanFile = (filePath) => {
+    const normalized = filePath.replace(/\\/g, '/');
+    if (
+      normalized.includes('node_modules') ||
+      normalized.includes('.git') ||
+      normalized.includes('.next') ||
+      normalized.includes('PLAN.md') ||
+      normalized.includes('tests/sentinel.test.mjs') ||
+      normalized.split('/').pop().startsWith('CHANGELOG')
+    ) {
+      return;
+    }
+
+    const content = fs.readFileSync(filePath, 'utf8').toLowerCase();
+    for (const term of PROHIBITED_TERMS) {
+      if (content.includes(term.toLowerCase())) {
+        violations.push({ filePath, term });
+      }
+    }
+  };
+
+  const walkDir = (dir) => {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) {
+        if (!['node_modules', '.git', '.next'].includes(entry.name)) {
+          walkDir(fullPath);
+        }
+      } else if (entry.isFile()) {
+        scanFile(fullPath);
+      }
+    }
+  };
+
+  for (const target of targets) {
+    if (fs.statSync(target).isDirectory()) {
+      walkDir(target);
+    } else {
+      scanFile(target);
+    }
+  }
+
+  assert.equal(
+    violations.length,
+    0,
+    `Found ${violations.length} prohibited term occurrences:\n` +
+      violations.map(v => `  - ${v.filePath}: "${v.term}"`).join('\n')
+  );
+});
+
 
 

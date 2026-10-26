@@ -1,4 +1,4 @@
-# AICTE Sentinel — Regulatory Scrutiny & Fraud Intelligence Platform
+# AICTE Sentinel — Regulatory Scrutiny & Compliance Intelligence Platform
 
 > **Smart India Hackathon 2026 — Problem Statement SIH26261**  
 > **Core positioning:** *"AICTE Sentinel does not replace regulatory judgment — it makes every judgment auditable."*
@@ -9,7 +9,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8)](https://tailwindcss.com)
 [![Prisma ORM](https://img.shields.io/badge/Prisma-PostgreSQL-indigo)](https://prisma.io)
 
-AICTE Sentinel is a decision-support and fraud-intelligence web application engineered for Smart India Hackathon 2026. It assists the All India Council for Technical Education (AICTE) Bureau of Approvals in validating institutional approval applications, authenticating legal and academic documents, enforcing versioned compliance rules, and detecting multi-institution collusion (such as shared land parcels, reused faculty credentials, and duplicate municipal certificates).
+AICTE Sentinel is a decision-support and compliance-intelligence web application engineered for Smart India Hackathon 2026. It assists the All India Council for Technical Education (AICTE) Bureau of Approvals in validating institutional approval applications, authenticating legal and academic documents, enforcing versioned compliance rules, and detecting multi-institution linkages (such as shared land parcels, reused faculty credentials, and duplicate municipal certificates).
 
 ---
 
@@ -27,7 +27,7 @@ AICTE Sentinel includes a **1-Click Quick Role Switcher** in the top navigation 
 
 ---
 
-## 2. Seeded Fraud & Compliance Demonstration Scenarios
+## 2. Seeded Compliance Demonstration Scenarios
 
 The platform comes pre-seeded with three realistic institutional cases illustrating distinct regulatory dilemmas:
 
@@ -43,12 +43,12 @@ The platform comes pre-seeded with three realistic institutional cases illustrat
   1. Missing Structural Stability Certificate signed by certified structural engineer.
   2. Faculty deficit: 22 declared faculty vs. statutory requirement of 24 for 480 intake.
   3. **Forensic Anomaly:** PDF metadata indicates post-signature editing via Canva / Nitro Pro with 3 incremental xref saves.
-  4. **Cross-Institution Reused Faculty:** Dr. Vikram Malhotra (`XYZPK9876Q`, `VTU-PHD-MECH-4412`) declared as Professor at Nova while simultaneously listed as Principal at Apex Polytechnic College!
+  4. **Cross-Institution Reused Faculty:** Dr. Vikram Malhotra (`XYZPK9876Q`, `VTU-PHD-MECH-4412`) declared as Professor at Nova while simultaneously listed as Principal at Apex Polytechnic College.
 
-### Case 3: Apex Polytechnic College (`APP-2026-APX-003`) — Readiness: 25/100 (Risk: Critical, Collusion: 92)
+### Case 3: Apex Polytechnic College (`APP-2026-APX-003`) — Readiness: 25/100 (Risk: Critical, Linkage: 92)
 - **Type:** New Institution Campus
 - **Features:**
-  1. **Land Double-Pledging Conflict:** Claims Survey No. 289/1A (2.1 acres) in Hinjawadi Pune, which is already claimed by Nova Engineering College (3.2 acres) on the same undivided partition!
+  1. **Possible Overlapping Land Claim:** Claims Survey No. 289/1A (2.1 acres) in Hinjawadi Pune, which is already claimed by Nova Engineering College (3.2 acres) on the same undivided partition (verify sub-division records).
   2. **Duplicate Document:** Reused municipal occupancy certificate (`OCC-PUNE-2021-DUP-01`) previously filed for Western Horizon campus in 2021.
   3. **Fail-Closed Verification:** Maharashtra DTE NOC API endpoint returned timeout/offline; system fail-closed to `Source Unavailable` (never marks unverified files as verified).
 
@@ -79,7 +79,7 @@ The platform comes pre-seeded with three realistic institutional cases illustrat
                       │ • Forensics: SHA-256, PDF Metadata     │
                       │ • Passports: 6-State Fail-Closed Model │
                       │ • Rules: 22 Statutory Compliance Rules │
-                      │ • Collusion Radar: Entity Graph Network│
+                      │ • Linkage Radar: Entity Graph Network  │
                       │ • Audit Trail: SHA-256 Hash Chain      │
                       └───────────────────┬────────────────────┘
                                           │
@@ -133,7 +133,7 @@ Located in `src/lib/rules/packs.json`:
 - **Academic:** Programme intake limits, prior EoA verification.
 - **Consistency & Dates:** Name uniformity across deeds and affidavit, 90-day affidavit validity.
 
-### Module 6: Collusion Radar
+### Module 6: Linkage Radar
 - Cross-institution interactive SVG graph network:
   - Entities: Institutions, Trusts, Land Parcels, Faculty Members, Certificates, Anomalous PDFs.
   - Conflict Edges: Shared Land (`Survey 289/1A`), Reused Faculty (`Dr. Vikram Malhotra`), Reused Certificate (`OCC-PUNE-2021-DUP-01`).
@@ -188,8 +188,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 4. **Document Locker & Passports:**
    - Switch to the *Evidence Locker & Passports* tab.
    - Click **Inspect Passport** on `apex_duplicate_occ_cert.pdf`. Inspect the forensic metadata showing Canva/Ghostscript tampering heuristics.
-5. **Collusion Radar (`/officer/radar`):**
-   - Click on the central conflict node **COLLUSION: Survey No. 289/1A** or **Dr. Vikram Malhotra**.
+5. **Linkage Radar (`/officer/radar`):**
+   - Click on the central conflict node **LINKAGE: Survey No. 289/1A** or **Dr. Vikram Malhotra**.
    - Notice the animated red conflict link connecting Nova Engineering and Apex Polytechnic.
 6. **Official Scrutiny Report (`/officer/scrutiny/app-apex-003`):**
    - View the formatted government report ready for print/export with cryptographic audit seal.
@@ -212,7 +212,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | `POST` | `/api/documents/upload` | Upload file, compute SHA-256, run forensics, and extract fields |
 | `POST` | `/api/documents/[id]/verify` | Trigger fail-closed mock government adapter verification |
 | `POST` | `/api/findings/[id]/action` | Officer action (`Confirm`, `Dismiss`, `Clarification`, `Escalate`) |
-| `GET` | `/api/radar` | Get cross-institution collusion nodes and edges |
+| `GET` | `/api/radar` | Get cross-institution linkage nodes and edges |
 | `POST` | `/api/evc/observations` | Record EVC on-site inspection observation |
 | `GET` | `/api/audit` | Fetch hash-chained audit events and test chain integrity |
 
@@ -223,4 +223,4 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - **Human-in-the-Loop:** The system never autonomously approves or rejects an institution. All adverse findings are advisory decision-support.
 - **Fail-Closed Verification:** If an authorized registry is offline or inconclusive, the document is routed to manual officer review and is never marked as verified.
 - **Evidence-Linked Findings:** Every alert specifies the finding ID, rule ID, confidence rating, exact evidence locator, and recommended action.
-- **Immutable Ledger:** All document versions, extracted values, source responses, and officer decisions are immutable and cryptographically hash-chained.
+- **Tamper-Evident Ledger:** All document versions, extracted values, source responses, and officer decisions are tamper-evident and cryptographically hash-chained.

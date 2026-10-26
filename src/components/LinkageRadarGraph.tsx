@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { LinkageRadarData, CollusionRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
+import { LinkageRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
 import StatusChip from './StatusChip';
 import { 
   Building2, 
@@ -15,7 +15,6 @@ interface LinkageRadarGraphProps {
   data: LinkageRadarData;
   onSelectInstitution?: (institutionName: string) => void;
 }
-export type CollusionRadarGraphProps = LinkageRadarGraphProps;
 
 export default function LinkageRadarGraph({ data, onSelectInstitution }: LinkageRadarGraphProps) {
   const [selectedNode, setSelectedNode] = useState<RiskGraphNode | null>(data.nodes[1]); // Default to Nova
@@ -341,5 +340,3 @@ export default function LinkageRadarGraph({ data, onSelectInstitution }: Linkage
     </div>
   );
 }
-
-export const CollusionRadarGraph = LinkageRadarGraph;

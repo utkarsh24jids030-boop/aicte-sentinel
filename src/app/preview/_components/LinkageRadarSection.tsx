@@ -221,5 +221,3 @@ export default function LinkageRadarSection() {
     </section>
   );
 }
-
-export const CollusionRadarSection = LinkageRadarSection;

@@ -37,7 +37,7 @@ export function formatStatus(status: string) {
       return 'bg-emerald-100 text-emerald-800 border-emerald-300';
     case 'Mismatch Detected':
     case 'MISMATCH':
-    case 'Fraudulent':
+    case 'Discrepant':
     case 'Rejected':
     case 'DEFICIENT':
       return 'bg-rose-100 text-rose-800 border-rose-300';

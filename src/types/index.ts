@@ -68,7 +68,6 @@ export interface Application {
   status: ApplicationStatus;
   readinessScore: number;
   linkageRiskScore: number;
-  collusionRiskScore: number; // Deprecated alias for backward compatibility
   riskTier: RiskTier;
   programmes: string[];
   currentIntake: number;
@@ -176,7 +175,6 @@ export type FindingCategory =
   | 'FORENSIC_ANOMALY'
   | 'COMPLIANCE_BREACH'
   | 'CROSS_INSTITUTION_LINKAGE'
-  | 'CROSS_INSTITUTION_COLLUSION' // Deprecated alias
   | 'VERIFICATION_MISMATCH';
 
 export interface Finding {
@@ -311,7 +309,7 @@ export interface InspectionObservation {
   taskId: string;
   category: 'Land & Boundary' | 'Building & Labs' | 'Fire Safety & NOC' | 'Faculty Physical Verification' | 'General Infrastructure';
   claimText: string;
-  physicalVerificationStatus: 'Verified' | 'Deficient' | 'Discrepant' | 'Inconclusive' | 'Fraudulent';
+  physicalVerificationStatus: 'Verified' | 'Deficient' | 'Discrepant' | 'Inconclusive';
   observationNotes: string;
   photoUrls: string[];
   latitude?: number;
@@ -345,7 +343,6 @@ export interface LinkageRadarData {
   nodes: RiskGraphNode[];
   edges: RiskGraphEdge[];
   overallLinkageRiskScore: number;
-  overallCollusionRiskScore: number; // Deprecated alias
   riskSummary: {
     criticalClusters: number;
     crossInstitutionalReuses: number;
@@ -353,8 +350,6 @@ export interface LinkageRadarData {
     duplicateFacultyCount: number;
   };
 }
-
-export type CollusionRadarData = LinkageRadarData;
 
 export interface AuditEvent {
   id: string;
@@ -381,7 +376,7 @@ export interface ScrutinyReportData {
   applicationType: ApplicationType;
   academicYear: string;
   readinessScore: number;
-  collusionRiskScore: number;
+  linkageRiskScore: number;
   scrutinyDate: string;
   officerName: string;
   officerDesignation: string;

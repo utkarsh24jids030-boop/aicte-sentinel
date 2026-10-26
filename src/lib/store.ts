@@ -133,7 +133,6 @@ export const DEMO_APPLICATIONS: Application[] = [
     status: 'Under Scrutiny',
     readinessScore: 75,
     linkageRiskScore: 15,
-    collusionRiskScore: 15,
     riskTier: 'Medium',
     programmes: ['Computer Science & Engg (180)', 'Electronics & Comm (120)', 'Mechanical Engg (60)'],
     currentIntake: 360,
@@ -152,7 +151,6 @@ export const DEMO_APPLICATIONS: Application[] = [
     status: 'Deficiency Communicated',
     readinessScore: 45,
     linkageRiskScore: 68,
-    collusionRiskScore: 68,
     riskTier: 'High',
     programmes: ['Computer Science & Engg (240)', 'AI & Data Science (120)', 'Robotics & Automation (60)', 'Civil Engg (60)'],
     currentIntake: 360,
@@ -171,7 +169,6 @@ export const DEMO_APPLICATIONS: Application[] = [
     status: 'EVC Inspection Recommended',
     readinessScore: 10,
     linkageRiskScore: 92,
-    collusionRiskScore: 92,
     riskTier: 'Critical',
     programmes: ['Diploma in Computer Technology (120)', 'Diploma in Mechanical (60)', 'Diploma in Electrical (60)'],
     currentIntake: 0,
@@ -1434,7 +1431,6 @@ export class DataStore {
         ...app,
         readinessScore: breakdown.score,
         linkageRiskScore,
-        collusionRiskScore: linkageRiskScore,
         riskTier
       };
     });
@@ -1461,7 +1457,6 @@ export class DataStore {
       ...app,
       readinessScore: breakdown.score,
       linkageRiskScore,
-      collusionRiskScore: linkageRiskScore,
       riskTier
     };
   }

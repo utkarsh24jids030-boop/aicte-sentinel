@@ -119,7 +119,7 @@ export default function AuditorPage() {
                 <h4 className="font-bold text-slate-900">{app.institutionName}</h4>
                 <div className="flex justify-between text-slate-500 text-[11px]">
                   <span>Readiness: {app.readinessScore}/100</span>
-                  <span>Linkage Risk: {app.linkageRiskScore ?? app.collusionRiskScore}/100</span>
+                  <span>Linkage Risk: {app.linkageRiskScore}/100</span>
                 </div>
                 <Link
                   href={`/officer/case/${app.id}`}

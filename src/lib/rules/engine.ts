@@ -39,7 +39,7 @@ export class RulesEngine {
 
   /**
    * Evaluate an application against all active statutory compliance rules,
-   * document forensic indicators, cross-institution collusions, and verification passports.
+   * document forensic indicators, cross-institution linkages, and verification passports.
    */
   static evaluateApplication(
     app: Application,
@@ -215,7 +215,7 @@ export class RulesEngine {
       }
     }
 
-    // 4. CROSS-INSTITUTION COLLUSION FINDINGS
+    // 4. CROSS-INSTITUTION LINKAGE FINDINGS
     const _otherApps = allApps ? allApps.filter(a => a.id !== app.id) : [];
     const _otherDocs = allDocs ? allDocs.filter(d => d.applicationId !== app.id) : [];
 
@@ -226,7 +226,7 @@ export class RulesEngine {
     if (surveyNumber && surveyNumber.trim() === '289/1A') {
       const isNovaOrApex = app.id === 'app-nova-002' || app.id === 'app-apex-003';
       if (isNovaOrApex) {
-        const fid = app.id === 'app-apex-003' ? 'FIND-APX-001' : `FIND-${app.id}-LAND-COLLUSION`;
+        const fid = app.id === 'app-apex-003' ? 'FIND-APX-001' : `FIND-${app.id}-LAND-LINKAGE`;
         if (!findings.some(f => f.id === fid)) {
           findings.push({
             id: fid,
@@ -254,7 +254,7 @@ export class RulesEngine {
     );
 
     if (hasMalhotra || (app.id === 'app-nova-002' && facDoc)) {
-      const fid = app.id === 'app-nova-002' ? 'FIND-NOV-003' : `FIND-${app.id}-COLLUSION-FAC`;
+      const fid = app.id === 'app-nova-002' ? 'FIND-NOV-003' : `FIND-${app.id}-LINKAGE-FAC`;
       if (!findings.some(f => f.id === fid)) {
         findings.push({
           id: fid,

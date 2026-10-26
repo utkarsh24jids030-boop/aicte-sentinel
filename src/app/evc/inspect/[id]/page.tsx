@@ -236,7 +236,7 @@ export default function MobileInspectionFormPage({
                 {[
                   { val: 'Verified', label: 'Verified Satisfactory', color: 'bg-emerald-600 text-white' },
                   { val: 'Deficient', label: 'Deficient / Non-compliant', color: 'bg-amber-600 text-white' },
-                  { val: 'Fraudulent', label: 'Severe Discrepancy / Disputed Claim', color: 'bg-rose-600 text-white' },
+                  { val: 'Discrepant', label: 'Severe Discrepancy / Disputed Claim', color: 'bg-rose-600 text-white' },
                   { val: 'Inconclusive', label: 'Inconclusive / Pending', color: 'bg-slate-700 text-white' }
                 ].map((item) => (
                   <button

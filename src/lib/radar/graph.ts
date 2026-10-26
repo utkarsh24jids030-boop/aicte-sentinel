@@ -2,7 +2,7 @@
 // Cross-institution graph analysis: Shared Land, Reused Faculty, Duplicate Certs, Common Sponsoring Trusts
 // Problem Statement SIH26261 - Smart India Hackathon 2026
 
-import { LinkageRadarData, CollusionRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
+import { LinkageRadarData, RiskGraphNode, RiskGraphEdge } from '@/types';
 
 export class LinkageRadarEngine {
   /**
@@ -239,7 +239,7 @@ export class LinkageRadarEngine {
 
       // CRITICAL CROSS-INSTITUTION EDGES (NOVA <-> APEX)
       {
-        id: 'edge-collusion-land-nova',
+        id: 'edge-linkage-land-nova',
         source: 'inst-nova',
         target: 'land-shared-pune',
         relationType: 'SHARED_LAND',
@@ -249,7 +249,7 @@ export class LinkageRadarEngine {
         institutionsInvolved: ['Nova Engineering College', 'Apex Polytechnic College']
       },
       {
-        id: 'edge-collusion-land-apex',
+        id: 'edge-linkage-land-apex',
         source: 'inst-apex',
         target: 'land-shared-pune',
         relationType: 'SHARED_LAND',
@@ -259,7 +259,7 @@ export class LinkageRadarEngine {
         institutionsInvolved: ['Nova Engineering College', 'Apex Polytechnic College']
       },
       {
-        id: 'edge-collusion-fac-nova',
+        id: 'edge-linkage-fac-nova',
         source: 'inst-nova',
         target: 'fac-malhotra',
         relationType: 'REUSED_FACULTY',
@@ -269,7 +269,7 @@ export class LinkageRadarEngine {
         institutionsInvolved: ['Nova Engineering College', 'Apex Polytechnic College']
       },
       {
-        id: 'edge-collusion-fac-apex',
+        id: 'edge-linkage-fac-apex',
         source: 'inst-apex',
         target: 'fac-malhotra',
         relationType: 'REUSED_FACULTY',
@@ -279,7 +279,7 @@ export class LinkageRadarEngine {
         institutionsInvolved: ['Nova Engineering College', 'Apex Polytechnic College']
       },
       {
-        id: 'edge-collusion-trust',
+        id: 'edge-linkage-trust',
         source: 'trust-nova',
         target: 'trust-apex',
         relationType: 'SAME_TRUST',
@@ -304,7 +304,6 @@ export class LinkageRadarEngine {
       nodes,
       edges,
       overallLinkageRiskScore: 92,
-      overallCollusionRiskScore: 92, // Deprecated alias
       riskSummary: {
         criticalClusters: 2,
         crossInstitutionalReuses: 4,
@@ -343,14 +342,10 @@ export class LinkageRadarEngine {
       nodes: filteredNodes,
       edges: filteredEdges,
       overallLinkageRiskScore: instRisk,
-      overallCollusionRiskScore: instRisk, // Deprecated alias
       riskSummary: full.riskSummary
     };
   }
 }
-
-// Backward-compatible alias
-export const CollusionRadarEngine = LinkageRadarEngine;
 
 /**
  * Transparent factor weights for cross-institution linkage scoring
@@ -361,9 +356,6 @@ export const LINKAGE_FACTOR_WEIGHTS = {
   DUPLICATE_CERT: 25,   // Recycled certificate match (25%)
   COMMON_TRUSTEE: 10,   // Interlocking trust management / society network (10%)
 };
-
-// Backward-compatible alias
-export const COLLUSION_FACTOR_WEIGHTS = LINKAGE_FACTOR_WEIGHTS;
 
 /**
  * Documented Cross-Institution Risk Score Calculation

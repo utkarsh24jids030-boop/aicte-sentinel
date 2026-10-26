@@ -139,7 +139,7 @@ export default function LandingPage() {
 
                     {findings.slice(0, 4).map((f) => {
                       const isForensic = f.category === 'FORENSIC_ANOMALY';
-                      const isLinkage = f.category === 'CROSS_INSTITUTION_LINKAGE' || f.category === 'CROSS_INSTITUTION_COLLUSION';
+                      const isLinkage = f.category === 'CROSS_INSTITUTION_LINKAGE';
                       const isCrit = f.severity === 'Critical';
 
                       return (

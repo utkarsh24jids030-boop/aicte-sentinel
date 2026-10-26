@@ -406,4 +406,22 @@ test('Unprivileged Registration Safeguard: Rejects privileged role escalation', 
   assert.equal(normalResult.role, 'INSTITUTION');
 });
 
+test('Authentication Reality & Disclosure: Demo auth notice present, NextAuth not used', () => {
+  const loginPage = fs.readFileSync('./src/app/login/page.tsx', 'utf8');
+  assert.ok(
+    loginPage.includes('Demo Authentication Notice') && loginPage.includes('Jan Parichay'),
+    'Login page must prominently display Demo Authentication Notice mentioning Jan Parichay SSO requirement'
+  );
+
+  const readme = fs.readFileSync('./README.md', 'utf8');
+  assert.ok(
+    readme.includes('Demo Authentication Notice') && readme.includes('NextAuth is **NOT** used'),
+    'README must honestly disclose that NextAuth is not used and that demo auth is for prototype only'
+  );
+
+  const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+  assert.equal(packageJson.dependencies['next-auth'], undefined, 'next-auth must not be a project dependency');
+});
+
+
 

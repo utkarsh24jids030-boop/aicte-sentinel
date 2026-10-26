@@ -25,6 +25,15 @@ AICTE Sentinel includes a **1-Click Quick Role Switcher** in the top navigation 
 | **Admin** | Vikramaditya Singh | `admin@sentinel-demo.example` | Rule packs, mock verification adapters, user RBAC |
 | **Auditor** | Meenakshi Sundaram | `auditor@sentinel-demo.example` | Read-only vigilance view, SHA-256 hash-chain integrity verification |
 
+> [!NOTE]
+> **Demo Authentication Notice:**
+> Evaluator role-switching and Firebase email/password auth are for prototype demonstration only. Production deployments require AICTE Single Sign-On (SSO) via Jan Parichay / DigiLocker / SAML 2.0 with hardware token MFA.
+>
+> **Authentication Architecture Truth & Security Scope:**
+> - **Active Prototype Implementation:** The demo runtime utilizes instant client-side demo role switching (`AuthContext.tsx`) with Google Firebase Auth SDK fallback, client-side route guards (`ProtectedRoute.tsx`), and server-side profile resolution with role-escalation clamping (`AuthService.resolveUserProfile`).
+> - **NextAuth / Auth.js:** NextAuth is **NOT** used in this application.
+> - **Enforcement Boundary:** Prototype role routing is enforced at the UI navigation layer with server-side unprivileged clamped registration and server-side PII masking. Production deployments require enterprise session cookies, cryptographic JWT signature verification, and database-level RBAC alongside Jan Parichay SSO.
+
 ---
 
 ## 2. Seeded Compliance Demonstration Scenarios

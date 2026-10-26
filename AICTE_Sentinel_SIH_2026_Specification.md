@@ -473,9 +473,7 @@ Use this stack unless there is a strong reason to change it:
 - State/data: React Query or SWR
 - Backend: Next.js API routes or separate FastAPI backend
 - Database: PostgreSQL
-- ORM: Prisma
-- Authentication: NextAuth/Auth.js with email-password and role-based access
-- File storage: Local encrypted storage for prototype or S3-compatible storage
+- Authentication: Demo role switching with Firebase Auth integration for prototype (NextAuth is NOT used); production targets Jan Parichay / SAML 2.0 / DigiLocker SSO
 - Queue: In-memory/BullMQ-compatible queue abstraction
 - Graph: PostgreSQL JSONB relationships for prototype; Neo4j optional
 - Charts: Recharts

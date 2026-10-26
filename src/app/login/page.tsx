@@ -168,7 +168,7 @@ function LoginFormContent() {
               </div>
               
               <p className="text-xs text-slate-500 mb-5">
-                {mode === 'LOGIN' && 'Firebase authenticated single sign-on for institutional approvals & regulatory intelligence.'}
+                {mode === 'LOGIN' && 'Role-based evaluation portal with Firebase authentication for institutional approvals & regulatory intelligence.'}
                 {mode === 'REGISTER' && 'Create your institutional credentials to submit and track approval applications.'}
                 {mode === 'FORGOT_PASSWORD' && 'Enter your verified email to receive a secure Firebase recovery link.'}
               </p>
@@ -454,8 +454,8 @@ function LoginFormContent() {
               </div>
             </div>
 
-            <div className="mt-6 text-[11px] text-slate-400 bg-amber-50 p-3 rounded-xl border border-amber-200 text-amber-900">
-              <strong>Tip:</strong> All accounts authenticate directly via Google Firebase with audit logging.
+            <div className="mt-6 text-[11px] bg-amber-50 p-3.5 rounded-xl border border-amber-200 text-amber-900 leading-relaxed">
+              <strong>Demo Authentication Notice:</strong> Evaluator role-switching and Firebase email/password auth are for prototype demonstration only. Production deployments require AICTE Single Sign-On (SSO) via Jan Parichay / DigiLocker / SAML 2.0 with hardware token MFA.
             </div>
           </div>
         </div>

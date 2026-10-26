@@ -168,7 +168,7 @@ export async function POST(request: Request) {
       fileSize,
       mimeType,
       sha256Hash: docSha256,
-      verificationStatus: forensicAnalysis.isSuspicious ? 'Manual Review Required' : 'Not Verified',
+      verificationStatus: forensicAnalysis.isSuspicious ? 'Manual Review Required' : 'Verification Pending',
       verificationSource: 'Initial Upload Processing',
       extractionEngine,
       extractionEngineStatus,

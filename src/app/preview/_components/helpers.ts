@@ -43,6 +43,10 @@ export function formatStatus(status: string) {
     case 'SERVICE_OFFLINE':
     case 'RECORD_NOT_FOUND':
       return 'bg-purple-100 text-purple-800 border-purple-300';
+    case 'Verification Pending':
+      return 'bg-blue-100 text-blue-800 border-blue-300';
+    case 'Manual Review Required':
+      return 'bg-orange-100 text-orange-800 border-orange-300';
     default:
       return 'bg-slate-100 text-slate-800 border-slate-300';
   }

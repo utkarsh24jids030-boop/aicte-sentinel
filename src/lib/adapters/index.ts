@@ -228,7 +228,7 @@ export class MockVerificationService {
     const attemptId = `ATT-DL-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const record = MOCK_DIGILOCKER_DB[docIdentifier];
 
-    let status: VerificationStatus = 'Not Verified';
+    let status: VerificationStatus = 'Verification Pending';
     let sourceStatus: SourceResponse['sourceStatus'] = 'RECORD_NOT_FOUND';
     let details: Record<string, unknown> = {};
 
@@ -289,7 +289,7 @@ export class MockVerificationService {
     const attemptId = `ATT-CR-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const record = MOCK_CERT_REGISTRY_DB[certNumber];
 
-    let status: VerificationStatus = 'Not Verified';
+    let status: VerificationStatus = 'Verification Pending';
     let sourceStatus: SourceResponse['sourceStatus'] = 'RECORD_NOT_FOUND';
     let details: Record<string, unknown> = {};
 
@@ -347,7 +347,7 @@ export class MockVerificationService {
     const foundKey = Object.keys(MOCK_LAND_RECORDS_DB).find(k => k.includes(surveyNumber));
     const record = foundKey ? MOCK_LAND_RECORDS_DB[foundKey] : undefined;
 
-    let status: VerificationStatus = 'Not Verified';
+    let status: VerificationStatus = 'Verification Pending';
     let sourceStatus: SourceResponse['sourceStatus'] = 'RECORD_NOT_FOUND';
     let details: Record<string, unknown> = {};
 
@@ -403,7 +403,7 @@ export class MockVerificationService {
     const attemptId = `ATT-FAC-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const record = MOCK_FACULTY_REGISTRY_DB[panOrId];
 
-    let status: VerificationStatus = 'Not Verified';
+    let status: VerificationStatus = 'Verification Pending';
     let sourceStatus: SourceResponse['sourceStatus'] = 'RECORD_NOT_FOUND';
     let details: Record<string, unknown> = {};
 
@@ -458,7 +458,7 @@ export class MockVerificationService {
     const attemptId = `ATT-DTE-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const record = MOCK_STATE_DTE_DB[nocNumber];
 
-    let status: VerificationStatus = 'Not Verified';
+    let status: VerificationStatus = 'Verification Pending';
     let sourceStatus: SourceResponse['sourceStatus'] = 'RECORD_NOT_FOUND';
     let details: Record<string, unknown> = {};
     const latencyMs = record?.latencyMs || 5240;

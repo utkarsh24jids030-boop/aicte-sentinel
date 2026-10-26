@@ -16,6 +16,7 @@ import {
   Download
 } from 'lucide-react';
 import { Application, DocumentRecord, Finding, ReadinessBreakdown } from '@/types';
+import VerificationStatusLegend from '@/components/VerificationStatusLegend';
 
 export default function ScrutinyReportPage({
   params
@@ -97,7 +98,9 @@ export default function ScrutinyReportPage({
   const verifiedCount = documents.filter(d => d.verificationStatus === 'Verified').length;
   const mismatchCount = documents.filter(d => d.verificationStatus === 'Mismatch Detected').length;
   const expiredCount = documents.filter(d => d.verificationStatus === 'Expired').length;
-  const manualCount = documents.filter(d => ['Manual Review Required', 'Source Unavailable', 'Not Verified'].includes(d.verificationStatus)).length;
+  const pendingCount = documents.filter(d => d.verificationStatus === 'Verification Pending').length;
+  const unavailableCount = documents.filter(d => d.verificationStatus === 'Source Unavailable').length;
+  const manualCount = documents.filter(d => d.verificationStatus === 'Manual Review Required').length;
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col font-sans print:bg-white">
@@ -198,10 +201,12 @@ export default function ScrutinyReportPage({
                 <thead className="bg-slate-50 border-b text-slate-700 font-bold">
                   <tr>
                     <th className="px-3 py-2">Total Uploaded</th>
-                    <th className="px-3 py-2 text-emerald-700">Verified Authentic</th>
-                    <th className="px-3 py-2 text-rose-700">Mismatch Detected</th>
+                    <th className="px-3 py-2 text-emerald-700">Verified</th>
+                    <th className="px-3 py-2 text-rose-700">Mismatch</th>
                     <th className="px-3 py-2 text-amber-700">Expired</th>
-                    <th className="px-3 py-2 text-slate-700">Manual / Unavailable</th>
+                    <th className="px-3 py-2 text-blue-700">Pending</th>
+                    <th className="px-3 py-2 text-zinc-700">Unavailable</th>
+                    <th className="px-3 py-2 text-orange-700">Manual Review</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -210,11 +215,14 @@ export default function ScrutinyReportPage({
                     <td className="px-3 py-2.5 text-emerald-700">{verifiedCount}</td>
                     <td className="px-3 py-2.5 text-rose-700">{mismatchCount}</td>
                     <td className="px-3 py-2.5 text-amber-700">{expiredCount}</td>
-                    <td className="px-3 py-2.5 text-slate-700">{manualCount}</td>
+                    <td className="px-3 py-2.5 text-blue-700">{pendingCount}</td>
+                    <td className="px-3 py-2.5 text-zinc-700">{unavailableCount}</td>
+                    <td className="px-3 py-2.5 text-orange-700">{manualCount}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
+            <VerificationStatusLegend compact className="mt-3" />
           </div>
 
           {/* Itemized Adverse Findings Table */}

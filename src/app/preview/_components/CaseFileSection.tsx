@@ -3,6 +3,7 @@ import { DataStore } from '@/lib/store';
 import { RulesEngine } from '@/lib/rules/engine';
 import { Application, DocumentRecord, Finding } from '@/types';
 import { formatSeverity, formatStatus, maskIdentifier, maskPII } from './helpers';
+import VerificationStatusLegend from '@/components/VerificationStatusLegend';
 
 interface CaseFileSectionProps {
   appId?: string;
@@ -179,6 +180,8 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
               <h3 className="text-lg font-bold text-slate-900 border-b pb-2">
                 Statutory Documents & Verification Passports ({documents.length})
               </h3>
+
+              <VerificationStatusLegend compact />
 
               <div className="space-y-6">
                 {documents.map((doc: DocumentRecord) => {

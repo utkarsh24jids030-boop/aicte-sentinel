@@ -98,8 +98,7 @@ export type VerificationStatus =
   | 'Expired'
   | 'Verification Pending'
   | 'Source Unavailable'
-  | 'Manual Review Required'
-  | 'Not Verified';
+  | 'Manual Review Required';
 
 export interface ExtractedField {
   id: string;

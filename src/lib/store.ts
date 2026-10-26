@@ -538,8 +538,8 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     fileSize: 560000,
     mimeType: 'application/pdf',
     sha256Hash: '6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a',
-    verificationStatus: 'Verified',
-    verificationSource: 'AICTE Central Document Repository (simulated)',
+    verificationStatus: 'Verification Pending',
+    verificationSource: 'AICTE Central Document Repository (simulated) - Awaiting issuing authority confirmation',
     forensicMetadata: {
       fileSize: 560000,
       mimeType: 'application/pdf',
@@ -557,6 +557,21 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
     ],
     versions: [
       { id: 'v-sun-10', documentId: 'doc-sun-prior-eoa', versionNumber: 1, fileName: 'Sunrise_Prior_EoA_2025.pdf', filePath: '/uploads/sunrise/prior_eoa.pdf', fileSize: 560000, sha256Hash: '6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a', uploadedAt: '2026-01-18T10:50:00Z', uploadedBy: 'Dr. Anand Kumar' }
+    ],
+    verificationAttempts: [
+      {
+        id: 'att-sun-eoa-001',
+        documentId: 'doc-sun-prior-eoa',
+        adapterName: 'AICTE Approval Engine Mock Adapter (simulated)',
+        attemptTimestamp: '2026-01-20T11:50:00Z',
+        requestPayload: { aicteId: '1-14092811', academicYear: '2025-2026' },
+        responseStatus: 'Pending',
+        rawResponse: { status: 'QUEUED', message: 'Verification request queued; awaiting batch confirmation from Regional Office' },
+        latencyMs: 140,
+        requestSummary: 'GET /api/v2/approvals/1-14092811/2025-2026',
+        responseSummary: 'HTTP 202 Accepted (140ms) - Verification request queued; awaiting batch confirmation from Regional Office',
+        officerReviewStatus: 'Pending Review'
+      }
     ],
     createdAt: '2026-01-18T10:50:00Z',
     updatedAt: '2026-01-18T10:50:00Z'
@@ -1352,7 +1367,7 @@ export const INITIAL_AUDIT_EVENTS: AuditEvent[] = [
     action: 'VERIFICATION_ATTEMPT',
     entityType: 'ADAPTER',
     entityId: 'doc-sun-fire',
-    beforeSummary: 'Status: Not Verified',
+    beforeSummary: 'Status: Verification Pending',
     afterSummary: 'Source status: RECORD_EXPIRED (Expired on 2024-01-14). Fail-closed status: Expired',
     ipAddress: '127.0.0.1 (Worker)',
     userAgent: 'AICTE-Adapter-Daemon/2026.3',

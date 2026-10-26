@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { DocumentRecord, ExtractedField, VerificationStatus } from '@/types';
 import StatusChip from './StatusChip';
+import VerificationStatusLegend from './VerificationStatusLegend';
 import { 
   X, 
   FileText, 
@@ -303,6 +304,9 @@ export default function DocumentViewerModal({
                   </table>
                 </div>
               </div>
+
+              {/* 6-State Verification Status Legend */}
+              <VerificationStatusLegend compact />
             </div>
           )}
 

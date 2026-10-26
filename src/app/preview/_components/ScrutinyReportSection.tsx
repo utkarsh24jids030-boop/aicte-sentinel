@@ -4,6 +4,7 @@ import { Application } from '@/types';
 import { AuditTrailEngine } from '@/lib/audit/trail';
 import { computeReportSeal } from '@/lib/security/reportSeal';
 import { formatSeverity, maskPII } from './helpers';
+import VerificationStatusLegend from '@/components/VerificationStatusLegend';
 
 interface ScrutinyReportSectionProps {
   appId?: string;
@@ -34,8 +35,9 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
         const verifiedDocs = documents.filter(d => d.verificationStatus === 'Verified').length;
         const mismatchDocs = documents.filter(d => d.verificationStatus === 'Mismatch Detected').length;
         const expiredDocs = documents.filter(d => d.verificationStatus === 'Expired').length;
-        const manualDocs = documents.filter(d => d.verificationStatus === 'Manual Review Required' || d.verificationStatus === 'Not Verified').length;
+        const pendingDocs = documents.filter(d => d.verificationStatus === 'Verification Pending').length;
         const unavailableDocs = documents.filter(d => d.verificationStatus === 'Source Unavailable').length;
+        const manualDocs = documents.filter(d => d.verificationStatus === 'Manual Review Required').length;
 
         // Recommendation logic
         let recommendation = 'CONSIDER_EVC_INSPECTION';
@@ -148,32 +150,37 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
               <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2">
                 1. Fail-Closed Verification Summary Matrix
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 text-center text-xs">
-                <div className="p-3 rounded-xl bg-slate-100 border border-slate-200">
-                  <div className="text-slate-500 font-bold">Total Documents</div>
-                  <div className="text-xl font-bold font-mono text-slate-900 mt-1">{totalDocs}</div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5 text-center text-xs">
+                <div className="p-2.5 rounded-xl bg-slate-100 border border-slate-200">
+                  <div className="text-slate-500 font-bold">Total Docs</div>
+                  <div className="text-lg font-bold font-mono text-slate-900 mt-1">{totalDocs}</div>
                 </div>
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
-                  <div className="text-emerald-700 font-bold">Verified Authentic</div>
-                  <div className="text-xl font-bold font-mono text-emerald-800 mt-1">{verifiedDocs}</div>
+                <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+                  <div className="text-emerald-700 font-bold">Verified</div>
+                  <div className="text-lg font-bold font-mono text-emerald-800 mt-1">{verifiedDocs}</div>
                 </div>
-                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200">
-                  <div className="text-rose-700 font-bold">Mismatch Detected</div>
-                  <div className="text-xl font-bold font-mono text-rose-800 mt-1">{mismatchDocs}</div>
+                <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200">
+                  <div className="text-rose-700 font-bold">Mismatch</div>
+                  <div className="text-lg font-bold font-mono text-rose-800 mt-1">{mismatchDocs}</div>
                 </div>
-                <div className="p-3 rounded-xl bg-amber-50 border border-amber-200">
-                  <div className="text-amber-700 font-bold">Expired NOCs</div>
-                  <div className="text-xl font-bold font-mono text-amber-800 mt-1">{expiredDocs}</div>
+                <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200">
+                  <div className="text-amber-700 font-bold">Expired</div>
+                  <div className="text-lg font-bold font-mono text-amber-800 mt-1">{expiredDocs}</div>
                 </div>
-                <div className="p-3 rounded-xl bg-purple-50 border border-purple-200">
-                  <div className="text-purple-700 font-bold">Source Unavailable</div>
-                  <div className="text-xl font-bold font-mono text-purple-800 mt-1">{unavailableDocs}</div>
+                <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200">
+                  <div className="text-blue-700 font-bold">Pending</div>
+                  <div className="text-lg font-bold font-mono text-blue-800 mt-1">{pendingDocs}</div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="text-slate-600 font-bold">Manual Review</div>
-                  <div className="text-xl font-bold font-mono text-slate-800 mt-1">{manualDocs}</div>
+                <div className="p-2.5 rounded-xl bg-purple-50 border border-purple-200">
+                  <div className="text-purple-700 font-bold">Unavailable</div>
+                  <div className="text-lg font-bold font-mono text-purple-800 mt-1">{unavailableDocs}</div>
+                </div>
+                <div className="p-2.5 rounded-xl bg-orange-50 border border-orange-200">
+                  <div className="text-orange-700 font-bold">Manual Review</div>
+                  <div className="text-lg font-bold font-mono text-orange-800 mt-1">{manualDocs}</div>
                 </div>
               </div>
+              <VerificationStatusLegend compact className="mt-3" />
             </div>
 
             {/* Key Deficiencies & Findings */}

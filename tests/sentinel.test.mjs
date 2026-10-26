@@ -817,6 +817,39 @@ test('Official PS Item 1: Regulation Bureau Naming Consistency', () => {
   assert.ok(!readme.includes('Bureau of Approvals'), 'README.md must not contain Bureau of Approvals');
 });
 
+test('Official PS Item 2: Verification Status Set of exactly 6 values and Status Legend', () => {
+  const typesFile = fs.readFileSync('./src/types/index.ts', 'utf8');
+  const exactSet = [
+    'Verified',
+    'Mismatch Detected',
+    'Expired',
+    'Verification Pending',
+    'Source Unavailable',
+    'Manual Review Required'
+  ];
+
+  for (const status of exactSet) {
+    assert.ok(typesFile.includes(`'${status}'`), `VerificationStatus type must contain '${status}'`);
+  }
+  assert.ok(!typesFile.includes("'Not Verified'"), "VerificationStatus type must not contain 'Not Verified'");
+
+  const legendFile = fs.readFileSync('./src/components/VerificationStatusLegend.tsx', 'utf8');
+  for (const status of exactSet) {
+    assert.ok(legendFile.includes(status), `VerificationStatusLegend must document '${status}'`);
+  }
+
+  const storeFile = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(storeFile.includes("'Verification Pending'"), "store.ts must seed documents with 'Verification Pending'");
+  assert.ok(storeFile.includes("doc-sun-prior-eoa"), "store.ts must have doc-sun-prior-eoa");
+
+  const caseFilePreview = fs.readFileSync('./src/app/preview/_components/CaseFileSection.tsx', 'utf8');
+  assert.ok(caseFilePreview.includes('VerificationStatusLegend'), 'CaseFileSection must render VerificationStatusLegend');
+
+  const scrutinyPreview = fs.readFileSync('./src/app/preview/_components/ScrutinyReportSection.tsx', 'utf8');
+  assert.ok(scrutinyPreview.includes('VerificationStatusLegend'), 'ScrutinyReportSection must render VerificationStatusLegend');
+  assert.ok(scrutinyPreview.includes('Verification Pending'), 'ScrutinyReportSection must compute pending documents');
+});
+
 
 
 

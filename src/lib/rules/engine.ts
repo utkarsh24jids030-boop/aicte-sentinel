@@ -661,6 +661,18 @@ export class RulesEngine {
         return { passed: true };
       }
 
+      case 'FEE-TER-001': {
+        if (institutionalRecord) {
+          if (institutionalRecord.terPaymentStatus === 'PENDING' || institutionalRecord.terPaymentStatus === 'MISSING') {
+            return {
+              passed: false,
+              failureMessage: `Technical Education Regulatory (TER) processing fee payment status is ${institutionalRecord.terPaymentStatus.toLowerCase()} in institutional master records [SOURCE: TO BE VERIFIED].`
+            };
+          }
+        }
+        return { passed: true };
+      }
+
       default: {
         if (rule.logic && !logicEvaluation.passed) {
           return {

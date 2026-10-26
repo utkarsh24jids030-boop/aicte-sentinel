@@ -885,6 +885,24 @@ test('Official PS Item 3: Simulated AICTE Institutional Records Source and Cross
   assert.ok(casePreview.includes('SIMULATED INTERNAL SOURCE'), 'CaseFileSection must label internal source as simulated');
 });
 
+test('Official PS Item 4: TER Payment Status Tracking and Non-Invented Fee Rule Verification', () => {
+  const packsFile = fs.readFileSync('./src/lib/rules/packs.json', 'utf8');
+  const packs = JSON.parse(packsFile);
+  const rFee = packs.find(r => r.rule_id === 'FEE-TER-001');
+
+  assert.ok(rFee, 'FEE-TER-001 must exist in packs.json');
+  assert.equal(rFee.source_reference, 'SOURCE: TO BE VERIFIED', 'Source reference must stay SOURCE: TO BE VERIFIED');
+  assert.equal(rFee.severity, 'Critical', 'TER Fee non-payment must be Critical severity');
+
+  // Verify no fee amounts or schedules were invented
+  const jsonStr = JSON.stringify(rFee);
+  assert.ok(!jsonStr.includes('Rs.') && !jsonStr.includes('INR') && !jsonStr.includes('lakh'), 'Must not invent rupee amounts or fee schedules');
+
+  const storeFile = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(storeFile.includes("terPaymentStatus: 'PENDING'"), 'Apex Polytechnic must seed PENDING payment status');
+  assert.ok(storeFile.includes("terPaymentStatus: 'PAID'"), 'Sunrise must seed PAID payment status');
+});
+
 
 
 

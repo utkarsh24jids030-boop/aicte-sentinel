@@ -994,6 +994,36 @@
         "description": "Statutory rule enforcing presence of valid prior approval record in AICTE database for EoA / Intake Increase."
       }
     ]
+  },
+  {
+    "rule_id": "FEE-TER-001",
+    "version": "2026.3",
+    "name": "Technical Education Regulatory (TER) Processing Fee Payment Status",
+    "category": "Regulatory_Fee",
+    "applies_to": [
+      "EoA",
+      "New_Institution",
+      "Intake_Increase",
+      "Site_Change",
+      "Closure"
+    ],
+    "severity": "Critical",
+    "logic": "internal_record.ter_payment_status == 'PAID'",
+    "evidence_fields": [
+      "internal_record.ter_payment_status",
+      "internal_record.ter_transaction_reference"
+    ],
+    "failure_message": "Mandatory Technical Education Regulatory (TER) processing fee payment is pending or missing in institutional master records [SOURCE: TO BE VERIFIED].",
+    "recommended_action": "Complete statutory TER processing fee payment through official AICTE payment gateway and provide transaction reference [SOURCE: TO BE VERIFIED].",
+    "source_reference": "SOURCE: TO BE VERIFIED",
+    "changelog": [
+      {
+        "version": "2026.3",
+        "date": "2026-02-01",
+        "author": "AICTE Sentinel Intelligence Team",
+        "description": "Statutory rule verifying TER payment status without inventing amounts or fee calculation schedules."
+      }
+    ]
   }
 ]
 

@@ -253,7 +253,8 @@ test('Statutory Rules Pack: Verify All Rules Have Defined Pass & Fail Logic', ()
     'CROSS-FACULTY-DUP-001',
     'REC-INTAKE-001',
     'REC-PROG-002',
-    'REC-PRIOR-003'
+    'REC-PRIOR-003',
+    'FEE-TER-001'
   ];
 
   for (const rid of requiredRuleIds) {

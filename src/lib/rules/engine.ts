@@ -6,6 +6,7 @@ import { Application, DocumentRecord, ComplianceRule, ReadinessBreakdown, Findin
 import rulePacks from './packs.json';
 import { getAsOfDate } from '@/lib/config/env';
 import { MINIMUM_LAND_AREA_ACRES, resolveProgrammeLevel, computeRequiredFaculty, FACULTY_CALCULATION_BASIS } from '@/lib/config/norms';
+import { SafeLogicEvaluator } from './evaluator';
 
 /**
  * Canonical readiness score calculation function.
@@ -188,8 +189,8 @@ export class RulesEngine {
     }
 
     // 4. CROSS-INSTITUTION COLLUSION FINDINGS
-    const otherApps = allApps ? allApps.filter(a => a.id !== app.id) : [];
-    const otherDocs = allDocs ? allDocs.filter(d => d.applicationId !== app.id) : [];
+    const _otherApps = allApps ? allApps.filter(a => a.id !== app.id) : [];
+    const _otherDocs = allDocs ? allDocs.filter(d => d.applicationId !== app.id) : [];
 
     // Check shared land survey numbers between institutions
     const landDoc = documents.find(d => d.documentType === 'Land Deed');
@@ -281,6 +282,12 @@ export class RulesEngine {
     };
 
     const asOf = getAsOfDate();
+    const logicEvaluation = SafeLogicEvaluator.evaluate(rule.logic, {
+      app,
+      documents,
+      institution,
+      asOfDate: asOf
+    });
 
     switch (rule.rule_id) {
       case 'LAND-DEED-001': {
@@ -558,8 +565,15 @@ export class RulesEngine {
         return { passed: true };
       }
 
-      default:
+      default: {
+        if (rule.logic && !logicEvaluation.passed) {
+          return {
+            passed: false,
+            failureMessage: rule.failure_message
+          };
+        }
         return { passed: true };
+      }
     }
   }
 }

@@ -624,6 +624,15 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       incrementalSavesDetected: true,
       metadataAnomalyDetected: true,
       tamperingConfidence: 0.88,
+      duplicateConfidence: 0.00,
+      isDuplicateMatch: false,
+      tamperScoreFormula: 'TamperScore = 0.40*saves + 0.30*producer + 0.16*font + 0.10*date + 0.02',
+      tamperScoreInputs: {
+        incrementalSaves: 1,
+        producerAnomaly: 1,
+        fontDiscrepancies: 1,
+        modDateDiscrepancy: 0
+      },
       anomalyIndicators: [
         'PDF Producer header indicates post-creation editing with Canva / Nitro Pro',
         '3 incremental xref tables detected: document was edited after digital signing',
@@ -1024,7 +1033,18 @@ export const DEMO_DOCUMENTS: DocumentRecord[] = [
       creationDate: '2021-03-22T16:00:00Z',
       incrementalSavesDetected: false,
       metadataAnomalyDetected: false,
-      tamperingConfidence: 0.94,
+      tamperingConfidence: 0.02,
+      duplicateConfidence: 0.99,
+      isDuplicateMatch: true,
+      duplicateMatchedDocId: 'doc-wh-occ-2021',
+      duplicateMatchedFileName: 'Western_Horizon_Occupancy_2021.pdf',
+      tamperScoreFormula: 'TamperScore = 0.40*saves + 0.30*producer + 0.16*font + 0.10*date + 0.02',
+      tamperScoreInputs: {
+        incrementalSaves: 0,
+        producerAnomaly: 0,
+        fontDiscrepancies: 0,
+        modDateDiscrepancy: 0
+      },
       anomalyIndicators: [
         'Exact cryptographic SHA-256 duplicate of archived certificate doc-wh-occ-2021 originally issued to Western Horizon in 2021',
         'Date timestamp in binary stream older than declared institution founding date'

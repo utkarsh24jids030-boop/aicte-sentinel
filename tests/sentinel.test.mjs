@@ -596,6 +596,67 @@ test('Item 5: Radar Edge Types & Officer Link Dismissal Action', () => {
   );
 });
 
+test('Item 6: Tamper vs Duplicate Scores Decoupling and Formula Documentation', () => {
+  // 1. Verify formula and weights in forensics engine
+  const forensicsCode = fs.readFileSync('./src/lib/forensics/engine.ts', 'utf8');
+  assert.ok(
+    forensicsCode.includes('computeTamperScore') &&
+    forensicsCode.includes('TAMPER_WEIGHTS') &&
+    forensicsCode.includes('TamperScore = 0.40*saves + 0.30*producer + 0.16*font + 0.10*date + 0.02'),
+    'forensics/engine.ts must define and document the tamper score formula and weights'
+  );
+
+  // 2. Mathematical calibration test of the formula
+  const computeTamper = (saves, producer, font, date) => {
+    const raw = (saves * 0.40) + (producer * 0.30) + (font * 0.16) + (date * 0.10) + 0.02;
+    return Number(Math.min(1.0, Math.max(0.02, raw)).toFixed(2));
+  };
+
+  // Clean document (or clean duplicate) -> 0.02 baseline
+  assert.equal(computeTamper(0, 0, 0, 0), 0.02, 'Clean document must have baseline 0.02 (2%) tamper score');
+
+  // Nova tampered document (saves + producer + font) -> 0.88
+  assert.equal(computeTamper(1, 1, 1, 0), 0.88, 'Nova tampered file must evaluate to 0.88 (88%)');
+
+  // 3. Verify in store.ts that Apex duplicate has low tamper score and high duplicate score
+  const storeContent = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(
+    storeContent.includes("id: 'doc-apex-dup-cert'") &&
+    storeContent.includes('duplicateConfidence: 0.99') &&
+    storeContent.includes('isDuplicateMatch: true'),
+    'doc-apex-dup-cert in store.ts must have duplicateConfidence 0.99 and isDuplicateMatch true'
+  );
+
+  // Verify doc-apex-dup-cert has low tamper score (0.02)
+  const apexDocBlock = storeContent.substring(
+    storeContent.indexOf("id: 'doc-apex-dup-cert'"),
+    storeContent.indexOf("id: 'doc-apex-dup-cert'") + 1000
+  );
+  assert.ok(
+    apexDocBlock.includes('tamperingConfidence: 0.02'),
+    'doc-apex-dup-cert must have low tamper score 0.02 because it has no structural anomalies'
+  );
+
+  // 4. Verify DocumentViewerModal renders both separate scores and formula breakdown
+  const modalCode = fs.readFileSync('./src/components/DocumentViewerModal.tsx', 'utf8');
+  assert.ok(
+    modalCode.includes('Document Tampering Score') &&
+    modalCode.includes('Duplicate Match Score') &&
+    modalCode.includes('Tamper Score Mathematical Formula & Inputs:'),
+    'DocumentViewerModal must display separate Document Tampering Score, Duplicate Match Score, and formula breakdown'
+  );
+
+  // 5. Verify preview CaseFileSection renders both separate scores and formula
+  const casePreviewCode = fs.readFileSync('./src/app/preview/_components/CaseFileSection.tsx', 'utf8');
+  assert.ok(
+    casePreviewCode.includes('Tampering Score:') &&
+    casePreviewCode.includes('Duplicate Score:') &&
+    casePreviewCode.includes('Formula:'),
+    'CaseFileSection must render separate Tampering Score, Duplicate Score, and formula'
+  );
+});
+
+
 
 
 

@@ -144,8 +144,12 @@ export class RulesEngine {
           }
         }
 
-        // Duplicate certificate across applications / entities
-        if (doc.forensicMetadata.tamperingConfidence > 0.9 && doc.forensicMetadata.anomalyIndicators.some(i => i.toLowerCase().includes('duplicate'))) {
+        // Duplicate certificate across applications / entities (Decoupled from structural tamper score)
+        if (
+          (doc.forensicMetadata.duplicateConfidence && doc.forensicMetadata.duplicateConfidence > 0.8) ||
+          doc.forensicMetadata.isDuplicateMatch ||
+          doc.forensicMetadata.anomalyIndicators.some(i => i.toLowerCase().includes('duplicate'))
+        ) {
           const fid = app.id === 'app-apex-003' ? 'FIND-APX-002' : `FIND-${app.id}-DUP-${doc.id}`;
           if (!findings.some(f => f.id === fid)) {
             findings.push({

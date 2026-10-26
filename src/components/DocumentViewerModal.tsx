@@ -363,11 +363,62 @@ export default function DocumentViewerModal({
                   <span className="font-mono text-slate-800">{forensic.nearDuplicateHash || 'FP-00000000'}</span>
                 </div>
 
+                {/* Separate Tampering Score */}
                 <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 text-xs">
-                  <span className="text-[11px] font-semibold text-slate-500 block mb-1">Tampering Risk Score</span>
+                  <span className="text-[11px] font-semibold text-slate-500 block mb-1">Document Tampering Score</span>
                   <span className={`font-bold ${forensic.tamperingConfidence > 0.5 ? 'text-rose-600' : 'text-emerald-600'}`}>
-                    {Math.round(forensic.tamperingConfidence * 100)}% Confidence
+                    {Math.round(forensic.tamperingConfidence * 100)}% {forensic.tamperingConfidence > 0.5 ? '(Structural Anomaly)' : '(Clean Structure)'}
                   </span>
+                </div>
+
+                {/* Separate Duplicate Score */}
+                <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 text-xs">
+                  <span className="text-[11px] font-semibold text-slate-500 block mb-1">Duplicate Match Score</span>
+                  <span className={`font-bold ${(forensic.duplicateConfidence || 0) > 0.5 ? 'text-purple-600' : 'text-slate-700'}`}>
+                    {Math.round((forensic.duplicateConfidence || 0) * 100)}% {(forensic.duplicateConfidence || 0) > 0.5 ? '(Cryptographic Match)' : '(Unique Hash)'}
+                  </span>
+                  {forensic.duplicateMatchedDocId && (
+                    <span className="block text-[10px] text-purple-700 mt-1 font-mono truncate">
+                      Matched: {forensic.duplicateMatchedFileName || forensic.duplicateMatchedDocId}
+                    </span>
+                  )}
+                </div>
+
+                {/* Tamper Score Formula & Inputs Breakdown */}
+                <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 text-xs space-y-2 col-span-1 md:col-span-2">
+                  <div className="flex flex-wrap items-center justify-between gap-1">
+                    <span className="font-semibold text-slate-800">Tamper Score Mathematical Formula & Inputs:</span>
+                    <span className="font-mono text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded">
+                      {forensic.tamperScoreFormula || 'TamperScore = 0.40*saves + 0.30*producer + 0.16*font + 0.10*date + 0.02'}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-500">
+                    Calculated strictly from structural physical anomalies. A duplicate certificate with clean structure maintains a 2% baseline tamper score.
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
+                    <div className="p-2 rounded bg-white border border-slate-200">
+                      <span className="text-slate-400 block text-[10px]">Incremental Saves (w=0.40)</span>
+                      <span className={`font-mono font-bold ${forensic.incrementalSavesDetected ? 'text-rose-600' : 'text-slate-700'}`}>
+                        {forensic.incrementalSavesDetected ? '1 (Active: +0.40)' : '0 (Clean: 0.00)'}
+                      </span>
+                    </div>
+                    <div className="p-2 rounded bg-white border border-slate-200">
+                      <span className="text-slate-400 block text-[10px]">Producer Anomaly (w=0.30)</span>
+                      <span className={`font-mono font-bold ${forensic.metadataAnomalyDetected ? 'text-rose-600' : 'text-slate-700'}`}>
+                        {forensic.metadataAnomalyDetected ? '1 (Active: +0.30)' : '0 (Clean: 0.00)'}
+                      </span>
+                    </div>
+                    <div className="p-2 rounded bg-white border border-slate-200">
+                      <span className="text-slate-400 block text-[10px]">Font Subsets (w=0.16)</span>
+                      <span className={`font-mono font-bold ${forensic.metadataAnomalyDetected ? 'text-rose-600' : 'text-slate-700'}`}>
+                        {forensic.metadataAnomalyDetected ? '1 (Active: +0.16)' : '0 (Clean: 0.00)'}
+                      </span>
+                    </div>
+                    <div className="p-2 rounded bg-white border border-slate-200">
+                      <span className="text-slate-400 block text-[10px]">Baseline Residual</span>
+                      <span className="font-mono font-bold text-slate-700">0.02</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

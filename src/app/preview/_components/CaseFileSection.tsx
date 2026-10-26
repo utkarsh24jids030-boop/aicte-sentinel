@@ -243,12 +243,21 @@ export default function CaseFileSection({ appId }: CaseFileSectionProps) {
                               </span>
                             </div>
                             <div>
+                              <span className="text-slate-500">Duplicate Score:</span>{' '}
+                              <span className={`font-mono font-bold ${(doc.forensicMetadata.duplicateConfidence || 0) > 0.5 ? 'text-purple-600' : 'text-slate-700'}`}>
+                                {((doc.forensicMetadata.duplicateConfidence || 0) * 100).toFixed(0)}%
+                              </span>
+                            </div>
+                            <div>
                               <span className="text-slate-500">Incremental Saves:</span>{' '}
                               <span className="font-semibold text-slate-800">{doc.forensicMetadata.incrementalSavesDetected ? 'DETECTED' : 'None'}</span>
                             </div>
                             <div>
                               <span className="text-slate-500">Metadata Anomaly:</span>{' '}
                               <span className="font-semibold text-slate-800">{doc.forensicMetadata.metadataAnomalyDetected ? 'DETECTED' : 'Clean'}</span>
+                            </div>
+                            <div className="col-span-2 text-[10px] text-slate-500 font-mono bg-slate-100 p-1.5 rounded">
+                              <strong>Formula:</strong> {doc.forensicMetadata.tamperScoreFormula || 'TamperScore = 0.40*saves + 0.30*producer + 0.16*font + 0.10*date + 0.02'}
                             </div>
                           </div>
                           {doc.forensicMetadata.pdfProducer && (

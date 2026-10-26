@@ -139,7 +139,18 @@ export interface ForensicMetadata {
   incrementalSavesDetected: boolean;
   metadataAnomalyDetected: boolean;
   nearDuplicateHash?: string;
-  tamperingConfidence: number; // 0 - 1.0
+  tamperingConfidence: number; // 0 - 1.0 (Structural/tamper indicators only)
+  duplicateConfidence?: number; // 0 - 1.0 (Exact or near hash match across records)
+  isDuplicateMatch?: boolean;
+  duplicateMatchedDocId?: string;
+  duplicateMatchedFileName?: string;
+  tamperScoreFormula?: string;
+  tamperScoreInputs?: {
+    incrementalSaves: number;
+    producerAnomaly: number;
+    fontDiscrepancies: number;
+    modDateDiscrepancy: number;
+  };
   anomalyIndicators: string[];
 }
 

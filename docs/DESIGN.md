@@ -4,7 +4,7 @@
 > **Classification:** Engineering Design Document & Technical Architecture  
 > **Status:** Version 2026.3 (Production Blueprint & Decision-Support Specification)
 
-This design document formalizes the technical architecture, domain models, cryptographic audit trail, and regulatory verification pipeline for **AICTE Sentinel**, an automated decision-support and compliance-intelligence system for the All India Council for Technical Education (AICTE) Bureau of Approvals.
+This design document formalizes the technical architecture, domain models, cryptographic audit trail, and regulatory verification pipeline for **AICTE Sentinel**, an automated decision-support and compliance-intelligence system for the All India Council for Technical Education (AICTE) Regulation Bureau.
 
 ---
 

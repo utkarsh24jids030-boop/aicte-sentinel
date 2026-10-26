@@ -24,4 +24,4 @@ The table below catalogs every location in the codebase requiring authoritative 
 ---
 
 ### Advisory Notice
-All compliance decisions output by AICTE Sentinel are decision-support advisories only. Final regulatory determinations rest exclusively with the AICTE Bureau of Approvals, the Executive Committee, and authorized Appellate Bodies.
+All compliance decisions output by AICTE Sentinel are decision-support advisories only. Final regulatory determinations rest exclusively with the AICTE Regulation Bureau, the Executive Committee, and authorized Appellate Bodies.

@@ -239,7 +239,7 @@ export default function InstitutionDashboard() {
 
                 <div className="relative">
                   <span className="absolute -left-[31px] top-0.5 w-3.5 h-3.5 rounded-full bg-blue-500 ring-4 ring-white" />
-                  <div className="font-bold text-slate-900">2. Bureau of Approvals Scrutiny</div>
+                  <div className="font-bold text-slate-900">2. Regulation Bureau Scrutiny</div>
                   <p className="text-[11px] text-slate-500">Officer reviews evidence-linked findings and verification passports.</p>
                 </div>
 

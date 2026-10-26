@@ -34,7 +34,7 @@ export const DEMO_USERS: User[] = [
     email: 'officer@sentinel-demo.example',
     name: 'Smt. Priyadarshini Rao',
     role: 'OFFICER',
-    designation: 'Senior Scrutiny Officer (Bureau of Approvals)',
+    designation: 'Senior Scrutiny Officer (Regulation Bureau)',
     avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80',
     createdAt: '2026-01-01T00:00:00Z'
   },

@@ -95,7 +95,7 @@ async function main() {
       email: 'officer@sentinel-demo.example',
       name: 'Smt. Priyadarshini Rao',
       role: 'OFFICER',
-      designation: 'Senior Scrutiny Officer (Bureau of Approvals)'
+      designation: 'Senior Scrutiny Officer (Regulation Bureau)'
     }
   });
 

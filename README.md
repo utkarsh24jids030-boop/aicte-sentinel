@@ -9,7 +9,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8)](https://tailwindcss.com)
 [![Prisma ORM](https://img.shields.io/badge/Prisma-PostgreSQL-indigo)](https://prisma.io)
 
-AICTE Sentinel is a decision-support and compliance-intelligence web application engineered for Smart India Hackathon 2026. It assists the All India Council for Technical Education (AICTE) Bureau of Approvals in validating institutional approval applications, authenticating legal and academic documents, enforcing versioned compliance rules, and detecting multi-institution linkages (such as shared land parcels, reused faculty credentials, and duplicate municipal certificates). Complete technical design and module specifications are documented in [docs/DESIGN.md](docs/DESIGN.md).
+AICTE Sentinel is a decision-support and compliance-intelligence web application engineered for Smart India Hackathon 2026. It assists the All India Council for Technical Education (AICTE) Regulation Bureau in validating institutional approval applications, authenticating legal and academic documents, enforcing versioned compliance rules, and detecting multi-institution linkages (such as shared land parcels, reused faculty credentials, and duplicate municipal certificates). Complete technical design and module specifications are documented in [docs/DESIGN.md](docs/DESIGN.md).
 
 ---
 

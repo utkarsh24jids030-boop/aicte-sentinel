@@ -799,6 +799,25 @@ test('Item 10: Repo Hygiene, License, Architecture Diagram & Design Document', (
   );
 });
 
+test('Official PS Item 1: Regulation Bureau Naming Consistency', () => {
+  const store = fs.readFileSync('./src/lib/store.ts', 'utf8');
+  assert.ok(store.includes('Regulation Bureau'), 'store.ts must refer to Regulation Bureau');
+  assert.ok(!store.includes('Bureau of Approvals'), 'store.ts must not contain Bureau of Approvals');
+
+  const scrutinyPreview = fs.readFileSync('./src/app/preview/_components/ScrutinyReportSection.tsx', 'utf8');
+  assert.ok(scrutinyPreview.includes('Regulation Bureau'), 'ScrutinyReportSection must refer to Regulation Bureau');
+  assert.ok(!scrutinyPreview.includes('Bureau of Approvals'), 'ScrutinyReportSection must not contain Bureau of Approvals');
+
+  const officerQueue = fs.readFileSync('./src/app/preview/_components/OfficerQueueSection.tsx', 'utf8');
+  assert.ok(officerQueue.includes('Regulation Bureau'), 'OfficerQueueSection must refer to Regulation Bureau');
+  assert.ok(!officerQueue.includes('Bureau of Approvals'), 'OfficerQueueSection must not contain Bureau of Approvals');
+
+  const readme = fs.readFileSync('./README.md', 'utf8');
+  assert.ok(readme.includes('Regulation Bureau'), 'README.md must refer to Regulation Bureau');
+  assert.ok(!readme.includes('Bureau of Approvals'), 'README.md must not contain Bureau of Approvals');
+});
+
+
 
 
 

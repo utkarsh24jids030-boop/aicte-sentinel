@@ -10,7 +10,7 @@ export default function OfficerQueueSection() {
       <div className="border-b border-slate-200 pb-4">
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">
-            Bureau of Approvals
+            Regulation Bureau
           </span>
           <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
             Officer Scrutiny Queue

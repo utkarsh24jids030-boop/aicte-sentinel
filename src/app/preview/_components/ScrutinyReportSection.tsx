@@ -91,7 +91,7 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
             <div className="relative z-10 border-b-2 border-slate-900 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <div className="text-[11px] font-bold text-blue-900 uppercase tracking-widest">
-                  All India Council for Technical Education (AICTE) • Bureau of Approvals
+                  All India Council for Technical Education (AICTE) • Regulation Bureau
                 </div>
                 <h2 className="text-xl md:text-2xl font-black text-slate-900 mt-1">
                   Statutory Scrutiny Evaluation Report

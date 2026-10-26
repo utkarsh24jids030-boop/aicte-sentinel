@@ -153,7 +153,7 @@ export default function ScrutinyReportPage({
               ALL INDIA COUNCIL FOR TECHNICAL EDUCATION
             </h1>
             <div className="text-xs font-semibold text-slate-700 mt-1">
-              Bureau of Approvals • Nelson Mandela Marg, Vasant Kunj, New Delhi - 110070
+              Regulation Bureau • Nelson Mandela Marg, Vasant Kunj, New Delhi - 110070
             </div>
             <div className="inline-block mt-3 px-4 py-1 rounded-full bg-slate-100 border border-slate-300 text-xs font-bold text-slate-900">
               FORMAL REGULATORY SCRUTINY & DEFICIENCY REPORT (2026-2027)
@@ -297,7 +297,7 @@ export default function ScrutinyReportPage({
             <div className="text-right">
               <div className="font-bold text-slate-900 text-sm">Smt. Priyadarshini Rao</div>
               <div className="text-slate-600">Senior Scrutiny Officer</div>
-              <div className="text-[11px] text-slate-400">Bureau of Approvals, AICTE New Delhi</div>
+              <div className="text-[11px] text-slate-400">Regulation Bureau, AICTE New Delhi</div>
             </div>
           </div>
 

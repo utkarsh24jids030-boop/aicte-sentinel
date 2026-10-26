@@ -54,6 +54,10 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-[#002b66] text-white shadow-md border-b border-[#001f4d]">
+      <div className="bg-amber-500/15 border-b border-amber-500/30 text-amber-200 text-[11px] font-semibold py-1 px-4 text-center tracking-wide flex items-center justify-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+        <span>Synthetic data - Simulated integrations • PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT</span>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo & Identity */}

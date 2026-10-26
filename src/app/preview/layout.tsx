@@ -33,7 +33,7 @@ export default function PreviewLayout({
       {/* 1. Mandatory Public Read-Only Banner */}
       <div className="bg-amber-100 border-b border-amber-300 text-amber-950 px-4 py-2.5 text-xs text-center font-bold tracking-wide flex items-center justify-center gap-2">
         <Eye className="w-4 h-4 text-amber-700 flex-shrink-0" />
-        <span>Public read-only preview. Synthetic data and mock verification adapters.</span>
+        <span>Public read-only preview • Synthetic data - Simulated integrations • PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT</span>
       </div>
 
       {/* 2. Public Preview Navigation Bar */}

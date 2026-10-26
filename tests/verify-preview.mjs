@@ -89,7 +89,7 @@ async function verifyAll() {
       }
 
       // Check mandatory public read-only banner
-      const hasBanner = html.includes('Public read-only preview. Synthetic data and mock verification adapters.');
+      const hasBanner = html.includes('Public read-only preview') && html.includes('PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT');
       if (!hasBanner) {
         console.error(`❌ [FAIL] ${item.path} is missing mandatory preview banner`);
         allPassed = false;

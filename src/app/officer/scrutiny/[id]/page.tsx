@@ -113,10 +113,25 @@ export default function ScrutinyReportPage({
         </div>
 
         {/* Printable Official Government Scrutiny Document */}
-        <div className="bg-white rounded-2xl border border-slate-300 p-8 sm:p-12 shadow-md print:shadow-none print:border-none print:p-0">
+        <div className="relative bg-white rounded-2xl border border-slate-300 p-8 sm:p-12 shadow-md print:shadow-none print:border-none print:p-0 overflow-hidden">
           
+          {/* Diagonal Background Watermark */}
+          <div 
+            aria-hidden="true" 
+            className="pointer-events-none select-none absolute inset-0 flex items-center justify-center overflow-hidden z-0 opacity-[0.03] print:opacity-[0.07]"
+          >
+            <span className="text-4xl sm:text-6xl font-black uppercase tracking-widest text-slate-900 -rotate-45 whitespace-nowrap">
+              PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT
+            </span>
+          </div>
+
+          {/* Prototype Watermark Banner (Screen & Print) */}
+          <div className="relative z-10 mb-6 p-2 text-center rounded-lg border-2 border-dashed border-amber-500 bg-amber-50 text-amber-900 font-extrabold text-xs tracking-wider uppercase print:border-black print:bg-slate-100 print:text-black">
+            PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT • SYNTHETIC DATA FOR DEMONSTRATION ONLY
+          </div>
+
           {/* AICTE Header */}
-          <div className="text-center border-b-2 border-slate-900 pb-6 mb-6">
+          <div className="relative z-10 text-center border-b-2 border-slate-900 pb-6 mb-6">
             <div className="text-xs font-bold tracking-widest text-slate-600 uppercase mb-1">
               Government of India • Ministry of Education
             </div>
@@ -270,6 +285,11 @@ export default function ScrutinyReportPage({
               <div className="text-slate-600">Senior Scrutiny Officer</div>
               <div className="text-[11px] text-slate-400">Bureau of Approvals, AICTE New Delhi</div>
             </div>
+          </div>
+
+          {/* Footer Prototype Notice */}
+          <div className="relative z-10 text-center text-[10px] text-slate-500 font-bold uppercase mt-6 pt-4 border-t border-slate-200 print:block">
+            AICTE SENTINEL PROTOTYPE DEMONSTRATOR • NOT AN OFFICIAL AICTE DOCUMENT • ALL COMPLIANCE OUTPUTS ADVISORY ONLY
           </div>
 
         </div>

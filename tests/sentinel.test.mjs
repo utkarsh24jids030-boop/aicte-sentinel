@@ -271,6 +271,14 @@ test('PII Privacy & Synthetic Identifiers: maskPII sanitizes identifiers and pre
   assert.equal(/\b\d{12}\b/.test(storeText), false, 'Zero 12-digit Aadhaar numbers permitted in store.ts');
 });
 
+test('Prototype Watermark & Disclaimer Banner: Scrutiny reports and navigation contain prototype watermark', () => {
+  const navbar = fs.readFileSync('./src/components/Navbar.tsx', 'utf8');
+  assert.ok(navbar.includes('PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT'), 'Navbar must contain prototype disclaimer');
+  assert.ok(navbar.includes('Synthetic data'), 'Navbar must disclose synthetic data');
 
+  const scrutinyPage = fs.readFileSync('./src/app/officer/scrutiny/[id]/page.tsx', 'utf8');
+  assert.ok(scrutinyPage.includes('PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT'), 'Officer scrutiny page must contain prototype watermark');
 
-
+  const scrutinyPreview = fs.readFileSync('./src/app/preview/_components/ScrutinyReportSection.tsx', 'utf8');
+  assert.ok(scrutinyPreview.includes('PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT'), 'Scrutiny preview report must contain prototype watermark');
+});

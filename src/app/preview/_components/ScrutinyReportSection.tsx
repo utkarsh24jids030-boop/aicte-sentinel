@@ -67,10 +67,25 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
           <article 
             key={app.id} 
             id={`scrutiny-${app.id}`} 
-            className="p-6 md:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6"
+            className="relative p-6 md:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6 overflow-hidden"
           >
+            {/* Diagonal Background Watermark */}
+            <div 
+              aria-hidden="true" 
+              className="pointer-events-none select-none absolute inset-0 flex items-center justify-center overflow-hidden z-0 opacity-[0.03] print:opacity-[0.07]"
+            >
+              <span className="text-4xl sm:text-6xl font-black uppercase tracking-widest text-slate-900 -rotate-45 whitespace-nowrap">
+                PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT
+              </span>
+            </div>
+
+            {/* Prototype Watermark Banner (Screen & Print) */}
+            <div className="relative z-10 p-2 text-center rounded-lg border-2 border-dashed border-amber-500 bg-amber-50 text-amber-900 font-extrabold text-xs tracking-wider uppercase print:border-black print:bg-slate-100 print:text-black">
+              PROTOTYPE - NOT AN OFFICIAL AICTE DOCUMENT • SYNTHETIC DATA FOR DEMONSTRATION ONLY
+            </div>
+
             {/* Header Stamp */}
-            <div className="border-b-2 border-slate-900 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="relative z-10 border-b-2 border-slate-900 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <div className="text-[11px] font-bold text-blue-900 uppercase tracking-widest">
                   All India Council for Technical Education (AICTE) • Bureau of Approvals
@@ -230,12 +245,17 @@ export default function ScrutinyReportSection({ appId }: ScrutinyReportSectionPr
             </div>
 
             {/* Cryptographic Hash Chain Seal */}
-            <div className="p-3 rounded-lg bg-slate-900 text-slate-300 font-mono text-[11px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div className="relative z-10 p-3 rounded-lg bg-slate-900 text-slate-300 font-mono text-[11px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
                 <span>AICTE Cryptographic Hash-Chain Seal: {hashStamp}</span>
               </div>
               <span className="text-slate-400">Untampered • Verifiable on CAG Audit Node</span>
+            </div>
+
+            {/* Footer Prototype Notice */}
+            <div className="relative z-10 text-center text-[10px] text-slate-500 font-bold uppercase pt-4 border-t border-slate-200 print:block">
+              AICTE SENTINEL PROTOTYPE DEMONSTRATOR • NOT AN OFFICIAL AICTE DOCUMENT • ALL COMPLIANCE OUTPUTS ADVISORY ONLY
             </div>
           </article>
         );
